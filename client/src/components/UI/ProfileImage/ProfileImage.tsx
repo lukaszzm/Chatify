@@ -26,7 +26,9 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
         src={
           localFile
             ? `${src}`
-            : `${process.env.REACT_APP_IMAGE_URL}${src}${process.env.REACT_APP_IMAGE_SUFFIX}`
+            : `${import.meta.env.VITE_IMAGE_URL}${src}${
+                import.meta.env.VITE_IMAGE_SUFFIX
+              }`
         }
         alt="avatar"
       />
