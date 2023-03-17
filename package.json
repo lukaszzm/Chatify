@@ -1,0 +1,25 @@
+{
+  "name": "chatify-turborepo",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "dotenv -- turbo run dev",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "*",
+    "prettier": "latest",
+    "turbo": "latest",
+    "dotenv-cli": "latest"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "npm@9.5.1"
+}
