@@ -8,41 +8,61 @@
 </p>
 
 ## ️🔴 Live Preview
-Click on this <b>[link](https://chatify-ccec7.web.app/)</b> to see a live app preview.
 
+Click on this <b>[link](https://chatify-ccec7.web.app/)</b> to see a live app preview.
 
 ## 🔐 Login Credentials
 
-
 **Email:** test#@test.com  
 **Password:** testtest
- 
+
 In place of the hashtag, type a number from <b>1</b> to <b>5</b>.
 
 **OR**
 
 You can <b>register</b> with your own credentials!
 
-
 ## ⚙ Features
- - User authentication
- - Real-time messaging
- - Images upload
- - Light/Dark mode
- - Searching users in the database
+
+- User authentication
+- Real-time messaging
+- Images upload
+- Light/Dark mode
+- Searching users in the database
 
 ## 🧑‍💻 Tech Stack
 
-**Frontend:** 
-<p><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /></p>
-<p><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" /></p>
-
-**Backend:** 
 <p>
-<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" /></p>
+<img src="https://img.shields.io/badge/Turborepo-EF4444.svg?style=for-the-badge&logo=Turborepo&logoColor=white" />
+&nbsp;
+<img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=TypeScript&logoColor=white" /> 
+</p>
 
-**Database:**  
-<p><img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" /></p>
+**Frontend:**
+
+<p>
+<img src="https://img.shields.io/badge/Vite-646CFF.svg?style=for-the-badge&logo=Vite&logoColor=white" />
+&nbsp;
+<img src="https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black" />
+</p>
+
+**Backend:**
+
+<p>
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+&nbsp;
+<img src="https://img.shields.io/badge/Express-000000.svg?style=for-the-badge&logo=Express&logoColor=white" />
+</p>
+
+**Database:**
+
+<p><img src="https://img.shields.io/badge/MongoDB-47A248.svg?style=for-the-badge&logo=MongoDB&logoColor=white" /></p>
+
+**Image Hosting:**
+
+<p>
+<img src="https://img.shields.io/badge/Firebase-FFCA28.svg?style=for-the-badge&logo=Firebase&logoColor=black" />
+</p>
 
 ## 📌 License
 
