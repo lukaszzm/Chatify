@@ -15,8 +15,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "noImplicitAny": false,
-    "files": ["./node_modules/wmr/types.d.ts"]
+    "noImplicitAny": false
   },
   "exclude": ["node_modules"]
 }
