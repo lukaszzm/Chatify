@@ -9,7 +9,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "dotenv -- turbo run dev",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "deploy": "turbo run build --scope=client --include-dependencies --no-deps"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
