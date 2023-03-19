@@ -8,8 +8,6 @@ import fs from "fs";
 import { messagesRouter, authRouter, notesRouter, usersRouter } from "./routes";
 import { IMessage } from "./interfaces/IMessage.interface";
 
-console.log(process.env.DB_USER);
-
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -19,6 +17,7 @@ app.use(express.json());
 
 const server = app.listen(port, () => console.log(`SERVER STARTED ON ${port}`));
 
+mongoose.set("strictQuery", false);
 const mongoDB = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@chatify.5xwhr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 mongoose
   .connect(mongoDB, {
