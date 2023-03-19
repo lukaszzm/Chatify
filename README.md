@@ -9,14 +9,14 @@
 
 ## ️🔴 Live Preview
 
-Click on this <b>[link](https://chatify-ccec7.web.app/)</b> to see a live app preview.
+Click on this <b>[link](https://chatify-client.vercel.app/)</b> to see a live app preview.
 
 ## 🔐 Login Credentials
 
 **Email:** test#@test.com  
 **Password:** testtest
 
-In place of the hashtag, type a number from <b>1</b> to <b>5</b>.
+In place of the hashtag, type a number from <b>1</b> to <b>3</b>.
 
 **OR**
 
