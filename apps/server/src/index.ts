@@ -10,7 +10,7 @@ import { IMessage } from "./interfaces/IMessage.interface";
 
 console.log(process.env.DB_USER);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 const app = express();
 
 app.use(cors());
