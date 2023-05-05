@@ -1,23 +1,25 @@
-import styles from "./NewNote.module.css";
-import { noteSchema } from "../../../schemas/schemas";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { newNote } from "../../../api";
-import { Modal, Alert, LoadingSpinner } from "../../../components/UI";
-import { INote } from "../../../interfaces/Note.interface";
+import {
+  Modal,
+  Alert,
+  LoadingSpinner,
+  Label,
+  Input,
+} from "../../../components/UI";
+import { useNewNote } from "../../../hooks/useNewNote";
 
 interface NewNoteProps {
   closeModal: () => void;
 }
 
-export const NewNote: React.FC<NewNoteProps> = ({ closeModal }) => {
-  const queryClient = useQueryClient();
-  const { mutate, isLoading, isError } = useMutation({
-    mutationFn: (note: INote) => newNote(note),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["notes"]);
-      closeModal();
-    },
+export const NewNote = ({ closeModal }: NewNoteProps) => {
+  const {
+    isLoading,
+    isError,
+    register,
+    submitFn,
+    formState: { errors },
+  } = useNewNote({
+    onSuccess: closeModal,
   });
 
   return (
@@ -27,44 +29,24 @@ export const NewNote: React.FC<NewNoteProps> = ({ closeModal }) => {
       confirmLabel="Create Note"
       isDisabledConfirm={isLoading}
       form="newNote"
+      onConfirm={submitFn}
     >
-      <Formik
-        initialValues={{
-          title: "",
-          text: "",
-        }}
-        validationSchema={noteSchema}
-        onSubmit={async ({ title, text }) => {
-          mutate({ title, text, _id: "" });
-        }}
-      >
-        {({ errors, touched }) => (
-          <Form id="newNote" className={styles.form}>
-            <Field
-              className={
-                errors.title && touched.title
-                  ? `${styles.field} ${styles["field-error"]}`
-                  : `${styles.field}`
-              }
-              type="text"
-              name="title"
-              placeholder="Type your title"
-            />
-            <ErrorMessage component="p" className={styles.error} name="title" />
-            <Field
-              className={
-                errors.text && touched.text
-                  ? `${styles.field} ${styles["field-error"]}`
-                  : `${styles.field}`
-              }
-              as="textarea"
-              name="text"
-              placeholder="Type your text"
-            />
-            <ErrorMessage component="p" className={styles.error} name="text" />
-          </Form>
-        )}
-      </Formik>
+      <form>
+        <Label htmlFor="title">Title</Label>
+        <Input
+          id="title"
+          placeholder="Place your title here"
+          {...register("title")}
+          error={errors.title}
+        />
+        <Label htmlFor="text">Text</Label>
+        <Input
+          id="text"
+          placeholder="Place your text here"
+          {...register("text")}
+          error={errors.text}
+        />
+      </form>
       {isLoading ? (
         <LoadingSpinner />
       ) : isError ? (

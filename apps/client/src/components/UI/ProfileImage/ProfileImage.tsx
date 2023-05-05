@@ -3,22 +3,15 @@ import styles from "./ProfileImage.module.css";
 
 interface ProfileImageProps {
   src: string;
-  className?: string;
   large?: boolean;
   localFile?: boolean;
 }
 
-export const ProfileImage: React.FC<ProfileImageProps> = ({
-  src,
-  className,
-  large,
-  localFile,
-}) => {
+export const ProfileImage = ({ src, large, localFile }: ProfileImageProps) => {
   return (
     <div
       className={clsx(
         `${styles["image-container"]}`,
-        `${className}`,
         large && `${styles.large}`
       )}
     >

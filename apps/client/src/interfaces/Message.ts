@@ -1,10 +1,10 @@
-import { IUser } from "./User.interface";
+import { User } from "./User";
 
-export interface IMessage {
+export interface Message {
   _id: string;
   text: string;
   fromId: string;
   toId: string;
   createdAt: Date | string;
-  userInfo: IUser[];
+  userInfo: User[];
 }

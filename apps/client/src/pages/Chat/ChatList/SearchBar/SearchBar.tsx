@@ -1,81 +1,48 @@
 import styles from "./SearchBar.module.css";
-import { useEffect, useState, useRef } from "react";
-import { SearchedUser } from "../SearchedUser";
 import searchIcon from "../../../../assets/icons/search.svg";
+import { SearchedUser } from "../SearchedUser";
 import { Input, LoadingSpinner } from "../../../../components/UI";
-import { useDebounce } from "../../../../hooks/useDebounce";
-import { IUser } from "../../../../interfaces/User.interface";
-import { searchUsers } from "../../../../api/usersApi";
+import { useSearchBar } from "../../../../hooks/useSearchBar";
 
 export const SearchBar = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [isTouched, setIsTouched] = useState(false);
-  const [result, setResult] = useState<IUser[]>([]);
-  const debouncedValue = useDebounce(inputValue, 300);
-
-  const changeHandler = () => {
-    inputRef.current!.value.trim() !== ""
-      ? setIsTouched(true)
-      : setIsTouched(false);
-    setInputValue(inputRef.current!.value.trim());
-  };
-
-  const resetInput = () => {
-    inputRef.current!.value = "";
-    setInputValue("");
-    setIsTouched(false);
-  };
-
-  useEffect(() => {
-    const searchUsersHandler = async (input: string) => {
-      setIsLoading(true);
-      try {
-        const users = await searchUsers(input);
-        users.length > 2 ? setResult(users.slice(0, 2)) : setResult(users);
-      } catch {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (debouncedValue.trim() !== "") searchUsersHandler(debouncedValue);
-  }, [debouncedValue]);
+  const { setInputValue, inputRef, resetHandler, data, isFetching, isError } =
+    useSearchBar();
 
   return (
-    <>
+    <div>
       <div className={styles["search-wrapper"]}>
         <img src={searchIcon} alt="Search Icon." />
         <Input
-          className={styles["search-bar"]}
-          onChange={changeHandler}
+          autoComplete="off"
+          id="search"
+          onChange={(e) => setInputValue(e.target.value)}
+          type="search"
           placeholder="Search user"
           ref={inputRef}
         />
       </div>
       <div className={styles["results-wrapper"]}>
-        {!isTouched ? null : isLoading ? (
+        {isFetching ? (
           <LoadingSpinner />
         ) : isError ? (
           <p>Something went wrong.</p>
-        ) : result.length === 0 ? (
-          <p>No results.</p>
-        ) : (
-          result.map(({ _id, firstName, lastName, profileImage }) => (
-            <SearchedUser
-              key={_id}
-              id={_id}
-              firstName={firstName}
-              lastName={lastName}
-              profileImage={profileImage}
-              onClick={resetInput}
-            />
-          ))
-        )}
+        ) : data ? (
+          data.length === 0 ? (
+            <p>No results.</p>
+          ) : (
+            data.map(({ _id, firstName, lastName, profileImage }) => (
+              <SearchedUser
+                key={_id}
+                id={_id}
+                firstName={firstName}
+                lastName={lastName}
+                profileImage={profileImage}
+                onClick={resetHandler}
+              />
+            ))
+          )
+        ) : null}
       </div>
-    </>
+    </div>
   );
 };

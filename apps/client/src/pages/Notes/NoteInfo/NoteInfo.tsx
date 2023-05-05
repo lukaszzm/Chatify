@@ -6,13 +6,13 @@ import { getNoteInfo } from "../../../api";
 import { DeleteNote } from "../DeleteNote";
 import { useModal } from "../../../hooks/useModal";
 import * as ReactDOM from "react-dom";
-import { Topbar, LoadingSpinner, Icon, Button } from "../../../components/UI";
+import { Topbar, LoadingSpinner, Icon } from "../../../components/UI";
 
-interface INoteInfoProps {
+interface NoteInfoProps {
   noteId: string;
 }
 
-export const NoteInfo: React.FC<INoteInfoProps> = ({ noteId }) => {
+export const NoteInfo = ({ noteId }: NoteInfoProps) => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["note", noteId],
@@ -26,14 +26,10 @@ export const NoteInfo: React.FC<INoteInfoProps> = ({ noteId }) => {
   ) : data ? (
     <>
       <Topbar backTo="/dashboard/notes">
-        <h3>{data.title}</h3>
-        <Button className={styles.button} onClick={openModal}>
-          <Icon
-            className={styles["delete-icon"]}
-            icon={deleteIcon}
-            alt="delete"
-          />
-        </Button>
+        <h2>{data.title}</h2>
+        <button onClick={openModal} className={styles["delete-button"]}>
+          <Icon icon={deleteIcon} alt="delete" />
+        </button>
       </Topbar>
       <NoteContent text={data.text} createdAt={data.createdAt} />
       {isModalOpen

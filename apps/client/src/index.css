@@ -27,7 +27,7 @@
   --background: #121212;
   --background-secondary: #181818;
   --background-secondary-hover: #202020;
-  --background-secondary-active: #404040;
+  --background-secondary-active: #303030;
   --background-grey: #2c2c2c;
   --background-dark-grey: #202020;
   --input-background: #2c2c2c;
@@ -71,18 +71,12 @@ h1 {
   font-weight: 500;
 }
 
-h3 {
-  padding: 0px 10px 0px 10px;
+h2 {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
-h4 {
-  color: var(--text-secondary);
-}
-
-h5 {
-  color: var(--text-secondary);
-  margin: 0;
-}
 
 p {
   color: var(--text-tertiary);
@@ -119,12 +113,6 @@ button {
 
 input {
   font-family: "Inter", sans-serif;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
 
 #root {

@@ -1,12 +1,12 @@
 .search-wrapper {
     display: flex;
-    width: 100%;
     background-color: var(--input-background);
     border-radius: 5px;
+    margin: auto;
+    padding-left: 10px;
 }
 
 .search-wrapper img {
-    padding-left: 8px;
     width: 16px;
     filter: var(--icon-filter-placeholder);
 }
@@ -17,8 +17,4 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-}
-
-.search-bar {
-    padding: 12px;
 }

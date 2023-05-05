@@ -55,7 +55,8 @@ web_modules/
 # dotenv environment variable files
 .env
 
-
+# idea
+.idea
 
 # vuepress v2.x temp and cache directory
 .temp

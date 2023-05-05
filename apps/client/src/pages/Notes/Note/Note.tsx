@@ -1,19 +1,16 @@
 import { Link } from "react-router-dom";
 import { Card } from "../../../components/UI";
-import styles from "./Note.module.css";
 
-interface INoteProps {
-  isActive: boolean
-  title: string,
-  id: string
+interface NoteProps {
+  isActive: boolean;
+  title: string;
+  id: string;
 }
 
-export const Note: React.FC<INoteProps> = ({title, id, isActive }) => {
+export const Note = ({ title, id, isActive }: NoteProps) => {
   return (
     <Link to={id}>
-      <Card isActive={isActive} className={styles.card}>
-        <h4>{title}</h4>
-      </Card>
+      <Card isActive={isActive}>{title}</Card>
     </Link>
   );
 };

@@ -4,6 +4,6 @@ interface SidebarProps {
   children: React.ReactNode;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+export const Sidebar = ({ children }: SidebarProps) => {
   return <aside className={styles.sidebar}>{children}</aside>;
 };

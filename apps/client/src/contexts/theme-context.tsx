@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 
 const isBrowserDefaultDark = () =>
   window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 const ThemeContext = React.createContext({
   theme: "light",
-  toggleTheme: () => { /* do nothing */ },
+  toggleTheme: () => {},
 });
 
 interface ThemeContextProviderProps {
   children: React.ReactNode;
 }
 
-export const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({
+export const ThemeContextProvider = ({
   children,
-}) => {
-  let initTheme = "light";
+}: ThemeContextProviderProps) => {
+  let initTheme: string;
   const preferredTheme = localStorage.getItem("theme");
   preferredTheme
     ? (initTheme = preferredTheme)

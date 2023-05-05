@@ -4,6 +4,6 @@ interface NotificationProps {
   children: React.ReactNode;
 }
 
-export const Notification: React.FC<NotificationProps> = ({ children }) => {
+export const Notification = ({ children }: NotificationProps) => {
   return <p className={styles.notification}> {children} </p>;
 };

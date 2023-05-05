@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import styles from "./Content.module.css";
 
-interface IContentProps {
+interface ContentProps {
   children: React.ReactNode;
   onLeft?: boolean;
 }
-export const Content: React.FC<IContentProps> = ({ children, onLeft }) => {
+export const Content = ({ children, onLeft }: ContentProps) => {
   return (
     <section
       className={clsx(`${styles.container}`, onLeft && `${styles.left}`)}

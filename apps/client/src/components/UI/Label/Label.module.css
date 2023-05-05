@@ -1,8 +1,6 @@
 .label {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-secondary);
     text-align: left;
-    margin-top: 15px;
-    margin-bottom: 5px;
 }

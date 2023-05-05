@@ -10,13 +10,13 @@ interface SearchedUserProps {
   onClick: () => void;
 }
 
-export const SearchedUser: React.FC<SearchedUserProps> = ({
+export const SearchedUser = ({
   id,
   firstName,
   lastName,
   profileImage,
   onClick,
-}) => {
+}: SearchedUserProps) => {
   return (
     <div className={styles.container}>
       <ProfileImage src={profileImage} />
@@ -24,7 +24,7 @@ export const SearchedUser: React.FC<SearchedUserProps> = ({
         {firstName} {lastName}
       </p>
       <Link to={id} onClick={onClick}>
-        <Button className={styles.button}>Chat</Button>
+        <Button>Chat</Button>
       </Link>
     </div>
   );

@@ -1,14 +1,6 @@
-.delete-icon {
+.delete-button {
   text-align: right;
   cursor: pointer;
-}
-
-.delete-icon:hover {
-  filter: invert(53%) sepia(70%) saturate(5549%) hue-rotate(335deg)
-    brightness(119%) contrast(110%);
-}
-
-.button {
   padding: 0;
   border-radius: 50%;
   background: none;
@@ -17,8 +9,9 @@
   margin-right: 5px;
 }
 
-.button:hover {
-  background: none;
+.delete-button:hover {
+  filter: invert(53%) sepia(70%) saturate(5549%) hue-rotate(335deg)
+    brightness(119%) contrast(110%);
 }
 
 .error {
