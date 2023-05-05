@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import formatTime from "../../../../utils/format-time";
+import { formatTime } from "../../../../utils/format-time";
 import styles from "./Message.module.css";
 
 interface MessageProps {
@@ -8,11 +8,7 @@ interface MessageProps {
   createdAt: string | Date;
 }
 
-export const Message: React.FC<MessageProps> = ({
-  createdAt,
-  isMine,
-  text,
-}) => {
+export const Message = ({ createdAt, isMine, text }: MessageProps) => {
   const formattedTime = formatTime(createdAt);
 
   return (

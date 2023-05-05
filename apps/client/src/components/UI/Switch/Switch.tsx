@@ -2,22 +2,21 @@ import styles from "./Switch.module.css";
 
 interface SwitchProps {
   withLabels?: boolean;
-  className?: string;
   onChange: () => void;
   checked: boolean;
 }
 
-export const Switch: React.FC<SwitchProps> = ({
-  withLabels,
-  className,
-  onChange,
-  checked,
-}) => {
+export const Switch = ({ withLabels, onChange, checked }: SwitchProps) => {
   return (
-    <div className={`${styles["switch-wrapper"]} ${className}`}>
+    <div className={`${styles["switch-wrapper"]}`}>
       {withLabels && <p className={styles.off}>OFF</p>}
-      <label className={styles.switch}>
-        <input type="checkbox" onChange={onChange} checked={checked} />
+      <label htmlFor="switch" className={styles.switch}>
+        <input
+          id="switch"
+          type="checkbox"
+          onChange={onChange}
+          checked={checked}
+        />
         <i></i>
       </label>
       {withLabels && <p className={styles.on}>ON</p>}

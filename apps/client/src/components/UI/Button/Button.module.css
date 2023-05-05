@@ -1,5 +1,4 @@
 .button {
-    border: none;
     outline: none;
     border-radius: 10px;
     background-color: var(--accent);
@@ -7,7 +6,7 @@
     transition: .1s;
     color: #fff;
     padding: 10px;
-    letter-spacing: 0.6px;
+    font-size: 0.9rem;
     border: 1px solid var(--accent);
 }
 
@@ -18,13 +17,13 @@
 
 .outline {
     background-color: transparent;
-    color: var(--accent);
-    border: 1px solid var(--accent);
+    color: var(--text-secondary);
+    border: 1px solid var(--input-background);
 }
 
 .outline:hover {
-    color: #fff;
-    background-color: var(--accent-hover);
+    background-color: var(--input-background);
+    border-color: var(--input-background);
 }
 
 .button:disabled {

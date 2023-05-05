@@ -1,4 +1,4 @@
-import { IMessage } from "../interfaces/Message.interface";
+import { Message } from "../interfaces/Message";
 import { axiosConfig } from "../service/axiosConfig";
 
 export const getRecentMessages = async () => {
@@ -13,7 +13,7 @@ export const getUserInfo = async (ID: string) => {
   return result.data;
 };
 
-export const newMessage = async (message: IMessage) => {
+export const newMessage = async (message: Message) => {
   const result = await axiosConfig.post(`messages/`, message);
 
   return { ...result.data, userInfo: message.userInfo };

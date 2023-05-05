@@ -1,5 +1,5 @@
-.button {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
+.top-sidebar {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
 }

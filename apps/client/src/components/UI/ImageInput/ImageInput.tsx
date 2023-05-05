@@ -1,66 +1,61 @@
 import styles from "./ImageInput.module.css";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { Icon, ProfileImage } from "..";
+import * as React from "react";
 import editIcon from "../../../assets/icons/edit.svg";
-import { Button, Icon, ProfileImage } from "..";
+import clsx from "clsx";
 
 interface ImageInputProps {
-  name: string;
-  onChange: (image: File) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   defaultImage?: string;
+  id: string;
 }
 
-export const ImageInput: React.FC<ImageInputProps> = ({
-  name,
-  onChange,
-  defaultImage,
-}) => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+export const ImageInput = React.forwardRef<HTMLInputElement, ImageInputProps>(
+  ({ id, onChange, defaultImage, ...rest }, ref) => {
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-  const clickHandler = () => {
-    inputRef!.current!.click();
-  };
-
-  return (
-    <div className={styles["input-container"]}>
-      {selectedImage && (
-        <ProfileImage
-          localFile
-          large
-          className={styles.preview}
-          src={URL.createObjectURL(selectedImage)}
-        />
-      )}
-      {defaultImage && !selectedImage && (
-        <ProfileImage large className={styles.preview} src={defaultImage} />
-      )}
-      <input
-        type="file"
-        name={name}
-        accept="image/png, image/jpg, image/jpeg"
-        onChange={(event) => {
-          if (event.target.files) {
-            setSelectedImage(event.target.files[0]);
-            onChange(event.target.files[0]);
-          }
-        }}
-        style={{ display: "none" }}
-        ref={inputRef}
-      />
-      {selectedImage || defaultImage ? (
-        <Button
-          outline
-          type="button"
-          className={styles["edit-button"]}
-          onClick={clickHandler}
+    return (
+      <div className={styles["input-container"]}>
+        {selectedImage && (
+          <ProfileImage
+            localFile
+            large
+            src={URL.createObjectURL(selectedImage)}
+          />
+        )}
+        {defaultImage && !selectedImage && (
+          <ProfileImage large src={defaultImage} />
+        )}
+        <label
+          htmlFor={id}
+          className={clsx(
+            selectedImage || defaultImage ? `${styles.change}` : `${styles.add}`
+          )}
         >
-          <Icon noColor icon={editIcon} className={styles.icon} alt="" />
-        </Button>
-      ) : (
-        <Button outline type="button" onClick={clickHandler}>
-          Upload Profile Image
-        </Button>
-      )}
-    </div>
-  );
-};
+          {selectedImage || defaultImage ? (
+            <Icon noColor icon={editIcon} alt="" />
+          ) : (
+            "Click here to add Profile Image"
+          )}
+        </label>
+        <input
+          id={id}
+          type="file"
+          accept="image/png, image/jpg, image/jpeg"
+          onChange={(event) => {
+            if (event.target.files) {
+              setSelectedImage(event.target.files[0]);
+              onChange(event);
+            }
+          }}
+          className={styles.input}
+          ref={ref}
+          {...rest}
+        />
+      </div>
+    );
+  }
+);
+
+ImageInput.displayName = "ImageInput";

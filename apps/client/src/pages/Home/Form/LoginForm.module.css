@@ -1,55 +1,14 @@
 .form {
   width: 80%;
-  max-width: 500px;
-  margin-top: 0px;
+  max-width: 1200px;
   padding-bottom: 35px;
   border-bottom: 1px solid var(--text-tertiary);
+  display: grid;
+  gap: 0.8rem;
 }
 
 .form h1 {
-  font-size: 2.5rem;
   text-align: left;
-}
-.form label {
-  display: block;
-  text-align: left;
-  margin-left: 2%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
+  font-size: 2.2rem;
 }
 
-.form input {
-  color: var(--text-primary);
-}
-
-.field {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 5px;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  background-color: var(--input-background);
-  border: 1px solid var(--input-background);
-}
-
-.field-error {
-  border: 1px solid var(--error);
-}
-
-.field-error:focus {
-  outline: 1px solid var(--error);
-}
-
-.button {
-  width: 100%;
-  margin-top: 10px;
-  font-size: 1rem;
-  padding-top: 13px;
-  padding-bottom: 13px;
-}
-
-.error {
-  color: var(--error);
-}

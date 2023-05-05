@@ -11,7 +11,7 @@ interface ModalProps {
   isDisabledConfirm?: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({
+export const Modal = ({
   children,
   closeModal,
   title,
@@ -19,13 +19,13 @@ export const Modal: React.FC<ModalProps> = ({
   confirmLabel,
   form,
   isDisabledConfirm,
-}) => {
+}: ModalProps) => {
   return (
     <>
       <div className={styles.backdrop} onClick={closeModal} />
       <div className={styles.modal}>
         <div className={styles.title}>
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </div>
         <div className={styles.content}>{children}</div>
         <div className={styles.buttons}>

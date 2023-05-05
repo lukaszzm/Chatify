@@ -1,20 +1,18 @@
 import styles from "./NoteContent.module.css";
-import moment from "moment";
+import * as dayjs from "dayjs";
 
 interface NoteContentProps {
-  text: string,
-  createdAt: string
+  text: string;
+  createdAt: string;
 }
 
-export const NoteContent: React.FC<NoteContentProps> = ({ text, createdAt }) => {
+export const NoteContent = ({ text, createdAt }: NoteContentProps) => {
   return (
     <div className={styles.container}>
       <p className={styles.date}>
-        Created at {moment(createdAt).format("DD.MM.YYYY")}
+        Created at {dayjs(createdAt).format("DD.MM.YYYY")}
       </p>
       <p className={styles.text}>{text}</p>
     </div>
   );
 };
-
-export default NoteContent;

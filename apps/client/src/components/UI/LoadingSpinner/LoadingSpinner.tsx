@@ -5,7 +5,7 @@ interface LoadingSpinnerProps {
   center?: boolean;
 }
 
-export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ center }) => {
+export const LoadingSpinner = ({ center }: LoadingSpinnerProps) => {
   return (
     <div className={clsx(`${styles.spinner}`, center && `${styles.centered}`)}>
       <div></div>

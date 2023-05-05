@@ -1,9 +1,6 @@
 import { axiosConfig } from "../service/axiosConfig";
 import { getUserInfo } from "./chatApi";
-import {
-  Credentials,
-  RegisterCredentials,
-} from "../interfaces/Credentials.interface";
+import { Credentials, RegisterCredentials } from "../interfaces/Credentials";
 
 export const login = async ({ email, password }: Credentials) => {
   const response = await axiosConfig.post("/auth/login", {
@@ -25,7 +22,7 @@ export const register = async ({
   formData.append("password", password);
   formData.append("firstName", firstName);
   formData.append("lastName", lastName);
-  if (profileImage) formData.append("profileImage", profileImage);
+  if (profileImage) formData.append("profileImage", profileImage[0]);
 
   const response = await axiosConfig.post("auth/register", formData);
   return response.data;

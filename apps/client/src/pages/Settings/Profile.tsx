@@ -1,19 +1,24 @@
-import { ChangeBox } from "./ChangeBox";
 import { ChangeImage } from "./ChangeImage";
 import { Topbar, SettingsContainer } from "../../components/UI";
 import { useAuth } from "../../hooks/useAuth";
+import { ChangeFirstName } from "./ChangeFirstName/ChangeFirstName";
+import { ChangeLastName } from "./ChangeLastName";
 
 export const Profile = () => {
   const { authData } = useAuth();
+
   return (
     <>
       <Topbar backTo="/dashboard/settings">
-        <h3>Profile Settings</h3>
+        <h2>Profile Settings</h2>
       </Topbar>
       <SettingsContainer>
-        <ChangeImage defaultImage={authData!.profileImage} />
-        <ChangeBox initialValue={authData!.firstName} value="First name" />
-        <ChangeBox initialValue={authData!.lastName} value="Last name" />
+        <ChangeImage
+          defaultImage={authData!.profileImage}
+          userId={authData!._id}
+        />
+        <ChangeFirstName initialValue={authData!.firstName} />
+        <ChangeLastName initialValue={authData!.lastName} />
       </SettingsContainer>
     </>
   );

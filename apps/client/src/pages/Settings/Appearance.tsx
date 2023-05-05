@@ -8,15 +8,12 @@ export const Appearance = () => {
   return (
     <>
       <Topbar backTo="/dashboard/settings">
-        <h3>Appearance Settings</h3>
+        <h2>Appearance Settings</h2>
       </Topbar>
       <SettingsContainer>
-      <Label htmlFor="switch">
-        Dark mode
-      </Label>
-      <Switch withLabels onChange={toggleTheme} checked={theme === 'dark'}/>
+        <Label htmlFor="switch">Dark mode</Label>
+        <Switch withLabels onChange={toggleTheme} checked={theme === "dark"} />
       </SettingsContainer>
-      
     </>
   );
 };

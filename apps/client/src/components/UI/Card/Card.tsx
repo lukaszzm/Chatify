@@ -4,22 +4,11 @@ import styles from "./Card.module.css";
 interface CardProps {
   children: React.ReactNode;
   isActive?: boolean;
-  className?: string;
 }
 
-export const Card: React.FC<CardProps> = ({
-  children,
-  isActive,
-  className,
-}) => {
+export const Card = ({ children, isActive }: CardProps) => {
   return (
-    <div
-      className={clsx(
-        `${styles.wrapper}`,
-        `${className}`,
-        isActive && `${styles.isActive}`
-      )}
-    >
+    <div className={clsx(`${styles.wrapper}`, isActive && `${styles.active}`)}>
       {children}
     </div>
   );

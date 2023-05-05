@@ -6,5 +6,5 @@ export interface Credentials {
 export interface RegisterCredentials extends Credentials {
   firstName: string;
   lastName: string;
-  profileImage: string | null;
+  profileImage: FileList;
 }

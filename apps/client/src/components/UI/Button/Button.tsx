@@ -4,32 +4,35 @@ import clsx from "clsx";
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  className?: string;
   type?: "submit" | "reset" | "button";
   outline?: boolean;
   disabled?: boolean;
   maxWidth?: string;
   form?: string;
+  fullWidth?: boolean;
+  size?: "sm" | "md";
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = ({
   children,
   onClick,
-  className,
   type,
   outline,
   disabled,
   maxWidth,
   form,
-}) => {
+  fullWidth,
+  size = "md",
+}: ButtonProps) => {
   return (
     <button
       disabled={disabled}
       onClick={onClick}
       className={clsx(
         `${styles.button}`,
-        `${className}`,
-        outline && `${styles.outline}`
+        outline && `${styles.outline}`,
+        fullWidth && `${styles["full-width"]}`,
+        size === "sm" && `${styles.small}`
       )}
       type={type || "submit"}
       style={{ maxWidth: maxWidth }}

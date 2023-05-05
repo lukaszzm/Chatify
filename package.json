@@ -8,18 +8,17 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "dotenv -- turbo run dev",
+    "dev": "dotenv -- turbo dev",
     "lint": "turbo run lint"
   },
   "devDependencies": {
+    "dotenv-cli": "^7.2.1",
     "eslint-config-custom": "*",
     "prettier": "latest",
-    "turbo": "latest",
-    "dotenv-cli": "latest"
+    "turbo": "latest"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "packageManager": "npm@9.5.1"
 }
