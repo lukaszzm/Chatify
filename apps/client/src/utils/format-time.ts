@@ -1,4 +1,7 @@
-import * as dayjs from "dayjs";
+import * as _dayjs from "dayjs";
+
+const dayjs = _dayjs;
+
 export const formatTime = (timestamp: string | Date) => {
   const time = timestamp instanceof Date ? timestamp : new Date(timestamp);
   let formattedTime = "";

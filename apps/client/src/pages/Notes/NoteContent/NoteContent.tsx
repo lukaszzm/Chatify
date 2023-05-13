@@ -1,5 +1,7 @@
 import styles from "./NoteContent.module.css";
-import * as dayjs from "dayjs";
+import * as _dayjs from "dayjs";
+
+const dayjs = _dayjs;
 
 interface NoteContentProps {
   text: string;
