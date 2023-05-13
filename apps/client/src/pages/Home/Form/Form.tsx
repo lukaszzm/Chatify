@@ -2,13 +2,13 @@ import styles from "./Form.module.css";
 import { Link } from "react-router-dom";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
-import { Button, Logo } from "../../../components/UI";
+import { Logo } from "../../../components/UI";
 
 interface FormProps {
   isLogin?: boolean;
 }
 
-export const Form: React.FC<FormProps> = ({ isLogin }) => {
+export const Form = ({ isLogin }: FormProps) => {
   return (
     <div className={styles.container}>
       <Logo onlyMobile />
@@ -20,9 +20,7 @@ export const Form: React.FC<FormProps> = ({ isLogin }) => {
           <p>Already have an account?</p>
         )}
         <Link to={isLogin ? "/register" : "/"}>
-          <Button className={styles.button} outline={true}>
-            {isLogin ? "Register" : "Login"}
-          </Button>
+          {isLogin ? "Click here to register" : "Click here to login"}
         </Link>
       </div>
     </div>

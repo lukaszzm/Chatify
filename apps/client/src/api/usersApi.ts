@@ -5,10 +5,13 @@ export const searchUsers = async (input: string) => {
   return response.data;
 };
 
-export const updatePassword = async (
-  currentPassword: string,
-  newPassword: string
-) => {
+export const updatePassword = async ({
+  currentPassword,
+  newPassword,
+}: {
+  currentPassword: string;
+  newPassword: string;
+}) => {
   const response = await axiosConfig.patch("users/password", {
     currentPassword,
     newPassword,
@@ -16,18 +19,26 @@ export const updatePassword = async (
   return response.data;
 };
 
-export const updateProfileImage = async (_id: string, image: File) => {
+export const updateProfileImage = async ({
+  _id,
+  image,
+}: {
+  _id: string;
+  image: FileList;
+}) => {
   const formData = new FormData();
   formData.append("id", _id);
-  formData.append("profileImage", image);
-  const request = await axiosConfig.patch("users/profile-image/", formData);
-  return request.data;
+  formData.append("profileImage", image[0]);
+  const response = await axiosConfig.patch("users/profile-image/", formData);
+  return response.data;
 };
 
-export const updateName = async (type: "first" | "last", value: string) => {
-  const response =
-    type == "first"
-      ? await axiosConfig.patch(`users/first-name/${value}`)
-      : await axiosConfig.patch(`users/last-name/${value}`);
+export const updateFirstName = async ({ value }: { value: string }) => {
+  const response = await axiosConfig.patch(`users/first-name/${value}`);
+  return response.data;
+};
+
+export const updateLastName = async ({ value }: { value: string }) => {
+  const response = await axiosConfig.patch(`users/last-name/${value}`);
   return response.data;
 };

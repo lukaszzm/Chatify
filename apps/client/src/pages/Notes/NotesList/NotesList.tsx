@@ -2,7 +2,7 @@ import styles from "./NotesList.module.css";
 import { useParams } from "react-router-dom";
 import { Note } from "../Note";
 import { NewNote } from "../NewNote";
-import ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom";
 import { useModal } from "../../../hooks/useModal";
 import { useQuery } from "@tanstack/react-query";
 import { getNotes } from "../../../api";
@@ -12,7 +12,7 @@ import {
   Button,
   LoadingSpinner,
 } from "../../../components/UI";
-import { INote } from "../../../interfaces/Note.interface";
+import type { Note as INote } from "../../../interfaces/Note";
 
 export const NotesList = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -25,10 +25,10 @@ export const NotesList = () => {
 
   return (
     <Sidebar>
-      <h1>Your notes</h1>
-      <Button className={styles.button} onClick={openModal}>
-        Create new note
-      </Button>
+      <div className={styles["top-sidebar"]}>
+        <h1>Your notes</h1>
+        <Button onClick={openModal}>Create new note</Button>
+      </div>
       <Container>
         {isLoading ? (
           <LoadingSpinner />

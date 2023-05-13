@@ -1,33 +1,26 @@
 .wrapper {
-    padding: 15px;
+    padding: 10px;
     border-top: 1px solid var(--background-dark-grey);
     -webkit-box-shadow: 8px 7px 17px -22px var(--shadow);
     -moz-box-shadow: 8px 7px 17px -22px var(--shadow);
     box-shadow: 8px 7px 17px -22px var(--shadow);
+    margin-bottom: 15px;
 }
 
 .form {
-    flex-direction: row;
-    margin-bottom: 5px;
-    margin-top: 5px;
-}
-
-.input {
-    padding: 14px;
-    margin-right: 10px;
-}
-
-.button {
-    padding: 10px;
+    display: grid;
+    grid-template-columns: 12fr 1fr;
+    flex: 4 1;
 }
 
 .icon {
     filter: invert(98%) sepia(2%) saturate(127%) hue-rotate(6deg) brightness(115%) contrast(100%);
-    width: 23px;
+    width: 24px;
+    margin: 0;
 }
 
 .error {
-    color:var(--error);
+    color: var(--error);
     text-align: left;
-    margin-left: 2%;
+    padding: 5px;
 }

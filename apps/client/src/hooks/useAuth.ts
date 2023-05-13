@@ -1,16 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getLoggedInUser, login, register } from "../api/authApi";
-import {
-  Credentials,
-  RegisterCredentials,
-} from "../interfaces/Credentials.interface";
+import { Credentials, RegisterCredentials } from "../interfaces/Credentials";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "../interfaces/User.interface";
+import { User } from "../interfaces/User";
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data: authData, ...rest } = useQuery<IUser>({
+  const { data: authData, ...rest } = useQuery<User>({
     queryKey: ["auth"],
     queryFn: () => getLoggedInUser(),
     onError: () => logout(),

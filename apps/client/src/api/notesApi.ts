@@ -1,4 +1,4 @@
-import { INote } from "../interfaces/Note.interface";
+import { Note } from "../interfaces/Note";
 import { axiosConfig } from "../service/axiosConfig";
 
 export const getNotes = async () => {
@@ -7,7 +7,7 @@ export const getNotes = async () => {
   return result.data;
 };
 
-export const newNote = async (newNote: INote) => {
+export const newNote = async (newNote: Note) => {
   const note = { ...newNote, createdAt: Date.now() };
   const result = await axiosConfig.post(`notes/`, note);
 

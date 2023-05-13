@@ -1,6 +1,6 @@
 import styles from "./RecentMessage.module.css";
 import { Link } from "react-router-dom";
-import formatTime from "../../../../utils/format-time";
+import { formatTime } from "../../../../utils/format-time";
 import { ProfileImage, Card } from "../../../../components/UI";
 
 interface RecentMessageProps {
@@ -14,7 +14,7 @@ interface RecentMessageProps {
   isMine: boolean;
 }
 
-export const RecentMessage: React.FC<RecentMessageProps> = ({
+export const RecentMessage = ({
   createdAt,
   isActive,
   message,
@@ -23,27 +23,19 @@ export const RecentMessage: React.FC<RecentMessageProps> = ({
   firstName,
   lastName,
   isMine,
-}) => {
-  const formattedTime =
-    typeof createdAt === "string"
-      ? formatTime(createdAt)
-      : formatTime(createdAt.toString());
-
+}: RecentMessageProps) => {
   const formattedMessage =
     message.length > 14 ? message.substring(0, 13) + ".." : message;
 
   return (
     <Link to={id}>
-      <Card isActive={isActive} className={styles.wrapper}>
+      <Card isActive={isActive}>
         <div className={styles["inner-wrapper"]}>
-          <ProfileImage
-            className={styles["profile-image"]}
-            src={profileImage}
-          />
+          <ProfileImage src={profileImage} />
           <div className={styles["text-wrapper"]}>
-            <h5 className={styles.name}>
+            <p className={styles.name}>
               {firstName} {lastName}
-            </h5>
+            </p>
             <p className={styles.message}>
               {isMine && <span className={styles.span}>You: </span>}{" "}
               {formattedMessage}
@@ -51,7 +43,7 @@ export const RecentMessage: React.FC<RecentMessageProps> = ({
           </div>
         </div>
         <div className={styles["timer-wrapper"]}>
-          <p className={styles.timer}>{formattedTime}</p>
+          <p className={styles.timer}>{formatTime(createdAt)}</p>
         </div>
       </Card>
     </Link>

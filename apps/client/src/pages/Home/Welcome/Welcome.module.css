@@ -9,10 +9,9 @@
 }
 
 .title {
-    margin: 0;
     font-size: 3rem;
     font-weight: 200;
-    margin-top: 45px;
+    color: var(--text-secondary);
 }
 
 .logo {
@@ -21,10 +20,8 @@
 }
 
 .img {
-    margin: 0;
     width: 80%;
     max-width: 600px;
-    margin-top: 30px;
 }
 
 @media screen and (max-width: 768px) {

@@ -6,7 +6,7 @@ interface AlertProps {
   children: React.ReactNode;
 }
 
-export const Alert: React.FC<AlertProps> = ({ children, error }) => {
+export const Alert = ({ children, error }: AlertProps) => {
   return (
     <div
       className={clsx(

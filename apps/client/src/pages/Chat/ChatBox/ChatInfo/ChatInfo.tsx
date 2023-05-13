@@ -8,11 +8,11 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "../../../../api";
 
-interface IChatInfoProps {
+interface ChatInfoProps {
   chatID: string;
 }
 
-export const ChatInfo: React.FC<IChatInfoProps> = ({ chatID }) => {
+export const ChatInfo = ({ chatID }: ChatInfoProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["chat-info", chatID],
     queryFn: () => getUserInfo(chatID),
@@ -22,20 +22,17 @@ export const ChatInfo: React.FC<IChatInfoProps> = ({ chatID }) => {
     <Topbar backTo="/dashboard/chat">
       {isLoading ? (
         <div className={styles["user"]}>
-          <LoadingImage className={styles["loading-image"]} />
-          <LoadingText className={styles["loading-text"]} />
+          <LoadingImage />
+          <LoadingText />
         </div>
       ) : isError ? (
         <p>Something went wrong.</p>
       ) : (
         <div className={styles["user"]}>
-          <ProfileImage
-            className={styles["user-image"]}
-            src={data[0].profileImage}
-          />
-          <h4 className={styles["user-text"]}>
+          <ProfileImage src={data[0].profileImage} />
+          <p className={styles["user-text"]}>
             {`${data[0].firstName} ${data[0].lastName}`}
-          </h4>
+          </p>
         </div>
       )}
     </Topbar>

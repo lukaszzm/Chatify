@@ -14,16 +14,19 @@
 }
 
 .info {
-    padding-top: 20px;
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.logo {
-    display: none;
+.info a {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
 }
 
-.button {
-    margin-top: 10px;
-    width: 100%;
+.info a:hover {
+    text-decoration: underline;
 }
 
 
@@ -31,23 +34,6 @@
     .container {
         width: 100%;
         justify-content: flex-start;
-    }
-
-    .logo {
-        margin-top: 2%;
-        display: flex;
-        align-items: center;
-        font-size: 1.2rem;
-    }
-
-    .logo h1 {
-        margin: 0;
-    }
-
-    .logo img {
-        width: 40px;
-        margin-right: 5px;
-        margin-top: 5px;
     }
 
     .info {

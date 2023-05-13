@@ -3,7 +3,7 @@
   width: 350px;
   background-color: var(--background-secondary);
   text-align: left;
-  padding: 0px 2% 0px 2%;
+  padding: 0 2% 0 2%;
   overflow: hidden;
   display: flex;
   flex-direction: column;

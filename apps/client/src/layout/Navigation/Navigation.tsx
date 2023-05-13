@@ -6,7 +6,7 @@ import listIcon from "../../assets/icons/list.svg";
 import settingsIcon from "../../assets/icons/settings.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
 import { useMediaQuery } from "react-responsive";
-import ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom";
 import { useModal } from "../../hooks/useModal";
 import { ProfileImage, Modal } from "../../components/UI";
 import { NavigationLink } from "./NavigationLink";
@@ -37,12 +37,7 @@ export const Navigation = () => {
         />
       </div>
       <div className={styles.changers}>
-        {authData ? (
-          <ProfileImage
-            className={styles["profile-image"]}
-            src={authData.profileImage}
-          />
-        ) : null}
+        {authData ? <ProfileImage src={authData.profileImage} /> : null}
         <NavigationButton
           title="logout"
           icon={logoutIcon}
@@ -52,8 +47,8 @@ export const Navigation = () => {
       </div>
       {isModalOpen &&
         ReactDOM.createPortal(
-          <Modal closeModal={closeModal} title="log out" onConfirm={logout}>
-            <p>Are you sure are you want to log out</p>
+          <Modal closeModal={closeModal} title="Logout" onConfirm={logout}>
+            <p>Are you sure are you want to sign out?</p>
           </Modal>,
           document.getElementById("modals") as HTMLElement
         )}

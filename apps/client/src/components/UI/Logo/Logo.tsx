@@ -2,11 +2,11 @@ import styles from "./Logo.module.css";
 import logoIcon from "../../../assets/logo.svg";
 import clsx from "clsx";
 
-interface ILogoProps {
+interface LogoProps {
   onlyMobile?: boolean;
 }
 
-export const Logo: React.FC<ILogoProps> = ({ onlyMobile }) => {
+export const Logo = ({ onlyMobile }: LogoProps) => {
   return (
     <div
       className={clsx(

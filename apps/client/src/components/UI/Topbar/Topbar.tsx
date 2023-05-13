@@ -8,7 +8,7 @@ interface TopbarProps {
   backTo: string;
 }
 
-export const Topbar: React.FC<TopbarProps> = ({ children, backTo }) => {
+export const Topbar = ({ children, backTo }: TopbarProps) => {
   return (
     <div className={styles.container}>
       <Link className={styles.back} to={backTo}>

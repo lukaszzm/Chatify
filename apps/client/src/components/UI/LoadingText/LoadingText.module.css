@@ -1,4 +1,7 @@
 .loading-text {
     background-color: var(--background-grey);
     border-radius: 15px;
+    width: 130px;
+    height: 30px;
+    margin-left: 15px;
 }

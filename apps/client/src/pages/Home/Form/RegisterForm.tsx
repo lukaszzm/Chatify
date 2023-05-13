@@ -1,116 +1,63 @@
 import styles from "./LoginForm.module.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { registerSchema } from "../../../schemas/schemas";
-import { useState } from "react";
-import { Alert, Button, ImageInput } from "../../../components/UI";
-import { useAuth } from "../../../hooks/useAuth";
-import { AxiosError } from "axios";
+import {
+  Alert,
+  Button,
+  ImageInput,
+  Input,
+  Label,
+} from "../../../components/UI";
+import { useRegisterForm } from "../../../hooks/useRegisterForm";
+import * as React from "react";
 
 export const RegisterForm = () => {
-  const { registerMutation } = useAuth();
-  const [axiosError, setAxiosError] = useState<string | null>(null);
+  const {
+    handleSubmit,
+    onSubmit,
+    register,
+    formState: { errors, isSubmitting, isDirty, isValid },
+    axiosError,
+  } = useRegisterForm();
+
   return (
-    <Formik
-      initialValues={{
-        email: "",
-        password: "",
-        profileImage: null,
-        firstName: "",
-        lastName: "",
-      }}
-      validationSchema={registerSchema}
-      onSubmit={async (values) => {
-        setAxiosError(null);
-        try {
-          await registerMutation.mutateAsync(values);
-        } catch (err) {
-          const error = err as AxiosError;
-          setAxiosError(error.response?.data as string);
-        }
-      }}
-    >
-      {({ errors, touched, isSubmitting, setFieldValue }) => (
-        <Form className={styles.form}>
-          <h1>Register</h1>
-          <label htmlFor="email">Email</label>
-          <Field
-            className={
-              errors.email && touched.email
-                ? `${styles.field} ${styles["field-error"]}`
-                : `${styles.field}`
-            }
-            type="email"
-            name="email"
-            placeholder="placeholder@gmail.com"
-          />
-          <ErrorMessage component="p" className={styles.error} name="email" />
-          <label htmlFor="password">Password</label>
-          <Field
-            className={
-              errors.password && touched.password
-                ? `${styles.field} ${styles["field-error"]}`
-                : `${styles.field}`
-            }
-            type="password"
-            name="password"
-            placeholder="atleast 8 characters"
-          />
-          <ErrorMessage
-            component="p"
-            className={styles.error}
-            name="password"
-          />
-          <label htmlFor="profileImage">Profile Image</label>
-          <ImageInput
-            name="profileImage"
-            onChange={(file) => {
-              setFieldValue("profileImage", file);
-            }}
-          />
-          <label htmlFor="firstName">First Name</label>
-          <Field
-            className={
-              errors.firstName && touched.firstName
-                ? `${styles.field} ${styles["field-error"]}`
-                : `${styles.field}`
-            }
-            type="text"
-            name="firstName"
-            placeholder="John"
-          />
-          <ErrorMessage
-            component="p"
-            className={styles.error}
-            name="firstName"
-          />
-
-          <label htmlFor="lastName">Last Name</label>
-          <Field
-            className={
-              errors.lastName && touched.lastName
-                ? `${styles.field} ${styles["field-error"]}`
-                : `${styles.field}`
-            }
-            type="text"
-            name="lastName"
-            placeholder="Smith"
-          />
-          <ErrorMessage
-            component="p"
-            className={styles.error}
-            name="lastName"
-          />
-
-          {axiosError && <Alert error>{axiosError}</Alert>}
-          <Button
-            disabled={isSubmitting}
-            className={styles.button}
-            type="submit"
-          >
-            Register
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <h1>Register</h1>
+      <Label htmlFor="email">Email</Label>
+      <Input
+        id="email"
+        placeholder="example@example.com"
+        error={errors.email}
+        {...register("email")}
+      />
+      <Label htmlFor="password">Password</Label>
+      <Input
+        id="password"
+        type="password"
+        placeholder="********"
+        error={errors.password}
+        {...register("password")}
+      />
+      <Label htmlFor="profileImage">Profile Image</Label>
+      <ImageInput {...register("profileImage")} id={"profileImage"} />
+      <Label htmlFor="firstName">First Name</Label>
+      <Input
+        id="firstName"
+        type="text"
+        placeholder="John"
+        error={errors.firstName}
+        {...register("firstName")}
+      />
+      <Label htmlFor="lastName">Last Name</Label>
+      <Input
+        id="lastName"
+        type="text"
+        placeholder="Smith"
+        error={errors.lastName}
+        {...register("lastName")}
+      />
+      {axiosError && <Alert error>{axiosError}</Alert>}
+      <Button type="submit" disabled={isSubmitting || !isDirty || !isValid}>
+        Register
+      </Button>
+    </form>
   );
 };

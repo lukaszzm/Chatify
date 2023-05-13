@@ -1,26 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteNote } from "../../../api";
-import { useNavigate } from "react-router-dom";
 import { Modal, Alert } from "../../../components/UI";
+import { useDeleteNote } from "../../../hooks/useDeleteNote";
 
 interface DeleteNoteProps {
   noteId: string;
   closeModal: () => void;
 }
 
-export const DeleteNote: React.FC<DeleteNoteProps> = ({
-  noteId,
-  closeModal,
-}) => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { mutate, isLoading, isError } = useMutation({
-    mutationFn: (ID: string) => deleteNote(ID),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["notes"]);
-      navigate("/dashboard/notes/");
-    },
-  });
+export const DeleteNote = ({ noteId, closeModal }: DeleteNoteProps) => {
+  const { mutate, isLoading, isError } = useDeleteNote();
 
   return (
     <Modal
