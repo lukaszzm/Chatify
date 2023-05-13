@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getNoteInfo } from "../../../api";
 import { DeleteNote } from "../DeleteNote";
 import { useModal } from "../../../hooks/useModal";
-import * as ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import { Topbar, LoadingSpinner, Icon } from "../../../components/UI";
 
 interface NoteInfoProps {

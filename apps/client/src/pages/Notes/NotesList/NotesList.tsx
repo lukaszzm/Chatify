@@ -2,7 +2,7 @@ import styles from "./NotesList.module.css";
 import { useParams } from "react-router-dom";
 import { Note } from "../Note";
 import { NewNote } from "../NewNote";
-import * as ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import { useModal } from "../../../hooks/useModal";
 import { useQuery } from "@tanstack/react-query";
 import { getNotes } from "../../../api";

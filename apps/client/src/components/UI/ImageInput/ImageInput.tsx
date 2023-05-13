@@ -1,7 +1,7 @@
 import styles from "./ImageInput.module.css";
 import { useState } from "react";
 import { Icon, ProfileImage } from "..";
-import * as React from "react";
+import React from "react";
 import editIcon from "../../../assets/icons/edit.svg";
 import clsx from "clsx";
 

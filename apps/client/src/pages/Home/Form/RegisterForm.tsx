@@ -7,7 +7,6 @@ import {
   Label,
 } from "../../../components/UI";
 import { useRegisterForm } from "../../../hooks/useRegisterForm";
-import * as React from "react";
 
 export const RegisterForm = () => {
   const {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import styles from "./Input.module.css";
 import clsx from "clsx";
 import { FieldError } from "react-hook-form";

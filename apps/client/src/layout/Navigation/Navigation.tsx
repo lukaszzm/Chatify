@@ -6,7 +6,7 @@ import listIcon from "../../assets/icons/list.svg";
 import settingsIcon from "../../assets/icons/settings.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
 import { useMediaQuery } from "react-responsive";
-import * as ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import { useModal } from "../../hooks/useModal";
 import { ProfileImage, Modal } from "../../components/UI";
 import { NavigationLink } from "./NavigationLink";
