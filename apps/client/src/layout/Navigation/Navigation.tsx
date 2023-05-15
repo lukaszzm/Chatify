@@ -12,12 +12,14 @@ import { ProfileImage, Modal } from "../../components/UI";
 import { NavigationLink } from "./NavigationLink";
 import { NavigationButton } from "./NavigationButton";
 import { useAuth } from "../../hooks/useAuth";
+import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 
 export const Navigation = () => {
   const isFirstNested = useMatch("dashboard/:id");
   const isMobile = useMediaQuery({ query: "(max-width:768px)" });
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { authData, logout } = useAuth();
+  const { logout } = useAuth();
+  const { profileImage } = useAuthenticatedUser();
 
   return (
     <nav
@@ -37,7 +39,7 @@ export const Navigation = () => {
         />
       </div>
       <div className={styles.changers}>
-        {authData ? <ProfileImage src={authData.profileImage} /> : null}
+        <ProfileImage src={profileImage} />
         <NavigationButton
           title="logout"
           icon={logoutIcon}

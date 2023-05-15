@@ -1,11 +1,11 @@
 import { ChangeImage } from "./ChangeImage";
 import { Topbar, SettingsContainer } from "../../components/UI";
-import { useAuth } from "../../hooks/useAuth";
 import { ChangeFirstName } from "./ChangeFirstName/ChangeFirstName";
 import { ChangeLastName } from "./ChangeLastName";
+import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 
 export const Profile = () => {
-  const { authData } = useAuth();
+  const { id, profileImage, firstName, lastName } = useAuthenticatedUser();
 
   return (
     <>
@@ -13,12 +13,9 @@ export const Profile = () => {
         <h2>Profile Settings</h2>
       </Topbar>
       <SettingsContainer>
-        <ChangeImage
-          defaultImage={authData!.profileImage}
-          userId={authData!._id}
-        />
-        <ChangeFirstName initialValue={authData!.firstName} />
-        <ChangeLastName initialValue={authData!.lastName} />
+        <ChangeImage defaultImage={profileImage} userId={id} />
+        <ChangeFirstName initialValue={firstName} />
+        <ChangeLastName initialValue={lastName} />
       </SettingsContainer>
     </>
   );

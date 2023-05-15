@@ -4,14 +4,14 @@ import { Message } from "../Message";
 import { LoadingSpinner } from "../../../../components/UI";
 import { useMessages } from "../../../../hooks/useMessages";
 import { scrollToEnd } from "../../../../utils/scroll-to-end";
-import { useAuth } from "../../../../hooks/useAuth";
+import { useAuthenticatedUser } from "../../../../hooks/useAuthenticatedUser";
 
 interface MessagesProps {
   chatID: string;
 }
 
 export const Messages = ({ chatID }: MessagesProps) => {
-  const { authData } = useAuth();
+  const { id } = useAuthenticatedUser();
   const messagesEnd = useRef<HTMLDivElement>(null);
   const { data, isLoading, isError } = useMessages(chatID);
 
@@ -33,7 +33,7 @@ export const Messages = ({ chatID }: MessagesProps) => {
             <Message
               key={index}
               text={text}
-              isMine={fromId === authData?._id}
+              isMine={fromId === id}
               createdAt={createdAt}
             />
           ))

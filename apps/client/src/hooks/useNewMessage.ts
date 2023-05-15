@@ -1,4 +1,3 @@
-import { useAuth } from "./useAuth";
 import { useReactQuerySubscription } from "./useReactQuerySubscription";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,11 +6,12 @@ import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Message } from "../interfaces/Message";
 import { newMessage } from "../api";
+import { useAuthenticatedUser } from "./useAuthenticatedUser";
 
 type FormData = z.infer<typeof NewMessageSchema>;
 
 export const useNewMessage = (chatID: string) => {
-  const { authData } = useAuth();
+  const { id, firstName, lastName, profileImage } = useAuthenticatedUser();
   const { socket } = useReactQuerySubscription();
   const queryClient = useQueryClient();
   const {
@@ -35,20 +35,18 @@ export const useNewMessage = (chatID: string) => {
   });
 
   const submitFn = handleSubmit(async ({ text }) => {
-    if (!authData) return;
-
     const message = {
-      _id: `${authData._id}${chatID}`,
+      _id: `${id}${chatID}`,
       text: text,
-      fromId: authData._id,
+      fromId: id,
       toId: chatID,
       createdAt: Date.now().toString(),
       userInfo: [
         {
-          _id: authData._id,
-          firstName: authData.firstName,
-          lastName: authData.lastName,
-          profileImage: authData.profileImage,
+          _id: id,
+          firstName: firstName,
+          lastName: lastName,
+          profileImage: profileImage,
         },
       ],
     };

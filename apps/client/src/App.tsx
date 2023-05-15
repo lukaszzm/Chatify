@@ -21,7 +21,7 @@ import { useAuth } from "./hooks/useAuth";
 import { FullScreenLoader } from "./components/UI";
 
 export const App = () => {
-  const { authData, isLoading } = useAuth();
+  const { data, isLoading } = useAuth();
 
   if (isLoading) return <FullScreenLoader />;
 
@@ -29,7 +29,7 @@ export const App = () => {
     <Routes>
       <Route
         path="/dashboard"
-        element={authData ? <Layout /> : <Navigate to="/" />}
+        element={data ? <Layout /> : <Navigate to="/" />}
       >
         <Route path="chat" element={<Chat />}>
           <Route path=":ID" element={<ChatBox />} />
@@ -45,7 +45,7 @@ export const App = () => {
       </Route>
       <Route
         path="/"
-        element={authData ? <Navigate to="dashboard/chat" /> : <Home />}
+        element={data ? <Navigate to="dashboard/chat" /> : <Home />}
       >
         <Route path="register" element={<Form />} />
         <Route path="" element={<Form isLogin />} />

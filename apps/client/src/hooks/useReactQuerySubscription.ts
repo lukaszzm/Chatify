@@ -8,14 +8,14 @@ const SOCKET_URL = import.meta.env.VITE_URL as string;
 
 export const useReactQuerySubscription = () => {
   const [socket, setSocket] = useState<Socket>();
-  const { authData } = useAuth();
+  const { data } = useAuth();
   const queryClient = useQueryClient();
 
   useEffect(() => {
     const socket = io(SOCKET_URL, {});
 
-    if (socket && authData) {
-      socket.emit("add-user", authData._id);
+    if (socket && data) {
+      socket.emit("add-user", data._id);
       setSocket(socket);
     }
 
@@ -45,7 +45,7 @@ export const useReactQuerySubscription = () => {
     return () => {
       socket.close();
     };
-  }, [authData, queryClient, setSocket]);
+  }, [data, queryClient, setSocket]);
 
   return { socket };
 };

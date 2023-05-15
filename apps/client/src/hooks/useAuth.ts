@@ -7,7 +7,7 @@ import { User } from "../interfaces/User";
 export const useAuth = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data: authData, ...rest } = useQuery<User>({
+  const { data, ...rest } = useQuery<User>({
     queryKey: ["auth"],
     queryFn: () => getLoggedInUser(),
     onError: () => logout(),
@@ -46,5 +46,5 @@ export const useAuth = () => {
     navigate("/");
   };
 
-  return { authData, loginMutation, registerMutation, logout, ...rest };
+  return { data, loginMutation, registerMutation, logout, ...rest };
 };

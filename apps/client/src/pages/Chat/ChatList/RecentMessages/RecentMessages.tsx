@@ -4,10 +4,10 @@ import { Container, LoadingSpinner } from "../../../../components/UI";
 import { useQuery } from "@tanstack/react-query";
 import { getRecentMessages } from "../../../../api";
 import { Message } from "../../../../interfaces/Message";
-import { useAuth } from "../../../../hooks/useAuth";
+import { useAuthenticatedUser } from "../../../../hooks/useAuthenticatedUser";
 
 export const RecentMessages = () => {
-  const { authData } = useAuth();
+  const { id } = useAuthenticatedUser();
   const { ID } = useParams();
   const { data, isLoading, isError } = useQuery<Message[]>({
     queryKey: ["recent-messages"],
@@ -33,7 +33,7 @@ export const RecentMessages = () => {
             isActive={ID === userInfo[0]._id}
             message={text}
             createdAt={createdAt}
-            isMine={fromId === authData?._id}
+            isMine={fromId === id}
           />
         ))
       )}
