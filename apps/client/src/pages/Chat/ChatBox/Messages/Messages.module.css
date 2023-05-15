@@ -5,36 +5,33 @@
 }
 
 .container::-webkit-scrollbar {
-  width: 15px;
+  width: 8px;
 }
 
 .container::-webkit-scrollbar-track {
-  background: #ebebff;
+  background: var(--background-secondary-active);
   border-radius: 10px;
 }
 
 .container::-webkit-scrollbar-thumb {
-  background: #4E5AEA;
+  background: var(--accent);
   border-radius: 10px;
 }
 
 .container::-webkit-scrollbar-thumb:hover {
-  background: #3f49bf;
+  background: var(--accent-hover);
   border-radius: 10px;
 }
 
 .container::-webkit-scrollbar-thumb:active {
-  background: #363fa7;
+  background: var(--accent-hover);
   border-radius: 10px;
 }
 
 .chat-box {
   display: flex;
   flex-direction: column;
-  padding: 0px;
   width:  99%;
-  margin: 0 auto;
-  margin-top: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin: 10px auto 0;
+  padding: 10px 0;
 }
