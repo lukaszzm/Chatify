@@ -9,7 +9,7 @@ export const SearchBar = () => {
     useSearchBar();
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles["search-wrapper"]}>
         <img src={searchIcon} alt="Search Icon." />
         <Input

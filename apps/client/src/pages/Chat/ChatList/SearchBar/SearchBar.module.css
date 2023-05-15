@@ -4,6 +4,11 @@
     border-radius: 5px;
     margin: auto;
     padding-left: 10px;
+    width: 100%;
+}
+
+.search-wrapper div {
+    width: 100%;
 }
 
 .search-wrapper img {
@@ -17,4 +22,9 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
+}
+
+.container {
+    width: 90%;
+    padding: 0 10px;
 }
