@@ -12,7 +12,7 @@ export const NoteContent = ({ text, createdAt }: NoteContentProps) => {
       <p className={styles.date}>
         Created at {moment(createdAt).format("DD.MM.YYYY")}
       </p>
-      <p className={styles.text}>{text}</p>
+      <span className={styles.text}>{text}</span>
     </div>
   );
 };
