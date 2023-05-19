@@ -10,8 +10,8 @@ export const useNewNote = ({ onSuccess }: { onSuccess: () => void }) => {
   const queryClient = useQueryClient();
   const { mutate, isLoading, isError } = useMutation({
     mutationFn: (note: Note) => newNote(note),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["notes"]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["notes"]);
       onSuccess();
     },
   });

@@ -6,6 +6,7 @@ import {
   Input,
 } from "../../../components/UI";
 import { useNewNote } from "../../../hooks/useNewNote";
+import { TextArea } from "../../../components/UI/TextArea";
 
 interface NewNoteProps {
   closeModal: () => void;
@@ -40,7 +41,7 @@ export const NewNote = ({ closeModal }: NewNoteProps) => {
           error={errors.title}
         />
         <Label htmlFor="text">Text</Label>
-        <Input
+        <TextArea
           id="text"
           placeholder="Place your text here"
           {...register("text")}

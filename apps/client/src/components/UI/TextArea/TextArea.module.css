@@ -1,0 +1,25 @@
+.textarea {
+    width: 100%;
+    background-color: var(--input-background);
+    color: var(--text-primary);
+    border: 1px solid var(--input-background);
+    min-height: 150px;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 10px;
+    resize: none;
+    font-family: "Inter", sans-serif;
+
+}
+
+.error {
+    border: 1px solid var(--error);
+}
+
+.error-message {
+    color: var(--error);
+    text-align: left;
+    margin-top: 5px;
+}
