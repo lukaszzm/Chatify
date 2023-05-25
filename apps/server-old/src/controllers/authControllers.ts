@@ -7,11 +7,7 @@ import bcrypt from "bcryptjs";
 const JWT_TOKEN = process.env.JWT_TOKEN as string;
 const DEFAULT_PROFILE_PATH = process.env.DEFAULT_PROFILE_PATH as string;
 
-export const login = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password }: { email: string; password: string } = req.body;
     const fixedEmail = email.toLowerCase();
@@ -39,11 +35,7 @@ export const login = async (
   }
 };
 
-export const register = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const email: string = req.body.email.toLowerCase();
     const user = await Users.findOne({ email: email });
@@ -72,9 +64,7 @@ export const register = async (
       throw new Error("Something went wrong.");
     }
 
-    return res
-      .status(201)
-      .send({ id, token, firstName, lastName, profileImage });
+    return res.status(201).send({ id, token, firstName, lastName, profileImage });
   } catch (err) {
     next(err);
   }

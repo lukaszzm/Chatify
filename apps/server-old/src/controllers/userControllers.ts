@@ -2,27 +2,16 @@ import { Users } from "../models/users";
 import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 
-export const getUserById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await Users.find(
-      { _id: req.params.id },
-      { _id: 1, firstName: 1, lastName: 1, profileImage: 1 }
-    );
+    const user = await Users.find({ _id: req.params.id }, { _id: 1, firstName: 1, lastName: 1, profileImage: 1 });
     return res.json(user);
   } catch (err) {
     next(err);
   }
 };
 
-export const getUserByName = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getUserByName = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id: string = req.body.id;
     const input = req.params.input;
@@ -46,7 +35,7 @@ export const getUserByName = async (
           },
         ],
       },
-      { firstName: 1, lastName: 1, profileImage: 1 }
+      { firstName: 1, lastName: 1, profileImage: 1 },
     );
     return res.json(users);
   } catch (err) {
@@ -54,11 +43,7 @@ export const getUserByName = async (
   }
 };
 
-export const updateFirstName = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const updateFirstName = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id: string = req.body.id;
     const newFirstName = req.params.firstName;
@@ -69,11 +54,7 @@ export const updateFirstName = async (
   return res.status(204).send();
 };
 
-export const updateLastName = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const updateLastName = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id: string = req.body.id;
     const newLastName = req.params.lastName;
@@ -84,17 +65,9 @@ export const updateLastName = async (
   return res.status(204).send();
 };
 
-export const updatePassword = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const updatePassword = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {
-      id,
-      currentPassword,
-      newPassword,
-    }: { id: string; currentPassword: string; newPassword: string } = req.body;
+    const { id, currentPassword, newPassword }: { id: string; currentPassword: string; newPassword: string } = req.body;
 
     const user = await Users.findOne({ _id: id });
     if (!user) throw new Error("User not found.");
@@ -111,11 +84,7 @@ export const updatePassword = async (
   }
 };
 
-export const updateProfileImage = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const updateProfileImage = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id: string = req.body.id;
     const newFilePath = req.file!.path;

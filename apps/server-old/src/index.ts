@@ -76,9 +76,7 @@ app.use((err: TypeError, req: Request, res: Response, next: NextFunction) => {
     });
   }
   if (err) {
-    return res
-      .status(500)
-      .send(err.message || "Something went wrong. Try again later.");
+    return res.status(500).send(err.message || "Something went wrong. Try again later.");
   }
   return res.status(404).send("Not Found.");
 });
