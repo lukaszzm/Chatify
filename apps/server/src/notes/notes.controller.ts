@@ -1,25 +1,27 @@
 import { Controller, Post, Get, Delete, Body, Param } from "@nestjs/common";
 import { CreateNoteDto } from "./dtos/create-note.dto";
+import { NotesService } from "./notes.service";
 
 @Controller("notes")
 export class NotesController {
+  constructor(private readonly notesService: NotesService) {}
   @Get()
   getAllNotes() {
-    return "all notes";
+    return this.notesService.findAll();
   }
 
   @Post()
-  createNote(@Body() post: CreateNoteDto) {
-    return post;
+  createNote(@Body() body: CreateNoteDto) {
+    return this.notesService.create(body);
   }
 
   @Get(":id")
   getNoteById(@Param("id") id: string) {
-    return "Note by id: " + id;
+    return this.notesService.findOne(id);
   }
 
   @Delete(":id")
   deleteNoteById(@Param("id") id: string) {
-    return "Note with id: " + id + "deleted.";
+    return this.notesService.delete(id);
   }
 }
