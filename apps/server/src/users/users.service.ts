@@ -19,8 +19,8 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
-  find(email: string) {
-    return this.usersRepository.findBy({ email });
+  findOneByMail(email: string) {
+    return this.usersRepository.findOneBy({ email });
   }
 
   create(credentials: NewUser) {
