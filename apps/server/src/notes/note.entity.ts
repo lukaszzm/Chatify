@@ -17,4 +17,7 @@ export class Note {
 
   @ManyToOne(() => User, (user) => user.notes)
   user: User;
+
+  @Column()
+  userId: string;
 }

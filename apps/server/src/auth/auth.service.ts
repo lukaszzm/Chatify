@@ -10,6 +10,7 @@ export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
   async signUp(credentials: SignUpCredentialsDto) {
+    // TODO: add support for file upload
     const { email, password, firstName, lastName, profileImage } = credentials;
 
     const user = await this.usersService.findOneByMail(email);
@@ -20,7 +21,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await this.usersService.create({ email, password: hashedPassword, firstName, lastName });
 
-    const payload = { sub: newUser.id, email: newUser.email };
+    const payload = { sub: newUser.id };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

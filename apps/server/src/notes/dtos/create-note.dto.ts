@@ -1,4 +1,4 @@
-import { IsDateString, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 export class CreateNoteDto {
   @IsString()
@@ -7,6 +7,7 @@ export class CreateNoteDto {
   @IsString()
   text: string;
 
-  @IsDateString()
+  //TODO: Change to better type
+  @IsString()
   createdAt: string;
 }

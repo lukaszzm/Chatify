@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { Length } from "class-validator";
 import { Note } from "../notes/note.entity";
 
 @Entity()
@@ -11,7 +10,6 @@ export class User {
   email: string;
 
   @Column()
-  @Length(8)
   password: string;
 
   @Column()
