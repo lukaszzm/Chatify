@@ -1,4 +1,4 @@
-import { IsDateString, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 export class CreateMessageDto {
   @IsString()
@@ -10,6 +10,7 @@ export class CreateMessageDto {
   @IsString()
   toId: string;
 
-  @IsDateString()
+  // TODO: give better type
+  @IsString()
   createdAt: string;
 }

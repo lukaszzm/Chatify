@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { User } from "./user.entity";
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import bcrypt from "bcrypt";
 
+// TODO: write it in another location
 interface NewUser {
   email: string;
   password: string;
@@ -25,16 +26,20 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
-  findByName(input: string) {
+  findByName(fullName: string) {
     return this.usersRepository.find({
       where: {
-        firstName: input,
+        fullName: Like(`%${fullName}%`),
       },
     });
   }
 
   create(credentials: NewUser) {
-    const user = this.usersRepository.create(credentials);
+    const { firstName, lastName } = credentials;
+    const user = this.usersRepository.create({
+      fullName: `${firstName} ${lastName}`,
+      ...credentials,
+    });
     return this.usersRepository.save(user);
   }
 
