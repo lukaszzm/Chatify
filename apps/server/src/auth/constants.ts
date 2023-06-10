@@ -1,4 +1,3 @@
-export const jwtContants = {
-  // TODO: key from .env config
-  secret: "SUPER_SECRET_KEY",
+export const jwtConstants = {
+  secret: process.env.SECRET_KEY,
 };

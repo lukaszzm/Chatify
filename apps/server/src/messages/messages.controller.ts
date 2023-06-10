@@ -9,17 +9,17 @@ import { MessagesService } from "./messages.service";
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
   @Post()
-  createMessage(@Body() body: CreateMessageDto, @AuthId() id: string) {
-    return this.messagesService.create(body, id);
-  }
-
-  @Get(":id")
-  getMessagesWithId(@Param("id") id: string, @AuthId() userId: string) {
-    return this.messagesService.findMessagesBetweenUsers(id, userId);
+  createMessage(@Body() body: CreateMessageDto, @AuthId() authId: string) {
+    return this.messagesService.create(body, authId);
   }
 
   @Get("recent")
-  getRecentMessages() {
-    return "recent messages";
+  getRecentMessages(@AuthId() userId: string) {
+    return this.messagesService.findRecentMessages(userId);
+  }
+
+  @Get(":id")
+  getMessagesWithId(@Param("id") id: string, @AuthId() authId: string) {
+    return this.messagesService.findMessagesBetweenUsers(id, authId);
   }
 }

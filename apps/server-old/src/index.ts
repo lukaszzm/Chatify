@@ -18,7 +18,7 @@ app.use(express.json());
 const server = app.listen(port, () => console.log(`SERVER STARTED ON ${port}`));
 
 mongoose.set("strictQuery", false);
-const mongoDB = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@chatify.5xwhr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const mongoDB = `mongodb+srv://${process.env.DB_USER_DEPRECATED}:${process.env.DB_PASSWORD_DEPRECATED}@chatify.5xwhr.mongodb.net/${process.env.DB_NAME_DEPRECATED}?retryWrites=true&w=majority`;
 mongoose
   .connect(mongoDB, {
     useNewUrlParser: true,

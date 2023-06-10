@@ -4,15 +4,7 @@ import { Like, Repository } from "typeorm";
 import { User } from "./user.entity";
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import bcrypt from "bcrypt";
-
-// TODO: write it in another location
-interface NewUser {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  profileImage?: string;
-}
+import { CreateUserDto } from "./dtos/create-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -22,11 +14,18 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
-  findOneByMail(email: string) {
-    return this.usersRepository.findOneBy({ email });
+  findOneByMail(email: string, includePassword = false) {
+    return this.usersRepository.findOne({
+      where: {
+        email,
+      },
+      select: {
+        password: includePassword,
+      },
+    });
   }
 
-  findByName(fullName: string) {
+  findByName(fullName = "") {
     return this.usersRepository.find({
       where: {
         fullName: Like(`%${fullName}%`),
@@ -34,7 +33,7 @@ export class UsersService {
     });
   }
 
-  create(credentials: NewUser) {
+  create(credentials: CreateUserDto) {
     const { firstName, lastName } = credentials;
     const user = this.usersRepository.create({
       fullName: `${firstName} ${lastName}`,
@@ -47,7 +46,7 @@ export class UsersService {
     const user = await this.usersRepository.findOneBy({ id });
     if (!user) throw new NotFoundException();
 
-    const { currentPassword, newPassword, ...rest } = body;
+    const { currentPassword, newPassword, firstName, lastName, ...rest } = body;
 
     if (currentPassword && newPassword) {
       const isValidPassword = await bcrypt.compare(currentPassword, user.password);
@@ -58,10 +57,12 @@ export class UsersService {
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      Object.assign(user, { ...rest, password: hashedPassword });
+      Object.assign(user, firstName && { firstName }, lastName && { lastName }, { password: hashedPassword, ...rest });
     } else {
-      Object.assign(user, { ...rest });
+      Object.assign(user, firstName && { firstName }, lastName && { lastName }, { ...rest });
     }
+
+    Object.assign(user, { fullName: `${user.firstName} ${user.lastName}` });
 
     return this.usersRepository.save(user);
   }

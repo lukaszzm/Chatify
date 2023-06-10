@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Message } from "./message.entity";
 import { Repository } from "typeorm";
@@ -8,10 +8,18 @@ import { CreateMessageDto } from "./dtos/create-message.dto";
 export class MessagesService {
   constructor(@InjectRepository(Message) private messagesRepository: Repository<Message>) {}
 
-  async create(body: CreateMessageDto, id: string) {
-    if (id !== body.fromId) throw new UnauthorizedException();
+  async create(body: CreateMessageDto, fromId: string) {
+    const { toId, text } = body;
+    const message = await this.messagesRepository.create({
+      from: {
+        id: fromId,
+      },
+      to: {
+        id: toId,
+      },
+      text,
+    });
 
-    const message = await this.messagesRepository.create(body);
     return this.messagesRepository.save(message);
   }
 
@@ -36,5 +44,21 @@ export class MessagesService {
         },
       ],
     });
+  }
+
+  findRecentMessages(userId: string) {
+    return this.messagesRepository.query(`
+        SELECT DISTINCT ON ("userId") *
+            FROM (
+                SELECT id, "fromId" AS "userId", text, "createdAt"
+                FROM message
+                WHERE "toId" = '${userId}'
+
+            UNION ALL
+                SELECT  id, "toId" AS "userId", text, "createdAt"
+                FROM message
+                WHERE "fromId" = '${userId}'
+                ) sub
+            ORDER BY "userId", "createdAt" DESC;`);
   }
 }

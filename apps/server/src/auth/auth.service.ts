@@ -10,14 +10,15 @@ export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
   async signUp(credentials: SignUpCredentialsDto) {
-    // TODO: add support for file upload
-    const { email, password, firstName, lastName, profileImage } = credentials;
+    const { email, password, firstName, lastName } = credentials;
 
-    const user = await this.usersService.findOneByMail(email);
+    const user = await this.usersService.findOneByMail(email, true);
     if (user) {
       throw new HttpException({ message: "This email is already used." }, 409);
     }
 
+    // TODO: add support for file upload
+    // const imageUrl = uploadImage(profileImage);
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await this.usersService.create({ email, password: hashedPassword, firstName, lastName });
 
@@ -29,7 +30,7 @@ export class AuthService {
 
   async signIn(credentials: SignInCredentialsDto) {
     const { email, password } = credentials;
-    const user = await this.usersService.findOneByMail(email);
+    const user = await this.usersService.findOneByMail(email, true);
     if (!user) {
       throw new NotFoundException();
     }
@@ -39,7 +40,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

@@ -10,7 +10,7 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column()
@@ -19,12 +19,11 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column({})
+  @Column()
   fullName: string;
 
   @Column({
-    default:
-      "https://firebasestorage.googleapis.com/v0/b/chatify-ccec7.appspot.com/o/blank.png?alt=media&token=3c15a358-7573-4644-b939-cc9fa9c444d1",
+    default: process.env.DEFAULT_PROFILE_IMAGE_URL,
   })
   profileImage: string;
 

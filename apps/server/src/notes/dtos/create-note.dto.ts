@@ -6,8 +6,4 @@ export class CreateNoteDto {
 
   @IsString()
   text: string;
-
-  //TODO: Change to better type
-  @IsString()
-  createdAt: string;
 }
