@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
-import { CreateMessageDto } from "./dtos/create-message.dto";
-import { AuthGuard } from "../auth/auth.guard";
+import { Controller, Get, Param, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "../auth/guards/auth.guard";
 import { AuthId } from "../auth/decorators/auth-user.decorator";
 import { MessagesService } from "./messages.service";
 
@@ -8,14 +7,10 @@ import { MessagesService } from "./messages.service";
 @Controller("messages")
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
-  @Post()
-  createMessage(@Body() body: CreateMessageDto, @AuthId() authId: string) {
-    return this.messagesService.create(body, authId);
-  }
 
   @Get("recent")
-  getRecentMessages(@AuthId() userId: string) {
-    return this.messagesService.findRecentMessages(userId);
+  getRecentMessages(@AuthId() authId: string) {
+    return this.messagesService.findRecentMessages(authId);
   }
 
   @Get(":id")

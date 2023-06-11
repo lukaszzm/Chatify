@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Patch, Query, UseGuards } from "@nestjs/c
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import { UsersService } from "./users.service";
 import { AuthId } from "../auth/decorators/auth-user.decorator";
-import { AuthGuard } from "../auth/auth.guard";
+import { AuthGuard } from "../auth/guards/auth.guard";
 
 @UseGuards(AuthGuard)
 @Controller("users")
@@ -15,8 +15,8 @@ export class UsersController {
   }
 
   @Get("me")
-  getLoggedUserInfo(@AuthId() id: string) {
-    return this.usersService.findOneById(id);
+  getLoggedUserInfo(@AuthId() authId: string) {
+    return this.usersService.findOneById(authId);
   }
 
   @Get(":id")
@@ -25,7 +25,7 @@ export class UsersController {
   }
 
   @Patch("me")
-  updateUser(@Body() body: UpdateUserDto, @AuthId() id: string) {
-    return this.usersService.update(body, id);
+  updateUser(@Body() body: UpdateUserDto, @AuthId() authId: string) {
+    return this.usersService.update(body, authId);
   }
 }
