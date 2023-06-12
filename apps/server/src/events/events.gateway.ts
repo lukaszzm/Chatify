@@ -5,6 +5,7 @@ import { UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { MessagesService } from "../messages/messages.service";
 import { AuthWsGuard } from "../auth/guards/ws.guard";
 import { AuthWsId } from "../auth/decorators/auth-ws-user.decorator";
+import { JwtService } from "@nestjs/jwt";
 
 @UseGuards(AuthWsGuard)
 @WebSocketGateway({
@@ -17,13 +18,7 @@ export class EventsGateway {
   server: Server;
   activeUsers = new Map<string, string>();
 
-  constructor(private readonly messageService: MessagesService) {}
-
-  @SubscribeMessage("connect-user")
-  async handleUserConnection(@ConnectedSocket() socket: Socket, @AuthWsId() authId: string) {
-    console.log("CONNECTED: " + authId);
-    this.activeUsers.set(authId, socket.id);
-  }
+  constructor(private readonly messageService: MessagesService, private readonly jwtService: JwtService) {}
 
   @UsePipes(new ValidationPipe())
   @SubscribeMessage("send-message")
@@ -38,5 +33,31 @@ export class EventsGateway {
     }
   }
 
-  // TODO: usuwanie z activeUsers gdy socket zostanie rozłączony
+  async handleConnection(@ConnectedSocket() socket: Socket) {
+    try {
+      const token = this.extractTokenFromHandshake(socket);
+      const { sub } = await this.jwtService.verifyAsync(token);
+      console.log("User Connected: " + sub);
+      this.activeUsers.set(sub, socket.id);
+    } catch (e) {
+      console.log("Error: " + e);
+      socket.disconnect(true);
+    }
+  }
+
+  async handleDisconnect(@ConnectedSocket() socket: Socket) {
+    try {
+      const token = this.extractTokenFromHandshake(socket);
+      const { sub } = await this.jwtService.verifyAsync(token);
+      if (this.activeUsers.has(sub)) this.activeUsers.delete(sub);
+      console.log("User Disconnected: " + sub);
+    } catch (e) {
+      console.log("Error: " + e);
+    }
+    console.log(this.activeUsers);
+  }
+
+  private extractTokenFromHandshake(socket: Socket) {
+    return socket.handshake.headers.authorization?.split(" ")[1] ?? "";
+  }
 }
