@@ -1,5 +1,4 @@
-import { IsEmail, IsOptional, IsString, MinLength } from "class-validator";
-import { HasMimeType, IsFile, MaxFileSize, FileSystemStoredFile } from "nestjs-form-data";
+import { IsEmail, IsString, MinLength } from "class-validator";
 
 export class SignUpCredentialsDto {
   @IsEmail()
@@ -14,10 +13,4 @@ export class SignUpCredentialsDto {
   @IsString()
   @MinLength(8)
   password: string;
-
-  @IsOptional()
-  @IsFile()
-  @MaxFileSize(5e6)
-  @HasMimeType(["image/jpeg", "image/jpg", "image/png"])
-  profileImage?: FileSystemStoredFile;
 }

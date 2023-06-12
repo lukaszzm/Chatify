@@ -9,18 +9,15 @@ import { JwtService } from "@nestjs/jwt";
 export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
-  async signUp(credentials: SignUpCredentialsDto) {
+  async signUp(credentials: SignUpCredentialsDto, file?: Express.Multer.File) {
     const { email, password, firstName, lastName } = credentials;
-
     const user = await this.usersService.findOneByMail(email, true);
     if (user) {
       throw new HttpException({ message: "This email is already used." }, 409);
     }
 
-    // TODO: add support for file upload
-    // const imageUrl = uploadImage(profileImage);
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await this.usersService.create({ email, password: hashedPassword, firstName, lastName });
+    const newUser = await this.usersService.create({ email, password: hashedPassword, firstName, lastName }, file);
 
     const payload = { sub: newUser.id };
     return {

@@ -5,10 +5,14 @@ import { User } from "./user.entity";
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import bcrypt from "bcrypt";
 import { CreateUserDto } from "./dtos/create-user.dto";
+import { S3Service } from "./s3.service";
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private usersRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private usersRepository: Repository<User>,
+    private readonly s3Service: S3Service,
+  ) {}
 
   findOneById(id: string) {
     return this.usersRepository.findOneBy({ id });
@@ -34,8 +38,14 @@ export class UsersService {
     });
   }
 
-  create(credentials: CreateUserDto) {
+  async create(credentials: CreateUserDto, file?: Express.Multer.File) {
     const { firstName, lastName } = credentials;
+
+    if (file) {
+      const { originalname, buffer } = file;
+      await this.s3Service.upload(originalname, buffer);
+    }
+
     const user = this.usersRepository.create({
       fullName: `${firstName} ${lastName}`,
       ...credentials,
