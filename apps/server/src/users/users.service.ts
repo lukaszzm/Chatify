@@ -40,24 +40,27 @@ export class UsersService {
 
   async create(credentials: CreateUserDto, file?: Express.Multer.File) {
     const { firstName, lastName } = credentials;
+    const fullName = `${firstName} ${lastName}`;
 
     if (file) {
       const { originalname, buffer } = file;
-      await this.s3Service.upload(originalname, buffer);
+      const path = `${fullName}/${originalname}`;
+      const url = await this.s3Service.upload(path, buffer);
+      Object.assign(credentials, { profileImage: url });
     }
 
     const user = this.usersRepository.create({
-      fullName: `${firstName} ${lastName}`,
+      fullName,
       ...credentials,
     });
     return this.usersRepository.save(user);
   }
 
-  async update(body: UpdateUserDto, id: string) {
+  async update(body: UpdateUserDto, id: string, file?: Express.Multer.File) {
     const user = await this.usersRepository.findOneBy({ id });
     if (!user) throw new NotFoundException();
 
-    const { currentPassword, newPassword, firstName, lastName, ...rest } = body;
+    const { currentPassword, newPassword, firstName, lastName } = body;
 
     if (currentPassword && newPassword) {
       const isValidPassword = await bcrypt.compare(currentPassword, user.password);
@@ -67,10 +70,17 @@ export class UsersService {
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
+      Object.assign(user, { password: hashedPassword });
+    }
 
-      Object.assign(user, firstName && { firstName }, lastName && { lastName }, { password: hashedPassword, ...rest });
-    } else {
-      Object.assign(user, firstName && { firstName }, lastName && { lastName }, { ...rest });
+    Object.assign(user, firstName && { firstName }, lastName && { lastName });
+    const fullName = `${user.firstName} ${user.lastName}`;
+
+    if (file) {
+      const { originalname, buffer } = file;
+      const path = `${fullName}/${originalname}`;
+      const url = await this.s3Service.upload(path, buffer);
+      Object.assign(user, { profileImage: url });
     }
 
     Object.assign(user, { fullName: `${user.firstName} ${user.lastName}` });
