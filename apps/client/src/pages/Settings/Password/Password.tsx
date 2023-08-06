@@ -1,13 +1,5 @@
 import styles from "./Password.module.css";
-import {
-  Topbar,
-  Input,
-  Button,
-  Alert,
-  Label,
-  SettingsContainer,
-} from "../../../components/UI";
-import { updatePassword } from "../../../api/usersApi";
+import { Topbar, Input, Button, Alert, Label, SettingsContainer } from "../../../components/UI";
 import { useUserSettingsForm } from "../../../hooks/useUserSettingsForm";
 import { z } from "zod";
 import { ChangePasswordSchema } from "../../../schemas";
@@ -15,21 +7,11 @@ import { ChangePasswordSchema } from "../../../schemas";
 type FormData = z.infer<typeof ChangePasswordSchema>;
 
 export const Password = () => {
-  const {
-    register,
-    submitFn,
-    errors,
-    isValid,
-    isError,
-    isDirty,
-    isLoading,
-    isSuccess,
-    errorMessage,
-  } = useUserSettingsForm<FormData>({
-    defaultValues: {},
-    schema: ChangePasswordSchema,
-    mutationFn: updatePassword,
-  });
+  const { register, submitFn, errors, isValid, isError, isDirty, isLoading, isSuccess, errorMessage } =
+    useUserSettingsForm<FormData>({
+      defaultValues: {},
+      schema: ChangePasswordSchema,
+    });
 
   return (
     <>
@@ -55,14 +37,8 @@ export const Password = () => {
             error={errors.newPassword}
           ></Input>
           {isError && <Alert error>{errorMessage}</Alert>}
-          {isSuccess && (
-            <Alert>Your password has been changed successfully</Alert>
-          )}
-          <Button
-            maxWidth="80px"
-            disabled={isLoading || !isDirty || !isValid}
-            type="submit"
-          >
+          {isSuccess && <Alert>Your password has been changed successfully</Alert>}
+          <Button maxWidth="80px" disabled={isLoading || !isDirty || !isValid} type="submit">
             Save
           </Button>
         </form>

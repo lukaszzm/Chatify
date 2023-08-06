@@ -29,12 +29,12 @@ export class AuthService {
     const { email, password } = credentials;
     const user = await this.usersService.findOneByMail(email, true);
     if (!user) {
-      throw new NotFoundException();
+      throw new NotFoundException("This email is not connected to any account.");
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Your password is invalid.");
     }
 
     const payload = { sub: user.id };

@@ -26,7 +26,10 @@ export class EventsGateway {
     console.log("Message sent from: " + authId);
     const message = await this.messageService.create(body, authId);
 
+    const senderSocketId = this.activeUsers.get(authId);
     const receiverSocketId = this.activeUsers.get(body.toId);
+
+    if (senderSocketId) this.server.to(senderSocketId).emit("receive-message", message);
     if (receiverSocketId) {
       console.log("Message sent to: " + body.toId);
       this.server.to(receiverSocketId).emit("receive-message", message);
@@ -58,6 +61,6 @@ export class EventsGateway {
   }
 
   private extractTokenFromHandshake(socket: Socket) {
-    return socket.handshake.headers.authorization?.split(" ")[1] ?? "";
+    return socket.handshake.auth.token?.split(" ")[1] ?? "";
   }
 }

@@ -16,7 +16,7 @@ import { Password } from "./pages/Settings/Password";
 import { Appearance } from "./pages/Settings/Appearance";
 
 import { Notes } from "./pages/Notes";
-import { NoteInfo } from "./pages/Notes/NoteInfo";
+import { NoteBox } from "./pages/Notes/NoteBox";
 import { useAuth } from "./hooks/useAuth";
 import { FullScreenLoader } from "./components/UI";
 
@@ -27,15 +27,12 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route
-        path="/dashboard"
-        element={data ? <Layout /> : <Navigate to="/" />}
-      >
+      <Route path="/dashboard" element={data ? <Layout /> : <Navigate to="/" />}>
         <Route path="chat" element={<Chat />}>
-          <Route path=":ID" element={<ChatBox />} />
+          <Route path=":chatId" element={<ChatBox />} />
         </Route>
         <Route path="notes" element={<Notes />}>
-          <Route path=":ID" element={<NoteInfo noteId="" />} />
+          <Route path=":noteId" element={<NoteBox />} />
         </Route>
         <Route path="settings" element={<Settings />}>
           <Route path="profile" element={<Profile />} />
@@ -43,10 +40,7 @@ export const App = () => {
           <Route path="appearance" element={<Appearance />} />
         </Route>
       </Route>
-      <Route
-        path="/"
-        element={data ? <Navigate to="dashboard/chat" /> : <Home />}
-      >
+      <Route path="/" element={data ? <Navigate to="dashboard/chat" /> : <Home />}>
         <Route path="register" element={<Form />} />
         <Route path="" element={<Form isLogin />} />
       </Route>

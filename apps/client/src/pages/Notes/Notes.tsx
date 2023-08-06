@@ -1,35 +1,22 @@
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { NotesList } from "./NotesList";
-import { NoteInfo } from "./NoteInfo";
+import { NoteBox } from "./NoteBox";
 import { Content, Notification } from "../../components/UI";
+import { ChatList } from "../Chat/ChatList";
+import { ChatBox } from "../Chat/ChatBox";
 
 export const Notes = () => {
   const isMobile = useMediaQuery({ query: "(max-width:768px)" });
-  const { ID } = useParams();
+  const { noteId } = useParams();
 
-  if (isMobile) {
-    if (ID) {
-      return (
-        <Content>
-          <NoteInfo noteId={ID} />
-        </Content>
-      );
-    } else {
-      return <NotesList />;
-    }
-  } else {
-    return (
-      <>
-        <NotesList />
-        <Content>
-          {ID ? (
-            <NoteInfo noteId={ID} />
-          ) : (
-            <Notification>Select existing note or create new.</Notification>
-          )}
-        </Content>
-      </>
-    );
-  }
+  if (isMobile && noteId) return <NoteBox />;
+
+  if (isMobile && !noteId) return <NotesList />;
+
+  return (
+    <>
+      <NotesList /> <NoteBox />
+    </>
+  );
 };

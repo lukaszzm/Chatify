@@ -1,24 +1,19 @@
 import styles from "./NotesList.module.css";
+import ReactDOM from "react-dom";
 import { useParams } from "react-router-dom";
 import { Note } from "../Note";
 import { NewNote } from "../NewNote";
-import ReactDOM from "react-dom";
 import { useModal } from "../../../hooks/useModal";
 import { useQuery } from "@tanstack/react-query";
 import { getNotes } from "../../../api";
-import {
-  Sidebar,
-  Container,
-  Button,
-  LoadingSpinner,
-} from "../../../components/UI";
-import type { Note as INote } from "../../../interfaces/Note";
+import { Sidebar, Container, Button, LoadingSpinner } from "../../../components/UI";
+import type { Note as TNote } from "../../../interfaces/Note";
 
 export const NotesList = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { ID } = useParams();
+  const { noteId } = useParams();
 
-  const { data, isLoading, isError } = useQuery<INote[]>({
+  const { data, isLoading, isError } = useQuery<TNote[]>({
     queryKey: ["notes"],
     queryFn: getNotes,
   });
@@ -37,16 +32,11 @@ export const NotesList = () => {
         ) : data.length === 0 ? (
           <p>You don&apos;t have any notes yet.</p>
         ) : data.length > 0 ? (
-          data.map(({ title, _id }) => (
-            <Note key={_id} id={_id} title={title} isActive={ID === _id} />
-          ))
+          data.map(({ title, id }) => <Note key={id} id={id} title={title} isActive={noteId === id} />)
         ) : null}
       </Container>
       {isModalOpen
-        ? ReactDOM.createPortal(
-            <NewNote closeModal={closeModal} />,
-            document.getElementById("modals") as HTMLElement
-          )
+        ? ReactDOM.createPortal(<NewNote closeModal={closeModal} />, document.getElementById("modals") as HTMLElement)
         : null}
     </Sidebar>
   );

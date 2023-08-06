@@ -10,7 +10,7 @@ export class MessagesService {
 
   async create(body: CreateMessageDto, fromId: string) {
     const { toId, text } = body;
-    const message = await this.messagesRepository.create({
+    const newMessage = await this.messagesRepository.create({
       from: {
         id: fromId,
       },
@@ -19,8 +19,14 @@ export class MessagesService {
       },
       text,
     });
+    const { id } = await this.messagesRepository.save(newMessage);
 
-    return this.messagesRepository.save(message);
+    return this.messagesRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ["from", "to"],
+    });
   }
 
   findMessagesBetweenUsers(firstUserId: string, secondUserId: string) {
@@ -47,16 +53,19 @@ export class MessagesService {
   }
 
   findRecentMessages(userId: string) {
+    // TODO: better query
     return this.messagesRepository.query(`
         SELECT DISTINCT ON ("userId") *
             FROM (
-                SELECT id, "fromId" AS "userId", text, "createdAt"
-                FROM message
+                SELECT m.id, m."fromId" AS "userId", m.text, m."createdAt", m."fromId", m."toId", u."profileImage", u."fullName"
+                FROM message m
+                LEFT JOIN "user" u ON m."fromId" = u.id
                 WHERE "toId" = '${userId}'
 
             UNION ALL
-                SELECT  id, "toId" AS "userId", text, "createdAt"
-                FROM message
+                SELECT  m.id, m."toId" AS "userId", m.text, m."createdAt", m."fromId", m."toId", u."profileImage", u."fullName"
+                FROM message m
+                LEFT JOIN "user" u ON m."toId" = u.id
                 WHERE "fromId" = '${userId}'
                 ) sub
             ORDER BY "userId", "createdAt" DESC;`);

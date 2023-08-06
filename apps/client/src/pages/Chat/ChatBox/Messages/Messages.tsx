@@ -7,18 +7,19 @@ import { scrollToEnd } from "../../../../utils/scroll-to-end";
 import { useAuthenticatedUser } from "../../../../hooks/useAuthenticatedUser";
 
 interface MessagesProps {
-  chatID: string;
+  chatId: string;
 }
 
-export const Messages = ({ chatID }: MessagesProps) => {
+export const Messages = ({ chatId }: MessagesProps) => {
   const { id } = useAuthenticatedUser();
   const messagesEnd = useRef<HTMLDivElement>(null);
-  const { data, isLoading, isError } = useMessages(chatID);
+  const { data, isLoading, isError } = useMessages(chatId);
 
   useEffect(() => {
     scrollToEnd(messagesEnd);
   }, [data]);
 
+  console.log(data);
   return (
     <section className={styles.container}>
       <div className={styles["chat-box"]}>
@@ -30,12 +31,7 @@ export const Messages = ({ chatID }: MessagesProps) => {
           <p>You don&apos;t have any messages with this user yet.</p>
         ) : (
           data.map(({ text, fromId, createdAt }, index) => (
-            <Message
-              key={index}
-              text={text}
-              isMine={fromId === id}
-              createdAt={createdAt}
-            />
+            <Message key={index} text={text} isMine={fromId === id} createdAt={createdAt} />
           ))
         )}
         <div ref={messagesEnd}></div>

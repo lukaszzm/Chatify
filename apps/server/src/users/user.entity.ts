@@ -7,19 +7,22 @@ export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({
+    unique: true,
+    length: 100,
+  })
   email: string;
 
   @Column({ select: false })
   password: string;
 
-  @Column()
+  @Column({ length: 50 })
   firstName: string;
 
-  @Column()
+  @Column({ length: 50 })
   lastName: string;
 
-  @Column()
+  @Column({ length: 100 })
   fullName: string;
 
   @Column({

@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Message } from "../interfaces/Message";
 import { getMessages } from "../api";
 
-export const useMessages = (ID: string) => {
+export const useMessages = (id: string) => {
   return useQuery<Message[]>({
-    queryKey: ["messages", ID],
-    queryFn: () => getMessages(ID),
+    queryKey: ["messages", id],
+    queryFn: () => getMessages(id),
   });
 };

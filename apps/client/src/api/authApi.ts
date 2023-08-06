@@ -1,22 +1,17 @@
 import { axiosConfig } from "../service/axiosConfig";
-import { getUserInfo } from "./chatApi";
-import { Credentials, RegisterCredentials } from "../interfaces/Credentials";
+import { SignInCredentials, SignUpCredentials } from "../interfaces/Credentials";
+import { AxiosError } from "axios";
 
-export const login = async ({ email, password }: Credentials) => {
-  const response = await axiosConfig.post("/auth/login", {
-    email,
-    password,
-  });
+export const signIn = async (signInCredentials: SignInCredentials) => {
+  const response = await axiosConfig.post("/auth/sign-in", signInCredentials);
+  console.log("sign-in");
+  console.log(response.data);
+  console.log("-----------------------");
   return response.data;
 };
 
-export const register = async ({
-  email,
-  password,
-  firstName,
-  lastName,
-  profileImage,
-}: RegisterCredentials) => {
+export const signUp = async (signUpCredentials: SignUpCredentials) => {
+  const { email, password, firstName, lastName, profileImage } = signUpCredentials;
   const formData = new FormData();
   formData.append("email", email);
   formData.append("password", password);
@@ -24,16 +19,21 @@ export const register = async ({
   formData.append("lastName", lastName);
   if (profileImage) formData.append("profileImage", profileImage[0]);
 
-  const response = await axiosConfig.post("auth/register", formData);
+  const response = await axiosConfig.post("auth/sign-up", formData);
+  console.log("sign-up");
+  console.log(response.data);
+  console.log("-----------------------");
   return response.data;
 };
 
 export const getLoggedInUser = async () => {
   const localToken = localStorage.getItem("token");
-  const localId = localStorage.getItem("id");
-  if (localToken !== null && localId !== null) {
-    const response = await getUserInfo(localId);
-    return response[0];
+  if (localToken) {
+    const response = await axiosConfig.get(`users/me`);
+    console.log("get-logged-in-user");
+    console.log(response.data);
+    console.log("-----------------------");
+    return response.data;
   } else {
     return null;
   }

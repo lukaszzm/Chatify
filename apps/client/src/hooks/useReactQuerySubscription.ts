@@ -1,39 +1,51 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { Message } from "../interfaces/Message";
-import { useAuth } from "./useAuth";
+import type { Message, NewMessage, RecentMessage } from "../interfaces/Message";
+import { useAuthenticatedUser } from "./useAuthenticatedUser";
 
 const SOCKET_URL = import.meta.env.VITE_URL as string;
 
 export const useReactQuerySubscription = () => {
   const [socket, setSocket] = useState<Socket>();
-  const { data } = useAuth();
+  const { id } = useAuthenticatedUser();
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const socket = io(SOCKET_URL, {});
+    const token = localStorage.getItem("token");
+    const socket = io(SOCKET_URL, {
+      auth: {
+        token: `Bearer ${token}`,
+      },
+    });
 
-    if (socket && data) {
-      socket.emit("add-user", data._id);
+    if (socket) {
       setSocket(socket);
     }
 
-    socket.on("receive-message", async (message: Message) => {
+    socket.on("receive-message", async (message: NewMessage) => {
       await queryClient.cancelQueries(["messages", "recent-messages"]);
       const prevMessages = queryClient.getQueryData<Message[]>(["messages"]);
-      const prevRecentMessages = queryClient.getQueryData<Message[]>([
-        "recent-messages",
-      ]);
+      const prevRecentMessages = queryClient.getQueryData<RecentMessage[]>(["recent-messages"]);
+      console.log("---------------------------");
+      console.log("------MESSAGE------");
+
+      console.log(message);
+      console.log("---------------------------");
+
       if (prevMessages) {
         queryClient.setQueryData(["messages"], [...prevMessages, message]);
       }
       if (prevRecentMessages) {
-        const newRecentMessages = prevRecentMessages.filter(
-          (el: Message) => el.userInfo[0]._id !== message.userInfo[0]._id
-        );
-        newRecentMessages.unshift(message);
-        queryClient.setQueryData(["recent-messages"], newRecentMessages);
+        const user = message.fromId === id ? message.to : message.from;
+        const newRecentMessage = {
+          ...message,
+          userId: user.id,
+          fullName: user.fullName,
+          profileImage: user.profileImage,
+        };
+        const filteredRecentMessages = prevRecentMessages.filter((el) => el.userId !== user.id);
+        queryClient.setQueryData(["recent-messages"], [newRecentMessage, ...filteredRecentMessages]);
       }
 
       await Promise.all([
@@ -45,7 +57,7 @@ export const useReactQuerySubscription = () => {
     return () => {
       socket.close();
     };
-  }, [data, queryClient, setSocket]);
+  }, [queryClient, setSocket]);
 
   return { socket };
 };

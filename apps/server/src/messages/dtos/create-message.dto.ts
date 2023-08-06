@@ -1,9 +1,10 @@
-import { IsString } from "class-validator";
+import { IsString, IsUUID, MaxLength } from "class-validator";
 
 export class CreateMessageDto {
   @IsString()
+  @MaxLength(250)
   text: string;
 
-  @IsString()
+  @IsUUID()
   toId: string;
 }

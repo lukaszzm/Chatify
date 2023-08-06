@@ -1,7 +1,6 @@
 import moment from "moment";
 
-export const formatTime = (timestamp: string | Date) => {
-  const time = timestamp instanceof Date ? timestamp : new Date(timestamp);
+export const formatTime = (time: Date) => {
   let formattedTime = "";
 
   if (moment().isSame(moment(time), "day")) {

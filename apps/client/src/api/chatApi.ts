@@ -1,26 +1,26 @@
-import { Message } from "../interfaces/Message";
+import { Message, MessageForm } from "../interfaces/Message";
 import { axiosConfig } from "../service/axiosConfig";
 
 export const getRecentMessages = async () => {
-  const result = await axiosConfig.get("messages/");
-
-  return result.data;
+  const response = await axiosConfig.get("messages/recent");
+  console.log("get-recent-message");
+  console.log(response.data);
+  console.log("-----------------------");
+  return response.data;
 };
 
-export const getUserInfo = async (ID: string) => {
-  const result = await axiosConfig.get(`users/id/${ID}`);
-
-  return result.data;
+export const newMessage = async (message: MessageForm) => {
+  const response = await axiosConfig.post(`messages/`, message);
+  console.log("post-new-message");
+  console.log(response.data);
+  console.log("-----------------------");
+  return response.data;
 };
 
-export const newMessage = async (message: Message) => {
-  const result = await axiosConfig.post(`messages/`, message);
-
-  return { ...result.data, userInfo: message.userInfo };
-};
-
-export const getMessages = async (ID: string) => {
-  const result = await axiosConfig.get(`messages/${ID}`);
-
-  return result.data;
+export const getMessages = async (id: string) => {
+  const response = await axiosConfig.get(`messages/${id}`);
+  console.log("get-messages-with-id");
+  console.log(response.data);
+  console.log("-----------------------");
+  return response.data;
 };

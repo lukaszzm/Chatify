@@ -6,17 +6,25 @@ export class Message {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({
+    length: 250,
+  })
   text: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
+  @Column({ nullable: true })
+  fromId: string;
+
   @ManyToOne(() => User, (sender) => sender.sentMessages)
-  @JoinColumn({ name: "fromId" })
+  @JoinColumn()
   from: User;
 
+  @Column({ nullable: true })
+  toId: string;
+
   @ManyToOne(() => User, (receiver) => receiver.receivedMessages)
-  @JoinColumn({ name: "toId" })
+  @JoinColumn()
   to: User;
 }

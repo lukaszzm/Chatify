@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getLoggedInUser, login, register } from "../api/authApi";
-import { Credentials, RegisterCredentials } from "../interfaces/Credentials";
+import { getLoggedInUser, signIn, signUp } from "../api/authApi";
+import { SignInCredentials, SignUpCredentials } from "../interfaces/Credentials";
 import { useNavigate } from "react-router-dom";
-import { User } from "../interfaces/User";
+import type { User } from "../interfaces/User";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -13,38 +13,27 @@ export const useAuth = () => {
     onError: () => logout(),
   });
 
-  const loginMutation = useMutation({
-    mutationFn: ({ email, password }: Credentials) =>
-      login({ email, password }),
-    onSuccess: ({ token, id }) => {
-      localStorage.setItem("token", token);
-      localStorage.setItem("id", id);
+  const signInMutation = useMutation({
+    mutationFn: (signInCredentials: SignInCredentials) => signIn(signInCredentials),
+    onSuccess: ({ access_token }) => {
+      localStorage.setItem("token", access_token);
       navigate("/dashboard/chat");
     },
   });
 
-  const registerMutation = useMutation({
-    mutationFn: ({
-      email,
-      password,
-      firstName,
-      lastName,
-      profileImage,
-    }: RegisterCredentials) =>
-      register({ email, password, firstName, lastName, profileImage }),
-    onSuccess: ({ token, id }) => {
-      localStorage.setItem("token", token);
-      localStorage.setItem("id", id);
+  const signUpMutation = useMutation({
+    mutationFn: (signUpCredentials: SignUpCredentials) => signUp(signUpCredentials),
+    onSuccess: ({ access_token }) => {
+      localStorage.setItem("token", access_token);
       navigate("/dashboard/chat");
     },
   });
 
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("id");
     queryClient.setQueryData(["auth"], null);
     navigate("/");
   };
 
-  return { data, loginMutation, registerMutation, logout, ...rest };
+  return { data, signInMutation, signUpMutation, logout, ...rest };
 };

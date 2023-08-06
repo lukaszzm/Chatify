@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosConfig = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_URL,
 });
 axiosConfig.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -13,7 +13,7 @@ axiosConfig.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosConfig.interceptors.response.use(
@@ -22,5 +22,5 @@ axiosConfig.interceptors.response.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );

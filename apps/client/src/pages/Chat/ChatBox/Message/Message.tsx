@@ -5,7 +5,7 @@ import styles from "./Message.module.css";
 interface MessageProps {
   isMine: boolean;
   text: string;
-  createdAt: string | Date;
+  createdAt: Date;
 }
 
 export const Message = ({ createdAt, isMine, text }: MessageProps) => {
@@ -14,10 +14,7 @@ export const Message = ({ createdAt, isMine, text }: MessageProps) => {
   return (
     <div
       data-time={formattedTime}
-      className={clsx(
-        `${styles.container}`,
-        isMine ? `${styles.mine}` : `${styles["not-mine"]}`
-      )}
+      className={clsx(`${styles.container}`, isMine ? `${styles.mine}` : `${styles["not-mine"]}`)}
     >
       <p className={styles.text}>{text}</p>
     </div>

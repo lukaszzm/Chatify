@@ -22,6 +22,6 @@ export class AuthWsGuard implements CanActivate {
   }
 
   private extractTokenFromHandshake(socket: Socket) {
-    return socket.handshake.headers.authorization?.split(" ")[1] ?? "";
+    return socket.handshake.auth.token?.split(" ")[1] ?? "";
   }
 }

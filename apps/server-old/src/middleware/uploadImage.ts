@@ -9,11 +9,11 @@ const MIME_TYPE_MAP = {
 
 export const fileUpload = multer({
   storage: FirebaseStorage({
-    bucketName: process.env.FIREBASE_BUCKET,
+    bucketName: process.env.FIREBASE_BUCKET_DEPRECATED,
     credentials: {
-      clientEmail: process.env.FIREBASE_EMAIL,
-      privateKey: process.env.FIREBASE_KEY!.replace(/\\n/g, "\n"),
-      projectId: process.env.FIREBASE_ID,
+      clientEmail: process.env.FIREBASE_EMAIL_DEPRECATED,
+      privateKey: process.env.FIREBASE_KEY_DEPRECATED!.replace(/\\n/g, "\n"),
+      projectId: process.env.FIREBASE_ID_DEPRECATED,
     },
     public: true,
     unique: true,

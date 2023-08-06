@@ -4,8 +4,8 @@ import { Users } from "../models/users";
 import { IUser } from "../interfaces/IUser.interface";
 import bcrypt from "bcryptjs";
 
-const JWT_TOKEN = process.env.JWT_TOKEN as string;
-const DEFAULT_PROFILE_PATH = process.env.DEFAULT_PROFILE_PATH as string;
+const JWT_TOKEN = process.env.JWT_TOKEN_DEPRECATED as string;
+const DEFAULT_PROFILE_PATH = process.env.DEFAULT_PROFILE_PATH_DEPRECATED as string;
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Like, Repository } from "typeorm";
+import { Like, Not, Repository } from "typeorm";
 import { User } from "./user.entity";
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import bcrypt from "bcrypt";
@@ -30,10 +30,11 @@ export class UsersService {
     });
   }
 
-  findByName(fullName = "") {
+  findByName(fullName = "", id: string) {
     return this.usersRepository.find({
       where: {
         fullName: Like(`%${fullName}%`),
+        id: Not(id),
       },
     });
   }
@@ -57,7 +58,11 @@ export class UsersService {
   }
 
   async update(body: UpdateUserDto, id: string, file?: Express.Multer.File) {
-    const user = await this.usersRepository.findOneBy({ id });
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      select: ["id", "firstName", "lastName", "fullName", "profileImage", "password"],
+    });
+
     if (!user) throw new NotFoundException();
 
     const { currentPassword, newPassword, firstName, lastName } = body;
@@ -66,7 +71,7 @@ export class UsersService {
       const isValidPassword = await bcrypt.compare(currentPassword, user.password);
 
       if (!isValidPassword) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException("Your current password is incorrect.");
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);

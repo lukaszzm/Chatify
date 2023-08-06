@@ -4,29 +4,18 @@ import { Input, Button } from "../../../../components/UI";
 import { useNewMessage } from "../../../../hooks/useNewMessage";
 
 interface NewMessageProps {
-  chatID: string;
+  chatId: string;
 }
 
-export const NewMessage = ({ chatID }: NewMessageProps) => {
-  const { register, submitFn, isValid, isLoading, isDirty, isError } =
-    useNewMessage(chatID);
+export const NewMessage = ({ chatId }: NewMessageProps) => {
+  const { register, submitFn, isValid, isDirty, isSubmitting, isSocketError } = useNewMessage(chatId);
 
   return (
     <div className={styles.wrapper}>
-      {isError && (
-        <p className={styles.error}>
-          Something went wrong! This message has not been sent.
-        </p>
-      )}
+      {isSocketError && <p className={styles.error}>Something went wrong! This message has not been sent.</p>}
       <form className={styles.form} onSubmit={submitFn}>
-        <Input
-          id="newMessage"
-          placeholder="Enter you message..."
-          {...register("text")}
-          fullHeight
-          autoComplete="off"
-        />
-        <Button disabled={!isValid || isLoading || !isDirty}>
+        <Input id="newMessage" placeholder="Enter you message..." {...register("text")} fullHeight autoComplete="off" />
+        <Button disabled={!isValid || isSubmitting || !isDirty}>
           <img src={sendIcon} className={styles.icon} alt="Send Icon." />
         </Button>
       </form>

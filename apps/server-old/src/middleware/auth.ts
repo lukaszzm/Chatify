@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
-const JWT_TOKEN = process.env.JWT_TOKEN as string;
+const JWT_TOKEN = process.env.JWT_TOKEN_DEPRECATED as string;
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
   try {

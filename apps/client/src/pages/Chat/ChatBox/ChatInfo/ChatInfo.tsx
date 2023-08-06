@@ -1,21 +1,16 @@
 import styles from "./ChatInfo.module.css";
-import {
-  LoadingImage,
-  LoadingText,
-  ProfileImage,
-  Topbar,
-} from "../../../../components/UI";
+import { LoadingImage, LoadingText, ProfileImage, Topbar } from "../../../../components/UI";
 import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "../../../../api";
 
 interface ChatInfoProps {
-  chatID: string;
+  chatId: string;
 }
 
-export const ChatInfo = ({ chatID }: ChatInfoProps) => {
+export const ChatInfo = ({ chatId }: ChatInfoProps) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["chat-info", chatID],
-    queryFn: () => getUserInfo(chatID),
+    queryKey: ["chat-info", chatId],
+    queryFn: () => getUserInfo(chatId),
   });
 
   return (
@@ -29,10 +24,8 @@ export const ChatInfo = ({ chatID }: ChatInfoProps) => {
         <p>Something went wrong.</p>
       ) : (
         <div className={styles["user"]}>
-          <ProfileImage src={data[0].profileImage} />
-          <p className={styles["user-text"]}>
-            {`${data[0].firstName} ${data[0].lastName}`}
-          </p>
+          <ProfileImage src={data.profileImage} />
+          <p className={styles["user-text"]}>{data.fullName}</p>
         </div>
       )}
     </Topbar>

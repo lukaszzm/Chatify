@@ -32,11 +32,18 @@ export class AuthController {
     )
     file?: Express.Multer.File,
   ) {
+    console.log("SIGN-UP");
+    console.log(credentials);
+    console.log(file);
+    console.log("-------------------------");
     return this.authService.signUp(credentials, file);
   }
 
   @Post("sign-in")
   signIn(@Body() credentials: SignInCredentialsDto) {
+    console.log("SIGN-IN");
+    console.log(credentials);
+    console.log("-------------------------");
     return this.authService.signIn(credentials);
   }
 }

@@ -1,27 +1,26 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { RegisterSchema } from "../schemas";
+import { SignUpSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "./useAuth";
 import { useState } from "react";
 import { AxiosError } from "axios";
-
-type FormData = z.infer<typeof RegisterSchema>;
+import type { SignUpCredentials } from "../interfaces/Credentials";
 
 export const useRegisterForm = () => {
-  const { register, handleSubmit, formState } = useForm<FormData>({
-    resolver: zodResolver(RegisterSchema),
+  const { register, handleSubmit, formState } = useForm<SignUpCredentials>({
+    resolver: zodResolver(SignUpSchema),
   });
-  const { registerMutation } = useAuth();
+  const { signUpMutation } = useAuth();
   const [axiosError, setAxiosError] = useState<string | null>(null);
 
-  const onSubmit = async (values: FormData) => {
+  const onSubmit = async (credentials: SignUpCredentials) => {
     setAxiosError(null);
     try {
-      await registerMutation.mutateAsync(values);
+      await signUpMutation.mutateAsync(credentials);
     } catch (err) {
-      const error = err as AxiosError;
-      setAxiosError(error.response?.data as string);
+      if (err instanceof AxiosError) {
+        setAxiosError(err.response?.data.message || "Something went wrong.");
+      }
     }
   };
 

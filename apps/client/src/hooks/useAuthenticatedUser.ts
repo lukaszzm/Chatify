@@ -8,9 +8,10 @@ export const useAuthenticatedUser = () => {
   }
 
   return {
-    id: data._id,
+    id: data.id,
     firstName: data.firstName,
     lastName: data.lastName,
+    fullName: data.fullName,
     profileImage: data.profileImage,
   };
 };

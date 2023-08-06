@@ -4,13 +4,12 @@ import { formatTime } from "../../../../utils/format-time";
 import { ProfileImage, Card } from "../../../../components/UI";
 
 interface RecentMessageProps {
-  createdAt: string | Date;
+  createdAt: Date;
   isActive: boolean;
   message: string;
   id: string;
   profileImage: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   isMine: boolean;
 }
 
@@ -20,12 +19,10 @@ export const RecentMessage = ({
   message,
   id,
   profileImage,
-  firstName,
-  lastName,
+  fullName,
   isMine,
 }: RecentMessageProps) => {
-  const formattedMessage =
-    message.length > 14 ? message.substring(0, 13) + ".." : message;
+  const formattedMessage = message.length > 14 ? message.substring(0, 13) + ".." : message;
 
   return (
     <Link to={id}>
@@ -33,12 +30,9 @@ export const RecentMessage = ({
         <div className={styles["inner-wrapper"]}>
           <ProfileImage src={profileImage} />
           <div className={styles["text-wrapper"]}>
-            <p className={styles.name}>
-              {firstName} {lastName}
-            </p>
+            <p className={styles.name}>{fullName}</p>
             <p className={styles.message}>
-              {isMine && <span className={styles.span}>You: </span>}{" "}
-              {formattedMessage}
+              {isMine && <span className={styles.span}>You: </span>} {formattedMessage}
             </p>
           </div>
         </div>

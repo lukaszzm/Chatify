@@ -6,10 +6,14 @@ export class Note {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({
+    length: 50,
+  })
   title: string;
 
-  @Column()
+  @Column({
+    length: 5000,
+  })
   text: string;
 
   @CreateDateColumn()
