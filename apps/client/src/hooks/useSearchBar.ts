@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useDebounce } from "./useDebounce";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { searchUsers } from "../api/usersApi";
+import { searchUsers } from "../api/users";
 import type { User } from "../interfaces/User";
 
 export const useSearchBar = () => {

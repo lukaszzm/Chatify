@@ -5,7 +5,7 @@ import { Note } from "../Note";
 import { NewNote } from "../NewNote";
 import { useModal } from "../../../hooks/useModal";
 import { useQuery } from "@tanstack/react-query";
-import { getNotes } from "../../../api";
+import { getNotes } from "../../../api/notes";
 import { Sidebar, Container, Button, LoadingSpinner } from "../../../components/UI";
 import type { Note as TNote } from "../../../interfaces/Note";
 

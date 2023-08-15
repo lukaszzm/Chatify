@@ -27,15 +27,11 @@ export const useReactQuerySubscription = () => {
       await queryClient.cancelQueries(["messages", "recent-messages"]);
       const prevMessages = queryClient.getQueryData<Message[]>(["messages"]);
       const prevRecentMessages = queryClient.getQueryData<RecentMessage[]>(["recent-messages"]);
-      console.log("---------------------------");
-      console.log("------MESSAGE------");
-
-      console.log(message);
-      console.log("---------------------------");
 
       if (prevMessages) {
         queryClient.setQueryData(["messages"], [...prevMessages, message]);
       }
+
       if (prevRecentMessages) {
         const user = message.fromId === id ? message.to : message.from;
         const newRecentMessage = {
@@ -57,7 +53,7 @@ export const useReactQuerySubscription = () => {
     return () => {
       socket.close();
     };
-  }, [queryClient, setSocket]);
+  }, [id, queryClient, setSocket]);
 
   return { socket };
 };

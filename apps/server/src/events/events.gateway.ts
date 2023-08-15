@@ -23,15 +23,16 @@ export class EventsGateway {
   @UsePipes(new ValidationPipe())
   @SubscribeMessage("send-message")
   async handleMessage(@MessageBody() body: CreateMessageDto, @AuthWsId() authId: string) {
-    console.log("Message sent from: " + authId);
     const message = await this.messageService.create(body, authId);
 
     const senderSocketId = this.activeUsers.get(authId);
     const receiverSocketId = this.activeUsers.get(body.toId);
 
-    if (senderSocketId) this.server.to(senderSocketId).emit("receive-message", message);
+    if (senderSocketId) {
+      this.server.to(senderSocketId).emit("receive-message", message);
+    }
+
     if (receiverSocketId) {
-      console.log("Message sent to: " + body.toId);
       this.server.to(receiverSocketId).emit("receive-message", message);
     }
   }
@@ -40,10 +41,8 @@ export class EventsGateway {
     try {
       const token = this.extractTokenFromHandshake(socket);
       const { sub } = await this.jwtService.verifyAsync(token);
-      console.log("User Connected: " + sub);
       this.activeUsers.set(sub, socket.id);
     } catch (e) {
-      console.log("Error: " + e);
       socket.disconnect(true);
     }
   }
@@ -53,11 +52,7 @@ export class EventsGateway {
       const token = this.extractTokenFromHandshake(socket);
       const { sub } = await this.jwtService.verifyAsync(token);
       if (this.activeUsers.has(sub)) this.activeUsers.delete(sub);
-      console.log("User Disconnected: " + sub);
-    } catch (e) {
-      console.log("Error: " + e);
-    }
-    console.log(this.activeUsers);
+    } catch (e) {}
   }
 
   private extractTokenFromHandshake(socket: Socket) {

@@ -52,22 +52,25 @@ export class MessagesService {
     });
   }
 
-  findRecentMessages(userId: string) {
-    // TODO: better query
-    return this.messagesRepository.query(`
-        SELECT DISTINCT ON ("userId") *
-            FROM (
-                SELECT m.id, m."fromId" AS "userId", m.text, m."createdAt", m."fromId", m."toId", u."profileImage", u."fullName"
-                FROM message m
-                LEFT JOIN "user" u ON m."fromId" = u.id
-                WHERE "toId" = '${userId}'
-
-            UNION ALL
-                SELECT  m.id, m."toId" AS "userId", m.text, m."createdAt", m."fromId", m."toId", u."profileImage", u."fullName"
-                FROM message m
-                LEFT JOIN "user" u ON m."toId" = u.id
-                WHERE "fromId" = '${userId}'
-                ) sub
-            ORDER BY "userId", "createdAt" DESC;`);
+  async findRecentMessages(userId: string) {
+    return this.messagesRepository.query(`SELECT sub.*
+    FROM (
+        SELECT DISTINCT ON (CASE WHEN "fromId" = '${userId}' THEN "toId" ELSE "fromId" END)
+            m.id,
+            CASE WHEN "fromId" = '${userId}' THEN "toId" ELSE "fromId" END AS "userId",
+            m.text,
+            m."createdAt",
+            m."fromId",
+            m."toId",
+            u."profileImage",
+            u."fullName"
+        FROM message m
+        LEFT JOIN "user" u ON CASE WHEN "fromId" = '${userId}' THEN "toId" ELSE "fromId" END = u.id
+        WHERE "fromId" = '${userId}' OR "toId" = '${userId}'
+        ORDER BY
+            CASE WHEN "fromId" = '${userId}' THEN "toId" ELSE "fromId" END,
+            "createdAt" DESC
+    ) sub
+    ORDER BY "createdAt" DESC;`);
   }
 }

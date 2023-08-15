@@ -25,25 +25,16 @@ export class UsersController {
 
   @Get()
   getUserByName(@Query("name") name: string, @AuthId() authId: string) {
-    console.log("GET-USER-BY-NAME");
-    console.log(name);
-    console.log("-------------------------");
     return this.usersService.findByName(name, authId);
   }
 
   @Get("me")
   getLoggedUserInfo(@AuthId() authId: string) {
-    console.log("GET-LOGGED-USER-INFO");
-    console.log(authId);
-    console.log("-------------------------");
     return this.usersService.findOneById(authId);
   }
 
   @Get(":id")
   getUserById(@Param("id") id: string) {
-    console.log("GET-USER-BY-ID");
-    console.log(id);
-    console.log("-------------------------");
     return this.usersService.findOneById(id);
   }
 
@@ -63,11 +54,6 @@ export class UsersController {
     )
     file?: Express.Multer.File,
   ) {
-    console.log("UPDATE-USER");
-    console.log(body);
-    console.log(file);
-    console.log("auth id: " + authId);
-    console.log("-------------------------");
     return this.usersService.update(body, authId, file);
   }
 }

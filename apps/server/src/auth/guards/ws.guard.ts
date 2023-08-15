@@ -13,9 +13,7 @@ export class AuthWsGuard implements CanActivate {
     try {
       const payload = await this.jwtService.verifyAsync(token);
       socket.handshake.query.id = payload.sub;
-      console.log("OK");
     } catch (err) {
-      console.log("ERROR");
       throw new WsException("Invalid token");
     }
     return true;

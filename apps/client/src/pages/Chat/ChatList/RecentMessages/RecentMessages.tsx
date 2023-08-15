@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { RecentMessage } from "../RecentMessage";
 import { Container, LoadingSpinner } from "../../../../components/UI";
 import { useQuery } from "@tanstack/react-query";
-import { getRecentMessages } from "../../../../api";
+import { getRecentMessages } from "../../../../api/messages";
 import { useAuthenticatedUser } from "../../../../hooks/useAuthenticatedUser";
 import type { RecentMessage as IRecentMessage } from "../../../../interfaces/Message";
 
@@ -14,7 +14,6 @@ export const RecentMessages = () => {
     queryFn: getRecentMessages,
   });
 
-  console.log(data);
   return (
     <Container>
       {isLoading ? (

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { newNote } from "../api";
+import { newNote } from "../api/notes";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { NoteSchema } from "../schemas";

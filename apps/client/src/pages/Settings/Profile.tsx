@@ -5,7 +5,7 @@ import { ChangeLastName } from "./ChangeLastName";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 
 export const Profile = () => {
-  const { id, profileImage, firstName, lastName } = useAuthenticatedUser();
+  const { profileImage, firstName, lastName } = useAuthenticatedUser();
 
   return (
     <>
@@ -13,7 +13,7 @@ export const Profile = () => {
         <h2>Profile Settings</h2>
       </Topbar>
       <SettingsContainer>
-        <ChangeImage defaultImage={profileImage} userId={id} />
+        <ChangeImage defaultImage={profileImage} />
         <ChangeFirstName initialValue={firstName} />
         <ChangeLastName initialValue={lastName} />
       </SettingsContainer>

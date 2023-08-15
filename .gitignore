@@ -91,8 +91,10 @@ web_modules/
 fly.toml
 
 # compiled output
-/dist
-/node_modules
+/apps/client/dist
+/apps/client/node_modules
+/apps/server/dist
+/apps/server/node_modules
 
 # OS
 .DS_Store

@@ -6,7 +6,7 @@ import { useModal } from "../../../hooks/useModal";
 import ReactDOM from "react-dom";
 import { DeleteNote } from "../DeleteNote";
 import { useQuery } from "@tanstack/react-query";
-import { getNoteInfo } from "../../../api";
+import { getNoteInfo } from "../../../api/notes";
 
 interface NoteContentProps {
   noteId: string;

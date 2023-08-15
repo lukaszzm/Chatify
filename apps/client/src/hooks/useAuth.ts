@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getLoggedInUser, signIn, signUp } from "../api/authApi";
+import { getLoggedInUser, signIn, signUp } from "../api/auth";
 import { SignInCredentials, SignUpCredentials } from "../interfaces/Credentials";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../interfaces/User";

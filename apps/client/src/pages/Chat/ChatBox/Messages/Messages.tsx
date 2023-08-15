@@ -19,7 +19,6 @@ export const Messages = ({ chatId }: MessagesProps) => {
     scrollToEnd(messagesEnd);
   }, [data]);
 
-  console.log(data);
   return (
     <section className={styles.container}>
       <div className={styles["chat-box"]}>

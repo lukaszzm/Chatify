@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteNote } from "../api";
+import { deleteNote } from "../api/notes";
 
 export const useDeleteNote = () => {
   const navigate = useNavigate();

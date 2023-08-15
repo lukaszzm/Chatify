@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { updateUserInfo } from "../api/usersApi";
+import { updateUserInfo } from "../api/users";
 
 export const useUserSettingsForm = <T extends FieldValues>({
   defaultValues,

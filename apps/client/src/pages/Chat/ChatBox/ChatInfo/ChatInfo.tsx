@@ -1,7 +1,7 @@
 import styles from "./ChatInfo.module.css";
 import { LoadingImage, LoadingText, ProfileImage, Topbar } from "../../../../components/UI";
 import { useQuery } from "@tanstack/react-query";
-import { getUserInfo } from "../../../../api";
+import { getUserInfo } from "../../../../api/users";
 
 interface ChatInfoProps {
   chatId: string;
