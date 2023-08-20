@@ -1,0 +1,1 @@
+{"version":3,"file":"message.entity.d.ts","sourceRoot":"","sources":["../../src/messages/message.entity.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,IAAI,EAAE,MAAM,sBAAsB,CAAC;AAE5C,qBACa,OAAO;IAElB,EAAE,EAAE,MAAM,CAAC;IAKX,IAAI,EAAE,MAAM,CAAC;IAGb,SAAS,EAAE,IAAI,CAAC;IAGhB,MAAM,EAAE,MAAM,CAAC;IAIf,IAAI,EAAE,IAAI,CAAC;IAGX,IAAI,EAAE,MAAM,CAAC;IAIb,EAAE,EAAE,IAAI,CAAC;CACV"}

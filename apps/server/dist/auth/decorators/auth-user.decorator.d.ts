@@ -1,0 +1,2 @@
+export declare const AuthId: (...dataOrPipes: (import("@nestjs/common").PipeTransform<any, any> | import("@nestjs/common").Type<import("@nestjs/common").PipeTransform<any, any>>)[]) => ParameterDecorator;
+//# sourceMappingURL=auth-user.decorator.d.ts.map
