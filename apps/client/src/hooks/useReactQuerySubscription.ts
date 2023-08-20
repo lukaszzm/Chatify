@@ -4,7 +4,7 @@ import { io, Socket } from "socket.io-client";
 import type { Message, NewMessage, RecentMessage } from "../interfaces/Message";
 import { useAuthenticatedUser } from "./useAuthenticatedUser";
 
-const SOCKET_URL = import.meta.env.VITE_URL as string;
+const SOCKET_URL = import.meta.env.VITE_API_URL as string;
 
 export const useReactQuerySubscription = () => {
   const [socket, setSocket] = useState<Socket>();

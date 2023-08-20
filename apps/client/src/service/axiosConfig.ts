@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosConfig = axios.create({
-  baseURL: import.meta.env.VITE_URL,
+  baseURL: import.meta.env.VITE_API_URL,
 });
 axiosConfig.defaults.headers.post["Content-Type"] = "application/json";
 
