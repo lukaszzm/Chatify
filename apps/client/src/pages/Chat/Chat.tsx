@@ -6,12 +6,12 @@ import { useReactQuerySubscription } from "../../hooks/useReactQuerySubscription
 
 export const Chat = () => {
   useReactQuerySubscription();
-  const { ID } = useParams();
+  const { chatId } = useParams();
   const isMobile = useMediaQuery({ query: "(max-width:768px)" });
 
-  if (isMobile && ID) return <ChatBox />;
+  if (isMobile && chatId) return <ChatBox />;
 
-  if (isMobile && !ID) return <ChatList />;
+  if (isMobile && !chatId) return <ChatList />;
 
   return (
     <>

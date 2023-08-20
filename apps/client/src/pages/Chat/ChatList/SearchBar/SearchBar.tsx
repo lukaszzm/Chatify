@@ -5,8 +5,7 @@ import { Input, LoadingSpinner } from "../../../../components/UI";
 import { useSearchBar } from "../../../../hooks/useSearchBar";
 
 export const SearchBar = () => {
-  const { setInputValue, inputRef, resetHandler, data, isFetching, isError } =
-    useSearchBar();
+  const { setInputValue, inputRef, resetHandler, data, isFetching, isError } = useSearchBar();
 
   return (
     <div className={styles.container}>
@@ -30,10 +29,10 @@ export const SearchBar = () => {
           data.length === 0 ? (
             <p>No results.</p>
           ) : (
-            data.map(({ _id, firstName, lastName, profileImage }) => (
+            data.map(({ id, firstName, lastName, profileImage }) => (
               <SearchedUser
-                key={_id}
-                id={_id}
+                key={id}
+                id={id}
                 firstName={firstName}
                 lastName={lastName}
                 profileImage={profileImage}

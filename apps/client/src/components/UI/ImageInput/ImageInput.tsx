@@ -17,27 +17,10 @@ export const ImageInput = React.forwardRef<HTMLInputElement, ImageInputProps>(
 
     return (
       <div className={styles["input-container"]}>
-        {selectedImage && (
-          <ProfileImage
-            localFile
-            large
-            src={URL.createObjectURL(selectedImage)}
-          />
-        )}
-        {defaultImage && !selectedImage && (
-          <ProfileImage large src={defaultImage} />
-        )}
-        <label
-          htmlFor={id}
-          className={clsx(
-            selectedImage || defaultImage ? `${styles.change}` : `${styles.add}`
-          )}
-        >
-          {selectedImage || defaultImage ? (
-            <Icon noColor icon={editIcon} alt="" />
-          ) : (
-            "Click here to add Profile Image"
-          )}
+        {selectedImage && <ProfileImage large src={URL.createObjectURL(selectedImage)} />}
+        {defaultImage && !selectedImage && <ProfileImage large src={defaultImage} />}
+        <label htmlFor={id} className={clsx(selectedImage || defaultImage ? `${styles.change}` : `${styles.add}`)}>
+          {selectedImage || defaultImage ? <Icon noColor icon={editIcon} alt="" /> : "Click here to add Profile Image"}
         </label>
         <input
           id={id}
@@ -55,7 +38,7 @@ export const ImageInput = React.forwardRef<HTMLInputElement, ImageInputProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 ImageInput.displayName = "ImageInput";

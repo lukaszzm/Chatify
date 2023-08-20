@@ -13,7 +13,7 @@ axiosConfig.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosConfig.interceptors.response.use(
@@ -22,5 +22,5 @@ axiosConfig.interceptors.response.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );

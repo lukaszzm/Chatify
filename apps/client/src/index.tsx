@@ -7,9 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
@@ -17,5 +15,5 @@ root.render(
         <App />
       </ThemeContextProvider>
     </QueryClientProvider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );

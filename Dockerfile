@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [ "node", "apps/server/dist/index.js"]
+CMD [ "node", "apps/server/dist/main.js"]

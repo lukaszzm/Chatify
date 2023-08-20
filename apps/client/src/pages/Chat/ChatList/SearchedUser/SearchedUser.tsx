@@ -10,13 +10,7 @@ interface SearchedUserProps {
   onClick: () => void;
 }
 
-export const SearchedUser = ({
-  id,
-  firstName,
-  lastName,
-  profileImage,
-  onClick,
-}: SearchedUserProps) => {
+export const SearchedUser = ({ id, firstName, lastName, profileImage, onClick }: SearchedUserProps) => {
   return (
     <div className={styles.container}>
       <ProfileImage src={profileImage} />

@@ -2,14 +2,14 @@ import { useParams } from "react-router-dom";
 import { RecentMessage } from "../RecentMessage";
 import { Container, LoadingSpinner } from "../../../../components/UI";
 import { useQuery } from "@tanstack/react-query";
-import { getRecentMessages } from "../../../../api";
-import { Message } from "../../../../interfaces/Message";
+import { getRecentMessages } from "../../../../api/messages";
 import { useAuthenticatedUser } from "../../../../hooks/useAuthenticatedUser";
+import type { RecentMessage as IRecentMessage } from "../../../../interfaces/Message";
 
 export const RecentMessages = () => {
-  const { id } = useAuthenticatedUser();
-  const { ID } = useParams();
-  const { data, isLoading, isError } = useQuery<Message[]>({
+  const { id: authId } = useAuthenticatedUser();
+  const { chatId } = useParams();
+  const { data, isLoading, isError } = useQuery<IRecentMessage[]>({
     queryKey: ["recent-messages"],
     queryFn: getRecentMessages,
   });
@@ -23,17 +23,16 @@ export const RecentMessages = () => {
       ) : data.length === 0 ? (
         <p>You don&apos;t have any chats yet.</p>
       ) : (
-        data.map(({ _id, userInfo, text, createdAt, fromId }) => (
+        data.map(({ id, text, createdAt, fullName, profileImage, userId, fromId }) => (
           <RecentMessage
-            key={_id}
-            id={userInfo[0]._id}
-            firstName={userInfo[0].firstName}
-            lastName={userInfo[0].lastName}
-            profileImage={userInfo[0].profileImage}
-            isActive={ID === userInfo[0]._id}
+            key={id}
+            id={userId}
+            fullName={fullName}
+            profileImage={profileImage}
+            isActive={chatId === userId}
             message={text}
             createdAt={createdAt}
-            isMine={fromId === id}
+            isMine={authId === fromId}
           />
         ))
       )}

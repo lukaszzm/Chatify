@@ -5,15 +5,15 @@ import { ChatInfo } from "./ChatInfo";
 import { Content, Notification } from "../../../components/UI";
 
 export const ChatBox = () => {
-  const { ID } = useParams();
+  const { chatId } = useParams();
 
   return (
     <Content>
-      {ID ? (
+      {chatId ? (
         <>
-          <ChatInfo chatID={ID} />
-          <Messages chatID={ID} />
-          <NewMessage chatID={ID} />
+          <ChatInfo chatId={chatId} />
+          <Messages chatId={chatId} />
+          <NewMessage chatId={chatId} />
         </>
       ) : (
         <Notification>Select user to start chatting.</Notification>

@@ -1,10 +1,6 @@
-export interface Credentials {
-  email: string;
-  password: string;
-}
+import { z } from "zod";
+import { SignInSchema, SignUpSchema } from "../schemas";
 
-export interface RegisterCredentials extends Credentials {
-  firstName: string;
-  lastName: string;
-  profileImage: FileList;
-}
+export type SignInCredentials = z.infer<typeof SignInSchema>;
+
+export type SignUpCredentials = z.infer<typeof SignUpSchema>;

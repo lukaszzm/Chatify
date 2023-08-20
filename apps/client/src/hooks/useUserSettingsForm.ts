@@ -4,15 +4,14 @@ import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AxiosError } from "axios";
+import { updateUserInfo } from "../api/users";
 
 export const useUserSettingsForm = <T extends FieldValues>({
   defaultValues,
   schema,
-  mutationFn,
 }: {
   defaultValues: any;
   schema: z.ZodSchema;
-  mutationFn: (value: T) => Promise<void>;
 }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {
@@ -25,7 +24,7 @@ export const useUserSettingsForm = <T extends FieldValues>({
   });
   const queryClient = useQueryClient();
   const { mutate, isLoading, isError, isSuccess } = useMutation({
-    mutationFn: (values: T) => mutationFn(values),
+    mutationFn: (values: T) => updateUserInfo(values),
     onMutate: () => {
       setErrorMessage(null);
     },
@@ -34,7 +33,7 @@ export const useUserSettingsForm = <T extends FieldValues>({
     },
     onError: async (error) => {
       if (error instanceof AxiosError) {
-        setErrorMessage(error.response?.data || "Something went wrong");
+        setErrorMessage(error.response?.data.message || "Something went wrong");
       }
     },
   });
