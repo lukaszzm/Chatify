@@ -21,7 +21,7 @@ const messages_service_1 = require("../messages/messages.service");
 const ws_guard_1 = require("../auth/guards/ws.guard");
 const auth_ws_user_decorator_1 = require("../auth/decorators/auth-ws-user.decorator");
 const jwt_1 = require("@nestjs/jwt");
-let EventsGateway = exports.EventsGateway = class EventsGateway {
+let EventsGateway = class EventsGateway {
     constructor(messageService, jwtService) {
         this.messageService = messageService;
         this.jwtService = jwtService;
@@ -62,6 +62,7 @@ let EventsGateway = exports.EventsGateway = class EventsGateway {
         return (_b = (_a = socket.handshake.auth.token) === null || _a === void 0 ? void 0 : _a.split(" ")[1]) !== null && _b !== void 0 ? _b : "";
     }
 };
+exports.EventsGateway = EventsGateway;
 __decorate([
     (0, websockets_1.WebSocketServer)(),
     __metadata("design:type", socket_io_1.Server)

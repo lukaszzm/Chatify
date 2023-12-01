@@ -22,7 +22,7 @@ const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./user.entity");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const s3_service_1 = require("./s3.service");
-let UsersService = exports.UsersService = class UsersService {
+let UsersService = class UsersService {
     constructor(usersRepository, s3Service) {
         this.usersRepository = usersRepository;
         this.s3Service = s3Service;
@@ -89,6 +89,7 @@ let UsersService = exports.UsersService = class UsersService {
         return this.usersRepository.save(user);
     }
 };
+exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),

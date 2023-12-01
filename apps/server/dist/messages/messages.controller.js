@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const auth_guard_1 = require("../auth/guards/auth.guard");
 const auth_user_decorator_1 = require("../auth/decorators/auth-user.decorator");
 const messages_service_1 = require("./messages.service");
-let MessagesController = exports.MessagesController = class MessagesController {
+let MessagesController = class MessagesController {
     constructor(messagesService) {
         this.messagesService = messagesService;
     }
@@ -28,6 +28,7 @@ let MessagesController = exports.MessagesController = class MessagesController {
         return this.messagesService.findMessagesBetweenUsers(id, authId);
     }
 };
+exports.MessagesController = MessagesController;
 __decorate([
     (0, common_1.Get)("recent"),
     __param(0, (0, auth_user_decorator_1.AuthId)()),

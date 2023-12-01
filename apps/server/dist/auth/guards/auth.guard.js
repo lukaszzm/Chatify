@@ -13,7 +13,7 @@ exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const constants_1 = require("../constants");
-let AuthGuard = exports.AuthGuard = class AuthGuard {
+let AuthGuard = class AuthGuard {
     constructor(jwtService) {
         this.jwtService = jwtService;
     }
@@ -35,6 +35,7 @@ let AuthGuard = exports.AuthGuard = class AuthGuard {
         return (_b = (_a = request.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1]) !== null && _b !== void 0 ? _b : "";
     }
 };
+exports.AuthGuard = AuthGuard;
 exports.AuthGuard = AuthGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService])

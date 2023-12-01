@@ -19,7 +19,7 @@ const users_service_1 = require("./users.service");
 const auth_user_decorator_1 = require("../auth/decorators/auth-user.decorator");
 const auth_guard_1 = require("../auth/guards/auth.guard");
 const platform_express_1 = require("@nestjs/platform-express");
-let UsersController = exports.UsersController = class UsersController {
+let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
@@ -36,6 +36,7 @@ let UsersController = exports.UsersController = class UsersController {
         return this.usersService.update(body, authId, file);
     }
 };
+exports.UsersController = UsersController;
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)("name")),

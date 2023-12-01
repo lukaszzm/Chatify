@@ -10,8 +10,9 @@ exports.EventsModule = void 0;
 const common_1 = require("@nestjs/common");
 const events_gateway_1 = require("./events.gateway");
 const messages_module_1 = require("../messages/messages.module");
-let EventsModule = exports.EventsModule = class EventsModule {
+let EventsModule = class EventsModule {
 };
+exports.EventsModule = EventsModule;
 exports.EventsModule = EventsModule = __decorate([
     (0, common_1.Module)({
         imports: [messages_module_1.MessagesModule],

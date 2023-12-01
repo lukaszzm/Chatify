@@ -18,7 +18,7 @@ const create_note_dto_1 = require("./dtos/create-note.dto");
 const notes_service_1 = require("./notes.service");
 const auth_guard_1 = require("../auth/guards/auth.guard");
 const auth_user_decorator_1 = require("../auth/decorators/auth-user.decorator");
-let NotesController = exports.NotesController = class NotesController {
+let NotesController = class NotesController {
     constructor(notesService) {
         this.notesService = notesService;
     }
@@ -35,6 +35,7 @@ let NotesController = exports.NotesController = class NotesController {
         return this.notesService.delete(noteId, authId);
     }
 };
+exports.NotesController = NotesController;
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, auth_user_decorator_1.AuthId)()),

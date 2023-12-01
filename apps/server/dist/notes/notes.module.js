@@ -12,8 +12,9 @@ const notes_controller_1 = require("./notes.controller");
 const notes_service_1 = require("./notes.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const note_entity_1 = require("./note.entity");
-let NotesModule = exports.NotesModule = class NotesModule {
+let NotesModule = class NotesModule {
 };
+exports.NotesModule = NotesModule;
 exports.NotesModule = NotesModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([note_entity_1.Note])],

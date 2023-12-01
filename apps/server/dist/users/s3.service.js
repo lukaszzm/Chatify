@@ -13,7 +13,7 @@ exports.S3Service = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const client_s3_1 = require("@aws-sdk/client-s3");
-let S3Service = exports.S3Service = class S3Service {
+let S3Service = class S3Service {
     constructor(configService) {
         this.configService = configService;
         this.region = this.configService.getOrThrow("AWS_S3_REGION");
@@ -35,6 +35,7 @@ let S3Service = exports.S3Service = class S3Service {
         return `https://${this.bucket}.s3.${this.region}.amazonaws.com/${fileName}`;
     }
 };
+exports.S3Service = S3Service;
 exports.S3Service = S3Service = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [config_1.ConfigService])

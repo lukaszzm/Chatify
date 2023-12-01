@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const message_entity_1 = require("./message.entity");
 const typeorm_2 = require("typeorm");
-let MessagesService = exports.MessagesService = class MessagesService {
+let MessagesService = class MessagesService {
     constructor(messagesRepository) {
         this.messagesRepository = messagesRepository;
     }
@@ -84,6 +84,7 @@ let MessagesService = exports.MessagesService = class MessagesService {
     ORDER BY "createdAt" DESC;`);
     }
 };
+exports.MessagesService = MessagesService;
 exports.MessagesService = MessagesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(message_entity_1.Message)),

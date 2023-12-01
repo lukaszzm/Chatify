@@ -13,7 +13,7 @@ exports.AuthWsGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const websockets_1 = require("@nestjs/websockets");
-let AuthWsGuard = exports.AuthWsGuard = class AuthWsGuard {
+let AuthWsGuard = class AuthWsGuard {
     constructor(jwtService) {
         this.jwtService = jwtService;
     }
@@ -34,6 +34,7 @@ let AuthWsGuard = exports.AuthWsGuard = class AuthWsGuard {
         return (_b = (_a = socket.handshake.auth.token) === null || _a === void 0 ? void 0 : _a.split(" ")[1]) !== null && _b !== void 0 ? _b : "";
     }
 };
+exports.AuthWsGuard = AuthWsGuard;
 exports.AuthWsGuard = AuthWsGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService])

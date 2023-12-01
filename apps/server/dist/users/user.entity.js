@@ -13,8 +13,9 @@ exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const note_entity_1 = require("../notes/note.entity");
 const message_entity_1 = require("../messages/message.entity");
-let User = exports.User = class User {
+let User = class User {
 };
+exports.User = User;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)

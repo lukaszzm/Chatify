@@ -18,7 +18,7 @@ const sign_up_credentials_dto_1 = require("./dtos/sign-up-credentials.dto");
 const sign_in_credentials_dto_1 = require("./dtos/sign-in-credentials.dto");
 const auth_service_1 = require("./auth.service");
 const platform_express_1 = require("@nestjs/platform-express");
-let AuthController = exports.AuthController = class AuthController {
+let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
@@ -29,6 +29,7 @@ let AuthController = exports.AuthController = class AuthController {
         return this.authService.signIn(credentials);
     }
 };
+exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)("sign-up"),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("profileImage")),
