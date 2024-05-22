@@ -1,9 +1,7 @@
 {
-  "extends": "@repo/typescript-config/base.json",
+  "extends": "@repo/typescript-config/nest.json",
   "compilerOptions": {
-    "lib": ["ES2015"],
-    "outDir": "./dist"
-  },
-  "exclude": ["node_modules"],
-  "include": ["."]
+    "outDir": "./dist",
+    "baseUrl": "./"
+  }
 }
