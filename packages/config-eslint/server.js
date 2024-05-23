@@ -3,10 +3,16 @@ const { resolve } = require("node:path");
 const project = resolve(process.cwd(), "tsconfig.json");
 
 module.exports = {
+  plugins: ["@typescript-eslint/eslint-plugin", "only-warn"],
   extends: [
-    "@vercel/style-guide/eslint/node",
-    "@vercel/style-guide/eslint/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
   ].map(require.resolve),
+  root: true,
+  env: {
+    node: true,
+    jest: true,
+  },
   parserOptions: {
     project,
   },
@@ -14,7 +20,6 @@ module.exports = {
     node: true,
     es6: true,
   },
-  plugins: ["only-warn"],
   settings: {
     "import/resolver": {
       typescript: {
@@ -32,22 +37,9 @@ module.exports = {
   ],
   ignorePatterns: [".*.js", "node_modules/", "dist/", ".eslintrc.js"],
   rules: {
-    "import/no-default-export": "off",
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-extraneous-class": "off",
-    "no-console": [
-      "warn",
-      {
-        allow: ["error"],
-      },
-    ],
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      {
-        checksVoidReturn: false,
-      },
-    ],
+    "@typescript-eslint/no-explicit-any": "off",
   },
 };

@@ -1,7 +1,14 @@
 {
   "extends": "@repo/typescript-config/nest.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "baseUrl": "./"
+    "rootDir": ".",
+    "outDir": "dist",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }
