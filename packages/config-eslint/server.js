@@ -43,5 +43,11 @@ module.exports = {
         allow: ["error"],
       },
     ],
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        checksVoidReturn: false,
+      },
+    ],
   },
 };
