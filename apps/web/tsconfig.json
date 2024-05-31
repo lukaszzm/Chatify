@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/vite.json",
+  "extends": "@chatify/typescript-config/vite.json",
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",

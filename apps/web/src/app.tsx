@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@repo/ui";
+import { Button } from "@chatify/ui";
 import { Logo } from "./components/logo";
 
 function App(): JSX.Element {
