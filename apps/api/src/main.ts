@@ -6,6 +6,6 @@ async function bootstrap() {
   await app.listen(3000);
 }
 
-bootstrap().catch((error: unknown) => {
-  console.error("Error starting the server: ", error);
+bootstrap().catch(() => {
+  process.exit(1);
 });
