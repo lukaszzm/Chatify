@@ -1,23 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@repo/ui";
+import { Logo } from "./components/logo";
 
 function App(): JSX.Element {
-  const [count, setCount] = useState(0);
-
-  function handleClick(): void {
-    setCount((prev) => prev + 1);
-  }
-
   return (
-    <main className="min-h-screen w-full flex justify-center items-center bg-gray-50">
-      <div className="flex flex-col gap-3 backdrop-blur-md bg-gray-100 py-6 px-12 rounded-xl">
-        <h1 className="text-2xl">
-          Hello from{" "}
-          <span className="font-semibold text-indigo-700">Chatify</span>
-        </h1>
-        <Button onClick={handleClick}>Count: {count}</Button>
+    <div className="min-h-screen w-full flex flex-col">
+      <header className="flex justify-between pt-6 px-12">
+        <a href="/" className="flex items-center gap-2">
+          <Logo className="w-12" />
+          <span className="font-semibold text-3xl">Chatify</span>
+        </a>
+        <nav className="space-x-2">
+          <Button size="lg" variant="outline">
+            Sign in
+          </Button>
+          <Button size="lg">Get started</Button>
+        </nav>
+      </header>
+      <div className="flex-1 p-8 flex">
+        <main className="flex-1 rounded-3xl bg-muted flex gap-6 p-12 items-center justify-start text-primary">
+          <div className="w-full space-y-4">
+            <h1 className="font-bold text-6xl lg:text-8xl">
+              Chat with your <span className="text-accent">Friends</span>
+            </h1>
+            <p className="text-2xl text-primary/80">
+              Keep the conversation going, no matter where you are.
+            </p>
+            <Button size="xl">Join the community</Button>
+          </div>
+          <div className="w-full p-12 h-full">
+            <div className="rounded-3xl bg-accent h-full p-4" />
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
   );
 }
 
