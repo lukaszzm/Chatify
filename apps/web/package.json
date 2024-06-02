@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@chatify/ui": "workspace:*",
+    "@tanstack/react-router": "^1.34.9",
+    "@tanstack/router-devtools": "^1.34.9",
+    "@tanstack/router-vite-plugin": "^1.34.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

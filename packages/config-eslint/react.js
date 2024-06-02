@@ -25,5 +25,7 @@ module.exports = {
   ignorePatterns: ["node_modules/", "dist/", ".eslintrc.js", "**/*.css"],
   rules: {
     "import/no-default-export": "off",
+    "eslint-comments/require-description": "off",
+    "unicorn/filename-case": "off",
   },
 };
