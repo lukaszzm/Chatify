@@ -7,10 +7,7 @@ export class PasswordService {
     return hash(plainPassword);
   }
 
-  async verify(
-    hashedPassword: string,
-    plainPassword: string
-  ): Promise<boolean> {
+  async verify(hashedPassword: string, plainPassword: string): Promise<boolean> {
     return verify(hashedPassword, plainPassword);
   }
 }

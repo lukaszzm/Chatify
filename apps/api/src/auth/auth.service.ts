@@ -26,10 +26,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const isPasswordValid = await this.passwordService.verify(
-      user.password,
-      password
-    );
+    const isPasswordValid = await this.passwordService.verify(user.password, password);
 
     if (!isPasswordValid) {
       throw new UnauthorizedException();

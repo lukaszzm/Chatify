@@ -1,6 +1,4 @@
 {
-  "eslint.workingDirectories": [
-    { "pattern": "apps/*/" },
-    { "pattern": "packages/*/" }
-  ]
+  "eslint.workingDirectories": [{ "pattern": "apps/*/" }, { "pattern": "packages/*/" }],
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }

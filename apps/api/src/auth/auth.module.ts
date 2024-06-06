@@ -18,12 +18,6 @@ import { UsersModule } from "@/users/users.module";
       signOptions: { expiresIn: process.env.JWT_ACCESS_EXPIRATION_TIME },
     }),
   ],
-  providers: [
-    AuthService,
-    JwtStrategy,
-    PasswordService,
-    ConfigService,
-    AuthResolver,
-  ],
+  providers: [AuthService, JwtStrategy, PasswordService, ConfigService, AuthResolver],
 })
 export class AuthModule {}
