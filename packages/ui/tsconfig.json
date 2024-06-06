@@ -6,6 +6,6 @@
       "@ui/*": ["./src/*"]
     }
   },
-  "include": ["src", "postcss.config.js", "tailwind.config.ts"],
+  "include": ["."],
   "exclude": ["node_modules"]
 }

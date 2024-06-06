@@ -1,7 +1,8 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
-import { ConfigService } from "@nestjs/config";
+
 import { PasswordService } from "@/auth/password.service";
 import { JwtPayload } from "@/auth/types/jwt-payload.type";
 import { UsersService } from "@/users/users.service";
@@ -78,7 +79,7 @@ export class AuthService {
         sub,
         email,
       });
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException();
     }
   }

@@ -1,10 +1,11 @@
+import { UseGuards } from "@nestjs/common";
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import type { User as UserType } from "@prisma/client";
-import { UseGuards } from "@nestjs/common";
+
+import { CurrentUser } from "@/auth/decorators/current-user.decorator";
+import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
-import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
-import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 
 @Resolver(() => User)
 export class UsersResolver {

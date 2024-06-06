@@ -1,10 +1,10 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ["@chatify/eslint-config/server.js"],
+  extends: ["@chatify/eslint-config/nest.js"],
   parser: "@typescript-eslint/parser",
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
   parserOptions: {
+    sourceType: "module",
+    ecmaVersion: "es2019",
     project: true,
   },
-  root: true,
 };

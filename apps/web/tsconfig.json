@@ -3,16 +3,12 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
+    "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@ui/*": ["../../packages/ui/src/*"]
     }
   },
   "exclude": ["node_modules", "public"],
-  "include": [
-    "src",
-    "postcss.config.js",
-    "tailwind.config.ts",
-    "index.html",
-    "vite.config.ts"
-  ]
+  "include": ["."]
 }

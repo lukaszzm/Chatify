@@ -1,12 +1,11 @@
-import React from "react";
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { Button, Logo } from "@chatify/ui";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
 
-function Index(): JSX.Element {
+function Index() {
   return (
     <div className="min-h-dvh flex flex-col justify-center items-center gap-4">
       <div className="flex gap-1 items-center">
