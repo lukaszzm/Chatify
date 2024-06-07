@@ -1,6 +1,8 @@
 import { Button, Logo } from "@chatify/ui";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
+import { GraphQLTest } from "@/components/graphql-test";
+
 export const Route = createLazyFileRoute("/dashboard")({
   component: Dashboard,
 });
@@ -16,6 +18,7 @@ function Dashboard() {
       <Button size="xl" asChild>
         <Link to="/">Go to Index</Link>
       </Button>
+      <GraphQLTest />
     </div>
   );
 }
