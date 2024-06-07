@@ -1,6 +1,8 @@
 import { Button, Logo } from "@chatify/ui";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
+import { SignInDialog } from "@/features/auth";
+
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
@@ -14,9 +16,7 @@ function Index() {
           <span className="font-semibold text-3xl sr-only sm:not-sr-only">Chatify</span>
         </Link>
         <nav className="space-x-3">
-          <Button size="lg" variant="outline">
-            Sign In
-          </Button>
+          <SignInDialog />
           <Button size="lg" className="hidden sm:inline-block">
             Get Started
           </Button>
