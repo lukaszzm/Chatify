@@ -10,7 +10,7 @@ import {
 
 import { SignInForm } from "@/features/auth/components/sign-in-form";
 
-export function SignInDialog() {
+export const SignInDialog = () => {
   return (
     <Hybrid>
       <HybridTrigger asChild>

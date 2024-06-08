@@ -5,7 +5,7 @@ type AuthFooterProps = {
   onSwitch: () => void;
 };
 
-export function AuthFooter({ variant, onSwitch }: AuthFooterProps) {
+export const AuthFooter = ({ variant, onSwitch }: AuthFooterProps) => {
   const text =
     variant === "sign-in" ? "Don't have an account?" : "Already have an account?";
   const buttonText = variant === "sign-in" ? "Create an account" : "Sign in";

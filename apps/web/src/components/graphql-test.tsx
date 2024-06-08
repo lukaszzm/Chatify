@@ -10,7 +10,7 @@ const GET_USER = gql(/* GraphQL */ `
   }
 `);
 
-export function GraphQLTest() {
+export const GraphQLTest = () => {
   const { data, loading } = useQuery(GET_USER, {
     variables: { id: "clwj00yhz000059klo8di1xnz" },
   });
@@ -24,4 +24,4 @@ export function GraphQLTest() {
   }
 
   return <p>Hello {data.user.firstName}!</p>;
-}
+};

@@ -3,11 +3,7 @@ import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
 import { SignInDialog } from "@/features/auth";
 
-export const Route = createLazyFileRoute("/")({
-  component: Index,
-});
-
-function Index() {
+const Index = () => {
   return (
     <div className="min-h-dvh w-full flex flex-col justify-center items-center gap-4">
       <header className="w-full flex justify-between items-center py-4 px-4 sm:px-8">
@@ -38,4 +34,8 @@ function Index() {
       </main>
     </div>
   );
-}
+};
+
+export const Route = createLazyFileRoute("/")({
+  component: Index,
+});

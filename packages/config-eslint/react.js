@@ -112,6 +112,13 @@ module.exports = {
         patterns: [".*"],
       },
     ],
+    "react/function-component-definition": [
+      2,
+      {
+        namedComponents: "arrow-function",
+        unnamedComponents: "arrow-function",
+      },
+    ],
   },
   overrides: [
     {

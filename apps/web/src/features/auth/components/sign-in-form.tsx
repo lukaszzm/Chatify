@@ -13,7 +13,7 @@ import {
 import { AuthFooter } from "@/features/auth/components/auth-footer";
 import { useSignIn } from "@/features/auth/hooks/use-sign-in";
 
-export function SignInForm() {
+export const SignInForm = () => {
   const { form, onSubmit } = useSignIn();
 
   return (
