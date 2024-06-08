@@ -28,4 +28,4 @@ export const SignInDialog = () => {
       </HybridContent>
     </Hybrid>
   );
-}
+};

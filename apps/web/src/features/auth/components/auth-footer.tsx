@@ -24,4 +24,4 @@ export const AuthFooter = ({ variant, onSwitch }: AuthFooterProps) => {
       </Button>
     </div>
   );
-}
+};
