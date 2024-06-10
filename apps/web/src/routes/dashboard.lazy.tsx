@@ -1,8 +1,6 @@
 import { Button, Logo } from "@chatify/ui";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
-import { GraphQLTest } from "@/components/graphql-test";
-
 const Dashboard = () => {
   return (
     <div className="min-h-dvh flex flex-col justify-center items-center gap-4">
@@ -14,7 +12,6 @@ const Dashboard = () => {
       <Button size="xl" asChild>
         <Link to="/">Go to Index</Link>
       </Button>
-      <GraphQLTest />
     </div>
   );
 };
