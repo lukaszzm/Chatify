@@ -1,7 +1,7 @@
 import { Button, Logo } from "@chatify/ui";
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
-import { SignInDialog } from "@/features/auth";
+import { isAuthenticated, SignInDialog } from "@/features/auth";
 
 const Index = () => {
   return (
@@ -36,6 +36,13 @@ const Index = () => {
   );
 };
 
-export const Route = createLazyFileRoute("/")({
+export const Route = createFileRoute("/")({
   component: Index,
+  beforeLoad: () => {
+    if (isAuthenticated()) {
+      throw redirect({
+        to: "/dashboard",
+      });
+    }
+  },
 });

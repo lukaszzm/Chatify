@@ -24,16 +24,14 @@ export type Scalars = {
   Float: { input: number; output: number };
   /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
   DateTime: { input: any; output: any };
-  /** A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction. */
-  JWT: { input: any; output: any };
 };
 
 export type Auth = {
   __typename?: "Auth";
   /** JWT access token */
-  accessToken: Scalars["JWT"]["output"];
+  accessToken: Scalars["String"]["output"];
   /** JWT refresh token */
-  refreshToken: Scalars["JWT"]["output"];
+  refreshToken: Scalars["String"]["output"];
   user: User;
 };
 
@@ -53,7 +51,7 @@ export type MutationLoginArgs = {
 };
 
 export type MutationRefreshArgs = {
-  refreshToken: Scalars["JWT"]["input"];
+  refreshToken: Scalars["String"]["input"];
 };
 
 export type Query = {
@@ -70,9 +68,9 @@ export type QueryUserArgs = {
 export type Token = {
   __typename?: "Token";
   /** JWT access token */
-  accessToken: Scalars["JWT"]["output"];
+  accessToken: Scalars["String"]["output"];
   /** JWT refresh token */
-  refreshToken: Scalars["JWT"]["output"];
+  refreshToken: Scalars["String"]["output"];
 };
 
 export type User = {
@@ -86,26 +84,108 @@ export type User = {
   updatedAt: Scalars["DateTime"]["output"];
 };
 
-export type QueryQueryVariables = Exact<{
-  id: Scalars["String"]["input"];
-}>;
+export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type QueryQuery = {
+export type GetMeQuery = {
   __typename?: "Query";
-  user: { __typename?: "User"; firstName?: string | null };
+  me: { __typename?: "User"; firstName?: string | null };
 };
 
-export const QueryDocument = {
+export type LoginMutationVariables = Exact<{
+  data: LoginInput;
+}>;
+
+export type LoginMutation = {
+  __typename?: "Mutation";
+  login: { __typename?: "Auth"; accessToken: string; refreshToken: string };
+};
+
+export type RefreshTokenMutationVariables = Exact<{
+  refreshToken: Scalars["String"]["input"];
+}>;
+
+export type RefreshTokenMutation = {
+  __typename?: "Mutation";
+  refresh: { __typename?: "Token"; accessToken: string; refreshToken: string };
+};
+
+export const GetMeDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "query",
-      name: { kind: "Name", value: "Query" },
+      name: { kind: "Name", value: "GetMe" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "me" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "firstName" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetMeQuery, GetMeQueryVariables>;
+export const LoginDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "Login" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "LoginInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "login" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "accessToken" } },
+                { kind: "Field", name: { kind: "Name", value: "refreshToken" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const RefreshTokenDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "RefreshToken" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "refreshToken" } },
           type: {
             kind: "NonNullType",
             type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
@@ -117,21 +197,27 @@ export const QueryDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "user" },
+            name: { kind: "Name", value: "refresh" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "id" },
-                value: { kind: "Variable", name: { kind: "Name", value: "id" } },
+                name: { kind: "Name", value: "refreshToken" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "refreshToken" },
+                },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "firstName" } }],
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "accessToken" } },
+                { kind: "Field", name: { kind: "Name", value: "refreshToken" } },
+              ],
             },
           },
         ],
       },
     },
   ],
-} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;
+} as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;

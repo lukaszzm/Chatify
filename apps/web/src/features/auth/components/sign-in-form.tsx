@@ -10,11 +10,15 @@ import {
   Separator,
 } from "@chatify/ui";
 
+import { ErrorAlert } from "@/components/error-alert";
 import { AuthFooter } from "@/features/auth/components/auth-footer";
 import { useSignIn } from "@/features/auth/hooks/use-sign-in";
 
 export const SignInForm = () => {
-  const { form, onSubmit } = useSignIn();
+  const { form, onSubmit, error } = useSignIn();
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   return (
     <Form {...form}>
@@ -45,7 +49,10 @@ export const SignInForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+
+        <ErrorAlert error={error} />
+
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
           Sign In
         </Button>
         <Separator />
