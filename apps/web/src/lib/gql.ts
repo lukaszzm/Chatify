@@ -2,7 +2,6 @@
 
 import { authExchange } from "@urql/exchange-auth";
 import { Kind } from "graphql";
-import type { Operation } from "urql";
 import { cacheExchange, Client, fetchExchange } from "urql";
 
 import {
@@ -21,16 +20,6 @@ const RefreshTokenMutation = graphql(`
     }
   }
 `);
-
-const isLoginOperation = (operation: Operation) =>
-  operation.kind !== "mutation" ||
-  !operation.query.definitions.some(
-    (definition) =>
-      definition.kind === Kind.OPERATION_DEFINITION &&
-      definition.selectionSet.selections.some(
-        (node) => node.kind === Kind.FIELD && node.name.value === "login"
-      )
-  );
 
 const gqlServerUrl = import.meta.env.VITE_API_URL + "/graphql";
 
@@ -53,16 +42,30 @@ const client = new Client({
           });
         },
         didAuthError(error) {
-          return error.graphQLErrors.some(
-            (e) => e.extensions?.code === "UNAUTHENTICATED"
-          );
+          const unsecurePath = "login";
+
+          return error.graphQLErrors.some((e) => {
+            const isPathUnsecure = e.path?.includes(unsecurePath) ?? true;
+            const isUnauthenticated = e.extensions?.code === "UNAUTHENTICATED";
+            return !isPathUnsecure && isUnauthenticated;
+          });
         },
         willAuthError(operation) {
           accessToken = getAccessToken();
           refreshToken = getRefreshToken();
 
           if (!accessToken) {
-            return isLoginOperation(operation);
+            return (
+              operation.kind !== "mutation" ||
+              !operation.query.definitions.some((definition) => {
+                return (
+                  definition.kind === Kind.OPERATION_DEFINITION &&
+                  definition.selectionSet.selections.some((node) => {
+                    return node.kind === Kind.FIELD && node.name.value === "login";
+                  })
+                );
+              })
+            );
           }
 
           return false;
