@@ -52,7 +52,7 @@ export const SignInForm = () => {
 
         <ErrorAlert error={error} />
 
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
+        <Button type="submit" className="w-full" isLoading={isSubmitting}>
           Sign In
         </Button>
         <Separator />
