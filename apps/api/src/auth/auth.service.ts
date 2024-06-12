@@ -23,13 +23,13 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Incorrect email or password");
     }
 
     const isPasswordValid = await this.passwordService.verify(user.password, password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Incorrect email or password");
     }
 
     return this.generateTokens({
