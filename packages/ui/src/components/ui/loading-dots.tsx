@@ -34,7 +34,7 @@ export const LoadingDots = forwardRef<HTMLDivElement, LoadingDotsProps>(
   ({ className, size, variant, ...props }, ref) => {
     return (
       <div
-        className={cn("flex space-x-2 justify-center items-center", className)}
+        className={cn("flex gap-1.5 justify-center items-center", className)}
         ref={ref}
         {...props}
       >
