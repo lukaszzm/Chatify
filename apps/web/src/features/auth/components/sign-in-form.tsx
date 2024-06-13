@@ -10,7 +10,7 @@ import {
   Separator,
 } from "@chatify/ui";
 
-import { ErrorAlert } from "@/components/error-alert";
+import { ErrorAlert } from "@/components/errors/error-alert";
 import { AuthFooter } from "@/features/auth/components/auth-footer";
 import { useSignIn } from "@/features/auth/hooks/use-sign-in";
 
