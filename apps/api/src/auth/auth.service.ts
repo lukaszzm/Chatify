@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
 
+import { SignInInput } from "@/auth/dtos/sign-in.input";
 import { SignUpInput } from "@/auth/dtos/sign-up.input";
 import { PasswordService } from "@/auth/password.service";
 import { JwtPayload } from "@/auth/types/jwt-payload.type";
@@ -17,17 +18,20 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async login(
-    email: string,
-    password: string
+  async signIn(
+    payload: SignInInput
   ): Promise<{ accessToken: string; refreshToken: string }> {
-    const user = await this.usersService.findOneByEmail(email);
+    const fixedEmail = payload.email.toLowerCase();
+    const user = await this.usersService.findOneByEmail(fixedEmail);
 
     if (!user) {
       throw new UnauthorizedException("Incorrect email or password");
     }
 
-    const isPasswordValid = await this.passwordService.verify(user.password, password);
+    const isPasswordValid = await this.passwordService.verify(
+      user.password,
+      payload.password
+    );
 
     if (!isPasswordValid) {
       throw new UnauthorizedException("Incorrect email or password");

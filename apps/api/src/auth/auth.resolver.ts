@@ -1,8 +1,8 @@
 import { Args, Mutation, Parent, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { AuthService } from "@/auth/auth.service";
-import { LoginInput } from "@/auth/dtos/login.input";
 import { RefreshTokenInput } from "@/auth/dtos/refresh-token.input";
+import { SignInInput } from "@/auth/dtos/sign-in.input";
 import { SignUpInput } from "@/auth/dtos/sign-up.input";
 import { Auth } from "@/auth/models/auth.model";
 import { Token } from "@/auth/models/token.model";
@@ -13,9 +13,8 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => Auth)
-  async login(@Args("data") { email, password }: LoginInput) {
-    const fixedEmail = email.toLowerCase();
-    return this.authService.login(fixedEmail, password);
+  async signIn(@Args("data") data: SignInInput) {
+    return this.authService.signIn(data);
   }
 
   @Mutation(() => Auth)
