@@ -15,3 +15,4 @@ export * from "./components/ui/alert";
 export * from "./components/ui/loading-dots";
 export * from "./components/ui/tooltip";
 export * from "./components/ui/tooltip-button";
+export * from "./components/ui/alert-dialog";
