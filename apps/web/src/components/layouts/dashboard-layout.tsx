@@ -3,7 +3,6 @@ import type { LinkProps } from "@tanstack/react-router";
 import { Link, Outlet } from "@tanstack/react-router";
 import { LayoutList, MessageSquareMore, Settings } from "lucide-react";
 
-import { GraphQLTest } from "@/components/graphql-test";
 import { SignOut } from "@/features/auth";
 
 type NavItem = {
@@ -30,11 +29,11 @@ export const DashboardLayout = () => {
             </TooltipButton>
           ))}
         </nav>
+
+        <SignOut className="mt-auto" />
       </aside>
       <main className="flex-1 bg-background rounded-md p-4">
         <Outlet />
-        <GraphQLTest />
-        <SignOut />
       </main>
     </div>
   );

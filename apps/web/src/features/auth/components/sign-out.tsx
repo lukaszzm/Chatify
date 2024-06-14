@@ -1,13 +1,14 @@
-import type { ButtonProps } from "@chatify/ui";
-import { Button } from "@chatify/ui";
+import { TooltipButton } from "@chatify/ui";
 import { useNavigate } from "@tanstack/react-router";
-import { forwardRef } from "react";
+import { LogOut } from "lucide-react";
 
 import { clearAuthTokens } from "@/features/auth/utils";
 
-interface SignOutProps extends Omit<ButtonProps, "onClick" | "children"> {}
+interface SignOutProps {
+  className?: string;
+}
 
-export const SignOut = forwardRef<HTMLButtonElement, SignOutProps>((props, ref) => {
+export const SignOut = ({ className }: SignOutProps) => {
   const navigate = useNavigate();
 
   const signOut = async () => {
@@ -18,10 +19,8 @@ export const SignOut = forwardRef<HTMLButtonElement, SignOutProps>((props, ref) 
   };
 
   return (
-    <Button ref={ref} onClick={signOut} {...props}>
-      Sign Out
-    </Button>
+    <TooltipButton tooltipText="Sign Out" onClick={signOut} className={className}>
+      <LogOut />
+    </TooltipButton>
   );
-});
-
-SignOut.displayName = "SignOut";
+};
