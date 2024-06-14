@@ -1,7 +1,7 @@
 import { Button, Logo } from "@chatify/ui";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
-import { isAuthenticated, SignInDialog } from "@/features/auth";
+import { isAuthenticated } from "@/features/auth";
 
 const Index = () => {
   return (
@@ -12,9 +12,11 @@ const Index = () => {
           <span className="font-semibold text-3xl sr-only sm:not-sr-only">Chatify</span>
         </Link>
         <nav className="space-x-3">
-          <SignInDialog />
-          <Button size="lg" className="hidden sm:inline-block">
-            Get Started
+          <Button size="lg" variant="outline" asChild>
+            <Link to="/sign-in">Sign In</Link>
+          </Button>
+          <Button size="lg" className="hidden sm:inline-flex" asChild>
+            <Link to="/sign-up">Get Started</Link>
           </Button>
         </nav>
       </header>
@@ -28,7 +30,9 @@ const Index = () => {
             ultimate destination for seamless communication.
           </p>
           <div>
-            <Button size="xl">Join the Community</Button>
+            <Button size="xl" asChild>
+              <Link to="/sign-up">Join the Community</Link>
+            </Button>
           </div>
         </div>
       </main>

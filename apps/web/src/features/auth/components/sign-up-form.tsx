@@ -9,11 +9,10 @@ import {
   Button,
 } from "@chatify/ui";
 
-import { ErrorAlert } from "@/components/errors/error-alert";
-import { useSignIn } from "@/features/auth/hooks/use-sign-in";
+import { useSignUp } from "@/features/auth/hooks/use-sign-up";
 
-export const SignInForm = () => {
-  const { form, onSubmit, error } = useSignIn();
+export const SignUpForm = () => {
+  const { form, onSubmit } = useSignUp();
   const {
     formState: { isSubmitting },
   } = form;
@@ -36,6 +35,32 @@ export const SignInForm = () => {
         />
         <FormField
           control={form.control}
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <Input placeholder="John" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Smith" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -48,10 +73,8 @@ export const SignInForm = () => {
           )}
         />
 
-        <ErrorAlert error={error} />
-
         <Button type="submit" className="w-full" isLoading={isSubmitting}>
-          Sign in
+          Create an account
         </Button>
       </form>
     </Form>

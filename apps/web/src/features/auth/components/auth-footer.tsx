@@ -1,27 +1,18 @@
 import { Button } from "@chatify/ui";
+import type { LinkProps } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
-type AuthFooterProps = {
-  variant: "sign-in" | "sign-up";
-  onSwitch: () => void;
-};
+interface AuthFooterProps {
+  label?: string;
+  linkText?: string;
+  to?: LinkProps["to"];
+}
 
-export const AuthFooter = ({ variant, onSwitch }: AuthFooterProps) => {
-  const text =
-    variant === "sign-in" ? "Don't have an account?" : "Already have an account?";
-  const buttonText = variant === "sign-in" ? "Create an account" : "Sign in";
-
-  return (
-    <div className="flex justify-center items-center gap-2 text-muted-foreground text-sm">
-      <p>{text}</p>
-      <Button
-        variant="link"
-        size="auto"
-        className="text-muted-foreground text-sm"
-        onClick={onSwitch}
-        type="button"
-      >
-        {buttonText}
-      </Button>
-    </div>
-  );
-};
+export const AuthFooter = ({ label, linkText, to }: AuthFooterProps) => (
+  <div className="flex items-center text-muted-foreground text-sm gap-2">
+    <p>{label}</p>
+    <Button variant="link" size="auto" asChild>
+      <Link to={to}>{linkText}</Link>
+    </Button>
+  </div>
+);

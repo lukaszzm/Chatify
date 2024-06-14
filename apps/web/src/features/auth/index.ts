@@ -1,5 +1,6 @@
-export { SignInDialog } from "./components/sign-in-dialog";
 export { SignOut } from "./components/sign-out";
+export { SignIn } from "./components/sign-in";
+export { SignUp } from "./components/sign-up";
 
 export {
   getAccessToken,
