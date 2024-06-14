@@ -35,23 +35,23 @@ export type Auth = {
   user: User;
 };
 
-export type LoginInput = {
-  email: Scalars["String"]["input"];
-  password: Scalars["String"]["input"];
-};
-
 export type Mutation = {
   __typename?: "Mutation";
-  login: Auth;
   refresh: Token;
-};
-
-export type MutationLoginArgs = {
-  data: LoginInput;
+  signIn: Auth;
+  signUp: Auth;
 };
 
 export type MutationRefreshArgs = {
   refreshToken: Scalars["String"]["input"];
+};
+
+export type MutationSignInArgs = {
+  data: SignInInput;
+};
+
+export type MutationSignUpArgs = {
+  data: SignUpInput;
 };
 
 export type Query = {
@@ -63,6 +63,18 @@ export type Query = {
 
 export type QueryUserArgs = {
   id: Scalars["String"]["input"];
+};
+
+export type SignInInput = {
+  email: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
+};
+
+export type SignUpInput = {
+  email: Scalars["String"]["input"];
+  firstName: Scalars["String"]["input"];
+  lastName: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
 };
 
 export type Token = {
@@ -84,20 +96,22 @@ export type User = {
   updatedAt: Scalars["DateTime"]["output"];
 };
 
-export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetMeQuery = {
-  __typename?: "Query";
-  me: { __typename?: "User"; firstName?: string | null };
-};
-
-export type LoginMutationVariables = Exact<{
-  data: LoginInput;
+export type SignInMutationVariables = Exact<{
+  data: SignInInput;
 }>;
 
-export type LoginMutation = {
+export type SignInMutation = {
   __typename?: "Mutation";
-  login: { __typename?: "Auth"; accessToken: string; refreshToken: string };
+  signIn: { __typename?: "Auth"; accessToken: string; refreshToken: string };
+};
+
+export type SignUpMutationVariables = Exact<{
+  data: SignUpInput;
+}>;
+
+export type SignUpMutation = {
+  __typename?: "Mutation";
+  signUp: { __typename?: "Auth"; accessToken: string; refreshToken: string };
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -109,43 +123,20 @@ export type RefreshTokenMutation = {
   refresh: { __typename?: "Token"; accessToken: string; refreshToken: string };
 };
 
-export const GetMeDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "GetMe" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "me" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "firstName" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetMeQuery, GetMeQueryVariables>;
-export const LoginDocument = {
+export const SignInDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "Login" },
+      name: { kind: "Name", value: "SignIn" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
           variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
           type: {
             kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "LoginInput" } },
+            type: { kind: "NamedType", name: { kind: "Name", value: "SignInInput" } },
           },
         },
       ],
@@ -154,7 +145,7 @@ export const LoginDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "login" },
+            name: { kind: "Name", value: "signIn" },
             arguments: [
               {
                 kind: "Argument",
@@ -174,7 +165,50 @@ export const LoginDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+} as unknown as DocumentNode<SignInMutation, SignInMutationVariables>;
+export const SignUpDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "SignUp" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "SignUpInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "signUp" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "accessToken" } },
+                { kind: "Field", name: { kind: "Name", value: "refreshToken" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [

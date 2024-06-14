@@ -42,10 +42,11 @@ const client = new Client({
           });
         },
         didAuthError(error) {
-          const unsecurePath = "login";
+          const unsecurePaths = ["signIn", "signUp"];
 
           return error.graphQLErrors.some((e) => {
-            const isPathUnsecure = e.path?.includes(unsecurePath) ?? true;
+            const isPathUnsecure =
+              e.path?.some((path) => unsecurePaths.includes(String(path))) ?? true;
             const isUnauthenticated = e.extensions?.code === "UNAUTHENTICATED";
             return !isPathUnsecure && isUnauthenticated;
           });
@@ -61,7 +62,10 @@ const client = new Client({
                 return (
                   definition.kind === Kind.OPERATION_DEFINITION &&
                   definition.selectionSet.selections.some((node) => {
-                    return node.kind === Kind.FIELD && node.name.value === "login";
+                    const allowedValues = ["signIn", "signUp"];
+                    return (
+                      node.kind === Kind.FIELD && allowedValues.includes(node.name.value)
+                    );
                   })
                 );
               })

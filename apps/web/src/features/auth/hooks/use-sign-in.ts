@@ -8,9 +8,9 @@ import { signInCredentialsSchema } from "@/features/auth/schemas/credentials-sch
 import { saveAuthTokens } from "@/features/auth/utils";
 import { graphql } from "@/gql";
 
-const LoginMutation = graphql(`
-  mutation Login($data: LoginInput!) {
-    login(data: $data) {
+const SignInMutation = graphql(`
+  mutation SignIn($data: SignInInput!) {
+    signIn(data: $data) {
       accessToken
       refreshToken
     }
@@ -26,14 +26,14 @@ export function useSignIn() {
     },
   });
 
-  const [{ error }, signIn] = useMutation(LoginMutation);
+  const [{ error }, signIn] = useMutation(SignInMutation);
 
   const navigate = useNavigate();
 
   const onSubmit = async (data: SignInCredentials) => {
     const result = await signIn({ data });
-    if (result.data?.login) {
-      saveAuthTokens(result.data.login);
+    if (result.data?.signIn) {
+      saveAuthTokens(result.data.signIn);
       await navigate({
         to: "/chat",
       });

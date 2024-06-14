@@ -9,10 +9,11 @@ import {
   Button,
 } from "@chatify/ui";
 
+import { ErrorAlert } from "@/components/errors/error-alert";
 import { useSignUp } from "@/features/auth/hooks/use-sign-up";
 
 export const SignUpForm = () => {
-  const { form, onSubmit } = useSignUp();
+  const { form, onSubmit, error } = useSignUp();
   const {
     formState: { isSubmitting },
   } = form;
@@ -72,6 +73,8 @@ export const SignUpForm = () => {
             </FormItem>
           )}
         />
+
+        <ErrorAlert error={error} />
 
         <Button type="submit" className="w-full" isLoading={isSubmitting}>
           Create an account
