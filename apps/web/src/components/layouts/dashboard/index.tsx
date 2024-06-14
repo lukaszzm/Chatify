@@ -20,7 +20,7 @@ export const DashboardLayout = () => (
       <SignOut className="mt-auto" />
     </aside>
 
-    <main className="flex-1 bg-background rounded-md p-4">
+    <main className="flex-1 flex gap-6">
       <Outlet />
     </main>
   </div>

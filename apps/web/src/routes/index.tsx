@@ -3,7 +3,7 @@ import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
 import { isAuthenticated } from "@/features/auth";
 
-const Index = () => {
+const IndexPage = () => {
   return (
     <div className="min-h-dvh w-full flex flex-col justify-center items-center gap-4">
       <header className="w-full flex justify-between items-center py-4 px-4 sm:px-8">
@@ -41,7 +41,7 @@ const Index = () => {
 };
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: IndexPage,
   beforeLoad: () => {
     if (isAuthenticated()) {
       throw redirect({
