@@ -24,12 +24,20 @@ input LoginInput {
 type Mutation {
   login(data: LoginInput!): Auth!
   refresh(refreshToken: String!): Token!
+  signUp(data: SignUpInput!): Auth!
 }
 
 type Query {
   me: User!
   user(id: String!): User!
   users: [User!]!
+}
+
+input SignUpInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
 }
 
 type Token {

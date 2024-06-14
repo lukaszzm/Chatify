@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
 
+import { SignUpInput } from "@/auth/dtos/sign-up.input";
 import { PasswordService } from "@/auth/password.service";
 import { JwtPayload } from "@/auth/types/jwt-payload.type";
 import { UsersService } from "@/users/users.service";
@@ -31,6 +32,27 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException("Incorrect email or password");
     }
+
+    return this.generateTokens({
+      sub: user.id,
+      email: user.email,
+    });
+  }
+
+  async signUp(payload: SignUpInput) {
+    const fixedEmail = payload.email.toLowerCase();
+    const existingUser = await this.usersService.findOneByEmail(fixedEmail);
+
+    if (existingUser) {
+      throw new UnauthorizedException("User with this email already exists");
+    }
+
+    const hashedPassword = await this.passwordService.hash(payload.password);
+
+    const user = await this.usersService.create({
+      ...payload,
+      password: hashedPassword,
+    });
 
     return this.generateTokens({
       sub: user.id,

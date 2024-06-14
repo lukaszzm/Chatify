@@ -20,4 +20,15 @@ export class UsersService {
   async findMany() {
     return this.prismaService.user.findMany();
   }
+
+  async create(data: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+  }) {
+    return this.prismaService.user.create({
+      data,
+    });
+  }
 }
