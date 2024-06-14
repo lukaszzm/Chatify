@@ -7,7 +7,7 @@ const ChatPage = () => {
   return (
     <div className="bg-background p-4 rounded-md space-y-4 w-full max-w-xs">
       <SearchInput placeholder="Search" />
-      <h1 className="text-xl">Chats</h1>
+      <h1 className="text-2xl">Chats</h1>
       <RecentMessages />
     </div>
   );
