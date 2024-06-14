@@ -35,7 +35,7 @@ export function useSignIn() {
     if (result.data?.login) {
       saveAuthTokens(result.data.login);
       await navigate({
-        to: "/dashboard",
+        to: "/chat",
       });
     }
   };

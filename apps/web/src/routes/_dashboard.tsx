@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { DashboardLayout } from "@/components/layouts/dashboard-layout";
+import { DashboardLayout } from "@/components/layouts/dashboard";
 import { isAuthenticated } from "@/features/auth";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_dashboard")({
   component: DashboardLayout,
   beforeLoad: () => {
     if (!isAuthenticated()) {

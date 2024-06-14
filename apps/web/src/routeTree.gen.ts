@@ -11,19 +11,37 @@
 // Import Routes
 
 import { Route as rootRoute } from "./routes/__root";
-import { Route as DashboardImport } from "./routes/dashboard";
+import { Route as DashboardImport } from "./routes/_dashboard";
 import { Route as IndexImport } from "./routes/index";
+import { Route as DashboardSettingsImport } from "./routes/_dashboard.settings";
+import { Route as DashboardNotesImport } from "./routes/_dashboard.notes";
+import { Route as DashboardChatImport } from "./routes/_dashboard.chat";
 
 // Create/Update Routes
 
 const DashboardRoute = DashboardImport.update({
-  path: "/dashboard",
+  id: "/_dashboard",
   getParentRoute: () => rootRoute,
 } as any);
 
 const IndexRoute = IndexImport.update({
   path: "/",
   getParentRoute: () => rootRoute,
+} as any);
+
+const DashboardSettingsRoute = DashboardSettingsImport.update({
+  path: "/settings",
+  getParentRoute: () => DashboardRoute,
+} as any);
+
+const DashboardNotesRoute = DashboardNotesImport.update({
+  path: "/notes",
+  getParentRoute: () => DashboardRoute,
+} as any);
+
+const DashboardChatRoute = DashboardChatImport.update({
+  path: "/chat",
+  getParentRoute: () => DashboardRoute,
 } as any);
 
 // Populate the FileRoutesByPath interface
@@ -37,19 +55,47 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexImport;
       parentRoute: typeof rootRoute;
     };
-    "/dashboard": {
-      id: "/dashboard";
-      path: "/dashboard";
-      fullPath: "/dashboard";
+    "/_dashboard": {
+      id: "/_dashboard";
+      path: "";
+      fullPath: "";
       preLoaderRoute: typeof DashboardImport;
       parentRoute: typeof rootRoute;
+    };
+    "/_dashboard/chat": {
+      id: "/_dashboard/chat";
+      path: "/chat";
+      fullPath: "/chat";
+      preLoaderRoute: typeof DashboardChatImport;
+      parentRoute: typeof DashboardImport;
+    };
+    "/_dashboard/notes": {
+      id: "/_dashboard/notes";
+      path: "/notes";
+      fullPath: "/notes";
+      preLoaderRoute: typeof DashboardNotesImport;
+      parentRoute: typeof DashboardImport;
+    };
+    "/_dashboard/settings": {
+      id: "/_dashboard/settings";
+      path: "/settings";
+      fullPath: "/settings";
+      preLoaderRoute: typeof DashboardSettingsImport;
+      parentRoute: typeof DashboardImport;
     };
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexRoute, DashboardRoute });
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  DashboardRoute: DashboardRoute.addChildren({
+    DashboardChatRoute,
+    DashboardNotesRoute,
+    DashboardSettingsRoute,
+  }),
+});
 
 /* prettier-ignore-end */
 
@@ -60,14 +106,31 @@ export const routeTree = rootRoute.addChildren({ IndexRoute, DashboardRoute });
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard"
+        "/_dashboard"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
+    "/_dashboard": {
+      "filePath": "_dashboard.tsx",
+      "children": [
+        "/_dashboard/chat",
+        "/_dashboard/notes",
+        "/_dashboard/settings"
+      ]
+    },
+    "/_dashboard/chat": {
+      "filePath": "_dashboard.chat.tsx",
+      "parent": "/_dashboard"
+    },
+    "/_dashboard/notes": {
+      "filePath": "_dashboard.notes.tsx",
+      "parent": "/_dashboard"
+    },
+    "/_dashboard/settings": {
+      "filePath": "_dashboard.settings.tsx",
+      "parent": "/_dashboard"
     }
   }
 }
