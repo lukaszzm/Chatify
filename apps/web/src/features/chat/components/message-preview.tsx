@@ -29,9 +29,9 @@ export const MessagePreview = ({
           <h3 className="font-semibold text-primary text-base">
             {firstName} {lastName}
           </h3>
-          <span className="text-xs text-muted-foreground/80">{createdAt}</span>
+          <span className="text-xs text-muted-foreground/60">{createdAt}</span>
         </div>
-        <p className="text-muted-foreground text-xs truncate">{message}</p>
+        <p className="text-muted-foreground/80 text-xs truncate">{message}</p>
       </div>
     </Button>
   );
