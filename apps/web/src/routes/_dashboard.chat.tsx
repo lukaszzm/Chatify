@@ -1,15 +1,18 @@
 import { SearchInput } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { RecentMessages } from "@/features/chat";
+import { Chat, ChatList } from "@/features/chat";
 
 const ChatPage = () => {
   return (
-    <div className="bg-background p-4 rounded-md space-y-4 w-full max-w-xs">
-      <SearchInput placeholder="Search" />
-      <h1 className="text-2xl">Chats</h1>
-      <RecentMessages />
-    </div>
+    <>
+      <div className="bg-background p-4 rounded-md space-y-4 w-full max-w-xs">
+        <SearchInput placeholder="Search" />
+        <h1 className="text-2xl">Chats</h1>
+        <ChatList />
+      </div>
+      <Chat />
+    </>
   );
 };
 
