@@ -18,3 +18,4 @@ export * from "./components/ui/tooltip";
 export * from "./components/ui/tooltip-button";
 export * from "./components/ui/alert-dialog";
 export * from "./components/ui/avatar";
+export * from "./components/ui/chat-bubble";
