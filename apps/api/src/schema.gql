@@ -29,13 +29,13 @@ scalar DateTime
 type Message {
   chat: Chat!
   chatId: ID!
+  content: String!
   createdAt: DateTime!
   id: ID!
   isDeleted: Boolean!
   isSeen: Boolean!
   sender: User!
   senderId: ID!
-  text: String!
   updatedAt: DateTime!
 }
 
@@ -47,6 +47,7 @@ type Mutation {
 
 type Query {
   chat(id: String!): Chat!
+  chats: [Chat!]!
   me: User!
   user(id: String!): User!
   users: [User!]!

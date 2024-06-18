@@ -23,6 +23,12 @@ export class ChatsResolver {
     return this.chatsService.findOneById(id, me.id);
   }
 
+  @UseGuards(GqlAuthGuard)
+  @Query(() => [Chat])
+  async chats(@CurrentUser() me: User) {
+    return this.chatsService.findMany(me.id);
+  }
+
   @ResolveField()
   async participants(@Parent() chat: Chat) {
     return this.usersService.findManyByChat(chat.id);

@@ -27,4 +27,16 @@ export class ChatsService {
 
     return chat;
   }
+
+  async findMany(userId: string) {
+    return this.prismaService.chat.findMany({
+      where: {
+        participants: {
+          some: {
+            userId,
+          },
+        },
+      },
+    });
+  }
 }

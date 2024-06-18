@@ -9,7 +9,7 @@ import { User } from "@/users/models/user.model";
 export class Message extends BaseModel {
   @Field(() => String)
   @IsString()
-  text: string;
+  content: string;
 
   @Field(() => Boolean)
   @IsBoolean()
