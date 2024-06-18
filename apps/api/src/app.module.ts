@@ -7,7 +7,9 @@ import { CustomPrismaModule } from "nestjs-prisma";
 import path from "path";
 
 import { AuthModule } from "@/auth/auth.module";
+import { ChatsModule } from "@/chats/chats.module";
 import configuration, { validationSchema } from "@/config/configuration";
+import { MessagesModule } from "@/messages/messages.module";
 import { UsersModule } from "@/users/users.module";
 
 @Module({
@@ -27,6 +29,8 @@ import { UsersModule } from "@/users/users.module";
     }),
     AuthModule,
     UsersModule,
+    ChatsModule,
+    MessagesModule,
   ],
 })
 export class AppModule {}

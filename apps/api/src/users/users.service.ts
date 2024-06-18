@@ -21,6 +21,18 @@ export class UsersService {
     return this.prismaService.user.findMany();
   }
 
+  async findManyByChat(chatId: string) {
+    return this.prismaService.user.findMany({
+      where: {
+        chats: {
+          some: {
+            chatId,
+          },
+        },
+      },
+    });
+  }
+
   async create(data: {
     email: string;
     password: string;

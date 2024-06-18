@@ -8,32 +8,32 @@ datasource db {
 }
 
 model User {
-  id            String        @id @default(cuid())
-  email         String        @unique
-  firstName      String
-  lastName      String
-  password      String
-  isActive      Boolean       @default(false)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  sentMessages  Message[]
-  conversations Participant[]
+  id           String        @id @default(cuid())
+  email        String        @unique
+  firstName    String
+  lastName     String
+  password     String
+  isActive     Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  sentMessages Message[]
+  chats        Participant[]
 }
 
 model Message {
-  id             String       @id @default(cuid())
-  text           String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  isSeen         Boolean      @default(false)
-  isDeleted      Boolean      @default(false)
-  senderId       String
-  sender         User         @relation(fields: [senderId], references: [id])
-  conversationId String
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isSeen    Boolean  @default(false)
+  isDeleted Boolean  @default(false)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id])
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id])
 }
 
-model Conversation {
+model Chat {
   id           String        @id @default(cuid())
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -44,10 +44,10 @@ model Conversation {
 }
 
 model Participant {
-  userId         String
-  user           User         @relation(fields: [userId], references: [id])
-  conversationId String
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id])
 
-  @@id([userId, conversationId])
+  @@id([userId, chatId])
 }
