@@ -10,118 +10,144 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as DashboardImport } from "./routes/_dashboard";
-import { Route as AuthImport } from "./routes/_auth";
-import { Route as IndexImport } from "./routes/index";
-import { Route as DashboardSettingsImport } from "./routes/_dashboard.settings";
-import { Route as DashboardNotesImport } from "./routes/_dashboard.notes";
-import { Route as DashboardChatImport } from "./routes/_dashboard.chat";
-import { Route as AuthSignUpImport } from "./routes/_auth.sign-up";
-import { Route as AuthSignInImport } from "./routes/_auth.sign-in";
+import { Route as rootRoute } from './routes/__root'
+import { Route as DashboardImport } from './routes/_dashboard'
+import { Route as AuthImport } from './routes/_auth'
+import { Route as IndexImport } from './routes/index'
+import { Route as DashboardSettingsImport } from './routes/_dashboard.settings'
+import { Route as DashboardNotesImport } from './routes/_dashboard.notes'
+import { Route as DashboardChatImport } from './routes/_dashboard.chat'
+import { Route as AuthSignUpImport } from './routes/_auth.sign-up'
+import { Route as AuthSignInImport } from './routes/_auth.sign-in'
+import { Route as DashboardChatIndexImport } from './routes/_dashboard.chat.index'
+import { Route as DashboardChatChatIdImport } from './routes/_dashboard.chat.$chatId'
 
 // Create/Update Routes
 
 const DashboardRoute = DashboardImport.update({
-  id: "/_dashboard",
+  id: '/_dashboard',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const AuthRoute = AuthImport.update({
-  id: "/_auth",
+  id: '/_auth',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const IndexRoute = IndexImport.update({
-  path: "/",
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const DashboardSettingsRoute = DashboardSettingsImport.update({
-  path: "/settings",
+  path: '/settings',
   getParentRoute: () => DashboardRoute,
-} as any);
+} as any)
 
 const DashboardNotesRoute = DashboardNotesImport.update({
-  path: "/notes",
+  path: '/notes',
   getParentRoute: () => DashboardRoute,
-} as any);
+} as any)
 
 const DashboardChatRoute = DashboardChatImport.update({
-  path: "/chat",
+  path: '/chat',
   getParentRoute: () => DashboardRoute,
-} as any);
+} as any)
 
 const AuthSignUpRoute = AuthSignUpImport.update({
-  path: "/sign-up",
+  path: '/sign-up',
   getParentRoute: () => AuthRoute,
-} as any);
+} as any)
 
 const AuthSignInRoute = AuthSignInImport.update({
-  path: "/sign-in",
+  path: '/sign-in',
   getParentRoute: () => AuthRoute,
-} as any);
+} as any)
+
+const DashboardChatIndexRoute = DashboardChatIndexImport.update({
+  path: '/',
+  getParentRoute: () => DashboardChatRoute,
+} as any)
+
+const DashboardChatChatIdRoute = DashboardChatChatIdImport.update({
+  path: '/$chatId',
+  getParentRoute: () => DashboardChatRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/_auth": {
-      id: "/_auth";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof AuthImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/_dashboard": {
-      id: "/_dashboard";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof DashboardImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/_auth/sign-in": {
-      id: "/_auth/sign-in";
-      path: "/sign-in";
-      fullPath: "/sign-in";
-      preLoaderRoute: typeof AuthSignInImport;
-      parentRoute: typeof AuthImport;
-    };
-    "/_auth/sign-up": {
-      id: "/_auth/sign-up";
-      path: "/sign-up";
-      fullPath: "/sign-up";
-      preLoaderRoute: typeof AuthSignUpImport;
-      parentRoute: typeof AuthImport;
-    };
-    "/_dashboard/chat": {
-      id: "/_dashboard/chat";
-      path: "/chat";
-      fullPath: "/chat";
-      preLoaderRoute: typeof DashboardChatImport;
-      parentRoute: typeof DashboardImport;
-    };
-    "/_dashboard/notes": {
-      id: "/_dashboard/notes";
-      path: "/notes";
-      fullPath: "/notes";
-      preLoaderRoute: typeof DashboardNotesImport;
-      parentRoute: typeof DashboardImport;
-    };
-    "/_dashboard/settings": {
-      id: "/_dashboard/settings";
-      path: "/settings";
-      fullPath: "/settings";
-      preLoaderRoute: typeof DashboardSettingsImport;
-      parentRoute: typeof DashboardImport;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/_dashboard': {
+      id: '/_dashboard'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/sign-in': {
+      id: '/_auth/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof AuthSignInImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/sign-up': {
+      id: '/_auth/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof AuthSignUpImport
+      parentRoute: typeof AuthImport
+    }
+    '/_dashboard/chat': {
+      id: '/_dashboard/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof DashboardChatImport
+      parentRoute: typeof DashboardImport
+    }
+    '/_dashboard/notes': {
+      id: '/_dashboard/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof DashboardNotesImport
+      parentRoute: typeof DashboardImport
+    }
+    '/_dashboard/settings': {
+      id: '/_dashboard/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof DashboardSettingsImport
+      parentRoute: typeof DashboardImport
+    }
+    '/_dashboard/chat/$chatId': {
+      id: '/_dashboard/chat/$chatId'
+      path: '/$chatId'
+      fullPath: '/chat/$chatId'
+      preLoaderRoute: typeof DashboardChatChatIdImport
+      parentRoute: typeof DashboardChatImport
+    }
+    '/_dashboard/chat/': {
+      id: '/_dashboard/chat/'
+      path: '/'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof DashboardChatIndexImport
+      parentRoute: typeof DashboardChatImport
+    }
   }
 }
 
@@ -131,11 +157,14 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AuthRoute: AuthRoute.addChildren({ AuthSignInRoute, AuthSignUpRoute }),
   DashboardRoute: DashboardRoute.addChildren({
-    DashboardChatRoute,
+    DashboardChatRoute: DashboardChatRoute.addChildren({
+      DashboardChatChatIdRoute,
+      DashboardChatIndexRoute,
+    }),
     DashboardNotesRoute,
     DashboardSettingsRoute,
   }),
-});
+})
 
 /* prettier-ignore-end */
 
@@ -178,7 +207,11 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_dashboard/chat": {
       "filePath": "_dashboard.chat.tsx",
-      "parent": "/_dashboard"
+      "parent": "/_dashboard",
+      "children": [
+        "/_dashboard/chat/$chatId",
+        "/_dashboard/chat/"
+      ]
     },
     "/_dashboard/notes": {
       "filePath": "_dashboard.notes.tsx",
@@ -187,6 +220,14 @@ export const routeTree = rootRoute.addChildren({
     "/_dashboard/settings": {
       "filePath": "_dashboard.settings.tsx",
       "parent": "/_dashboard"
+    },
+    "/_dashboard/chat/$chatId": {
+      "filePath": "_dashboard.chat.$chatId.tsx",
+      "parent": "/_dashboard/chat"
+    },
+    "/_dashboard/chat/": {
+      "filePath": "_dashboard.chat.index.tsx",
+      "parent": "/_dashboard/chat"
     }
   }
 }

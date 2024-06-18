@@ -5,10 +5,14 @@ import { Provider } from "urql";
 import { client } from "@/lib/gql";
 
 export const Route = createRootRoute({
-  component: () => (
+  component: RootPage,
+});
+
+function RootPage() {
+  return (
     <Provider value={client}>
       <Outlet />
       <TanStackRouterDevtools />
     </Provider>
-  ),
-});
+  );
+}
