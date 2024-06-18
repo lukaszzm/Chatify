@@ -2,7 +2,7 @@ import { ChatBubble } from "@chatify/ui";
 
 export const ChatBox = () => {
   return (
-    <div className="p-4 space-y-2">
+    <div className="p-4 space-y-2 flex-1">
       <ChatBubble isMine={true} createdAt="2 hours ago">
         That&apos;s awesome. I think our users will really appreciate the improvements.
       </ChatBubble>
