@@ -1,6 +1,6 @@
+import type { User as UserType } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import type { User as UserType } from "@prisma/client";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
