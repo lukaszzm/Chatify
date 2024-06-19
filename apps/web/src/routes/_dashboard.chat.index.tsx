@@ -1,3 +1,4 @@
+import { Container } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_dashboard/chat/")({
@@ -6,8 +7,10 @@ export const Route = createFileRoute("/_dashboard/chat/")({
 
 function ChatIndexPage() {
   return (
-    <div className="w-full flex justify-center items-center p-4">
-      <p className="text-muted-foreground">Select chat to start conversation.</p>
-    </div>
+    <Container variant="ghost" className="flex justify-center items-center">
+      <p className="text-muted-foreground text-center">
+        Select chat to start conversation.
+      </p>
+    </Container>
   );
 }

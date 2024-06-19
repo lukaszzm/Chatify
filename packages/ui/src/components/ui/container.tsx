@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
-const containerVariants = cva("p-4 rounded-md space-y-4 w-full", {
+const containerVariants = cva("rounded-md w-full", {
   variants: {
     variant: {
       default: "bg-background",

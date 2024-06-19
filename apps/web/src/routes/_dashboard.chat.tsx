@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_dashboard/chat")({
 function ChatRootPage() {
   return (
     <>
-      <Container size="sm">
+      <Container size="sm" className="space-y-4 p-4">
         <SearchInput placeholder="Search" />
         <h1 className="text-2xl">Chats</h1>
         <ChatList />

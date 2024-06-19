@@ -17,24 +17,22 @@ export const ChatList = () => {
   }
 
   return (
-    <>
-      <ul className="space-y-2">
-        {data ? (
-          data.recentChats.map(({ id, recentMessage }) => (
-            <li key={id}>
-              <ChatPreview
-                id={id}
-                createdAt={formatDate(recentMessage.createdAt)}
-                firstName={recentMessage.sender.firstName}
-                lastName={recentMessage.sender.lastName}
-                message={recentMessage.content}
-              />
-            </li>
-          ))
-        ) : (
-          <p>No chats</p>
-        )}
-      </ul>
-    </>
+    <ul className="space-y-2">
+      {data ? (
+        data.recentChats.map(({ id, recentMessage }) => (
+          <li key={id}>
+            <ChatPreview
+              id={id}
+              createdAt={formatDate(recentMessage.createdAt)}
+              firstName={recentMessage.sender.firstName}
+              lastName={recentMessage.sender.lastName}
+              message={recentMessage.content}
+            />
+          </li>
+        ))
+      ) : (
+        <p>No chats</p>
+      )}
+    </ul>
   );
 };
