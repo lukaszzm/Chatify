@@ -55,9 +55,21 @@ type Mutation {
   signUp(data: SignUpInput!): Auth!
 }
 
+type Note {
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  title: String!
+  updatedAt: DateTime!
+  user: User!
+  userId: String!
+}
+
 type Query {
   chat(chatId: String!): Chat!
   me: User!
+  note(noteId: String!): Note!
+  notes: [Note!]!
   recentChats: [ChatPreview!]!
   user(id: String!): User!
   users: [User!]!
