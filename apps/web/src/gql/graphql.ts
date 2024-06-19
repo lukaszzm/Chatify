@@ -193,7 +193,13 @@ export type NotesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type NotesQuery = {
   __typename?: "Query";
-  notes: Array<{ __typename?: "Note"; id: string; title: string }>;
+  notes: Array<{
+    __typename?: "Note";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+  }>;
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -356,6 +362,8 @@ export const NotesDocument = {
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "title" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
               ],
             },
           },

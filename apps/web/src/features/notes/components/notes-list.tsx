@@ -19,9 +19,7 @@ export const NotesList = () => {
 
   return (
     <div className="space-y-2">
-      {notes
-        ? notes.map((note) => <NotesItem key={note.id} id={note.id} title={note.title} />)
-        : null}
+      {notes ? notes.map((note) => <NotesItem key={note.id} {...note} />) : null}
     </div>
   );
 };

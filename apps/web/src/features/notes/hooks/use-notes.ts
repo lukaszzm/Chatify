@@ -7,6 +7,8 @@ const NotesQuery = graphql(`
     notes {
       id
       title
+      content
+      createdAt
     }
   }
 `);
