@@ -90,10 +90,23 @@ export type MutationSignUpArgs = {
   data: SignUpInput;
 };
 
+export type Note = {
+  __typename?: "Note";
+  content: Scalars["String"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ID"]["output"];
+  title: Scalars["String"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
+  user: User;
+  userId: Scalars["String"]["output"];
+};
+
 export type Query = {
   __typename?: "Query";
   chat: Chat;
   me: User;
+  note: Note;
+  notes: Array<Note>;
   recentChats: Array<ChatPreview>;
   user: User;
   users: Array<User>;
@@ -101,6 +114,10 @@ export type Query = {
 
 export type QueryChatArgs = {
   chatId: Scalars["String"]["input"];
+};
+
+export type QueryNoteArgs = {
+  noteId: Scalars["String"]["input"];
 };
 
 export type QueryUserArgs = {
@@ -170,6 +187,13 @@ export type RecentChatsQuery = {
       sender: { __typename?: "User"; firstName: string; lastName: string };
     };
   }>;
+};
+
+export type NotesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type NotesQuery = {
+  __typename?: "Query";
+  notes: Array<{ __typename?: "Note"; id: string; title: string }>;
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -314,6 +338,32 @@ export const RecentChatsDocument = {
     },
   ],
 } as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
+export const NotesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Notes" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "notes" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "title" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<NotesQuery, NotesQueryVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [
