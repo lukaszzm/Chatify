@@ -18,6 +18,7 @@ model User {
   updatedAt    DateTime      @updatedAt
   sentMessages Message[]
   chats        Participant[]
+  notes        Note[]
 }
 
 model Message {
@@ -50,4 +51,14 @@ model Participant {
   chat   Chat   @relation(fields: [chatId], references: [id])
 
   @@id([userId, chatId])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
