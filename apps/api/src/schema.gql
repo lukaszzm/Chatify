@@ -86,9 +86,9 @@ type Token {
 type User {
   createdAt: DateTime!
   email: String!
-  firstName: String
+  firstName: String!
   id: ID!
-  isActive: Boolean
-  lastName: String
+  isActive: Boolean!
+  lastName: String!
   updatedAt: DateTime!
 }

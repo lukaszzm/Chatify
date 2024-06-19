@@ -1,5 +1,5 @@
 import { Field, HideField, ObjectType } from "@nestjs/graphql";
-import { Allow, IsEmail, IsOptional } from "class-validator";
+import { IsBoolean, IsEmail, IsString } from "class-validator";
 
 import { BaseModel } from "@/common/models/base.model";
 
@@ -9,22 +9,19 @@ export class User extends BaseModel {
   @IsEmail()
   email: string;
 
-  @Field(() => String, { nullable: true })
-  @Allow()
-  @IsOptional()
-  firstName?: string;
+  @Field(() => String)
+  @IsString()
+  firstName: string;
 
-  @Field(() => String, { nullable: true })
-  @Allow()
-  @IsOptional()
-  lastName?: string;
+  @Field(() => String)
+  @IsString()
+  lastName: string;
 
-  @Field(() => Boolean, { nullable: true })
-  @Allow()
-  @IsOptional()
-  isActive?: boolean;
+  @Field(() => Boolean)
+  @IsBoolean()
+  isActive: boolean;
 
   @HideField()
-  @Allow()
+  @IsString()
   password: string;
 }
