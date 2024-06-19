@@ -7,7 +7,5 @@ export const Route = createFileRoute("/_dashboard/chat/$chatId")({
 });
 
 function ChatByIdPage() {
-  const { chatId } = Route.useParams();
-
-  return <Chat id={chatId} />;
+  return <Chat />;
 }
