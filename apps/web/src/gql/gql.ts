@@ -19,6 +19,8 @@ const documents = {
     types.SignUpDocument,
   "\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n":
     types.RecentChatsDocument,
+  "\n  query Note($noteId: String!) {\n    note(noteId: $noteId) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n":
+    types.NoteDocument,
   "\n  query Notes {\n    notes {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n":
     types.NotesDocument,
   "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n":
@@ -57,6 +59,12 @@ export function graphql(
 export function graphql(
   source: "\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n"
 ): (typeof documents)["\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query Note($noteId: String!) {\n    note(noteId: $noteId) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"
+): (typeof documents)["\n  query Note($noteId: String!) {\n    note(noteId: $noteId) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

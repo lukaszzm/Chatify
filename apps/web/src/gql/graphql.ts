@@ -189,6 +189,21 @@ export type RecentChatsQuery = {
   }>;
 };
 
+export type NoteQueryVariables = Exact<{
+  noteId: Scalars["String"]["input"];
+}>;
+
+export type NoteQuery = {
+  __typename?: "Query";
+  note: {
+    __typename?: "Note";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+  };
+};
+
 export type NotesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type NotesQuery = {
@@ -344,6 +359,51 @@ export const RecentChatsDocument = {
     },
   ],
 } as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
+export const NoteDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Note" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "note" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "noteId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "title" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<NoteQuery, NoteQueryVariables>;
 export const NotesDocument = {
   kind: "Document",
   definitions: [
