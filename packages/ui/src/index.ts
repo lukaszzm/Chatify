@@ -20,3 +20,4 @@ export * from "./components/ui/alert-dialog";
 export * from "./components/ui/avatar";
 export * from "./components/ui/chat-bubble";
 export * from "./components/ui/skeleton";
+export * from "./components/ui/container";
