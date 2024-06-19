@@ -1,7 +1,7 @@
 import { Skeleton } from "@chatify/ui";
 
 const NotesItemSkeleton = () => {
-  return <Skeleton className="w-full h-8 rounded-md" />;
+  return <Skeleton className="w-full h-14 rounded-md" />;
 };
 
 export const NotesListSkeleton = () => {
