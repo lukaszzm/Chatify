@@ -37,6 +37,9 @@ export class ChatsService {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
   }
 }

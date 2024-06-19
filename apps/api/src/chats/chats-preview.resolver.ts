@@ -1,16 +1,16 @@
-import type { User } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
-import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { ChatsService } from "@/chats/chats.service";
-import { Chat } from "@/chats/models/chat.model";
+import { ChatPreview } from "@/chats/models/chat-preview.model";
 import { MessagesService } from "@/messages/messages.service";
+import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
 
-@Resolver(() => Chat)
-export class ChatsResolver {
+@Resolver(() => ChatPreview)
+export class ChatsPreviewResolver {
   constructor(
     private readonly chatsService: ChatsService,
     private readonly usersService: UsersService,
@@ -18,21 +18,18 @@ export class ChatsResolver {
   ) {}
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => Chat)
-  async chat(
-    @Args("chatId", { type: () => String }) chatId: string,
-    @CurrentUser() me: User
-  ) {
-    return this.chatsService.findOneById(chatId, me.id);
+  @Query(() => [ChatPreview]!)
+  async recentChats(@CurrentUser() me: User) {
+    return this.chatsService.findMany(me.id);
   }
 
   @ResolveField()
-  async participants(@Parent() chat: Chat) {
+  async participants(@Parent() chat: ChatPreview) {
     return this.usersService.findManyByChat(chat.id);
   }
 
   @ResolveField()
-  async messages(@Parent() chat: Chat) {
-    return this.messagesService.findMany(chat.id);
+  async recentMessage(@Parent() chat: ChatPreview) {
+    return this.messagesService.findLast(chat.id);
   }
 }

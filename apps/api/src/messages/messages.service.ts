@@ -5,12 +5,24 @@ import { PrismaService } from "nestjs-prisma";
 export class MessagesService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findManyByChat(chatId: string) {
+  async findMany(chatId: string) {
     return this.prismaService.message.findMany({
       where: {
-        chat: {
-          id: chatId,
-        },
+        chatId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
+  async findLast(chatId: string) {
+    return this.prismaService.message.findFirst({
+      where: {
+        chatId,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
   }
