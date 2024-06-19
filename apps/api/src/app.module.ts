@@ -10,6 +10,7 @@ import { AuthModule } from "@/auth/auth.module";
 import { ChatsModule } from "@/chats/chats.module";
 import configuration, { validationSchema } from "@/config/configuration";
 import { MessagesModule } from "@/messages/messages.module";
+import { NotesModule } from "@/notes/notes.module";
 import { UsersModule } from "@/users/users.module";
 
 @Module({
@@ -31,6 +32,7 @@ import { UsersModule } from "@/users/users.module";
     UsersModule,
     ChatsModule,
     MessagesModule,
+    NotesModule,
   ],
 })
 export class AppModule {}
