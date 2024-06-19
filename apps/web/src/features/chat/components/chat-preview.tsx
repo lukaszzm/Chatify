@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, Button } from "@chatify/ui";
 import { Link } from "@tanstack/react-router";
 
 interface ChatPreviewProps {
+  id: string;
   firstName: string;
   lastName: string;
   createdAt: string;
@@ -9,6 +10,7 @@ interface ChatPreviewProps {
 }
 
 export const ChatPreview = ({
+  id,
   firstName,
   lastName,
   createdAt,
@@ -23,7 +25,14 @@ export const ChatPreview = ({
       className="p-3 rounded-sm justify-start items-center gap-2 w-full hover:bg-muted/40"
       asChild
     >
-      <Link aria-label={`Chat with ${firstName} ${lastName}`} to="/chat">
+      <Link
+        aria-label={`Chat with ${firstName} ${lastName}`}
+        to="/chat/$chatId"
+        params={{ chatId: id }}
+        activeProps={{
+          className: "bg-muted/40",
+        }}
+      >
         <Avatar>
           <AvatarFallback>{avatarFallback}</AvatarFallback>
         </Avatar>

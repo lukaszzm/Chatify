@@ -17,6 +17,8 @@ const documents = {
     types.SignInDocument,
   "\n  mutation SignUp($data: SignUpInput!) {\n    signUp(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.SignUpDocument,
+  "\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n":
+    types.RecentChatsDocument,
   "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.RefreshTokenDocument,
 };
@@ -47,6 +49,12 @@ export function graphql(
 export function graphql(
   source: "\n  mutation SignUp($data: SignUpInput!) {\n    signUp(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n"
 ): (typeof documents)["\n  mutation SignUp($data: SignUpInput!) {\n    signUp(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n"
+): (typeof documents)["\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

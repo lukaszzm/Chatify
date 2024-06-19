@@ -1,38 +1,40 @@
+import { ErrorAlert } from "@/components/errors/error-alert";
 import { ChatPreview } from "@/features/chat/components/chat-preview";
+import { ChatListSkeleton } from "@/features/chat/components/skeletons/chat-list-loading";
+import { useRecentChats } from "@/features/chat/hooks/use-recent-chats";
+import { formatDate } from "@/utils/format-date";
 
 export const ChatList = () => {
+  const [result] = useRecentChats();
+  const { data, fetching, error } = result;
+
+  if (fetching) {
+    return <ChatListSkeleton />;
+  }
+
+  if (error) {
+    return <ErrorAlert error={error} />;
+  }
+
   return (
-    <div className="space-y-2">
-      <ChatPreview
-        firstName="John"
-        lastName="Doe"
-        createdAt="2 hours ago"
-        message="Hey, how are you?"
-      />
-      <ChatPreview
-        firstName="Peter"
-        lastName="Crouch"
-        createdAt="3 hours ago"
-        message="I'm good, thanks for asking!"
-      />
-      <ChatPreview
-        firstName="Adam"
-        lastName="Brown"
-        createdAt="4 hours ago"
-        message="Do you have any plans for the weekend?"
-      />
-      <ChatPreview
-        firstName="Anna"
-        lastName="Smith"
-        createdAt="5 hours ago"
-        message="Not yet, I'm thinking of going to the beach."
-      />
-      <ChatPreview
-        firstName="John"
-        lastName="Doe"
-        createdAt="6 hours ago"
-        message="That sounds like a great idea!"
-      />
-    </div>
+    <>
+      <ul className="space-y-2">
+        {data ? (
+          data.recentChats.map(({ id, recentMessage }) => (
+            <li key={id}>
+              <ChatPreview
+                id={id}
+                createdAt={formatDate(recentMessage.createdAt)}
+                firstName={recentMessage.sender.firstName}
+                lastName={recentMessage.sender.lastName}
+                message={recentMessage.content}
+              />
+            </li>
+          ))
+        ) : (
+          <p>No chats</p>
+        )}
+      </ul>
+    </>
   );
 };

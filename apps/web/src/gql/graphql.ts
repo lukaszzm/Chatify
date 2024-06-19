@@ -23,7 +23,7 @@ export type Scalars = {
   Int: { input: number; output: number };
   Float: { input: number; output: number };
   /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: { input: any; output: any };
+  DateTime: { input: string; output: string };
 };
 
 export type Auth = {
@@ -33,6 +33,42 @@ export type Auth = {
   /** JWT refresh token */
   refreshToken: Scalars["String"]["output"];
   user: User;
+};
+
+export type Chat = {
+  __typename?: "Chat";
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ID"]["output"];
+  isDeleted: Scalars["Boolean"]["output"];
+  messages: Array<Message>;
+  participants: Array<User>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
+};
+
+export type ChatPreview = {
+  __typename?: "ChatPreview";
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ID"]["output"];
+  isDeleted: Scalars["Boolean"]["output"];
+  participants: Array<User>;
+  recentMessage: Message;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
+};
+
+export type Message = {
+  __typename?: "Message";
+  chat: Chat;
+  chatId: Scalars["ID"]["output"];
+  content: Scalars["String"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ID"]["output"];
+  isDeleted: Scalars["Boolean"]["output"];
+  isSeen: Scalars["Boolean"]["output"];
+  sender: User;
+  senderId: Scalars["ID"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
 };
 
 export type Mutation = {
@@ -56,9 +92,15 @@ export type MutationSignUpArgs = {
 
 export type Query = {
   __typename?: "Query";
+  chat: Chat;
   me: User;
+  recentChats: Array<ChatPreview>;
   user: User;
   users: Array<User>;
+};
+
+export type QueryChatArgs = {
+  chatId: Scalars["String"]["input"];
 };
 
 export type QueryUserArgs = {
@@ -89,10 +131,10 @@ export type User = {
   __typename?: "User";
   createdAt: Scalars["DateTime"]["output"];
   email: Scalars["String"]["output"];
-  firstName?: Maybe<Scalars["String"]["output"]>;
+  firstName: Scalars["String"]["output"];
   id: Scalars["ID"]["output"];
-  isActive?: Maybe<Scalars["Boolean"]["output"]>;
-  lastName?: Maybe<Scalars["String"]["output"]>;
+  isActive: Scalars["Boolean"]["output"];
+  lastName: Scalars["String"]["output"];
   updatedAt: Scalars["DateTime"]["output"];
 };
 
@@ -112,6 +154,22 @@ export type SignUpMutationVariables = Exact<{
 export type SignUpMutation = {
   __typename?: "Mutation";
   signUp: { __typename?: "Auth"; accessToken: string; refreshToken: string };
+};
+
+export type RecentChatsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type RecentChatsQuery = {
+  __typename?: "Query";
+  recentChats: Array<{
+    __typename?: "ChatPreview";
+    id: string;
+    recentMessage: {
+      __typename?: "Message";
+      content: string;
+      createdAt: string;
+      sender: { __typename?: "User"; firstName: string; lastName: string };
+    };
+  }>;
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -209,6 +267,53 @@ export const SignUpDocument = {
     },
   ],
 } as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
+export const RecentChatsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "RecentChats" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "recentChats" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "recentMessage" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "content" } },
+                      { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "sender" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                            { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [
