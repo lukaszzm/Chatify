@@ -12,6 +12,8 @@ import {
 } from "@chatify/ui";
 import { Plus } from "lucide-react";
 
+import { NewNoteForm } from "@/features/notes/components/new-note-form";
+
 export const NewNote = () => {
   return (
     <Hybrid>
@@ -24,12 +26,12 @@ export const NewNote = () => {
         <HybridHeader>
           <HybridTitle>New Note</HybridTitle>
         </HybridHeader>
-        <HybridBody className="space-y-2">
-          <p>NEW NOTE FORM</p>
+        <HybridBody>
+          <NewNoteForm />
         </HybridBody>
         <HybridFooter>
           <HybridClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button variant="outline">Cancel</Button>
           </HybridClose>
         </HybridFooter>
       </HybridContent>
