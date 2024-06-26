@@ -24,3 +24,4 @@ export * from "./components/ui/container";
 export * from "./components/ui/badge";
 export * from "./components/ui/dropdown-menu";
 export * from "./components/ui/sonner";
+export * from "./components/ui/textarea";
