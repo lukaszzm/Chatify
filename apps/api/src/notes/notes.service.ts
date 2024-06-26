@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { PrismaService } from "nestjs-prisma";
 
+import { CreateNoteInput } from "@/notes/dtos/create-note.input";
+
 @Injectable()
 export class NotesService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -27,6 +29,16 @@ export class NotesService {
     return this.prismaService.note.findMany({
       where: {
         userId,
+      },
+    });
+  }
+
+  async create(data: CreateNoteInput, userId: string) {
+    return await this.prismaService.note.create({
+      data: {
+        ...data,
+        userId,
+        content: "",
       },
     });
   }

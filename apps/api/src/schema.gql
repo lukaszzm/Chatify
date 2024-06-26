@@ -31,6 +31,10 @@ type ChatPreview {
   updatedAt: DateTime!
 }
 
+input CreateNoteInput {
+  title: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -50,6 +54,7 @@ type Message {
 }
 
 type Mutation {
+  createNote(data: CreateNoteInput!): Note!
   refresh(refreshToken: String!): Token!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
