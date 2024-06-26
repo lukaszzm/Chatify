@@ -78,6 +78,7 @@ export type Message = {
 export type Mutation = {
   __typename?: "Mutation";
   createNote: Note;
+  deleteNote: Note;
   refresh: Token;
   signIn: Auth;
   signUp: Auth;
@@ -85,6 +86,10 @@ export type Mutation = {
 
 export type MutationCreateNoteArgs = {
   data: CreateNoteInput;
+};
+
+export type MutationDeleteNoteArgs = {
+  noteId: Scalars["String"]["input"];
 };
 
 export type MutationRefreshArgs = {
@@ -196,6 +201,15 @@ export type RecentChatsQuery = {
       sender: { __typename?: "User"; firstName: string; lastName: string };
     };
   }>;
+};
+
+export type DeleteNoteMutationVariables = Exact<{
+  noteId: Scalars["String"]["input"];
+}>;
+
+export type DeleteNoteMutation = {
+  __typename?: "Mutation";
+  deleteNote: { __typename?: "Note"; id: string };
 };
 
 export type CreateNoteMutationVariables = Exact<{
@@ -377,6 +391,46 @@ export const RecentChatsDocument = {
     },
   ],
 } as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
+export const DeleteNoteDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteNote" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteNote" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "noteId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteNoteMutation, DeleteNoteMutationVariables>;
 export const CreateNoteDocument = {
   kind: "Document",
   definitions: [
