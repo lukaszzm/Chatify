@@ -57,6 +57,10 @@ export type ChatPreview = {
   updatedAt: Scalars["DateTime"]["output"];
 };
 
+export type CreateNoteInput = {
+  title: Scalars["String"]["input"];
+};
+
 export type Message = {
   __typename?: "Message";
   chat: Chat;
@@ -73,9 +77,14 @@ export type Message = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  createNote: Note;
   refresh: Token;
   signIn: Auth;
   signUp: Auth;
+};
+
+export type MutationCreateNoteArgs = {
+  data: CreateNoteInput;
 };
 
 export type MutationRefreshArgs = {
@@ -187,6 +196,15 @@ export type RecentChatsQuery = {
       sender: { __typename?: "User"; firstName: string; lastName: string };
     };
   }>;
+};
+
+export type CreateNoteMutationVariables = Exact<{
+  data: CreateNoteInput;
+}>;
+
+export type CreateNoteMutation = {
+  __typename?: "Mutation";
+  createNote: { __typename?: "Note"; id: string };
 };
 
 export type NoteQueryVariables = Exact<{
@@ -359,6 +377,46 @@ export const RecentChatsDocument = {
     },
   ],
 } as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
+export const CreateNoteDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateNote" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "CreateNoteInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createNote" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreateNoteMutation, CreateNoteMutationVariables>;
 export const NoteDocument = {
   kind: "Document",
   definitions: [

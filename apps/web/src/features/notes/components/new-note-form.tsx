@@ -9,10 +9,20 @@ import {
   Input,
 } from "@chatify/ui";
 
+import { ErrorAlert } from "@/components/errors/error-alert";
 import { useNewNote } from "@/features/notes/hooks/use-new-note";
 
-export const NewNoteForm = () => {
-  const { form, onSubmit } = useNewNote();
+interface NewNoteFormProps {
+  onNoteCreated?: () => void;
+}
+
+export const NewNoteForm = ({ onNoteCreated }: NewNoteFormProps) => {
+  const { form, onSubmit, error } = useNewNote({
+    onSuccess: onNoteCreated,
+  });
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   return (
     <Form {...form}>
@@ -30,7 +40,12 @@ export const NewNoteForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Create</Button>
+
+        <ErrorAlert error={error} />
+
+        <Button type="submit" isLoading={isSubmitting}>
+          Create
+        </Button>
       </form>
     </Form>
   );

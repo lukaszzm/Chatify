@@ -11,12 +11,15 @@ import {
   TooltipButton,
 } from "@chatify/ui";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 import { NewNoteForm } from "@/features/notes/components/new-note-form";
 
 export const NewNote = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Hybrid>
+    <Hybrid open={isOpen} onOpenChange={setIsOpen}>
       <HybridTrigger asChild>
         <TooltipButton tooltipText="Add new note" variant="default" className="size-9">
           <Plus />
@@ -27,7 +30,7 @@ export const NewNote = () => {
           <HybridTitle>New Note</HybridTitle>
         </HybridHeader>
         <HybridBody>
-          <NewNoteForm />
+          <NewNoteForm onNoteCreated={() => setIsOpen(false)} />
         </HybridBody>
         <HybridFooter>
           <HybridClose asChild>
