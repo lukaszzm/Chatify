@@ -55,6 +55,7 @@ type Message {
 
 type Mutation {
   createNote(data: CreateNoteInput!): Note!
+  deleteNote(noteId: String!): Note!
   refresh(refreshToken: String!): Token!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!

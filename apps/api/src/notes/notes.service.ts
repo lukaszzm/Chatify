@@ -42,4 +42,26 @@ export class NotesService {
       },
     });
   }
+
+  async delete(noteId: string, userId: string) {
+    const note = await this.prismaService.note.findFirst({
+      where: {
+        id: noteId,
+      },
+    });
+
+    if (!note) {
+      throw new NotFoundException("Note not found");
+    }
+
+    if (note.userId !== userId) {
+      throw new UnauthorizedException("You are not authorized to delete this note");
+    }
+
+    return this.prismaService.note.delete({
+      where: {
+        id: noteId,
+      },
+    });
+  }
 }
