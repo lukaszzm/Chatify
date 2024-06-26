@@ -13,7 +13,7 @@ const NotesQuery = graphql(`
   }
 `);
 
-export const useNotes = () => {
+export const useNotesQuery = () => {
   return useQuery({
     query: NotesQuery,
   });

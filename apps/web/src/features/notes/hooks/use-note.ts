@@ -1,21 +1,13 @@
-import { useQuery } from "urql";
+import { useContext } from "react";
 
-import { graphql } from "@/gql";
+import { NoteContext } from "@/features/notes/contexts/note-context";
 
-const NoteQuery = graphql(`
-  query Note($noteId: String!) {
-    note(noteId: $noteId) {
-      id
-      title
-      content
-      createdAt
-    }
+export const useNote = () => {
+  const context = useContext(NoteContext);
+
+  if (!context) {
+    throw new Error("useNote must be used within a NoteProvider");
   }
-`);
 
-export const useNote = (noteId: string) => {
-  return useQuery({
-    query: NoteQuery,
-    variables: { noteId },
-  });
+  return context;
 };

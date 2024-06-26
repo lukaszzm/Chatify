@@ -1,10 +1,10 @@
 import { ErrorAlert } from "@/components/errors/error-alert";
 import { NotesItem } from "@/features/notes/components/notes-item";
 import { NotesListSkeleton } from "@/features/notes/components/skeletons/notes-list-skeleton";
-import { useNotes } from "@/features/notes/hooks/use-notes";
+import { useNotesQuery } from "@/features/notes/hooks/use-notes-query";
 
 export const NotesList = () => {
-  const [result] = useNotes();
+  const [result] = useNotesQuery();
   const { data, fetching, error } = result;
 
   if (fetching) {

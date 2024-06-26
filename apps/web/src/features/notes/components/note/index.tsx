@@ -1,17 +1,19 @@
-import { Badge, Container, Separator } from "@chatify/ui";
+import { Container, Separator } from "@chatify/ui";
 import { notFound } from "@tanstack/react-router";
 
 import { ErrorAlert } from "@/components/errors/error-alert";
+import { NoteContent } from "@/features/notes/components/note/note-content";
+import { NoteHeader } from "@/features/notes/components/note/note-header";
 import { NoteSkeleton } from "@/features/notes/components/skeletons/note-skeleton";
-import { useNote } from "@/features/notes/hooks/use-note";
-import { formatDate } from "@/utils/format-date";
+import { NoteProvider } from "@/features/notes/contexts/note-context";
+import { useNoteQuery } from "@/features/notes/hooks/use-note-query";
 
 interface NoteProps {
   id: string;
 }
 
 export const Note = ({ id }: NoteProps) => {
-  const [result] = useNote(id);
+  const [result] = useNoteQuery(id);
   const { data, fetching, error } = result;
 
   if (fetching) {
@@ -31,13 +33,11 @@ export const Note = ({ id }: NoteProps) => {
 
   return (
     <Container className="p-4 space-y-2">
-      <div className="flex gap-2">
-        <Badge>Created {formatDate(note.createdAt)}</Badge>
-        <Badge variant="secondary">Last updated {formatDate(note.createdAt)}</Badge>
-      </div>
-      <h1 className="text-2xl font-semibold ">{note.title}</h1>
-      <Separator />
-      <p className="text-base text-muted-foreground">{note.content}</p>
+      <NoteProvider note={note}>
+        <NoteHeader />
+        <Separator />
+        <NoteContent />
+      </NoteProvider>
     </Container>
   );
 };
