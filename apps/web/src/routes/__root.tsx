@@ -1,3 +1,4 @@
+import { Toaster } from "@chatify/ui";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Provider } from "urql";
@@ -12,6 +13,7 @@ function RootPage() {
   return (
     <Provider value={client}>
       <Outlet />
+      <Toaster />
       <TanStackRouterDevtools />
     </Provider>
   );
