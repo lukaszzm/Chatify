@@ -32,7 +32,7 @@ export const Note = ({ id }: NoteProps) => {
   const note = data.note;
 
   return (
-    <Container className="p-4 space-y-2">
+    <Container className="p-4 space-y-2 flex flex-col">
       <NoteProvider note={note}>
         <NoteHeader />
         <Separator />
