@@ -15,11 +15,11 @@ const CreateNoteMutation = graphql(`
   }
 `);
 
-interface UseNewNoteProps {
+interface UseCreateNoteProps {
   onSuccess?: () => void;
 }
 
-export const useNewNote = ({ onSuccess }: UseNewNoteProps) => {
+export const useCreateNote = ({ onSuccess }: UseCreateNoteProps) => {
   const form = useForm<NewNoteValues>({
     resolver: zodResolver(newNoteSchema),
     defaultValues: {

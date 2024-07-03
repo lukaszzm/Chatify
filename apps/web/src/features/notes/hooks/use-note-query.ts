@@ -14,10 +14,8 @@ const NoteQuery = graphql(`
 `);
 
 export const useNoteQuery = (noteId: string) => {
-  const [result] = useQuery({
+  return useQuery({
     query: NoteQuery,
     variables: { noteId },
   });
-
-  return result;
 };

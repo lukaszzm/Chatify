@@ -10,14 +10,14 @@ import {
 } from "@chatify/ui";
 
 import { ErrorAlert } from "@/components/errors/error-alert";
-import { useNewNote } from "@/features/notes/hooks/use-new-note";
+import { useCreateNote } from "@/features/notes/hooks/use-create-note";
 
 interface NewNoteFormProps {
   onNoteCreated?: () => void;
 }
 
 export const NewNoteForm = ({ onNoteCreated }: NewNoteFormProps) => {
-  const { form, onSubmit, error } = useNewNote({
+  const { form, onSubmit, error } = useCreateNote({
     onSuccess: onNoteCreated,
   });
   const {

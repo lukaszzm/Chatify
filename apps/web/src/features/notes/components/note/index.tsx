@@ -13,7 +13,7 @@ interface NoteProps {
 }
 
 export const Note = ({ id }: NoteProps) => {
-  const { data, fetching, error } = useNoteQuery(id);
+  const [{ data, fetching, error }] = useNoteQuery(id);
 
   if (fetching) {
     return <NoteSkeleton />;
@@ -23,16 +23,14 @@ export const Note = ({ id }: NoteProps) => {
     return <ErrorAlert error={error} />;
   }
 
-  if (!data?.note) {
+  if (!data) {
     notFound();
     return;
   }
 
-  const note = data.note;
-
   return (
     <Container className="p-4 space-y-2 flex flex-col">
-      <NoteProvider note={note}>
+      <NoteProvider note={data.note}>
         <NoteHeader />
         <Separator />
         <NoteContent />

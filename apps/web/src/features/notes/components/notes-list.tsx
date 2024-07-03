@@ -4,8 +4,7 @@ import { NotesListSkeleton } from "@/features/notes/components/skeletons/notes-l
 import { useNotesQuery } from "@/features/notes/hooks/use-notes-query";
 
 export const NotesList = () => {
-  const [result] = useNotesQuery();
-  const { data, fetching, error } = result;
+  const [{ data, fetching, error }] = useNotesQuery();
 
   if (fetching) {
     return <NotesListSkeleton />;
@@ -15,11 +14,15 @@ export const NotesList = () => {
     return <ErrorAlert error={error} />;
   }
 
-  const notes = data?.notes;
+  if (!data) {
+    return <p>No notes.</p>;
+  }
 
   return (
     <div className="space-y-2">
-      {notes ? notes.map((note) => <NotesItem key={note.id} {...note} />) : null}
+      {data.notes.map((note) => (
+        <NotesItem key={note.id} {...note} />
+      ))}
     </div>
   );
 };
