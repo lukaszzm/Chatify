@@ -64,4 +64,29 @@ export class NotesService {
       },
     });
   }
+
+  async update(noteId: string, content: string, userId: string) {
+    const note = await this.prismaService.note.findFirst({
+      where: {
+        id: noteId,
+      },
+    });
+
+    if (!note) {
+      throw new NotFoundException("Note not found");
+    }
+
+    if (note.userId !== userId) {
+      throw new UnauthorizedException("You are not authorized to update this note");
+    }
+
+    return this.prismaService.note.update({
+      where: {
+        id: noteId,
+      },
+      data: {
+        content,
+      },
+    });
+  }
 }

@@ -59,6 +59,7 @@ type Mutation {
   refresh(refreshToken: String!): Token!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
+  updateNote(content: String!, noteId: String!): Note!
 }
 
 type Note {

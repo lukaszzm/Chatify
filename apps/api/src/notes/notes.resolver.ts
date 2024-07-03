@@ -46,6 +46,16 @@ export class NotesResolver {
     return this.notesService.delete(noteId, me.id);
   }
 
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => Note)
+  async updateNote(
+    @Args("noteId", { type: () => String }) noteId: string,
+    @Args("content", { type: () => String }) content: string,
+    @CurrentUser() me: User
+  ) {
+    return this.notesService.update(noteId, content, me.id);
+  }
+
   @ResolveField()
   async user(@Parent() note: Note) {
     return this.usersService.findOneById(note.userId);
