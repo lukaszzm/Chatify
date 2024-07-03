@@ -82,6 +82,7 @@ export type Mutation = {
   refresh: Token;
   signIn: Auth;
   signUp: Auth;
+  updateNote: Note;
 };
 
 export type MutationCreateNoteArgs = {
@@ -102,6 +103,11 @@ export type MutationSignInArgs = {
 
 export type MutationSignUpArgs = {
   data: SignUpInput;
+};
+
+export type MutationUpdateNoteArgs = {
+  content: Scalars["String"]["input"];
+  noteId: Scalars["String"]["input"];
 };
 
 export type Note = {
@@ -232,7 +238,7 @@ export type NoteQuery = {
     id: string;
     title: string;
     content: string;
-    createdAt: string;
+    updatedAt: string;
   };
 };
 
@@ -245,8 +251,18 @@ export type NotesQuery = {
     id: string;
     title: string;
     content: string;
-    createdAt: string;
+    updatedAt: string;
   }>;
+};
+
+export type UpdateNoteMutationVariables = Exact<{
+  noteId: Scalars["String"]["input"];
+  content: Scalars["String"]["input"];
+}>;
+
+export type UpdateNoteMutation = {
+  __typename?: "Mutation";
+  updateNote: { __typename?: "Note"; id: string };
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -507,7 +523,7 @@ export const NoteDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "title" } },
                 { kind: "Field", name: { kind: "Name", value: "content" } },
-                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
               ],
             },
           },
@@ -535,7 +551,7 @@ export const NotesDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "title" } },
                 { kind: "Field", name: { kind: "Name", value: "content" } },
-                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
               ],
             },
           },
@@ -544,6 +560,59 @@ export const NotesDocument = {
     },
   ],
 } as unknown as DocumentNode<NotesQuery, NotesQueryVariables>;
+export const UpdateNoteDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateNote" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "content" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateNote" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "noteId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "content" },
+                value: { kind: "Variable", name: { kind: "Name", value: "content" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateNoteMutation, UpdateNoteMutationVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [

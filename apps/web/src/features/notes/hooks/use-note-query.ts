@@ -8,14 +8,16 @@ const NoteQuery = graphql(`
       id
       title
       content
-      createdAt
+      updatedAt
     }
   }
 `);
 
 export const useNoteQuery = (noteId: string) => {
-  return useQuery({
+  const [result] = useQuery({
     query: NoteQuery,
     variables: { noteId },
   });
+
+  return result;
 };

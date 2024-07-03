@@ -5,12 +5,12 @@ import { useNote } from "@/features/notes/hooks/use-note";
 import { formatDate } from "@/utils/format-date";
 
 export const NoteHeader = () => {
-  const { createdAt, title } = useNote();
+  const { updatedAt, title } = useNote();
 
   return (
     <div className="flex justify-between items-center">
       <div className="space-y-2">
-        <Badge>Created {formatDate(createdAt)}</Badge>
+        <Badge>Updated {formatDate(updatedAt)}</Badge>
         <h1 className="text-3xl font-semibold">{title}</h1>
       </div>
       <NoteMenu />
