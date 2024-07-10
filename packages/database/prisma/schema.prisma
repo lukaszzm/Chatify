@@ -61,4 +61,5 @@ model Note {
   content   String
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+  isLocked  Boolean  @default(false)
 }
