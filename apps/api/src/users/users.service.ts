@@ -40,7 +40,10 @@ export class UsersService {
     lastName: string;
   }) {
     return this.prismaService.user.create({
-      data,
+      data: {
+        ...data,
+        fullName: `${data.firstName} ${data.lastName}`,
+      },
     });
   }
 }
