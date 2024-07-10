@@ -25,10 +25,12 @@ export const NotesList = () => {
   }
 
   return (
-    <ScrollArea className="space-y-2 h-[calc(100dvh-7rem)]">
-      {data.notes.map((note) => (
-        <NotesItem key={note.id} {...note} />
-      ))}
+    <ScrollArea className="h-[calc(100dvh-7rem)]">
+      <div className="space-y-2">
+        {data.notes.map((note) => (
+          <NotesItem key={note.id} {...note} />
+        ))}
+      </div>
     </ScrollArea>
   );
 };
