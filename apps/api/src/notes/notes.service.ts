@@ -30,6 +30,9 @@ export class NotesService {
       where: {
         userId,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
   }
 
