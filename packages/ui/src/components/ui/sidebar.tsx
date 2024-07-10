@@ -76,4 +76,22 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 SidebarItem.displayName = "SidebarItem";
 
-export { Sidebar, SidebarHeader, SidebarTitle, SidebarContent, SidebarList, SidebarItem };
+const SidebarInfo = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>((props, ref) => {
+  return (
+    <p className="text-center text-muted-foreground/80 text-sm" ref={ref} {...props} />
+  );
+});
+SidebarInfo.displayName = "SidebarInfo";
+
+export {
+  Sidebar,
+  SidebarHeader,
+  SidebarTitle,
+  SidebarContent,
+  SidebarList,
+  SidebarItem,
+  SidebarInfo,
+};
