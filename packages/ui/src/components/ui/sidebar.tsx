@@ -81,7 +81,11 @@ const SidebarInfo = React.forwardRef<
   React.HTMLAttributes<HTMLParagraphElement>
 >((props, ref) => {
   return (
-    <p className="text-center text-muted-foreground/80 text-sm" ref={ref} {...props} />
+    <p
+      className="text-center text-muted-foreground/80 text-sm py-2"
+      ref={ref}
+      {...props}
+    />
   );
 });
 SidebarInfo.displayName = "SidebarInfo";
