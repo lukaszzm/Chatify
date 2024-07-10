@@ -1,7 +1,7 @@
-import { Avatar, AvatarFallback, Button } from "@chatify/ui";
+import { Avatar, AvatarFallback, SidebarItem } from "@chatify/ui";
 import { Link } from "@tanstack/react-router";
 
-interface ChatPreviewProps {
+interface ChatSidebarListItemProps {
   id: string;
   firstName: string;
   lastName: string;
@@ -9,22 +9,17 @@ interface ChatPreviewProps {
   message: string;
 }
 
-export const ChatPreview = ({
+export const ChatSidebarListItem = ({
   id,
   firstName,
   lastName,
   createdAt,
   message,
-}: ChatPreviewProps) => {
+}: ChatSidebarListItemProps) => {
   const avatarFallback = `${firstName.at(0)}${lastName.at(0)}`;
 
   return (
-    <Button
-      variant="ghost"
-      size="auto"
-      className="p-3 rounded-sm justify-start items-center gap-2 w-full hover:bg-muted/40"
-      asChild
-    >
+    <SidebarItem asChild>
       <Link
         aria-label={`Chat with ${firstName} ${lastName}`}
         to="/chat/$chatId"
@@ -46,6 +41,6 @@ export const ChatPreview = ({
           <p className="text-muted-foreground/80 text-xs truncate">{message}</p>
         </div>
       </Link>
-    </Button>
+    </SidebarItem>
   );
 };

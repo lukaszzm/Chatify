@@ -1,2 +1,2 @@
-export { ChatList } from "./components/chat-list";
+export { ChatSidebar } from "./components/chat-sidebar";
 export { Chat } from "./components/chat";

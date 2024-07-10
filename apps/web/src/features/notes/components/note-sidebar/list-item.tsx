@@ -1,22 +1,21 @@
-import { Button } from "@chatify/ui";
+import { SidebarItem } from "@chatify/ui";
 import { Link } from "@tanstack/react-router";
 
 import { formatDate } from "@/utils/format-date";
 
-interface NotesItemProps {
+interface NoteSidebarListItemProps {
   id: string;
   title: string;
   updatedAt: string;
 }
 
-export const NotesItem = ({ id, title, updatedAt }: NotesItemProps) => {
+export const NoteSidebarListItem = ({
+  id,
+  title,
+  updatedAt,
+}: NoteSidebarListItemProps) => {
   return (
-    <Button
-      variant="ghost"
-      size="auto"
-      asChild
-      className="p-3 rounded-sm justify-start items-center gap-2 w-full hover:bg-muted/40"
-    >
+    <SidebarItem asChild>
       <Link
         aria-label={`View note: ${title}`}
         to="/notes/$noteId"
@@ -30,6 +29,6 @@ export const NotesItem = ({ id, title, updatedAt }: NotesItemProps) => {
           </span>
         </div>
       </Link>
-    </Button>
+    </SidebarItem>
   );
 };
