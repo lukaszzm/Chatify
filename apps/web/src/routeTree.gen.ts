@@ -19,8 +19,12 @@ import { Route as DashboardNotesImport } from "./routes/_dashboard.notes";
 import { Route as DashboardChatImport } from "./routes/_dashboard.chat";
 import { Route as AuthSignUpImport } from "./routes/_auth.sign-up";
 import { Route as AuthSignInImport } from "./routes/_auth.sign-in";
+import { Route as DashboardSettingsIndexImport } from "./routes/_dashboard.settings.index";
 import { Route as DashboardNotesIndexImport } from "./routes/_dashboard.notes.index";
 import { Route as DashboardChatIndexImport } from "./routes/_dashboard.chat.index";
+import { Route as DashboardSettingsProfileImport } from "./routes/_dashboard.settings.profile";
+import { Route as DashboardSettingsNotificationsImport } from "./routes/_dashboard.settings.notifications";
+import { Route as DashboardSettingsAppearanceImport } from "./routes/_dashboard.settings.appearance";
 import { Route as DashboardNotesNoteIdImport } from "./routes/_dashboard.notes.$noteId";
 import { Route as DashboardChatChatIdImport } from "./routes/_dashboard.chat.$chatId";
 
@@ -66,6 +70,11 @@ const AuthSignInRoute = AuthSignInImport.update({
   getParentRoute: () => AuthRoute,
 } as any);
 
+const DashboardSettingsIndexRoute = DashboardSettingsIndexImport.update({
+  path: "/",
+  getParentRoute: () => DashboardSettingsRoute,
+} as any);
+
 const DashboardNotesIndexRoute = DashboardNotesIndexImport.update({
   path: "/",
   getParentRoute: () => DashboardNotesRoute,
@@ -74,6 +83,21 @@ const DashboardNotesIndexRoute = DashboardNotesIndexImport.update({
 const DashboardChatIndexRoute = DashboardChatIndexImport.update({
   path: "/",
   getParentRoute: () => DashboardChatRoute,
+} as any);
+
+const DashboardSettingsProfileRoute = DashboardSettingsProfileImport.update({
+  path: "/profile",
+  getParentRoute: () => DashboardSettingsRoute,
+} as any);
+
+const DashboardSettingsNotificationsRoute = DashboardSettingsNotificationsImport.update({
+  path: "/notifications",
+  getParentRoute: () => DashboardSettingsRoute,
+} as any);
+
+const DashboardSettingsAppearanceRoute = DashboardSettingsAppearanceImport.update({
+  path: "/appearance",
+  getParentRoute: () => DashboardSettingsRoute,
 } as any);
 
 const DashboardNotesNoteIdRoute = DashboardNotesNoteIdImport.update({
@@ -160,6 +184,27 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardNotesNoteIdImport;
       parentRoute: typeof DashboardNotesImport;
     };
+    "/_dashboard/settings/appearance": {
+      id: "/_dashboard/settings/appearance";
+      path: "/appearance";
+      fullPath: "/settings/appearance";
+      preLoaderRoute: typeof DashboardSettingsAppearanceImport;
+      parentRoute: typeof DashboardSettingsImport;
+    };
+    "/_dashboard/settings/notifications": {
+      id: "/_dashboard/settings/notifications";
+      path: "/notifications";
+      fullPath: "/settings/notifications";
+      preLoaderRoute: typeof DashboardSettingsNotificationsImport;
+      parentRoute: typeof DashboardSettingsImport;
+    };
+    "/_dashboard/settings/profile": {
+      id: "/_dashboard/settings/profile";
+      path: "/profile";
+      fullPath: "/settings/profile";
+      preLoaderRoute: typeof DashboardSettingsProfileImport;
+      parentRoute: typeof DashboardSettingsImport;
+    };
     "/_dashboard/chat/": {
       id: "/_dashboard/chat/";
       path: "/";
@@ -173,6 +218,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/notes/";
       preLoaderRoute: typeof DashboardNotesIndexImport;
       parentRoute: typeof DashboardNotesImport;
+    };
+    "/_dashboard/settings/": {
+      id: "/_dashboard/settings/";
+      path: "/";
+      fullPath: "/settings/";
+      preLoaderRoute: typeof DashboardSettingsIndexImport;
+      parentRoute: typeof DashboardSettingsImport;
     };
   }
 }
@@ -191,7 +243,12 @@ export const routeTree = rootRoute.addChildren({
       DashboardNotesNoteIdRoute,
       DashboardNotesIndexRoute,
     }),
-    DashboardSettingsRoute,
+    DashboardSettingsRoute: DashboardSettingsRoute.addChildren({
+      DashboardSettingsAppearanceRoute,
+      DashboardSettingsNotificationsRoute,
+      DashboardSettingsProfileRoute,
+      DashboardSettingsIndexRoute,
+    }),
   }),
 });
 
@@ -252,7 +309,13 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_dashboard/settings": {
       "filePath": "_dashboard.settings.tsx",
-      "parent": "/_dashboard"
+      "parent": "/_dashboard",
+      "children": [
+        "/_dashboard/settings/appearance",
+        "/_dashboard/settings/notifications",
+        "/_dashboard/settings/profile",
+        "/_dashboard/settings/"
+      ]
     },
     "/_dashboard/chat/$chatId": {
       "filePath": "_dashboard.chat.$chatId.tsx",
@@ -262,6 +325,18 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_dashboard.notes.$noteId.tsx",
       "parent": "/_dashboard/notes"
     },
+    "/_dashboard/settings/appearance": {
+      "filePath": "_dashboard.settings.appearance.tsx",
+      "parent": "/_dashboard/settings"
+    },
+    "/_dashboard/settings/notifications": {
+      "filePath": "_dashboard.settings.notifications.tsx",
+      "parent": "/_dashboard/settings"
+    },
+    "/_dashboard/settings/profile": {
+      "filePath": "_dashboard.settings.profile.tsx",
+      "parent": "/_dashboard/settings"
+    },
     "/_dashboard/chat/": {
       "filePath": "_dashboard.chat.index.tsx",
       "parent": "/_dashboard/chat"
@@ -269,6 +344,10 @@ export const routeTree = rootRoute.addChildren({
     "/_dashboard/notes/": {
       "filePath": "_dashboard.notes.index.tsx",
       "parent": "/_dashboard/notes"
+    },
+    "/_dashboard/settings/": {
+      "filePath": "_dashboard.settings.index.tsx",
+      "parent": "/_dashboard/settings"
     }
   }
 }
