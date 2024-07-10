@@ -25,7 +25,7 @@ export const NoteContent = () => {
       onBlur={blurHandler}
       onChange={(e) => updateContent(e.target.value)}
       aria-placeholder={isLocked ? "No content" : "Write something..."}
-      className="flex-1 p-2 empty:before:content-[attr(aria-placeholder)] before:text-muted-foreground/80 whitespace-pre-wrap"
+      className="flex-1 p-2 empty:before:content-[attr(aria-placeholder)] before:text-muted-foreground/80 whitespace-pre-wrap overflow-auto"
     />
   );
 };

@@ -1,3 +1,5 @@
+import { ScrollArea } from "@chatify/ui";
+
 import { ErrorAlert } from "@/components/errors/error-alert";
 import { NotesItem } from "@/features/notes/components/notes-item";
 import { NotesListSkeleton } from "@/features/notes/components/skeletons/notes-list-skeleton";
@@ -23,10 +25,10 @@ export const NotesList = () => {
   }
 
   return (
-    <div className="space-y-2">
+    <ScrollArea className="space-y-2 h-[calc(100dvh-7rem)]">
       {data.notes.map((note) => (
         <NotesItem key={note.id} {...note} />
       ))}
-    </div>
+    </ScrollArea>
   );
 };
