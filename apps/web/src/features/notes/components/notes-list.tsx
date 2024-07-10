@@ -14,8 +14,12 @@ export const NotesList = () => {
     return <ErrorAlert error={error} />;
   }
 
-  if (!data) {
-    return <p>No notes.</p>;
+  if (!data || data.notes.length === 0) {
+    return (
+      <p className="text-sm text-muted-foreground/80 text-center py-4">
+        No notes found. Create a new note to get started.
+      </p>
+    );
   }
 
   return (
