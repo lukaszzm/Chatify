@@ -66,26 +66,27 @@ export class NotesService {
   }
 
   async update(noteId: string, content: string, userId: string) {
-    const note = await this.prismaService.note.findFirst({
-      where: {
-        id: noteId,
-      },
-    });
-
-    if (!note) {
-      throw new NotFoundException("Note not found");
-    }
-
-    if (note.userId !== userId) {
-      throw new UnauthorizedException("You are not authorized to update this note");
-    }
+    const note = await this.findOneById(noteId, userId);
 
     return this.prismaService.note.update({
       where: {
-        id: noteId,
+        id: note.id,
       },
       data: {
         content,
+      },
+    });
+  }
+
+  async toggleLock(noteId: string, userId: string) {
+    const note = await this.findOneById(noteId, userId);
+
+    return this.prismaService.note.update({
+      where: {
+        id: note.id,
+      },
+      data: {
+        isLocked: !note.isLocked,
       },
     });
   }

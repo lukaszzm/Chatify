@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { IsObject, IsString } from "class-validator";
+import { IsBoolean, IsObject, IsString } from "class-validator";
 
 import { BaseModel } from "@/common/models/base.model";
 import { User } from "@/users/models/user.model";
@@ -13,6 +13,10 @@ export class Note extends BaseModel {
   @Field(() => String)
   @IsString()
   content: string;
+
+  @Field(() => Boolean)
+  @IsBoolean()
+  isLocked: boolean;
 
   @Field(() => String)
   @IsString()
