@@ -82,6 +82,7 @@ export type Mutation = {
   refresh: Token;
   signIn: Auth;
   signUp: Auth;
+  toggleLock: Note;
   updateNote: Note;
 };
 
@@ -105,6 +106,10 @@ export type MutationSignUpArgs = {
   data: SignUpInput;
 };
 
+export type MutationToggleLockArgs = {
+  noteId: Scalars["String"]["input"];
+};
+
 export type MutationUpdateNoteArgs = {
   content: Scalars["String"]["input"];
   noteId: Scalars["String"]["input"];
@@ -115,6 +120,7 @@ export type Note = {
   content: Scalars["String"]["output"];
   createdAt: Scalars["DateTime"]["output"];
   id: Scalars["ID"]["output"];
+  isLocked: Scalars["Boolean"]["output"];
   title: Scalars["String"]["output"];
   updatedAt: Scalars["DateTime"]["output"];
   user: User;
@@ -209,15 +215,6 @@ export type RecentChatsQuery = {
   }>;
 };
 
-export type DeleteNoteMutationVariables = Exact<{
-  noteId: Scalars["String"]["input"];
-}>;
-
-export type DeleteNoteMutation = {
-  __typename?: "Mutation";
-  deleteNote: { __typename?: "Note"; id: string };
-};
-
 export type CreateNoteMutationVariables = Exact<{
   data: CreateNoteInput;
 }>;
@@ -225,6 +222,15 @@ export type CreateNoteMutationVariables = Exact<{
 export type CreateNoteMutation = {
   __typename?: "Mutation";
   createNote: { __typename?: "Note"; id: string };
+};
+
+export type DeleteNoteMutationVariables = Exact<{
+  noteId: Scalars["String"]["input"];
+}>;
+
+export type DeleteNoteMutation = {
+  __typename?: "Mutation";
+  deleteNote: { __typename?: "Note"; id: string };
 };
 
 export type NoteQueryVariables = Exact<{
@@ -239,6 +245,7 @@ export type NoteQuery = {
     title: string;
     content: string;
     updatedAt: string;
+    isLocked: boolean;
   };
 };
 
@@ -253,6 +260,15 @@ export type NotesQuery = {
     content: string;
     updatedAt: string;
   }>;
+};
+
+export type ToggleLockMutationVariables = Exact<{
+  noteId: Scalars["String"]["input"];
+}>;
+
+export type ToggleLockMutation = {
+  __typename?: "Mutation";
+  toggleLock: { __typename?: "Note"; id: string };
 };
 
 export type UpdateNoteMutationVariables = Exact<{
@@ -407,46 +423,6 @@ export const RecentChatsDocument = {
     },
   ],
 } as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
-export const DeleteNoteDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "DeleteNote" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "deleteNote" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "noteId" },
-                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<DeleteNoteMutation, DeleteNoteMutationVariables>;
 export const CreateNoteDocument = {
   kind: "Document",
   definitions: [
@@ -487,6 +463,46 @@ export const CreateNoteDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateNoteMutation, CreateNoteMutationVariables>;
+export const DeleteNoteDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteNote" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteNote" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "noteId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteNoteMutation, DeleteNoteMutationVariables>;
 export const NoteDocument = {
   kind: "Document",
   definitions: [
@@ -524,6 +540,7 @@ export const NoteDocument = {
                 { kind: "Field", name: { kind: "Name", value: "title" } },
                 { kind: "Field", name: { kind: "Name", value: "content" } },
                 { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+                { kind: "Field", name: { kind: "Name", value: "isLocked" } },
               ],
             },
           },
@@ -560,6 +577,46 @@ export const NotesDocument = {
     },
   ],
 } as unknown as DocumentNode<NotesQuery, NotesQueryVariables>;
+export const ToggleLockDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "ToggleLock" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "toggleLock" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "noteId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ToggleLockMutation, ToggleLockMutationVariables>;
 export const UpdateNoteDocument = {
   kind: "Document",
   definitions: [

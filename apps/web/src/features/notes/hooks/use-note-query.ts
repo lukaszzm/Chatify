@@ -9,6 +9,7 @@ const NoteQuery = graphql(`
       title
       content
       updatedAt
+      isLocked
     }
   }
 `);

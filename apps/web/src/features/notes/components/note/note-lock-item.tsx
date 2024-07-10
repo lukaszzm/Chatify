@@ -4,21 +4,23 @@ import { LockOpen, Lock } from "lucide-react";
 import { useNote } from "@/features/notes/hooks/use-note";
 
 export const NoteLockItem = () => {
-  const { editable, toggleEditable } = useNote();
+  const { isLocked, toggleLock, id } = useNote();
 
-  if (editable) {
+  const clickHandler = () => toggleLock(id);
+
+  if (isLocked) {
     return (
-      <DropdownMenuItem flex onClick={toggleEditable}>
-        <LockOpen size={16} />
-        <span>Lock</span>
+      <DropdownMenuItem flex onClick={clickHandler}>
+        <Lock size={16} />
+        <span>Unlock</span>
       </DropdownMenuItem>
     );
   }
 
   return (
-    <DropdownMenuItem flex onClick={toggleEditable}>
-      <Lock size={16} />
-      <span>Unlock</span>
+    <DropdownMenuItem flex onClick={clickHandler}>
+      <LockOpen size={16} />
+      <span>Lock</span>
     </DropdownMenuItem>
   );
 };
