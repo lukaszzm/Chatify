@@ -57,6 +57,7 @@ type Mutation {
   createNote(data: CreateNoteInput!): Note!
   deleteNote(noteId: String!): Note!
   refresh(refreshToken: String!): Token!
+  searchUsers(data: SearchUsersInput!): [User!]!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
   toggleLock(noteId: String!): Note!
@@ -74,19 +75,16 @@ type Note {
   userId: String!
 }
 
-input PaginationInput {
-  skip: Int! = 0
-  take: Int! = 10
-}
-
 type Query {
   chat(chatId: String!): Chat!
   me: User!
   note(noteId: String!): Note!
   notes: [Note!]!
   recentChats: [ChatPreview!]!
-  user(id: String!): User!
-  users(order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
+}
+
+input SearchUsersInput {
+  phrase: String!
 }
 
 input SignInInput {
@@ -99,11 +97,6 @@ input SignUpInput {
   firstName: String!
   lastName: String!
   password: String!
-}
-
-enum SortOrder {
-  Asc
-  Desc
 }
 
 type Token {
@@ -123,12 +116,4 @@ type User {
   isActive: Boolean!
   lastName: String!
   updatedAt: DateTime!
-}
-
-input UserWhereInput {
-  email: String
-  firstName: String
-  fullName: String
-  isActive: Boolean
-  lastName: String
 }

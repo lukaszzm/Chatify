@@ -1,10 +1,10 @@
 import type { User as UserType } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
-import { Args, Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
-import { UsersArgs } from "@/users/dtos/users.args";
+import { SearchUsersInput } from "@/users/dtos/search-users.input";
 import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
 
@@ -18,13 +18,9 @@ export class UsersResolver {
     return this.usersService.findOneById(user.id);
   }
 
-  @Query(() => User)
-  async user(@Args("id", { type: () => String }) id: string) {
-    return this.usersService.findOneById(id);
-  }
-
-  @Query(() => [User])
-  async users(@Args() args: UsersArgs) {
-    return this.usersService.findMany(args);
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => [User]!)
+  async searchUsers(@Args("data") data: SearchUsersInput, @CurrentUser() user: UserType) {
+    return this.usersService.search(data, user.id);
   }
 }
