@@ -31,6 +31,8 @@ const documents = {
     types.ToggleLockDocument,
   "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n":
     types.UpdateNoteDocument,
+  "\n  mutation SearchUsers($data: SearchUsersInput!) {\n    searchUsers(data: $data) {\n      id\n      firstName\n      lastName\n    }\n  }\n":
+    types.SearchUsersDocument,
   "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.RefreshTokenDocument,
 };
@@ -103,6 +105,12 @@ export function graphql(
 export function graphql(
   source: "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n"
 ): (typeof documents)["\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation SearchUsers($data: SearchUsersInput!) {\n    searchUsers(data: $data) {\n      id\n      firstName\n      lastName\n    }\n  }\n"
+): (typeof documents)["\n  mutation SearchUsers($data: SearchUsersInput!) {\n    searchUsers(data: $data) {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

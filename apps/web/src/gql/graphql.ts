@@ -80,6 +80,7 @@ export type Mutation = {
   createNote: Note;
   deleteNote: Note;
   refresh: Token;
+  searchUsers: Array<User>;
   signIn: Auth;
   signUp: Auth;
   toggleLock: Note;
@@ -96,6 +97,10 @@ export type MutationDeleteNoteArgs = {
 
 export type MutationRefreshArgs = {
   refreshToken: Scalars["String"]["input"];
+};
+
+export type MutationSearchUsersArgs = {
+  data: SearchUsersInput;
 };
 
 export type MutationSignInArgs = {
@@ -134,8 +139,6 @@ export type Query = {
   note: Note;
   notes: Array<Note>;
   recentChats: Array<ChatPreview>;
-  user: User;
-  users: Array<User>;
 };
 
 export type QueryChatArgs = {
@@ -146,8 +149,8 @@ export type QueryNoteArgs = {
   noteId: Scalars["String"]["input"];
 };
 
-export type QueryUserArgs = {
-  id: Scalars["String"]["input"];
+export type SearchUsersInput = {
+  phrase: Scalars["String"]["input"];
 };
 
 export type SignInInput = {
@@ -175,6 +178,7 @@ export type User = {
   createdAt: Scalars["DateTime"]["output"];
   email: Scalars["String"]["output"];
   firstName: Scalars["String"]["output"];
+  fullName: Scalars["String"]["output"];
   id: Scalars["ID"]["output"];
   isActive: Scalars["Boolean"]["output"];
   lastName: Scalars["String"]["output"];
@@ -279,6 +283,20 @@ export type UpdateNoteMutationVariables = Exact<{
 export type UpdateNoteMutation = {
   __typename?: "Mutation";
   updateNote: { __typename?: "Note"; id: string };
+};
+
+export type SearchUsersMutationVariables = Exact<{
+  data: SearchUsersInput;
+}>;
+
+export type SearchUsersMutation = {
+  __typename?: "Mutation";
+  searchUsers: Array<{
+    __typename?: "User";
+    id: string;
+    firstName: string;
+    lastName: string;
+  }>;
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -670,6 +688,53 @@ export const UpdateNoteDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdateNoteMutation, UpdateNoteMutationVariables>;
+export const SearchUsersDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "SearchUsers" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "SearchUsersInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "searchUsers" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SearchUsersMutation, SearchUsersMutationVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [

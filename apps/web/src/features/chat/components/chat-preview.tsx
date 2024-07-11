@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, SidebarItem } from "@chatify/ui";
 import { Link } from "@tanstack/react-router";
 
-interface ChatSidebarListItemProps {
+interface ChatPreviewProps {
   id: string;
   firstName: string;
   lastName: string;
@@ -9,13 +9,13 @@ interface ChatSidebarListItemProps {
   message: string;
 }
 
-export const ChatSidebarListItem = ({
+export const ChatPreview = ({
   id,
   firstName,
   lastName,
   createdAt,
   message,
-}: ChatSidebarListItemProps) => {
+}: ChatPreviewProps) => {
   const avatarFallback = `${firstName.at(0)}${lastName.at(0)}`;
 
   return (

@@ -1,11 +1,11 @@
 import { SidebarInfo, SidebarList } from "@chatify/ui";
 
 import { ErrorAlert } from "@/components/errors/error-alert";
-import { ChatSidebarListItem } from "@/features/chat/components/chat-sidebar/list-item";
+import { ChatPreview } from "@/features/chat/components/chat-preview";
 import { ChatListSkeleton } from "@/features/chat/components/skeletons/chat-list-skeleton";
 import { useRecentChats } from "@/features/chat/hooks/use-recent-chats";
 
-export const ChatSidebarList = () => {
+export const RecentChats = () => {
   const [{ data, fetching, error }] = useRecentChats();
 
   if (fetching) {
@@ -25,7 +25,7 @@ export const ChatSidebarList = () => {
   return (
     <SidebarList>
       {data.recentChats.map(({ id, recentMessage }) => (
-        <ChatSidebarListItem
+        <ChatPreview
           key={id}
           id={id}
           createdAt={recentMessage.createdAt}
