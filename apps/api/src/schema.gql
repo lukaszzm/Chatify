@@ -74,6 +74,11 @@ type Note {
   userId: String!
 }
 
+input PaginationInput {
+  skip: Int! = 0
+  take: Int! = 10
+}
+
 type Query {
   chat(chatId: String!): Chat!
   me: User!
@@ -81,7 +86,7 @@ type Query {
   notes: [Note!]!
   recentChats: [ChatPreview!]!
   user(id: String!): User!
-  users: [User!]!
+  users(order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
 }
 
 input SignInInput {
@@ -96,6 +101,11 @@ input SignUpInput {
   password: String!
 }
 
+enum SortOrder {
+  Asc
+  Desc
+}
+
 type Token {
   """JWT access token"""
   accessToken: String!
@@ -108,8 +118,17 @@ type User {
   createdAt: DateTime!
   email: String!
   firstName: String!
+  fullName: String!
   id: ID!
   isActive: Boolean!
   lastName: String!
   updatedAt: DateTime!
+}
+
+input UserWhereInput {
+  email: String
+  firstName: String
+  fullName: String
+  isActive: Boolean
+  lastName: String
 }

@@ -4,6 +4,7 @@ import { Args, Query, Resolver } from "@nestjs/graphql";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
+import { UsersArgs } from "@/users/dtos/users.args";
 import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
 
@@ -23,7 +24,7 @@ export class UsersResolver {
   }
 
   @Query(() => [User])
-  async users() {
-    return this.usersService.findMany();
+  async users(@Args() args: UsersArgs) {
+    return this.usersService.findMany(args);
   }
 }

@@ -17,6 +17,10 @@ export class User extends BaseModel {
   @IsString()
   lastName: string;
 
+  @Field(() => String)
+  @IsString()
+  fullName: string;
+
   @Field(() => Boolean)
   @IsBoolean()
   isActive: boolean;
