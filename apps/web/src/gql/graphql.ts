@@ -80,7 +80,6 @@ export type Mutation = {
   createNote: Note;
   deleteNote: Note;
   refresh: Token;
-  searchUsers: Array<User>;
   signIn: Auth;
   signUp: Auth;
   toggleLock: Note;
@@ -97,10 +96,6 @@ export type MutationDeleteNoteArgs = {
 
 export type MutationRefreshArgs = {
   refreshToken: Scalars["String"]["input"];
-};
-
-export type MutationSearchUsersArgs = {
-  data: SearchUsersInput;
 };
 
 export type MutationSignInArgs = {
@@ -132,6 +127,11 @@ export type Note = {
   userId: Scalars["String"]["output"];
 };
 
+export type PaginationInput = {
+  skip?: Scalars["Int"]["input"];
+  take?: Scalars["Int"]["input"];
+};
+
 export type Query = {
   __typename?: "Query";
   chat: Chat;
@@ -139,6 +139,7 @@ export type Query = {
   note: Note;
   notes: Array<Note>;
   recentChats: Array<ChatPreview>;
+  users: Array<User>;
 };
 
 export type QueryChatArgs = {
@@ -149,8 +150,11 @@ export type QueryNoteArgs = {
   noteId: Scalars["String"]["input"];
 };
 
-export type SearchUsersInput = {
-  phrase: Scalars["String"]["input"];
+export type QueryUsersArgs = {
+  excludeMe?: Scalars["Boolean"]["input"];
+  order?: InputMaybe<SortOrder>;
+  pagination?: InputMaybe<PaginationInput>;
+  where?: InputMaybe<UserWhereInput>;
 };
 
 export type SignInInput = {
@@ -164,6 +168,11 @@ export type SignUpInput = {
   lastName: Scalars["String"]["input"];
   password: Scalars["String"]["input"];
 };
+
+export enum SortOrder {
+  Asc = "Asc",
+  Desc = "Desc",
+}
 
 export type Token = {
   __typename?: "Token";
@@ -183,6 +192,14 @@ export type User = {
   isActive: Scalars["Boolean"]["output"];
   lastName: Scalars["String"]["output"];
   updatedAt: Scalars["DateTime"]["output"];
+};
+
+export type UserWhereInput = {
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  firstName?: InputMaybe<Scalars["String"]["input"]>;
+  fullName?: InputMaybe<Scalars["String"]["input"]>;
+  isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
+  lastName?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SignInMutationVariables = Exact<{
@@ -285,18 +302,15 @@ export type UpdateNoteMutation = {
   updateNote: { __typename?: "Note"; id: string };
 };
 
-export type SearchUsersMutationVariables = Exact<{
-  data: SearchUsersInput;
+export type SearchUsersQueryVariables = Exact<{
+  pagination: PaginationInput;
+  where: UserWhereInput;
+  excludeMe: Scalars["Boolean"]["input"];
 }>;
 
-export type SearchUsersMutation = {
-  __typename?: "Mutation";
-  searchUsers: Array<{
-    __typename?: "User";
-    id: string;
-    firstName: string;
-    lastName: string;
-  }>;
+export type SearchUsersQuery = {
+  __typename?: "Query";
+  users: Array<{ __typename?: "User"; id: string; firstName: string; lastName: string }>;
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -693,18 +707,31 @@ export const SearchUsersDocument = {
   definitions: [
     {
       kind: "OperationDefinition",
-      operation: "mutation",
+      operation: "query",
       name: { kind: "Name", value: "SearchUsers" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "pagination" } },
           type: {
             kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "SearchUsersInput" },
-            },
+            type: { kind: "NamedType", name: { kind: "Name", value: "PaginationInput" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "where" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "UserWhereInput" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "excludeMe" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
           },
         },
       ],
@@ -713,12 +740,22 @@ export const SearchUsersDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "searchUsers" },
+            name: { kind: "Name", value: "users" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "data" },
-                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+                name: { kind: "Name", value: "where" },
+                value: { kind: "Variable", name: { kind: "Name", value: "where" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "pagination" },
+                value: { kind: "Variable", name: { kind: "Name", value: "pagination" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "excludeMe" },
+                value: { kind: "Variable", name: { kind: "Name", value: "excludeMe" } },
               },
             ],
             selectionSet: {
@@ -734,7 +771,7 @@ export const SearchUsersDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<SearchUsersMutation, SearchUsersMutationVariables>;
+} as unknown as DocumentNode<SearchUsersQuery, SearchUsersQueryVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [

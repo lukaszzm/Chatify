@@ -1,10 +1,14 @@
-import { useMutation } from "urql";
+import { useQuery } from "urql";
 
 import { graphql } from "@/gql";
 
-const SearchUsersMutation = graphql(`
-  mutation SearchUsers($data: SearchUsersInput!) {
-    searchUsers(data: $data) {
+const SearchUsersQuery = graphql(`
+  query SearchUsers(
+    $pagination: PaginationInput!
+    $where: UserWhereInput!
+    $excludeMe: Boolean!
+  ) {
+    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {
       id
       firstName
       lastName
@@ -12,19 +16,17 @@ const SearchUsersMutation = graphql(`
   }
 `);
 
-// Add search functionality
-export const useSearch = () => {
-  const [, searchUsersMutation] = useMutation(SearchUsersMutation);
-
-  const searchUsers = async (phrase: string) => {
-    const { error } = await searchUsersMutation({ data: { phrase } });
-
-    if (error) {
-      return;
-    }
-  };
-
-  return {
-    searchUsers,
-  };
+export const useSearch = (phrase: string) => {
+  return useQuery({
+    query: SearchUsersQuery,
+    variables: {
+      pagination: {
+        take: 3,
+      },
+      where: {
+        fullName: phrase,
+      },
+      excludeMe: false,
+    },
+  });
 };
