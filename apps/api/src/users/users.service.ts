@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "nestjs-prisma";
 
-import { SearchUsersInput } from "@/users/dtos/search-users.input";
+import { UsersArgs } from "@/users/dtos/users.args";
 
 @Injectable()
 export class UsersService {
@@ -19,8 +19,23 @@ export class UsersService {
     });
   }
 
-  async findMany() {
-    return this.prismaService.user.findMany();
+  async findMany(args: UsersArgs, userId: string) {
+    const idFilter = args.excludeMe ? { not: userId } : undefined;
+
+    return this.prismaService.user.findMany({
+      where: {
+        id: idFilter,
+        fullName: { contains: args.where?.fullName },
+        firstName: { contains: args.where?.firstName },
+        lastName: { contains: args.where?.lastName },
+        email: { contains: args.where?.email },
+      },
+      take: args.pagination?.take,
+      skip: args.pagination?.skip,
+      orderBy: {
+        createdAt: args.order,
+      },
+    });
   }
 
   async findManyByChat(chatId: string) {
@@ -46,16 +61,6 @@ export class UsersService {
         ...data,
         fullName: `${data.firstName} ${data.lastName}`,
       },
-    });
-  }
-
-  async search(data: SearchUsersInput, userId: string) {
-    return this.prismaService.user.findMany({
-      where: {
-        id: { not: userId },
-        fullName: { contains: data.phrase },
-      },
-      take: 3,
     });
   }
 }
