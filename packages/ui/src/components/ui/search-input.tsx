@@ -4,11 +4,13 @@ import * as React from "react";
 import { Input, type InputProps } from "@ui/components/ui/input";
 import { cn } from "@ui/lib/utils";
 
-export const SearchInput = React.forwardRef<HTMLInputElement, InputProps>(
+interface SearchInputProps extends Omit<InputProps, "type"> {}
+
+export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   ({ className, ...props }, ref) => {
     return (
       <div className="relative">
-        <Input className={cn("pl-10", className)} ref={ref} {...props} />
+        <Input className={cn("pl-10", className)} ref={ref} type="search" {...props} />
         <Search className="text-muted-foreground/80 absolute left-2 top-2" />
       </div>
     );
