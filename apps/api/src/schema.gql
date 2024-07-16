@@ -21,16 +21,6 @@ type Chat {
   updatedAt: DateTime!
 }
 
-type ChatPreview {
-  createdAt: DateTime!
-  id: ID!
-  isDeleted: Boolean!
-  participants: [User!]!
-  recentMessage: Message!
-  title: String
-  updatedAt: DateTime!
-}
-
 input CreateNoteInput {
   title: String!
 }
@@ -80,11 +70,8 @@ input PaginationInput {
 }
 
 type Query {
-  chat(chatId: String!): Chat!
-  me: User!
   note(noteId: String!): Note!
   notes: [Note!]!
-  recentChats: [ChatPreview!]!
   users(excludeMe: Boolean! = true, order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
 }
 

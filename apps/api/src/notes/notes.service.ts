@@ -7,22 +7,12 @@ import { CreateNoteInput } from "@/notes/dtos/create-note.input";
 export class NotesService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findOneById(noteId: string, userId: string) {
-    const note = await this.prismaService.note.findFirst({
+  async findOneById(id: string) {
+    return this.prismaService.note.findFirst({
       where: {
-        id: noteId,
+        id,
       },
     });
-
-    if (!note) {
-      throw new NotFoundException("Note not found");
-    }
-
-    if (note.userId !== userId) {
-      throw new UnauthorizedException("You are not authorized to access this note");
-    }
-
-    return note;
   }
 
   async findMany(userId: string) {
@@ -36,6 +26,20 @@ export class NotesService {
     });
   }
 
+  async findOneOrThrow(id: string, userId: string) {
+    const note = await this.findOneById(id);
+
+    if (!note) {
+      throw new NotFoundException("Note not found");
+    }
+
+    if (note.userId !== userId) {
+      throw new UnauthorizedException("Unauthorized access");
+    }
+
+    return note;
+  }
+
   async create(data: CreateNoteInput, userId: string) {
     return await this.prismaService.note.create({
       data: {
@@ -47,19 +51,7 @@ export class NotesService {
   }
 
   async delete(noteId: string, userId: string) {
-    const note = await this.prismaService.note.findFirst({
-      where: {
-        id: noteId,
-      },
-    });
-
-    if (!note) {
-      throw new NotFoundException("Note not found");
-    }
-
-    if (note.userId !== userId) {
-      throw new UnauthorizedException("You are not authorized to delete this note");
-    }
+    await this.findOneOrThrow(noteId, userId);
 
     return this.prismaService.note.delete({
       where: {
@@ -69,11 +61,11 @@ export class NotesService {
   }
 
   async update(noteId: string, content: string, userId: string) {
-    const note = await this.findOneById(noteId, userId);
+    await this.findOneOrThrow(noteId, userId);
 
     return this.prismaService.note.update({
       where: {
-        id: note.id,
+        id: noteId,
       },
       data: {
         content,
@@ -82,11 +74,11 @@ export class NotesService {
   }
 
   async toggleLock(noteId: string, userId: string) {
-    const note = await this.findOneById(noteId, userId);
+    const note = await this.findOneOrThrow(noteId, userId);
 
     return this.prismaService.note.update({
       where: {
-        id: note.id,
+        id: noteId,
       },
       data: {
         isLocked: !note.isLocked,

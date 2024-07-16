@@ -1,3 +1,4 @@
+import { Prisma } from "@chatify/db";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "nestjs-prisma";
 
@@ -38,24 +39,7 @@ export class UsersService {
     });
   }
 
-  async findManyByChat(chatId: string) {
-    return this.prismaService.user.findMany({
-      where: {
-        chats: {
-          some: {
-            chatId,
-          },
-        },
-      },
-    });
-  }
-
-  async create(data: {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-  }) {
+  async create(data: Omit<Prisma.UserCreateInput, "fullName">) {
     return this.prismaService.user.create({
       data: {
         ...data,

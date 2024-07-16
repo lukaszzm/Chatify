@@ -13,12 +13,6 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => User)
-  async me(@CurrentUser() user: UserType) {
-    return this.usersService.findOneById(user.id);
-  }
-
-  @UseGuards(GqlAuthGuard)
   @Query(() => [User]!)
   async users(@Args() args: UsersArgs, @CurrentUser() user: UserType) {
     return this.usersService.findMany(args, user.id);

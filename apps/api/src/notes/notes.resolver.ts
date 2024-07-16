@@ -17,28 +17,28 @@ export class NotesResolver {
   ) {}
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => Note)
+  @Query(() => Note!)
   async note(
     @Args("noteId", { type: () => String }) noteId: string,
     @CurrentUser() me: User
   ) {
-    return this.notesService.findOneById(noteId, me.id);
+    return this.notesService.findOneOrThrow(noteId, me.id);
   }
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => [Note])
+  @Query(() => [Note]!)
   async notes(@CurrentUser() me: User) {
     return this.notesService.findMany(me.id);
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note)
+  @Mutation(() => Note!)
   async createNote(@Args("data") data: CreateNoteInput, @CurrentUser() me: User) {
     return this.notesService.create(data, me.id);
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note)
+  @Mutation(() => Note!)
   async deleteNote(
     @Args("noteId", { type: () => String }) noteId: string,
     @CurrentUser() me: User
@@ -47,7 +47,7 @@ export class NotesResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note)
+  @Mutation(() => Note!)
   async updateNote(
     @Args("noteId", { type: () => String }) noteId: string,
     @Args("content", { type: () => String }) content: string,
@@ -57,7 +57,7 @@ export class NotesResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note)
+  @Mutation(() => Note!)
   async toggleLock(
     @Args("noteId", { type: () => String }) noteId: string,
     @CurrentUser() me: User
