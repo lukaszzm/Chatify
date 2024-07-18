@@ -27,7 +27,7 @@ export const Chat = ({ id }: ChatProps) => {
 
   return (
     <Container className="flex flex-col">
-      <ChatHeader firstName="John" lastName="Smith" />
+      <ChatHeader title={data.chat.title} participants={data.chat.participants} />
       <ChatBox />
       <ChatNewMessage />
     </Container>

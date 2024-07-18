@@ -6,6 +6,12 @@ const ChatQuery = graphql(`
   query Chat($id: String!) {
     chat(id: $id) {
       id
+      title
+      participants {
+        id
+        firstName
+        lastName
+      }
     }
   }
 `);

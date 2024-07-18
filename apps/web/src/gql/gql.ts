@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation SignIn($data: SignInInput!) {\n    signIn(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.SignInDocument,
     "\n  mutation SignUp($data: SignUpInput!) {\n    signUp(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.SignUpDocument,
-    "\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n    }\n  }\n": types.ChatDocument,
+    "\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n      title\n      participants {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n": types.ChatDocument,
     "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n    }\n  }\n": types.CreateNoteDocument,
     "\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n": types.DeleteNoteDocument,
     "\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n": types.NoteDocument,
@@ -52,7 +52,7 @@ export function graphql(source: "\n  mutation SignUp($data: SignUpInput!) {\n   
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n    }\n  }\n"): (typeof documents)["\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n    }\n  }\n"];
+export function graphql(source: "\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n      title\n      participants {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n"): (typeof documents)["\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n      title\n      participants {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

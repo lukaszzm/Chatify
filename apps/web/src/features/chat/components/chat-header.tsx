@@ -1,21 +1,18 @@
-import { Avatar, AvatarFallback } from "@chatify/ui";
+import type { Participant } from "@/features/chat/types";
+import { generateChatTitle } from "@/features/chat/utils";
+import type { Nullable } from "@/types";
 
 interface ChatHeaderProps {
-  firstName: string;
-  lastName: string;
+  title: Nullable<string>;
+  participants: Participant[];
 }
 
-export const ChatHeader = ({ firstName, lastName }: ChatHeaderProps) => {
-  const avatarFallback = `${firstName.at(0)}${lastName.at(0)}`;
+export const ChatHeader = ({ title, participants }: ChatHeaderProps) => {
+  const dynamicTitle = title ?? generateChatTitle(participants);
 
   return (
-    <div className="w-full border-b flex items-center gap-2 border-border p-4">
-      <Avatar>
-        <AvatarFallback>{avatarFallback}</AvatarFallback>
-      </Avatar>
-      <h1 className="text-xl font-semibold">
-        {firstName} {lastName}
-      </h1>
+    <div className="border-b border-border p-2 pb-4">
+      <h1 className="text-xl font-semibold">{dynamicTitle}</h1>
     </div>
   );
 };
