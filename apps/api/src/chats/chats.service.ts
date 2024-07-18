@@ -8,6 +8,19 @@ import { removeDuplicates } from "@/common/utils";
 export class ChatsService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  async findOneById(id: string, userId: string) {
+    return this.prismaService.chat.findUnique({
+      where: {
+        id,
+        participants: {
+          some: {
+            userId,
+          },
+        },
+      },
+    });
+  }
+
   async create(data: StartChatInput) {
     const uniqueParticipants = removeDuplicates(data.participants);
 

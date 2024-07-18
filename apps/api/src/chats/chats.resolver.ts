@@ -1,6 +1,6 @@
 import type { User } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
@@ -13,7 +13,19 @@ export class ChatsResolver {
   constructor(private readonly chatsService: ChatsService) {}
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Chat!)
+  @Query(() => Chat, {
+    nullable: true,
+    description: "Get chat by ID, authenticated user must be a participant",
+  })
+  async chat(@Args("id") id: string, @CurrentUser() user: User) {
+    return this.chatsService.findOneById(id, user.id);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => Chat!, {
+    nullable: false,
+    description: "Start a new chat with the given participants, if it doesn't exist yet",
+  })
   async startChat(@Args("data") data: StartChatInput, @CurrentUser() user: User) {
     return this.chatsService.createIfNotExists({
       ...data,
