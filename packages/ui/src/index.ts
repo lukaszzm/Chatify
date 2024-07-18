@@ -27,3 +27,5 @@ export * from "./components/ui/sonner";
 export * from "./components/ui/textarea";
 export * from "./components/ui/scroll-area";
 export * from "./components/ui/sidebar";
+export * from "./components/ui/not-found-component";
+export * from "./components/ui/error-component";
