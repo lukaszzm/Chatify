@@ -17,8 +17,6 @@ const documents = {
     types.SignInDocument,
   "\n  mutation SignUp($data: SignUpInput!) {\n    signUp(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.SignUpDocument,
-  "\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n":
-    types.RecentChatsDocument,
   "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n    }\n  }\n":
     types.CreateNoteDocument,
   "\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n":
@@ -33,6 +31,8 @@ const documents = {
     types.UpdateNoteDocument,
   "\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n":
     types.SearchUsersDocument,
+  "\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n":
+    types.StartChatDocument,
   "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.RefreshTokenDocument,
 };
@@ -63,12 +63,6 @@ export function graphql(
 export function graphql(
   source: "\n  mutation SignUp($data: SignUpInput!) {\n    signUp(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n"
 ): (typeof documents)["\n  mutation SignUp($data: SignUpInput!) {\n    signUp(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: "\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n"
-): (typeof documents)["\n  query RecentChats {\n    recentChats {\n      id\n      recentMessage {\n        content\n        createdAt\n        sender {\n          firstName\n          lastName\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -111,6 +105,12 @@ export function graphql(
 export function graphql(
   source: "\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"
 ): (typeof documents)["\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n"
+): (typeof documents)["\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

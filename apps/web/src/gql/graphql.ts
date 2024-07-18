@@ -46,17 +46,6 @@ export type Chat = {
   updatedAt: Scalars["DateTime"]["output"];
 };
 
-export type ChatPreview = {
-  __typename?: "ChatPreview";
-  createdAt: Scalars["DateTime"]["output"];
-  id: Scalars["ID"]["output"];
-  isDeleted: Scalars["Boolean"]["output"];
-  participants: Array<User>;
-  recentMessage: Message;
-  title?: Maybe<Scalars["String"]["output"]>;
-  updatedAt: Scalars["DateTime"]["output"];
-};
-
 export type CreateNoteInput = {
   title: Scalars["String"]["input"];
 };
@@ -82,6 +71,7 @@ export type Mutation = {
   refresh: Token;
   signIn: Auth;
   signUp: Auth;
+  startChat: Chat;
   toggleLock: Note;
   updateNote: Note;
 };
@@ -104,6 +94,10 @@ export type MutationSignInArgs = {
 
 export type MutationSignUpArgs = {
   data: SignUpInput;
+};
+
+export type MutationStartChatArgs = {
+  data: StartChatInput;
 };
 
 export type MutationToggleLockArgs = {
@@ -134,16 +128,9 @@ export type PaginationInput = {
 
 export type Query = {
   __typename?: "Query";
-  chat: Chat;
-  me: User;
   note: Note;
   notes: Array<Note>;
-  recentChats: Array<ChatPreview>;
   users: Array<User>;
-};
-
-export type QueryChatArgs = {
-  chatId: Scalars["String"]["input"];
 };
 
 export type QueryNoteArgs = {
@@ -173,6 +160,11 @@ export enum SortOrder {
   Asc = "Asc",
   Desc = "Desc",
 }
+
+export type StartChatInput = {
+  participants: Array<Scalars["String"]["input"]>;
+  title?: InputMaybe<Scalars["String"]["input"]>;
+};
 
 export type Token = {
   __typename?: "Token";
@@ -218,22 +210,6 @@ export type SignUpMutationVariables = Exact<{
 export type SignUpMutation = {
   __typename?: "Mutation";
   signUp: { __typename?: "Auth"; accessToken: string; refreshToken: string };
-};
-
-export type RecentChatsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type RecentChatsQuery = {
-  __typename?: "Query";
-  recentChats: Array<{
-    __typename?: "ChatPreview";
-    id: string;
-    recentMessage: {
-      __typename?: "Message";
-      content: string;
-      createdAt: string;
-      sender: { __typename?: "User"; firstName: string; lastName: string };
-    };
-  }>;
 };
 
 export type CreateNoteMutationVariables = Exact<{
@@ -311,6 +287,15 @@ export type SearchUsersQueryVariables = Exact<{
 export type SearchUsersQuery = {
   __typename?: "Query";
   users: Array<{ __typename?: "User"; id: string; firstName: string; lastName: string }>;
+};
+
+export type StartChatMutationVariables = Exact<{
+  data: StartChatInput;
+}>;
+
+export type StartChatMutation = {
+  __typename?: "Mutation";
+  startChat: { __typename?: "Chat"; id: string };
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -408,53 +393,6 @@ export const SignUpDocument = {
     },
   ],
 } as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
-export const RecentChatsDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "RecentChats" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "recentChats" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "recentMessage" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "content" } },
-                      { kind: "Field", name: { kind: "Name", value: "createdAt" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "sender" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                            { kind: "Field", name: { kind: "Name", value: "lastName" } },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
 export const CreateNoteDocument = {
   kind: "Document",
   definitions: [
@@ -772,6 +710,46 @@ export const SearchUsersDocument = {
     },
   ],
 } as unknown as DocumentNode<SearchUsersQuery, SearchUsersQueryVariables>;
+export const StartChatDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "StartChat" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "StartChatInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "startChat" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<StartChatMutation, StartChatMutationVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [
