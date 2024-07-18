@@ -49,6 +49,7 @@ type Mutation {
   refresh(refreshToken: String!): Token!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
+  startChat(data: StartChatInput!): Chat!
   toggleLock(noteId: String!): Note!
   updateNote(content: String!, noteId: String!): Note!
 }
@@ -90,6 +91,11 @@ input SignUpInput {
 enum SortOrder {
   Asc
   Desc
+}
+
+input StartChatInput {
+  participants: [String!]!
+  title: String
 }
 
 type Token {
