@@ -26,7 +26,7 @@ export const useSearch = (phrase: string) => {
       where: {
         fullName: phrase,
       },
-      excludeMe: false,
+      excludeMe: true,
     },
   });
 };
