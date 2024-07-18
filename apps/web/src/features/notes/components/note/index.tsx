@@ -1,10 +1,8 @@
-import { Container, Separator } from "@chatify/ui";
-import { notFound } from "@tanstack/react-router";
+import { Container, ErrorComponent, NotFoundComponent, Separator } from "@chatify/ui";
 
-import { ErrorAlert } from "@/components/errors/error-alert";
 import { NoteContent } from "@/features/notes/components/note/note-content";
 import { NoteHeader } from "@/features/notes/components/note/note-header";
-import { NoteSkeleton } from "@/features/notes/components/skeletons/note-skeleton";
+import { NoteLoading } from "@/features/notes/components/note/note-loading";
 import { NoteProvider } from "@/features/notes/contexts/note-context";
 import { useNoteQuery } from "@/features/notes/hooks/use-note-query";
 
@@ -16,16 +14,15 @@ export const Note = ({ id }: NoteProps) => {
   const [{ data, fetching, error }] = useNoteQuery(id);
 
   if (fetching) {
-    return <NoteSkeleton />;
+    return <NoteLoading />;
   }
 
   if (error) {
-    return <ErrorAlert error={error} />;
+    return <ErrorComponent />;
   }
 
-  if (!data) {
-    notFound();
-    return;
+  if (!data?.note) {
+    return <NotFoundComponent text="Note not found" />;
   }
 
   return (

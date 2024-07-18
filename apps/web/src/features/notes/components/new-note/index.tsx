@@ -13,7 +13,7 @@ import {
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-import { NewNoteForm } from "@/features/notes/components/new-note-form";
+import { NewNoteForm } from "@/features/notes/components/new-note/form";
 
 export const NewNote = () => {
   const [isOpen, setIsOpen] = useState(false);
