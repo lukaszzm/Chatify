@@ -26,10 +26,10 @@ export class UsersService {
     return this.prismaService.user.findMany({
       where: {
         id: idFilter,
-        fullName: { contains: args.where?.fullName },
-        firstName: { contains: args.where?.firstName },
-        lastName: { contains: args.where?.lastName },
-        email: { contains: args.where?.email },
+        fullName: { contains: args.where?.fullName, mode: "insensitive" },
+        firstName: { contains: args.where?.firstName, mode: "insensitive" },
+        lastName: { contains: args.where?.lastName, mode: "insensitive" },
+        email: { contains: args.where?.email, mode: "insensitive" },
       },
       take: args.pagination?.take,
       skip: args.pagination?.skip,
