@@ -1,7 +1,6 @@
 import { Sidebar, SidebarContent, SidebarHeader, SidebarTitle } from "@chatify/ui";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { RecentChats } from "@/features/chat";
 import { Search } from "@/features/search";
 
 export const Route = createFileRoute("/_dashboard/chat")({
@@ -16,9 +15,7 @@ function Page() {
           <Search />
           <SidebarTitle>Chats</SidebarTitle>
         </SidebarHeader>
-        <SidebarContent>
-          <RecentChats />
-        </SidebarContent>
+        <SidebarContent />
       </Sidebar>
       <Outlet />
     </>
