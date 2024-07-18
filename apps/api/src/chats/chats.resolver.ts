@@ -1,16 +1,22 @@
 import type { User } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { ChatsService } from "@/chats/chats.service";
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
 import { Chat } from "@/chats/models/chat.model";
+import { MessagesService } from "@/messages/messages.service";
+import { UsersService } from "@/users/users.service";
 
 @Resolver(() => Chat)
 export class ChatsResolver {
-  constructor(private readonly chatsService: ChatsService) {}
+  constructor(
+    private readonly chatsService: ChatsService,
+    private readonly usersService: UsersService,
+    private readonly messagesService: MessagesService
+  ) {}
 
   @UseGuards(GqlAuthGuard)
   @Query(() => Chat, {
@@ -31,5 +37,15 @@ export class ChatsResolver {
       ...data,
       participants: [user.id, ...data.participants],
     });
+  }
+
+  @ResolveField()
+  async participants(@Parent() chat: Chat) {
+    return this.usersService.findManyByChatId(chat.id);
+  }
+
+  @ResolveField()
+  async messages(@Parent() chat: Chat) {
+    return this.messagesService.findManyByChatId(chat.id);
   }
 }

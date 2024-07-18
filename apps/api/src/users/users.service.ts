@@ -39,6 +39,18 @@ export class UsersService {
     });
   }
 
+  async findManyByChatId(chatId: string) {
+    return this.prismaService.user.findMany({
+      where: {
+        chats: {
+          some: {
+            chatId,
+          },
+        },
+      },
+    });
+  }
+
   async create(data: Omit<Prisma.UserCreateInput, "fullName">) {
     return this.prismaService.user.create({
       data: {
