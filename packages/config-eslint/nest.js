@@ -30,13 +30,7 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: [
-    "node_modules/",
-    "dist/",
-    ".eslintrc.cjs",
-    "*.config.js",
-    "*.gen.ts",
-  ],
+  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.cjs", "*.config.js", "*.gen.ts"],
   rules: {
     "import/order": [
       "error",
@@ -61,6 +55,7 @@ module.exports = {
         },
       },
     ],
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
