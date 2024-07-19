@@ -28,8 +28,8 @@ export const Chat = ({ id }: ChatProps) => {
   return (
     <Container className="flex flex-col">
       <ChatHeader title={data.chat.title} participants={data.chat.participants} />
-      <ChatBox />
-      <ChatNewMessage />
+      <ChatBox chatId={id} />
+      <ChatNewMessage chatId={id} />
     </Container>
   );
 };
