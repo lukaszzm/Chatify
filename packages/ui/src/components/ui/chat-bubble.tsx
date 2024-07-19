@@ -41,7 +41,7 @@ export const ChatBubble = ({
       ) : null}
       <div
         className={cn(
-          "flex flex-col w-full max-w-xs leading-1.5 p-4",
+          "flex flex-col w-full max-w-xs leading-0.5 p-3",
           isMine
             ? "rounded-l-lg rounded-tr-lg border-primary bg-primary text-primary-foreground ml-auto"
             : "rounded-e-xl rounded-es-xl border-muted/50 bg-muted/50"
@@ -53,7 +53,7 @@ export const ChatBubble = ({
           </span>
           <span
             className={cn(
-              "text-sm font-normal",
+              "text-xs font-normal",
               isMine ? "text-primary-foreground/80" : "text-muted-foreground/80"
             )}
           >
