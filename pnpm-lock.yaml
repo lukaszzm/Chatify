@@ -208,6 +208,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@chatify/db':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@chatify/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config-eslint

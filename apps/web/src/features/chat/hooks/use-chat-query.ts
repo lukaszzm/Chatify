@@ -17,8 +17,14 @@ const ChatQuery = graphql(`
 `);
 
 export const useChatQuery = (id: string) => {
-  return useQuery({
+  const [{ data, fetching, error }] = useQuery({
     query: ChatQuery,
     variables: { id },
   });
+
+  return {
+    data: data?.chat,
+    fetching,
+    error,
+  };
 };

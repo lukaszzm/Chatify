@@ -4,6 +4,7 @@ import { ChatBox } from "@/features/chat/components/chat-box";
 import { ChatHeader } from "@/features/chat/components/chat-header";
 import { ChatLoading } from "@/features/chat/components/chat-loading";
 import { ChatNewMessage } from "@/features/chat/components/chat-new-message";
+import { ChatProvider } from "@/features/chat/contexts/chat-context";
 import { useChatQuery } from "@/features/chat/hooks/use-chat-query";
 
 interface ChatProps {
@@ -11,7 +12,7 @@ interface ChatProps {
 }
 
 export const Chat = ({ id }: ChatProps) => {
-  const [{ data, fetching, error }] = useChatQuery(id);
+  const { data, fetching, error } = useChatQuery(id);
 
   if (fetching) {
     return <ChatLoading />;
@@ -21,15 +22,17 @@ export const Chat = ({ id }: ChatProps) => {
     return <ErrorComponent />;
   }
 
-  if (!data?.chat) {
+  if (!data) {
     return <NotFoundComponent text="Chat not found" />;
   }
 
   return (
-    <Container className="flex flex-col">
-      <ChatHeader title={data.chat.title} participants={data.chat.participants} />
-      <ChatBox chatId={id} />
-      <ChatNewMessage chatId={id} />
-    </Container>
+    <ChatProvider chat={data}>
+      <Container className="flex flex-col">
+        <ChatHeader />
+        <ChatBox />
+        <ChatNewMessage />
+      </Container>
+    </ChatProvider>
   );
 };

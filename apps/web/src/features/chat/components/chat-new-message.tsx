@@ -10,14 +10,12 @@ import {
 } from "@chatify/ui";
 import { Send } from "lucide-react";
 
+import { useChat } from "@/features/chat/hooks/use-chat";
 import { useNewMessage } from "@/features/chat/hooks/use-new-message";
 
-interface ChatNewMessageProps {
-  chatId: string;
-}
-
-export const ChatNewMessage = ({ chatId }: ChatNewMessageProps) => {
-  const { form, sendMessage, sending } = useNewMessage(chatId);
+export const ChatNewMessage = () => {
+  const { id } = useChat();
+  const { form, sendMessage, sending } = useNewMessage(id);
 
   return (
     <Form {...form}>

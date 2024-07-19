@@ -1,13 +1,9 @@
-import type { Participant } from "@/features/chat/types";
+import { useChat } from "@/features/chat/hooks/use-chat";
 import { generateChatTitle } from "@/features/chat/utils";
-import type { Nullable } from "@/types";
 
-interface ChatHeaderProps {
-  title: Nullable<string>;
-  participants: Participant[];
-}
+export const ChatHeader = () => {
+  const { title, participants } = useChat();
 
-export const ChatHeader = ({ title, participants }: ChatHeaderProps) => {
   const dynamicTitle = title ?? generateChatTitle(participants);
 
   return (
