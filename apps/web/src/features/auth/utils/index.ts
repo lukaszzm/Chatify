@@ -19,10 +19,3 @@ export const clearAuthTokens = () => {
   localStorage.removeItem(ACCESS_TOKEN);
   localStorage.removeItem(REFRESH_TOKEN);
 };
-
-export const isAuthenticated = () => {
-  const accessToken = getAccessToken();
-  const refreshToken = getRefreshToken();
-
-  return Boolean(accessToken && refreshToken);
-};

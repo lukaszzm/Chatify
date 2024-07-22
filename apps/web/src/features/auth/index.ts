@@ -2,10 +2,15 @@ export { SignOut } from "./components/sign-out";
 export { SignIn } from "./components/sign-in";
 export { SignUp } from "./components/sign-up";
 
+export { AuthProvider } from "./contexts/auth-context";
+
+export type { AuthContextValue } from "./contexts/auth-context";
+
 export {
   getAccessToken,
   getRefreshToken,
-  isAuthenticated,
   saveAuthTokens,
   clearAuthTokens,
 } from "./utils";
+
+export { useAuth } from "./hooks/use-auth";

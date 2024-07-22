@@ -3,9 +3,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useMutation } from "urql";
 
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { signUpCredentialsSchema } from "@/features/auth/schemas/credentials-schema";
 import type { SignUpCredentials } from "@/features/auth/schemas/credentials-schema";
-import { saveAuthTokens } from "@/features/auth/utils";
 import { graphql } from "@/gql";
 
 const SignUpMutation = graphql(`
@@ -28,13 +28,15 @@ export const useSignUp = () => {
     },
   });
   const [{ error }, signUpMutation] = useMutation(SignUpMutation);
+
+  const { signIn } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async (data: SignUpCredentials) => {
     const result = await signUpMutation({ data });
 
     if (result.data?.signUp) {
-      saveAuthTokens(result.data.signUp);
+      await signIn(result.data.signUp);
       await navigate({
         to: "/chat",
       });
