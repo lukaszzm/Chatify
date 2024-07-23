@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "nestjs-prisma";
 
 import { CreateNoteInput } from "@/notes/dtos/create-note.input";
@@ -7,12 +7,23 @@ import { CreateNoteInput } from "@/notes/dtos/create-note.input";
 export class NotesService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findOneById(id: string) {
-    return this.prismaService.note.findFirst({
+  async findOneById(id: string, userId: string) {
+    return this.prismaService.note.findUnique({
       where: {
         id,
+        userId,
       },
     });
+  }
+
+  async findOneOrThrow(id: string, userId: string) {
+    const note = await this.findOneById(id, userId);
+
+    if (!note) {
+      throw new NotFoundException("Note not found");
+    }
+
+    return note;
   }
 
   async findMany(userId: string) {
@@ -24,20 +35,6 @@ export class NotesService {
         updatedAt: "desc",
       },
     });
-  }
-
-  async findOneOrThrow(id: string, userId: string) {
-    const note = await this.findOneById(id);
-
-    if (!note) {
-      throw new NotFoundException("Note not found");
-    }
-
-    if (note.userId !== userId) {
-      throw new UnauthorizedException("Unauthorized access");
-    }
-
-    return note;
   }
 
   async create(data: CreateNoteInput, userId: string) {

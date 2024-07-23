@@ -3,8 +3,8 @@ import { useQuery } from "urql";
 import { graphql } from "@/gql";
 
 const NoteQuery = graphql(`
-  query Note($noteId: String!) {
-    note(noteId: $noteId) {
+  query Note($id: String!) {
+    note(id: $id) {
       id
       title
       content
@@ -14,9 +14,9 @@ const NoteQuery = graphql(`
   }
 `);
 
-export const useNoteQuery = (noteId: string) => {
+export const useNoteQuery = (id: string) => {
   return useQuery({
     query: NoteQuery,
-    variables: { noteId },
+    variables: { id },
   });
 };

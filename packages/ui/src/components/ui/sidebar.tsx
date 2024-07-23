@@ -45,7 +45,11 @@ const SidebarContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
 >(({ className, ...props }, ref) => {
   return (
-    <ScrollArea className={cn("h-[calc(100dvh-7rem)]", className)} ref={ref} {...props} />
+    <ScrollArea
+      className={cn("max-h-[calc(100dvh-7rem)]", className)}
+      ref={ref}
+      {...props}
+    />
   );
 });
 SidebarContent.displayName = "SidebarContent";

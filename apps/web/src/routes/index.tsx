@@ -1,12 +1,10 @@
 import { Button, Logo } from "@chatify/ui";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
-import { isAuthenticated } from "@/features/auth";
-
 export const Route = createFileRoute("/")({
   component: IndexPage,
-  beforeLoad: () => {
-    if (isAuthenticated()) {
+  beforeLoad: ({ context }) => {
+    if (context.auth.isAuthenticated) {
       throw redirect({
         to: "/chat",
       });

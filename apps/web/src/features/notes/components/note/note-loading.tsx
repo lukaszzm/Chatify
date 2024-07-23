@@ -1,6 +1,6 @@
 import { Container, Separator, Skeleton } from "@chatify/ui";
 
-export const NoteSkeleton = () => {
+export const NoteLoading = () => {
   return (
     <Container className="space-y-2 p-4">
       <div className="flex gap-2">

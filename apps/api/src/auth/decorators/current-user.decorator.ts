@@ -9,6 +9,8 @@ export const CurrentUser = createParamDecorator(
     }
 
     const context_ = GqlExecutionContext.create(context);
-    return context_.getContext().req.user;
+    const { req, connection } = context_.getContext();
+
+    return connection ? connection.user : req.user;
   }
 );

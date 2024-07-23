@@ -46,17 +46,6 @@ export type Chat = {
   updatedAt: Scalars["DateTime"]["output"];
 };
 
-export type ChatPreview = {
-  __typename?: "ChatPreview";
-  createdAt: Scalars["DateTime"]["output"];
-  id: Scalars["ID"]["output"];
-  isDeleted: Scalars["Boolean"]["output"];
-  participants: Array<User>;
-  recentMessage: Message;
-  title?: Maybe<Scalars["String"]["output"]>;
-  updatedAt: Scalars["DateTime"]["output"];
-};
-
 export type CreateNoteInput = {
   title: Scalars["String"]["input"];
 };
@@ -77,12 +66,19 @@ export type Message = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  /** Create a new note without a content (empty note with title) */
   createNote: Note;
+  /** Delete a note */
   deleteNote: Note;
   refresh: Token;
+  sendMessage: Message;
   signIn: Auth;
   signUp: Auth;
+  /** Start a new chat with the given participants, if it doesn't exist yet */
+  startChat: Chat;
+  /** Toggle lock on a note */
   toggleLock: Note;
+  /** Update a note content */
   updateNote: Note;
 };
 
@@ -98,12 +94,20 @@ export type MutationRefreshArgs = {
   refreshToken: Scalars["String"]["input"];
 };
 
+export type MutationSendMessageArgs = {
+  data: SendMessageInput;
+};
+
 export type MutationSignInArgs = {
   data: SignInInput;
 };
 
 export type MutationSignUpArgs = {
   data: SignUpInput;
+};
+
+export type MutationStartChatArgs = {
+  data: StartChatInput;
 };
 
 export type MutationToggleLockArgs = {
@@ -134,20 +138,26 @@ export type PaginationInput = {
 
 export type Query = {
   __typename?: "Query";
-  chat: Chat;
-  me: User;
-  note: Note;
+  /** Get chat by ID, authenticated user must be a participant */
+  chat?: Maybe<Chat>;
+  messages: Array<Message>;
+  /** Get a note by ID, if it belongs to the current user */
+  note?: Maybe<Note>;
+  /** Get all notes for the current user */
   notes: Array<Note>;
-  recentChats: Array<ChatPreview>;
   users: Array<User>;
 };
 
 export type QueryChatArgs = {
+  id: Scalars["String"]["input"];
+};
+
+export type QueryMessagesArgs = {
   chatId: Scalars["String"]["input"];
 };
 
 export type QueryNoteArgs = {
-  noteId: Scalars["String"]["input"];
+  id: Scalars["String"]["input"];
 };
 
 export type QueryUsersArgs = {
@@ -155,6 +165,11 @@ export type QueryUsersArgs = {
   order?: InputMaybe<SortOrder>;
   pagination?: InputMaybe<PaginationInput>;
   where?: InputMaybe<UserWhereInput>;
+};
+
+export type SendMessageInput = {
+  chatId: Scalars["String"]["input"];
+  content: Scalars["String"]["input"];
 };
 
 export type SignInInput = {
@@ -173,6 +188,20 @@ export enum SortOrder {
   Asc = "Asc",
   Desc = "Desc",
 }
+
+export type StartChatInput = {
+  participants: Array<Scalars["String"]["input"]>;
+  title?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  messageSent: Message;
+};
+
+export type SubscriptionMessageSentArgs = {
+  chatId: Scalars["String"]["input"];
+};
 
 export type Token = {
   __typename?: "Token";
@@ -220,20 +249,47 @@ export type SignUpMutation = {
   signUp: { __typename?: "Auth"; accessToken: string; refreshToken: string };
 };
 
-export type RecentChatsQueryVariables = Exact<{ [key: string]: never }>;
+export type ChatQueryVariables = Exact<{
+  id: Scalars["String"]["input"];
+}>;
 
-export type RecentChatsQuery = {
+export type ChatQuery = {
   __typename?: "Query";
-  recentChats: Array<{
-    __typename?: "ChatPreview";
+  chat?: {
+    __typename?: "Chat";
     id: string;
-    recentMessage: {
-      __typename?: "Message";
-      content: string;
-      createdAt: string;
-      sender: { __typename?: "User"; firstName: string; lastName: string };
-    };
+    title?: string | null;
+    participants: Array<{
+      __typename?: "User";
+      id: string;
+      firstName: string;
+      lastName: string;
+    }>;
+  } | null;
+};
+
+export type MessagesQueryVariables = Exact<{
+  chatId: Scalars["String"]["input"];
+}>;
+
+export type MessagesQuery = {
+  __typename?: "Query";
+  messages: Array<{
+    __typename?: "Message";
+    id: string;
+    content: string;
+    createdAt: string;
+    sender: { __typename?: "User"; id: string; firstName: string; lastName: string };
   }>;
+};
+
+export type SendMessageMutationVariables = Exact<{
+  data: SendMessageInput;
+}>;
+
+export type SendMessageMutation = {
+  __typename?: "Mutation";
+  sendMessage: { __typename?: "Message"; id: string };
 };
 
 export type CreateNoteMutationVariables = Exact<{
@@ -255,19 +311,19 @@ export type DeleteNoteMutation = {
 };
 
 export type NoteQueryVariables = Exact<{
-  noteId: Scalars["String"]["input"];
+  id: Scalars["String"]["input"];
 }>;
 
 export type NoteQuery = {
   __typename?: "Query";
-  note: {
+  note?: {
     __typename?: "Note";
     id: string;
     title: string;
     content: string;
     updatedAt: string;
     isLocked: boolean;
-  };
+  } | null;
 };
 
 export type NotesQueryVariables = Exact<{ [key: string]: never }>;
@@ -311,6 +367,15 @@ export type SearchUsersQueryVariables = Exact<{
 export type SearchUsersQuery = {
   __typename?: "Query";
   users: Array<{ __typename?: "User"; id: string; firstName: string; lastName: string }>;
+};
+
+export type StartChatMutationVariables = Exact<{
+  data: StartChatInput;
+}>;
+
+export type StartChatMutation = {
+  __typename?: "Mutation";
+  startChat: { __typename?: "Chat"; id: string };
 };
 
 export type RefreshTokenMutationVariables = Exact<{
@@ -408,42 +473,50 @@ export const SignUpDocument = {
     },
   ],
 } as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
-export const RecentChatsDocument = {
+export const ChatDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "query",
-      name: { kind: "Name", value: "RecentChats" },
+      name: { kind: "Name", value: "Chat" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "recentChats" },
+            name: { kind: "Name", value: "chat" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: { kind: "Variable", name: { kind: "Name", value: "id" } },
+              },
+            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "title" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "recentMessage" },
+                  name: { kind: "Name", value: "participants" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "content" } },
-                      { kind: "Field", name: { kind: "Name", value: "createdAt" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "sender" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                            { kind: "Field", name: { kind: "Name", value: "lastName" } },
-                          ],
-                        },
-                      },
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                      { kind: "Field", name: { kind: "Name", value: "lastName" } },
                     ],
                   },
                 },
@@ -454,7 +527,106 @@ export const RecentChatsDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
+} as unknown as DocumentNode<ChatQuery, ChatQueryVariables>;
+export const MessagesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Messages" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "messages" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "chatId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "sender" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                      { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MessagesQuery, MessagesQueryVariables>;
+export const SendMessageDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "SendMessage" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "SendMessageInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "sendMessage" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SendMessageMutation, SendMessageMutationVariables>;
 export const CreateNoteDocument = {
   kind: "Document",
   definitions: [
@@ -545,7 +717,7 @@ export const NoteDocument = {
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
           type: {
             kind: "NonNullType",
             type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
@@ -561,8 +733,8 @@ export const NoteDocument = {
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "noteId" },
-                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+                name: { kind: "Name", value: "id" },
+                value: { kind: "Variable", name: { kind: "Name", value: "id" } },
               },
             ],
             selectionSet: {
@@ -772,6 +944,46 @@ export const SearchUsersDocument = {
     },
   ],
 } as unknown as DocumentNode<SearchUsersQuery, SearchUsersQueryVariables>;
+export const StartChatDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "StartChat" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "StartChatInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "startChat" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<StartChatMutation, StartChatMutationVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [

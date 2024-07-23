@@ -4,11 +4,12 @@ import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
-const containerVariants = cva("rounded-md w-full space-y-4 p-4", {
+const containerVariants = cva("rounded-md w-full space-y-4 p-4 border", {
   variants: {
     variant: {
-      default: "bg-background",
-      ghost: "bg-none",
+      default: "border-background bg-background",
+      ghost: "border-none bg-none",
+      destructive: "border-destructive bg-destructive/5 text-destructive",
     },
     size: {
       sm: "w-full max-w-sm",

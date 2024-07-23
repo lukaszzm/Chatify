@@ -44,12 +44,23 @@ type Message {
 }
 
 type Mutation {
+  """Create a new note without a content (empty note with title)"""
   createNote(data: CreateNoteInput!): Note!
+
+  """Delete a note"""
   deleteNote(noteId: String!): Note!
   refresh(refreshToken: String!): Token!
+  sendMessage(data: SendMessageInput!): Message!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
+
+  """Start a new chat with the given participants, if it doesn't exist yet"""
+  startChat(data: StartChatInput!): Chat!
+
+  """Toggle lock on a note"""
   toggleLock(noteId: String!): Note!
+
+  """Update a note content"""
   updateNote(content: String!, noteId: String!): Note!
 }
 
@@ -70,9 +81,21 @@ input PaginationInput {
 }
 
 type Query {
-  note(noteId: String!): Note!
+  """Get chat by ID, authenticated user must be a participant"""
+  chat(id: String!): Chat
+  messages(chatId: String!): [Message!]!
+
+  """Get a note by ID, if it belongs to the current user"""
+  note(id: String!): Note
+
+  """Get all notes for the current user"""
   notes: [Note!]!
   users(excludeMe: Boolean! = true, order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
+}
+
+input SendMessageInput {
+  chatId: String!
+  content: String!
 }
 
 input SignInInput {
@@ -90,6 +113,15 @@ input SignUpInput {
 enum SortOrder {
   Asc
   Desc
+}
+
+input StartChatInput {
+  participants: [String!]!
+  title: String
+}
+
+type Subscription {
+  messageSent(chatId: String!): Message!
 }
 
 type Token {

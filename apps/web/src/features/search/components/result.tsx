@@ -1,5 +1,6 @@
-import { Link } from "@tanstack/react-router";
 import { Avatar, AvatarFallback, Button } from "@ui/index";
+
+import { useStartChat } from "@/features/search/hooks/use-start-chat";
 
 interface ResultProps {
   id: string;
@@ -8,6 +9,8 @@ interface ResultProps {
 }
 
 export const Result = ({ id, firstName, lastName }: ResultProps) => {
+  const { startChat, fetching } = useStartChat();
+
   const fallback = `${firstName.at(0)}${lastName.at(0)}`;
 
   return (
@@ -18,10 +21,13 @@ export const Result = ({ id, firstName, lastName }: ResultProps) => {
       <p className="text-sm">
         {firstName} {lastName}
       </p>
-      <Button asChild size="xs">
-        <Link to="/chat/$chatId" params={{ chatId: id }}>
-          Chat
-        </Link>
+      <Button
+        size="xs"
+        onClick={() => startChat(id)}
+        isLoading={fetching}
+        aria-label={`Start chat with ${firstName} ${lastName}`}
+      >
+        Chat
       </Button>
     </div>
   );

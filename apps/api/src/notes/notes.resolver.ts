@@ -17,28 +17,37 @@ export class NotesResolver {
   ) {}
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => Note!)
-  async note(
-    @Args("noteId", { type: () => String }) noteId: string,
-    @CurrentUser() me: User
-  ) {
-    return this.notesService.findOneOrThrow(noteId, me.id);
+  @Query(() => Note, {
+    nullable: true,
+    description: "Get a note by ID, if it belongs to the current user",
+  })
+  async note(@Args("id", { type: () => String }) id: string, @CurrentUser() me: User) {
+    return this.notesService.findOneById(id, me.id);
   }
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => [Note]!)
+  @Query(() => [Note]!, {
+    nullable: false,
+    description: "Get all notes for the current user",
+  })
   async notes(@CurrentUser() me: User) {
     return this.notesService.findMany(me.id);
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note!)
+  @Mutation(() => Note!, {
+    nullable: false,
+    description: "Create a new note without a content (empty note with title)",
+  })
   async createNote(@Args("data") data: CreateNoteInput, @CurrentUser() me: User) {
     return this.notesService.create(data, me.id);
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note!)
+  @Mutation(() => Note!, {
+    nullable: false,
+    description: "Delete a note",
+  })
   async deleteNote(
     @Args("noteId", { type: () => String }) noteId: string,
     @CurrentUser() me: User
@@ -47,7 +56,10 @@ export class NotesResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note!)
+  @Mutation(() => Note!, {
+    nullable: false,
+    description: "Update a note content",
+  })
   async updateNote(
     @Args("noteId", { type: () => String }) noteId: string,
     @Args("content", { type: () => String }) content: string,
@@ -57,7 +69,10 @@ export class NotesResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Note!)
+  @Mutation(() => Note!, {
+    nullable: false,
+    description: "Toggle lock on a note",
+  })
   async toggleLock(
     @Args("noteId", { type: () => String }) noteId: string,
     @CurrentUser() me: User
