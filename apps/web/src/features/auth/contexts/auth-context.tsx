@@ -20,7 +20,7 @@ export type AuthContextValue = {
   accessToken: string | null;
   refreshToken: string | null;
   signIn: (tokens: Tokens) => Promise<void>;
-  signOut: () => Promise<void>;
+  signOut: () => void;
 };
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -40,13 +40,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     await new Promise((r) => setTimeout(r, 10));
   }, []);
 
-  const signOut = useCallback(async () => {
+  const signOut = useCallback(() => {
     clearAuthTokens();
     setAccessToken(null);
     setRefreshToken(null);
-
-    // sleep 1s - fix with a better solution
-    await new Promise((r) => setTimeout(r, 10));
+    window.location.reload();
   }, []);
 
   return (

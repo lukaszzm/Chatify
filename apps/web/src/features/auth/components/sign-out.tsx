@@ -10,7 +10,6 @@ import {
   AlertDialogTrigger,
   TooltipButton,
 } from "@chatify/ui";
-import { useLocation, useNavigate } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
 
 import { useAuth } from "@/features/auth/hooks/use-auth";
@@ -21,13 +20,6 @@ interface SignOutProps {
 
 export const SignOut = ({ className }: SignOutProps) => {
   const { signOut } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleSignOut = async () => {
-    await signOut();
-    await navigate({ to: "/sign-in", search: { redirect: location.pathname } });
-  };
 
   return (
     <>
@@ -46,7 +38,7 @@ export const SignOut = ({ className }: SignOutProps) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSignOut}>Sign Out</AlertDialogAction>
+            <AlertDialogAction onClick={signOut}>Sign Out</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
