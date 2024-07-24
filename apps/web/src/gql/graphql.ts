@@ -299,6 +299,21 @@ export type MessagesQuery = {
   }>;
 };
 
+export type MessageSentSubscriptionVariables = Exact<{
+  chatId: Scalars["String"]["input"];
+}>;
+
+export type MessageSentSubscription = {
+  __typename?: "Subscription";
+  messageSent: {
+    __typename?: "Message";
+    id: string;
+    content: string;
+    createdAt: string;
+    sender: { __typename?: "User"; id: string; firstName: string; lastName: string };
+  };
+};
+
 export type SendMessageMutationVariables = Exact<{
   data: SendMessageInput;
 }>;
@@ -630,6 +645,62 @@ export const MessagesDocument = {
     },
   ],
 } as unknown as DocumentNode<MessagesQuery, MessagesQueryVariables>;
+export const MessageSentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "subscription",
+      name: { kind: "Name", value: "MessageSent" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "messageSent" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "chatId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "sender" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                      { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MessageSentSubscription, MessageSentSubscriptionVariables>;
 export const SendMessageDocument = {
   kind: "Document",
   definitions: [

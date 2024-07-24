@@ -18,14 +18,8 @@ const MessagesQuery = graphql(`
 `);
 
 export const useMessagesQuery = (chatId: string) => {
-  const [{ data, fetching, error }] = useQuery({
+  return useQuery({
     query: MessagesQuery,
     variables: { chatId },
   });
-
-  return {
-    data: data?.messages,
-    fetching,
-    error,
-  };
 };

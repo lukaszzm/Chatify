@@ -23,6 +23,8 @@ const documents = {
     types.ChatDocument,
   "\n  query Messages($chatId: String!) {\n    messages(chatId: $chatId) {\n      id\n      content\n      createdAt\n      sender {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n":
     types.MessagesDocument,
+  "\n  subscription MessageSent($chatId: String!) {\n    messageSent(chatId: $chatId) {\n      id\n      content\n      createdAt\n      sender {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n":
+    types.MessageSentDocument,
   "\n  mutation SendMessage($data: SendMessageInput!) {\n    sendMessage(data: $data) {\n      id\n    }\n  }\n":
     types.SendMessageDocument,
   "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n    }\n  }\n":
@@ -89,6 +91,12 @@ export function graphql(
 export function graphql(
   source: "\n  query Messages($chatId: String!) {\n    messages(chatId: $chatId) {\n      id\n      content\n      createdAt\n      sender {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n"
 ): (typeof documents)["\n  query Messages($chatId: String!) {\n    messages(chatId: $chatId) {\n      id\n      content\n      createdAt\n      sender {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  subscription MessageSent($chatId: String!) {\n    messageSent(chatId: $chatId) {\n      id\n      content\n      createdAt\n      sender {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n"
+): (typeof documents)["\n  subscription MessageSent($chatId: String!) {\n    messageSent(chatId: $chatId) {\n      id\n      content\n      createdAt\n      sender {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

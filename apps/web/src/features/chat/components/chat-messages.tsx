@@ -3,13 +3,13 @@ import { ChatBubble, ErrorComponent } from "@chatify/ui";
 import { useAuth } from "@/features/auth";
 import { ChatMessagesLoading } from "@/features/chat/components/chat-messages-loading";
 import { useChat } from "@/features/chat/hooks/use-chat";
-import { useMessagesQuery } from "@/features/chat/hooks/use-messages-query";
+import { useMessagesSubscription } from "@/features/chat/hooks/use-messages-subscription";
 import { formatDate } from "@/utils/format-date";
 
 export const ChatMessages = () => {
   const { user } = useAuth();
   const { id } = useChat();
-  const { data, fetching, error } = useMessagesQuery(id);
+  const [{ fetching, data, error }] = useMessagesSubscription(id);
 
   if (fetching) {
     return <ChatMessagesLoading />;

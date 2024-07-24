@@ -2,7 +2,8 @@
 
 import { authExchange } from "@urql/exchange-auth";
 import { Kind } from "graphql";
-import { cacheExchange, Client, fetchExchange } from "urql";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+import { cacheExchange, Client, fetchExchange, subscriptionExchange } from "urql";
 
 import {
   clearAuthTokens,
@@ -22,6 +23,16 @@ const RefreshTokenMutation = graphql(`
 `);
 
 const gqlServerUrl = import.meta.env.VITE_API_URL + "/graphql";
+
+const subscriptionClient = new SubscriptionClient(gqlServerUrl, {
+  reconnect: true,
+  connectionParams: () => {
+    const accessToken = getAccessToken();
+    return {
+      authorization: `Bearer ${accessToken}`,
+    };
+  },
+});
 
 const client = new Client({
   url: gqlServerUrl,
@@ -94,6 +105,9 @@ const client = new Client({
       };
     }),
     fetchExchange,
+    subscriptionExchange({
+      forwardSubscription: (request) => subscriptionClient.request(request),
+    }),
   ],
 });
 
