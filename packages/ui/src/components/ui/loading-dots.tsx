@@ -6,23 +6,32 @@ import { cn } from "@ui/lib/utils";
 
 const loadingDotsVariants = cva("rounded-full animate-bounce", {
   variants: {
-    size: {
-      sm: "size-1.5",
-      md: "size-2",
-      lg: "size-3",
-      xl: "size-5",
-    },
     variant: {
-      primary: "bg-primary",
-      secondary: "bg-secondary",
-      accent: "bg-accent",
-      muted: "bg-muted",
-      destructive: "bg-destructive",
+      default: "bg-primary-foreground",
+      destructive: "bg-destructive-foreground",
+      outline: "bg-secondary-foreground",
+      secondary: "bg-secondary-foreground",
+      ghost: "bg-primary",
+      link: "bg-accent",
+      muted: "bg-accent",
+      accent: "bg-accent-foreground",
+      nav: "bg-primary",
+      active: "bg-accent",
+    },
+    size: {
+      default: "h-10 px-4 py-2",
+      xs: "size-1",
+      sm: "size-1.5",
+      lg: "size-1.5",
+      xl: "size-1.5",
+      icon: "size-1",
+      auto: "size-1",
+      square: "size-1",
     },
   },
   defaultVariants: {
-    size: "sm",
-    variant: "primary",
+    variant: "default",
+    size: "default",
   },
 });
 
@@ -31,7 +40,7 @@ export interface LoadingDotsProps
     VariantProps<typeof loadingDotsVariants> {}
 
 export const LoadingDots = forwardRef<HTMLDivElement, LoadingDotsProps>(
-  ({ className, size, variant, ...props }, ref) => {
+  ({ className, variant, size, ...props }, ref) => {
     return (
       <div
         className={cn("flex gap-1.5 justify-center items-center", className)}
@@ -41,17 +50,17 @@ export const LoadingDots = forwardRef<HTMLDivElement, LoadingDotsProps>(
         <span className="sr-only">Loading...</span>
         <div
           className={cn(
-            loadingDotsVariants({ size, variant }),
+            loadingDotsVariants({ variant, size }),
             "[animation-delay:-0.3s]"
           )}
         />
         <div
           className={cn(
-            loadingDotsVariants({ size, variant }),
+            loadingDotsVariants({ variant, size }),
             "[animation-delay:-0.15s]"
           )}
         />
-        <div className={cn(loadingDotsVariants({ size, variant }))} />
+        <div className={cn(loadingDotsVariants({ variant, size }))} />
       </div>
     );
   }

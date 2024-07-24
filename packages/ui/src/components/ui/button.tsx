@@ -20,6 +20,7 @@ const buttonVariants = cva(
         muted: "bg-accent/10 text-accent hover:bg-accent/15",
         accent: "bg-accent text-accent-foreground hover:bg-accent/90",
         nav: "text-muted-foreground hover:text-primary",
+        active: "text-accent bg-accent/5",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -68,7 +69,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isLoading || disabled}
         {...props}
       >
-        {isLoading ? <LoadingDots variant="muted" /> : children}
+        {isLoading ? <LoadingDots variant={variant} size={size} /> : children}
       </Comp>
     );
   }
