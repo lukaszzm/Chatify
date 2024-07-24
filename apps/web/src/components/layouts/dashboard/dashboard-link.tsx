@@ -10,7 +10,7 @@ interface DashboardLinkProps {
 
 export const DashboardLink = ({ children, label, to }: DashboardLinkProps) => {
   const location = useLocation();
-  const isActive = location.pathname === to;
+  const isActive = to && location.pathname.startsWith(to);
 
   return (
     <TooltipButton tooltipText={label} asChild variant={isActive ? "active" : "nav"}>
