@@ -3,39 +3,26 @@ import type React from "react";
 import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
 import { cn } from "@ui/lib/utils";
 
-interface ChatBubbleBaseProps {
-  createdAt: string;
-  children: React.ReactNode;
-}
-
-interface MineChatBubbleProps extends ChatBubbleBaseProps {
-  isMine: true;
-  firstName?: never;
-  lastName?: never;
-}
-
-interface TheirChatBubbleProps extends ChatBubbleBaseProps {
-  isMine?: never;
+interface Sender {
   firstName: string;
   lastName: string;
 }
 
-type ChatBubbleProps = MineChatBubbleProps | TheirChatBubbleProps;
+interface ChatBubbleProps {
+  isMine: boolean;
+  sender: Sender;
+  createdAt: string;
+  children: React.ReactNode;
+}
 
-export const ChatBubble = ({
-  isMine,
-  firstName,
-  lastName,
-  createdAt,
-  children,
-}: ChatBubbleProps) => {
+export const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) => {
   return (
     <div className="flex items-start gap-2.5">
       {!isMine ? (
         <Avatar className="size-8">
           <AvatarFallback>
-            {firstName.at(0)}
-            {lastName.at(0)}
+            {sender.firstName.at(0)}
+            {sender.lastName.at(0)}
           </AvatarFallback>
         </Avatar>
       ) : null}
@@ -49,7 +36,7 @@ export const ChatBubble = ({
       >
         <div className="flex items-center justify-between space-x-2 rtl:space-x-reverse">
           <span className="text-sm font-semibold">
-            {isMine ? "You" : `${firstName} ${lastName}`}
+            {isMine ? "You" : `${sender.firstName} ${sender.lastName}`}
           </span>
           <span
             className={cn(
