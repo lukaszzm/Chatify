@@ -1,6 +1,6 @@
 import { TooltipButton } from "@chatify/ui";
 import type { LinkProps } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 
 interface DashboardLinkProps {
   label: string;
@@ -9,16 +9,12 @@ interface DashboardLinkProps {
 }
 
 export const DashboardLink = ({ children, label, to }: DashboardLinkProps) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
   return (
-    <TooltipButton tooltipText={label} asChild>
-      <Link
-        to={to}
-        activeProps={{
-          className: "text-accent/90 bg-accent/5 hover:text-accent",
-        }}
-      >
-        {children}
-      </Link>
+    <TooltipButton tooltipText={label} asChild variant={isActive ? "active" : "nav"}>
+      <Link to={to}>{children}</Link>
     </TooltipButton>
   );
 };
