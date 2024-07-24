@@ -83,6 +83,7 @@ input PaginationInput {
 type Query {
   """Get chat by ID, authenticated user must be a participant"""
   chat(id: String!): Chat
+  me: User!
   messages(chatId: String!): [Message!]!
 
   """Get a note by ID, if it belongs to the current user"""
