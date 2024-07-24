@@ -3,7 +3,7 @@ import { Outlet } from "@tanstack/react-router";
 
 import { navLinks } from "@/components/layouts/dashboard/config";
 import { DashboardLink } from "@/components/layouts/dashboard/dashboard-link";
-import { SignOut } from "@/features/auth";
+import { SignOut, UserAvatar } from "@/features/auth";
 
 export const DashboardLayout = () => (
   <div className="h-dvh flex w-full p-4 gap-6 bg-secondary overflow-auto">
@@ -17,7 +17,10 @@ export const DashboardLayout = () => (
         ))}
       </nav>
 
-      <SignOut className="mt-auto" />
+      <div className="flex flex-col gap-4 mt-auto items-center">
+        <UserAvatar />
+        <SignOut />
+      </div>
     </aside>
 
     <main className="flex-1 flex gap-6">

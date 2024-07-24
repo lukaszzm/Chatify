@@ -140,6 +140,7 @@ export type Query = {
   __typename?: "Query";
   /** Get chat by ID, authenticated user must be a participant */
   chat?: Maybe<Chat>;
+  me: User;
   messages: Array<Message>;
   /** Get a note by ID, if it belongs to the current user */
   note?: Maybe<Note>;
@@ -229,6 +230,21 @@ export type UserWhereInput = {
   fullName?: InputMaybe<Scalars["String"]["input"]>;
   isActive?: InputMaybe<Scalars["Boolean"]["input"]>;
   lastName?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type MeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MeQuery = {
+  __typename?: "Query";
+  me: {
+    __typename?: "User";
+    id: string;
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    email: string;
+    isActive: boolean;
+  };
 };
 
 export type SignInMutationVariables = Exact<{
@@ -387,6 +403,36 @@ export type RefreshTokenMutation = {
   refresh: { __typename?: "Token"; accessToken: string; refreshToken: string };
 };
 
+export const MeDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Me" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "me" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "fullName" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+                { kind: "Field", name: { kind: "Name", value: "isActive" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const SignInDocument = {
   kind: "Document",
   definitions: [

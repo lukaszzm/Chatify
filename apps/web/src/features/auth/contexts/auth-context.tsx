@@ -1,6 +1,7 @@
 import type { User } from "@chatify/db";
 import type { PropsWithChildren } from "react";
 import { createContext, useCallback, useState } from "react";
+import { useQuery } from "urql";
 
 import {
   clearAuthTokens,
@@ -8,20 +9,36 @@ import {
   getRefreshToken,
   saveAuthTokens,
 } from "@/features/auth/utils";
+import { graphql } from "@/gql";
 
 type Tokens = {
   accessToken: string;
   refreshToken: string;
 };
 
+type AuthUser = Omit<User, "password" | "createdAt" | "updatedAt">;
+
 export type AuthContextValue = {
   isAuthenticated: boolean;
-  user: User | null;
+  user: AuthUser | null;
   accessToken: string | null;
   refreshToken: string | null;
   signIn: (tokens: Tokens) => Promise<void>;
   signOut: () => void;
 };
+
+const MeQuery = graphql(`
+  query Me {
+    me {
+      id
+      firstName
+      lastName
+      fullName
+      email
+      isActive
+    }
+  }
+`);
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -30,6 +47,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [refreshToken, setRefreshToken] = useState(getRefreshToken());
 
   const isAuthenticated = !!accessToken && !!refreshToken;
+
+  const [{ data }] = useQuery({
+    query: MeQuery,
+    requestPolicy: "network-only",
+    pause: !isAuthenticated,
+  });
 
   const signIn = useCallback(async ({ accessToken, refreshToken }: Tokens) => {
     saveAuthTokens({ accessToken, refreshToken });
@@ -50,7 +73,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   return (
     <AuthContext.Provider
       value={{
-        user: null,
+        user: data?.me ?? null,
         isAuthenticated,
         accessToken,
         refreshToken,
