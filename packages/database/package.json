@@ -2,12 +2,12 @@
   "name": "@chatify/db",
   "version": "0.0.0",
   "dependencies": {
-    "@prisma/client": "5.15.0"
+    "@prisma/client": "5.17.0"
   },
   "devDependencies": {
     "@chatify/eslint-config": "workspace:*",
     "@chatify/typescript-config": "workspace:*",
-    "prisma": "^5.15.0"
+    "prisma": "^5.17.0"
   },
   "scripts": {
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
