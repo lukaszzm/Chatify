@@ -21,7 +21,7 @@ export const TooltipButton = forwardRef<HTMLButtonElement, TooltipButtonProps>(
       asChild,
       tooltipText,
       side = "right",
-      variant = "ghost",
+      variant = "nav",
       size = "square",
       className,
       ...props

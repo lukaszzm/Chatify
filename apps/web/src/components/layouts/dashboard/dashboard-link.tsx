@@ -14,7 +14,7 @@ export const DashboardLink = ({ children, label, to }: DashboardLinkProps) => {
       <Link
         to={to}
         activeProps={{
-          className: "bg-muted text-primary",
+          className: "text-accent/90 bg-accent/5 hover:text-accent",
         }}
       >
         {children}

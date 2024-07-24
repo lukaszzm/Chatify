@@ -7,7 +7,7 @@ import { cn } from "@ui/lib/utils";
 const containerVariants = cva("rounded-md w-full space-y-4 p-4 border", {
   variants: {
     variant: {
-      default: "border-background bg-background",
+      default: "border-card bg-card",
       ghost: "border-none bg-none",
       destructive: "border-destructive bg-destructive/5 text-destructive",
     },

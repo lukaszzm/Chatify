@@ -8,7 +8,6 @@ import {
   HybridHeader,
   HybridTitle,
   HybridTrigger,
-  TooltipButton,
 } from "@chatify/ui";
 import { Plus } from "lucide-react";
 import { useState } from "react";
@@ -21,9 +20,10 @@ export const NewNote = () => {
   return (
     <Hybrid open={isOpen} onOpenChange={setIsOpen}>
       <HybridTrigger asChild>
-        <TooltipButton tooltipText="Add new note" variant="default" className="size-9">
+        <Button variant="muted" className="gap-1">
+          New Note
           <Plus />
-        </TooltipButton>
+        </Button>
       </HybridTrigger>
       <HybridContent className="sm:max-w-md">
         <HybridHeader>

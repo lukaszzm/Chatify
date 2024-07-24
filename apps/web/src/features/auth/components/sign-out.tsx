@@ -26,7 +26,7 @@ export const SignOut = ({ className }: SignOutProps) => {
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <TooltipButton tooltipText="Sign Out" className={className}>
-            <LogOut />
+            <LogOut strokeWidth={2.35} />
           </TooltipButton>
         </AlertDialogTrigger>
         <AlertDialogContent>
