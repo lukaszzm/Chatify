@@ -15,6 +15,25 @@ export class MessagesService {
     });
   }
 
+  async findManyByUserId(userId: string) {
+    return this.prismaService.message.findMany({
+      where: {
+        senderId: userId,
+      },
+    });
+  }
+
+  async findLatestByChatId(chatId: string) {
+    return this.prismaService.message.findFirst({
+      where: {
+        chatId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
   async create(data: SendMessageInput, senderId: string) {
     return this.prismaService.message.create({
       data: {

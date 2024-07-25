@@ -21,6 +21,21 @@ export class ChatsService {
     });
   }
 
+  async findManyByUserId(userId: string) {
+    return this.prismaService.chat.findMany({
+      where: {
+        participants: {
+          some: {
+            userId,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
   async create(data: StartChatInput) {
     const uniqueParticipants = removeDuplicates(data.participants);
 

@@ -21,6 +21,16 @@ type Chat {
   updatedAt: DateTime!
 }
 
+type ChatPreview {
+  createdAt: DateTime!
+  id: ID!
+  isDeleted: Boolean!
+  latestMessage: Message!
+  participants: [User!]!
+  title: String
+  updatedAt: DateTime!
+}
+
 input CreateNoteInput {
   title: String!
 }
@@ -53,8 +63,6 @@ type Mutation {
   sendMessage(data: SendMessageInput!): Message!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
-
-  """Start a new chat with the given participants, if it doesn't exist yet"""
   startChat(data: StartChatInput!): Chat!
 
   """Toggle lock on a note"""
@@ -81,7 +89,6 @@ input PaginationInput {
 }
 
 type Query {
-  """Get chat by ID, authenticated user must be a participant"""
   chat(id: String!): Chat
   me: User!
   messages(chatId: String!): [Message!]!
@@ -91,6 +98,7 @@ type Query {
 
   """Get all notes for the current user"""
   notes: [Note!]!
+  recentChats: [ChatPreview!]!
   users(excludeMe: Boolean! = true, order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
 }
 

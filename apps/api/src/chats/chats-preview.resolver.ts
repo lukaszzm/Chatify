@@ -1,17 +1,17 @@
 import type { User } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { ChatsService } from "@/chats/chats.service";
-import { StartChatInput } from "@/chats/dtos/start-chat.input";
+import { ChatPreview } from "@/chats/models/chat-preview.model";
 import { Chat } from "@/chats/models/chat.model";
 import { MessagesService } from "@/messages/messages.service";
 import { UsersService } from "@/users/users.service";
 
-@Resolver(() => Chat)
-export class ChatsResolver {
+@Resolver(() => ChatPreview)
+export class ChatsPreviewResolver {
   constructor(
     private readonly chatsService: ChatsService,
     private readonly usersService: UsersService,
@@ -19,18 +19,9 @@ export class ChatsResolver {
   ) {}
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => Chat, { nullable: true })
-  async chat(@Args("id") id: string, @CurrentUser() user: User) {
-    return this.chatsService.findOneById(id, user.id);
-  }
-
-  @UseGuards(GqlAuthGuard)
-  @Mutation(() => Chat)
-  async startChat(@Args("data") data: StartChatInput, @CurrentUser() user: User) {
-    return this.chatsService.createIfNotExists({
-      ...data,
-      participants: [user.id, ...data.participants],
-    });
+  @Query(() => [ChatPreview])
+  async recentChats(@CurrentUser() user: User) {
+    return this.chatsService.findManyByUserId(user.id);
   }
 
   @ResolveField()
@@ -39,7 +30,7 @@ export class ChatsResolver {
   }
 
   @ResolveField()
-  async messages(@Parent() chat: Chat) {
-    return this.messagesService.findManyByChatId(chat.id);
+  async latestMessage(@Parent() chatPreview: ChatPreview) {
+    return this.messagesService.findLatestByChatId(chatPreview.id);
   }
 }
