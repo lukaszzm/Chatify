@@ -35,20 +35,33 @@ export class MessagesService {
   }
 
   async create(data: SendMessageInput, senderId: string) {
-    return this.prismaService.message.create({
-      data: {
-        content: data.content,
-        chat: {
-          connect: {
-            id: data.chatId,
+    return this.prismaService.$transaction(async (tx) => {
+      const message = await tx.message.create({
+        data: {
+          content: data.content,
+          chat: {
+            connect: {
+              id: data.chatId,
+            },
+          },
+          sender: {
+            connect: {
+              id: senderId,
+            },
           },
         },
-        sender: {
-          connect: {
-            id: senderId,
-          },
+      });
+
+      await tx.chat.update({
+        where: {
+          id: data.chatId,
         },
-      },
+        data: {
+          lastMessageAt: message.createdAt,
+        },
+      });
+
+      return message;
     });
   }
 }
