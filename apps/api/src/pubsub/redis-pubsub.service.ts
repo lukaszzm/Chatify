@@ -13,7 +13,5 @@ export class RedisPubSubService extends RedisPubSub implements OnModuleInit {
     });
   }
 
-  onModuleInit() {
-    console.log("RedisPubSubService initialized");
-  }
+  onModuleInit() {}
 }
