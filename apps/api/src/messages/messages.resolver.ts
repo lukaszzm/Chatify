@@ -14,7 +14,7 @@ import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { ChatsService } from "@/chats/chats.service";
 import { Chat } from "@/chats/models/chat.model";
-import { MESSAGE_SENT_EVENT } from "@/constants";
+import { CHAT_UPDATED_EVENT, MESSAGE_SENT_EVENT } from "@/constants";
 import { SendMessageInput } from "@/messages/dtos/send-message.input";
 import { MessagesService } from "@/messages/messages.service";
 import { Message } from "@/messages/models/message.model";
@@ -49,8 +49,10 @@ export class MessagesResolver {
   @Mutation(() => Message)
   async sendMessage(@Args("data") data: SendMessageInput, @CurrentUser() me: UserType) {
     const message = await this.messagesService.create(data, me.id);
+    const chat = await this.chatsService.findOneById(data.chatId, me.id);
 
     this.redisPubSub.publish(MESSAGE_SENT_EVENT, { messageSent: message });
+    this.redisPubSub.publish(CHAT_UPDATED_EVENT, { chatUpdated: chat });
 
     return message;
   }
