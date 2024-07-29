@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "nestjs-prisma";
 
 import { CreateNoteInput } from "@/notes/dtos/create-note.input";
+import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class NotesService {

@@ -1,7 +1,7 @@
 import { Prisma } from "@chatify/db";
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "nestjs-prisma";
 
+import { PrismaService } from "@/prisma/prisma.service";
 import { UsersArgs } from "@/users/dtos/users.args";
 
 @Injectable()

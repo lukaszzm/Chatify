@@ -1,9 +1,7 @@
-import { PrismaClient } from "@chatify/db";
 import { ApolloDriver, type ApolloDriverConfig } from "@nestjs/apollo";
 import { Module, UnauthorizedException } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
-import { CustomPrismaModule } from "nestjs-prisma";
 import path from "path";
 
 import { AuthModule } from "@/auth/auth.module";
@@ -12,22 +10,23 @@ import { ChatsModule } from "@/chats/chats.module";
 import configuration, { validationSchema } from "@/config/configuration";
 import { MessagesModule } from "@/messages/messages.module";
 import { NotesModule } from "@/notes/notes.module";
+import { PrismaModule } from "@/prisma/prisma.module";
+import { PubSubModule } from "@/pubsub/pubsub.module";
 import { UsersModule } from "@/users/users.module";
 
 @Module({
   imports: [
+    PrismaModule,
+    PubSubModule,
     AuthModule,
     UsersModule,
     ChatsModule,
     MessagesModule,
     NotesModule,
     ConfigModule.forRoot({
+      isGlobal: true,
       load: [configuration],
       validationSchema,
-    }),
-    CustomPrismaModule.forRoot({
-      name: "TurborepoPrisma",
-      client: new PrismaClient(),
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       imports: [AuthModule],

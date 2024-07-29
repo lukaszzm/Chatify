@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "nestjs-prisma";
 
 import { SendMessageInput } from "@/messages/dtos/send-message.input";
+import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class MessagesService {

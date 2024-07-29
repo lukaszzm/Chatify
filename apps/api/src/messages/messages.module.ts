@@ -1,18 +1,15 @@
-import { Module } from "@nestjs/common";
-import { PrismaService } from "nestjs-prisma";
+import { forwardRef, Module } from "@nestjs/common";
 
-import { ChatsService } from "@/chats/chats.service";
+import { ChatsModule } from "@/chats/chats.module";
 import { MessagesResolver } from "@/messages/messages.resolver";
 import { MessagesService } from "@/messages/messages.service";
-import { UsersService } from "@/users/users.service";
+import { PrismaModule } from "@/prisma/prisma.module";
+import { PubSubModule } from "@/pubsub/pubsub.module";
+import { UsersModule } from "@/users/users.module";
 
 @Module({
-  providers: [
-    MessagesService,
-    MessagesResolver,
-    PrismaService,
-    UsersService,
-    ChatsService,
-  ],
+  imports: [UsersModule, PrismaModule, PubSubModule, forwardRef(() => ChatsModule)],
+  providers: [MessagesService, MessagesResolver],
+  exports: [MessagesService],
 })
 export class MessagesModule {}

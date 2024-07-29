@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "nestjs-prisma";
 
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
 import { removeDuplicates } from "@/common/utils";
+import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class ChatsService {
