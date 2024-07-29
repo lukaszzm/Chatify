@@ -22,9 +22,6 @@
     "db:reset": "prisma migrate reset --preview-feature",
     "db:studio": "npx prisma studio"
   },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
   "exports": {
     ".": "./src/index.ts"
   }
