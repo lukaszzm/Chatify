@@ -27,6 +27,10 @@ const documents = {
     types.MessageSentDocument,
   "\n  mutation SendMessage($data: SendMessageInput!) {\n    sendMessage(data: $data) {\n      id\n    }\n  }\n":
     types.SendMessageDocument,
+  "\n  query RecentChats {\n    recentChats {\n      id\n      title\n      participants {\n        firstName\n        lastName\n        id\n      }\n      latestMessage {\n        id\n        sender {\n          id\n          firstName\n        }\n        content\n        createdAt\n      }\n    }\n  }\n":
+    types.RecentChatsDocument,
+  "\n  subscription ChatUpdated {\n    chatUpdated {\n      id\n      title\n      participants {\n        firstName\n        lastName\n        id\n      }\n      latestMessage {\n        id\n        sender {\n          id\n          firstName\n        }\n        content\n        createdAt\n      }\n    }\n  }\n":
+    types.ChatUpdatedDocument,
   "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n    }\n  }\n":
     types.CreateNoteDocument,
   "\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n":
@@ -103,6 +107,18 @@ export function graphql(
 export function graphql(
   source: "\n  mutation SendMessage($data: SendMessageInput!) {\n    sendMessage(data: $data) {\n      id\n    }\n  }\n"
 ): (typeof documents)["\n  mutation SendMessage($data: SendMessageInput!) {\n    sendMessage(data: $data) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query RecentChats {\n    recentChats {\n      id\n      title\n      participants {\n        firstName\n        lastName\n        id\n      }\n      latestMessage {\n        id\n        sender {\n          id\n          firstName\n        }\n        content\n        createdAt\n      }\n    }\n  }\n"
+): (typeof documents)["\n  query RecentChats {\n    recentChats {\n      id\n      title\n      participants {\n        firstName\n        lastName\n        id\n      }\n      latestMessage {\n        id\n        sender {\n          id\n          firstName\n        }\n        content\n        createdAt\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  subscription ChatUpdated {\n    chatUpdated {\n      id\n      title\n      participants {\n        firstName\n        lastName\n        id\n      }\n      latestMessage {\n        id\n        sender {\n          id\n          firstName\n        }\n        content\n        createdAt\n      }\n    }\n  }\n"
+): (typeof documents)["\n  subscription ChatUpdated {\n    chatUpdated {\n      id\n      title\n      participants {\n        firstName\n        lastName\n        id\n      }\n      latestMessage {\n        id\n        sender {\n          id\n          firstName\n        }\n        content\n        createdAt\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
