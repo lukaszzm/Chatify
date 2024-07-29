@@ -1,4 +1,4 @@
-import { ErrorComponent, SidebarList } from "@chatify/ui";
+import { ErrorComponent, SidebarInfo, SidebarList } from "@chatify/ui";
 
 import { ChatPreview } from "@/features/chat/components/chat-preview";
 import { RecentChatsLoading } from "@/features/chat/components/recent-chats-loading";
@@ -15,9 +15,13 @@ export const RecentChats = () => {
     return <ErrorComponent />;
   }
 
+  if (!data || data.length === 0) {
+    return <SidebarInfo>No chat history</SidebarInfo>;
+  }
+
   return (
     <SidebarList>
-      {data?.map((chat) => (
+      {data.map((chat) => (
         <ChatPreview key={chat.id} message={chat.latestMessage} {...chat} />
       ))}
     </SidebarList>
