@@ -29,6 +29,9 @@ export class ChatsService {
             userId,
           },
         },
+        lastMessageAt: {
+          not: null,
+        },
       },
       orderBy: {
         lastMessageAt: "desc",
