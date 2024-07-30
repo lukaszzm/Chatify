@@ -1,6 +1,7 @@
 import { ChatBubble, ErrorComponent } from "@chatify/ui";
 
 import { useAuth } from "@/features/auth";
+import { ChatBottomLine } from "@/features/chat/components/chat-bottom-line";
 import { ChatMessagesLoading } from "@/features/chat/components/chat-messages-loading";
 import { useChat } from "@/features/chat/hooks/use-chat";
 import { useMessagesSubscription } from "@/features/chat/hooks/use-messages-subscription";
@@ -39,6 +40,7 @@ export const ChatMessages = () => {
           {message.content}
         </ChatBubble>
       ))}
+      <ChatBottomLine />
     </>
   );
 };

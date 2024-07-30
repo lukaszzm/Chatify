@@ -14,8 +14,12 @@ import { useChat } from "@/features/chat/hooks/use-chat";
 import { useNewMessage } from "@/features/chat/hooks/use-new-message";
 
 export const ChatNewMessage = () => {
-  const { id } = useChat();
-  const { form, sendMessage, sending } = useNewMessage(id);
+  const { id, bottomRef } = useChat();
+
+  const { form, sendMessage, sending } = useNewMessage({
+    chatId: id,
+    onSend: () => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
+  });
 
   return (
     <Form {...form}>

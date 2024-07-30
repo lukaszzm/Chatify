@@ -15,7 +15,12 @@ const SendMessageMutation = graphql(`
   }
 `);
 
-export const useNewMessage = (chatId: string) => {
+interface UseNewMessageProps {
+  chatId: string;
+  onSend?: () => void;
+}
+
+export const useNewMessage = ({ chatId, onSend }: UseNewMessageProps) => {
   const form = useForm<NewMessageValues>({
     resolver: zodResolver(newMessageSchema),
     defaultValues: {
@@ -33,6 +38,7 @@ export const useNewMessage = (chatId: string) => {
     }
 
     form.reset();
+    onSend?.();
   });
 
   return {
