@@ -54,7 +54,7 @@ export const RECENT_CHATS_QUERY = graphql(`
   query RecentChats {
     recentChats {
       id
-      title
+      type
       participants {
         firstName
         lastName
@@ -77,7 +77,7 @@ export const CHAT_QUERY = graphql(`
   query Chat($id: String!) {
     chat(id: $id) {
       id
-      title
+      type
       participants {
         id
         firstName
