@@ -42,21 +42,17 @@ export class ChatsService {
   async create(data: StartChatInput) {
     const uniqueParticipants = removeDuplicates(data.participants);
 
-    return this.prismaService.$transaction(async (tx) => {
-      const newChat = await tx.chat.create({
-        data: {
-          title: data.title,
+    return this.prismaService.chat.create({
+      data: {
+        type: "ONE_TO_ONE",
+        participants: {
+          createMany: {
+            data: uniqueParticipants.map((userId) => ({
+              userId,
+            })),
+          },
         },
-      });
-
-      await tx.participant.createMany({
-        data: uniqueParticipants.map((userId) => ({
-          chatId: newChat.id,
-          userId,
-        })),
-      });
-
-      return newChat;
+      },
     });
   }
 
@@ -70,6 +66,7 @@ export class ChatsService {
             },
           },
         },
+        type: "ONE_TO_ONE",
       },
     });
 

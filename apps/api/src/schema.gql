@@ -18,6 +18,7 @@ type Chat {
   messages: [Message!]!
   participants: [User!]!
   title: String
+  type: ChatType!
   updatedAt: DateTime!
 }
 
@@ -28,7 +29,13 @@ type ChatPreview {
   latestMessage: Message!
   participants: [User!]!
   title: String
+  type: ChatType!
   updatedAt: DateTime!
+}
+
+enum ChatType {
+  Group
+  OneToOne
 }
 
 input CreateNoteInput {
@@ -126,7 +133,6 @@ enum SortOrder {
 
 input StartChatInput {
   participants: [String!]!
-  title: String
 }
 
 type Subscription {
