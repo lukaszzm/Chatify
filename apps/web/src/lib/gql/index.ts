@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/require-await */
 
 import { authExchange } from "@urql/exchange-auth";
+import { cacheExchange } from "@urql/exchange-graphcache";
 import { Kind } from "graphql";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { cacheExchange, Client, fetchExchange, subscriptionExchange } from "urql";
+import { Client, fetchExchange, subscriptionExchange } from "urql";
 
 import {
   clearAuthTokens,
@@ -12,6 +13,8 @@ import {
   saveAuthTokens,
 } from "@/features/auth";
 import { graphql } from "@/gql";
+import type { CreateNoteMutation, DeleteNoteMutation } from "@/gql/graphql";
+import { NOTES_QUERY } from "@/lib/gql/queries";
 
 const RefreshTokenMutation = graphql(`
   mutation RefreshToken($refreshToken: String!) {
@@ -37,7 +40,30 @@ const subscriptionClient = new SubscriptionClient(gqlServerUrl, {
 const client = new Client({
   url: gqlServerUrl,
   exchanges: [
-    cacheExchange,
+    cacheExchange({
+      updates: {
+        Mutation: {
+          createNote(result, _args, cache) {
+            const newData = result as CreateNoteMutation;
+
+            cache.updateQuery({ query: NOTES_QUERY }, (data) => {
+              data?.notes.unshift(newData.createNote);
+              return data;
+            });
+          },
+          deleteNote(result, _args, cache) {
+            const deletedData = result as DeleteNoteMutation;
+            cache.invalidate({ __typename: "Note", id: deletedData.deleteNote.id });
+          },
+          updateNote(_result, _args, _cache) {
+            //  Implement cache update for updateNote mutation
+          },
+          toggleLock(_result, _args, _cache) {
+            //  Implement cache update for toggleLock mutation
+          },
+        },
+      },
+    }),
     authExchange(async (utilities) => {
       let accessToken = getAccessToken();
       let refreshToken = getRefreshToken();
