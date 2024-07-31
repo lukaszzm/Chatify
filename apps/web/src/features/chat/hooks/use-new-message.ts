@@ -5,15 +5,7 @@ import { useMutation } from "urql";
 
 import type { NewMessageValues } from "@/features/chat/schemas/new-message-schema";
 import { newMessageSchema } from "@/features/chat/schemas/new-message-schema";
-import { graphql } from "@/gql";
-
-const SendMessageMutation = graphql(`
-  mutation SendMessage($data: SendMessageInput!) {
-    sendMessage(data: $data) {
-      id
-    }
-  }
-`);
+import { SEND_MESSAGE_MUTATION } from "@/lib/gql/mutations";
 
 interface UseNewMessageProps {
   chatId: string;
@@ -27,7 +19,7 @@ export const useNewMessage = ({ chatId, onSend }: UseNewMessageProps) => {
       content: "",
     },
   });
-  const [, sendMessageMutation] = useMutation(SendMessageMutation);
+  const [, sendMessageMutation] = useMutation(SEND_MESSAGE_MUTATION);
 
   const sendMessage = form.handleSubmit(async ({ content }) => {
     const { error } = await sendMessageMutation({ data: { chatId, content } });

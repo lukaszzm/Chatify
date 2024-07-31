@@ -1,5 +1,40 @@
 import { graphql } from "@/gql";
 
+export const REFRESH_TOKEN_MUTATION = graphql(`
+  mutation RefreshToken($refreshToken: String!) {
+    refresh(refreshToken: $refreshToken) {
+      accessToken
+      refreshToken
+    }
+  }
+`);
+
+export const SIGN_IN_MUTATION = graphql(`
+  mutation SignIn($data: SignInInput!) {
+    signIn(data: $data) {
+      accessToken
+      refreshToken
+    }
+  }
+`);
+
+export const SIGN_UP_MUTATION = graphql(`
+  mutation SignUp($data: SignUpInput!) {
+    signUp(data: $data) {
+      accessToken
+      refreshToken
+    }
+  }
+`);
+
+export const START_CHAT_MUTATION = graphql(`
+  mutation StartChat($data: StartChatInput!) {
+    startChat(data: $data) {
+      id
+    }
+  }
+`);
+
 export const CREATE_NOTE_MUTATION = graphql(`
   mutation CreateNote($data: CreateNoteInput!) {
     createNote(data: $data) {
@@ -36,6 +71,14 @@ export const UPDATE_NOTE_MUTATION = graphql(`
       id
       content
       updatedAt
+    }
+  }
+`);
+
+export const SEND_MESSAGE_MUTATION = graphql(`
+  mutation SendMessage($data: SendMessageInput!) {
+    sendMessage(data: $data) {
+      id
     }
   }
 `);

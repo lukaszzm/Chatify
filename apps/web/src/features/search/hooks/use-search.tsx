@@ -1,24 +1,10 @@
 import { useQuery } from "urql";
 
-import { graphql } from "@/gql";
-
-const SearchUsersQuery = graphql(`
-  query SearchUsers(
-    $pagination: PaginationInput!
-    $where: UserWhereInput!
-    $excludeMe: Boolean!
-  ) {
-    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {
-      id
-      firstName
-      lastName
-    }
-  }
-`);
+import { SEARCH_USERS_QUERY } from "@/lib/gql/queries";
 
 export const useSearch = (phrase: string) => {
   return useQuery({
-    query: SearchUsersQuery,
+    query: SEARCH_USERS_QUERY,
     variables: {
       pagination: {
         take: 3,

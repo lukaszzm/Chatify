@@ -1,32 +1,9 @@
 import { useQuery } from "urql";
 
-import { graphql } from "@/gql";
-
-const RecentChatsQuery = graphql(`
-  query RecentChats {
-    recentChats {
-      id
-      title
-      participants {
-        firstName
-        lastName
-        id
-      }
-      latestMessage {
-        id
-        sender {
-          id
-          firstName
-        }
-        content
-        createdAt
-      }
-    }
-  }
-`);
+import { RECENT_CHATS_QUERY } from "@/lib/gql/queries";
 
 export const useRecentChatsQuery = () => {
   return useQuery({
-    query: RecentChatsQuery,
+    query: RECENT_CHATS_QUERY,
   });
 };

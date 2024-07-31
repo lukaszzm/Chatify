@@ -6,16 +6,7 @@ import { useMutation } from "urql";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import type { SignInCredentials } from "@/features/auth/schemas/credentials-schema";
 import { signInCredentialsSchema } from "@/features/auth/schemas/credentials-schema";
-import { graphql } from "@/gql";
-
-const SignInMutation = graphql(`
-  mutation SignIn($data: SignInInput!) {
-    signIn(data: $data) {
-      accessToken
-      refreshToken
-    }
-  }
-`);
+import { SIGN_IN_MUTATION } from "@/lib/gql/mutations";
 
 export function useSignIn() {
   const form = useForm<SignInCredentials>({
@@ -26,7 +17,7 @@ export function useSignIn() {
     },
   });
 
-  const [{ error }, signInMutation] = useMutation(SignInMutation);
+  const [{ error }, signInMutation] = useMutation(SIGN_IN_MUTATION);
 
   const { signIn } = useAuth();
   const navigate = useNavigate();

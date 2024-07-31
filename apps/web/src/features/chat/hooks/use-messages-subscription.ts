@@ -1,47 +1,23 @@
 import { useSubscription } from "urql";
 
 import { useMessagesQuery } from "@/features/chat/hooks/use-messages-query";
-import { graphql } from "@/gql";
-
-const MessagesSubscription = graphql(`
-  subscription MessageSent($chatId: String!) {
-    messageSent(chatId: $chatId) {
-      id
-      content
-      createdAt
-      sender {
-        id
-        firstName
-        lastName
-      }
-    }
-  }
-`);
-
-type Message = {
-  id: string;
-  content: string;
-  createdAt: string;
-  sender: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  };
-};
+import type { MessageSentSubscription } from "@/gql/graphql";
+import { MESSAGES_SUBSCRIPTION } from "@/lib/gql/subscriptions";
 
 export const useMessagesSubscription = (chatId: string) => {
   const [queryResult] = useMessagesQuery(chatId);
 
   const [subResult] = useSubscription(
     {
-      query: MessagesSubscription,
+      query: MESSAGES_SUBSCRIPTION,
       variables: { chatId },
       pause: queryResult.fetching,
     },
-    (messages: Message[] = queryResult.data?.messages ?? [], response) => [
-      ...messages,
-      response.messageSent,
-    ]
+    (
+      messages: MessageSentSubscription["messageSent"][] = queryResult.data?.messages ??
+        [],
+      response
+    ) => [...messages, response.messageSent]
   );
 
   return [
