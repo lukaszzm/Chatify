@@ -1,25 +1,10 @@
 import { useQuery } from "urql";
 
-import { graphql } from "@/gql";
-
-const MessagesQuery = graphql(`
-  query Messages($chatId: String!) {
-    messages(chatId: $chatId) {
-      id
-      content
-      createdAt
-      sender {
-        id
-        firstName
-        lastName
-      }
-    }
-  }
-`);
+import { MESSAGES_QUERY } from "@/lib/gql/queries";
 
 export const useMessagesQuery = (chatId: string) => {
   return useQuery({
-    query: MessagesQuery,
+    query: MESSAGES_QUERY,
     variables: { chatId },
   });
 };

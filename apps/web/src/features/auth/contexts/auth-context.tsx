@@ -9,7 +9,7 @@ import {
   getRefreshToken,
   saveAuthTokens,
 } from "@/features/auth/utils";
-import { graphql } from "@/gql";
+import { ME_QUERY } from "@/lib/gql/queries";
 
 type Tokens = {
   accessToken: string;
@@ -27,19 +27,6 @@ export type AuthContextValue = {
   signOut: () => void;
 };
 
-const MeQuery = graphql(`
-  query Me {
-    me {
-      id
-      firstName
-      lastName
-      fullName
-      email
-      isActive
-    }
-  }
-`);
-
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
@@ -49,7 +36,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const isAuthenticated = !!accessToken && !!refreshToken;
 
   const [{ data }] = useQuery({
-    query: MeQuery,
+    query: ME_QUERY,
     requestPolicy: "network-only",
     pause: !isAuthenticated,
   });

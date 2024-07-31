@@ -1,24 +1,10 @@
 import { useQuery } from "urql";
 
-import { graphql } from "@/gql";
-
-const ChatQuery = graphql(`
-  query Chat($id: String!) {
-    chat(id: $id) {
-      id
-      title
-      participants {
-        id
-        firstName
-        lastName
-      }
-    }
-  }
-`);
+import { CHAT_QUERY } from "@/lib/gql/queries";
 
 export const useChatQuery = (id: string) => {
   const [{ data, fetching, error }] = useQuery({
-    query: ChatQuery,
+    query: CHAT_QUERY,
     variables: { id },
   });
 

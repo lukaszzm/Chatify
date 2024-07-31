@@ -2,18 +2,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { graphql } from "@/gql";
-
-const StartChatMutation = graphql(`
-  mutation StartChat($data: StartChatInput!) {
-    startChat(data: $data) {
-      id
-    }
-  }
-`);
+import { START_CHAT_MUTATION } from "@/lib/gql/mutations";
 
 export const useStartChat = () => {
-  const [{ fetching }, startChatMutation] = useMutation(StartChatMutation);
+  const [{ fetching }, startChatMutation] = useMutation(START_CHAT_MUTATION);
   const navigate = useNavigate();
 
   const startChat = async (id: string) => {

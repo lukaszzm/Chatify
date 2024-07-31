@@ -12,7 +12,6 @@ import {
   getRefreshToken,
   saveAuthTokens,
 } from "@/features/auth";
-import { graphql } from "@/gql";
 import type {
   CreateNoteMutation,
   DeleteNoteMutation,
@@ -20,16 +19,8 @@ import type {
   UpdateNoteMutation,
 } from "@/gql/graphql";
 import { TOGGLE_LOCK_FRAGMENT, UPDATE_NOTE_FRAGMENT } from "@/lib/gql/fragments";
+import { REFRESH_TOKEN_MUTATION } from "@/lib/gql/mutations";
 import { NOTES_QUERY } from "@/lib/gql/queries";
-
-const RefreshTokenMutation = graphql(`
-  mutation RefreshToken($refreshToken: String!) {
-    refresh(refreshToken: $refreshToken) {
-      accessToken
-      refreshToken
-    }
-  }
-`);
 
 const gqlServerUrl = import.meta.env.VITE_API_URL + "/graphql";
 
@@ -121,7 +112,7 @@ const client = new Client({
         },
         async refreshAuth() {
           if (refreshToken) {
-            const result = await utilities.mutate(RefreshTokenMutation, {
+            const result = await utilities.mutate(REFRESH_TOKEN_MUTATION, {
               refreshToken,
             });
 
