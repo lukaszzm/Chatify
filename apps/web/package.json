@@ -17,6 +17,7 @@
     "@tanstack/router-devtools": "^1.38.1",
     "@tanstack/router-vite-plugin": "^1.38.0",
     "@urql/exchange-auth": "^2.2.0",
+    "@urql/exchange-graphcache": "^7.1.2",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.390.0",
     "react": "^18.3.1",
