@@ -1,18 +1,10 @@
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { graphql } from "@/gql";
-
-const UpdateNoteMutation = graphql(`
-  mutation UpdateNote($noteId: String!, $content: String!) {
-    updateNote(noteId: $noteId, content: $content) {
-      id
-    }
-  }
-`);
+import { UPDATE_NOTE_MUTATION } from "@/lib/gql/mutations";
 
 export const useUpdateNote = () => {
-  const [, updateNoteMutation] = useMutation(UpdateNoteMutation);
+  const [, updateNoteMutation] = useMutation(UPDATE_NOTE_MUTATION);
 
   const updateNote = async (noteId: string, content: string) => {
     const result = await updateNoteMutation({ noteId, content });

@@ -5,15 +5,7 @@ import { useMutation } from "urql";
 
 import type { NewNoteValues } from "@/features/notes/schemas/new-note-schema";
 import { newNoteSchema } from "@/features/notes/schemas/new-note-schema";
-import { graphql } from "@/gql";
-
-const CreateNoteMutation = graphql(`
-  mutation CreateNote($data: CreateNoteInput!) {
-    createNote(data: $data) {
-      id
-    }
-  }
-`);
+import { CREATE_NOTE_MUTATION } from "@/lib/gql/mutations";
 
 interface UseCreateNoteProps {
   onSuccess?: () => void;
@@ -27,7 +19,7 @@ export const useCreateNote = ({ onSuccess }: UseCreateNoteProps) => {
     },
   });
 
-  const [{ error }, createNote] = useMutation(CreateNoteMutation);
+  const [{ error }, createNote] = useMutation(CREATE_NOTE_MUTATION);
   const navigate = useNavigate();
 
   const onSubmit = form.handleSubmit(async (values) => {
