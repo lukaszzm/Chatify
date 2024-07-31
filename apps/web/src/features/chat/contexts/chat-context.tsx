@@ -1,10 +1,11 @@
 import { createContext, useRef } from "react";
 
-import type { Nullable, User } from "@/types";
+import type { ChatType } from "@/gql/graphql";
+import type { User } from "@/types";
 
 export interface ChatContextValue {
   id: string;
-  title?: Nullable<string>;
+  type: ChatType;
   participants: Pick<User, "id" | "firstName" | "lastName">[];
   bottomRef: React.RefObject<HTMLDivElement>;
 }

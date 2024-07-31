@@ -4,7 +4,7 @@ export const RECENT_CHATS_SUBSCRIPTION = graphql(`
   subscription ChatUpdated {
     chatUpdated {
       id
-      title
+      type
       participants {
         firstName
         lastName

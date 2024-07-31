@@ -1,8 +1,11 @@
-import { Container, Skeleton } from "@chatify/ui";
+import { Avatar, Container, Skeleton } from "@chatify/ui";
 
 const ChatHeaderSkeleton = () => {
   return (
-    <div className="border-b border-border p-2 pb-4">
+    <div className="border-b border-border p-2 pb-4 flex items-center gap-4">
+      <Avatar>
+        <Skeleton className="size-full" />
+      </Avatar>
       <Skeleton className="w-72 h-8" />
     </div>
   );
