@@ -36,14 +36,22 @@ model Message {
 }
 
 model Chat {
-  id            String        @id @default(cuid())
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id            String           @id @default(cuid())
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   lastMessageAt DateTime?
-  title         String?
-  isDeleted     Boolean       @default(false)
+  isDeleted     Boolean          @default(false)
+  type          ConversationType @default(ONE_TO_ONE)
+  groupInfo     GroupChat?
   messages      Message[]
   participants  Participant[]
+}
+
+model GroupChat {
+  id     String @id @default(cuid())
+  title  String
+  chatId String @unique
+  chat   Chat   @relation(fields: [chatId], references: [id])
 }
 
 model Participant {
@@ -64,4 +72,9 @@ model Note {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   isLocked  Boolean  @default(false)
+}
+
+enum ConversationType {
+  ONE_TO_ONE
+  GROUP
 }
