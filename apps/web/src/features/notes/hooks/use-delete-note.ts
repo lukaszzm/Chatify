@@ -2,18 +2,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { graphql } from "@/gql";
-
-const DeleteNoteMutation = graphql(`
-  mutation DeleteNote($noteId: String!) {
-    deleteNote(noteId: $noteId) {
-      id
-    }
-  }
-`);
+import { DELETE_NOTE_MUTATION } from "@/lib/gql/mutations";
 
 export const useDeleteNote = () => {
-  const [, deleteNoteMutation] = useMutation(DeleteNoteMutation);
+  const [, deleteNoteMutation] = useMutation(DELETE_NOTE_MUTATION);
   const navigate = useNavigate();
 
   const deleteNote = async (noteId: string) => {

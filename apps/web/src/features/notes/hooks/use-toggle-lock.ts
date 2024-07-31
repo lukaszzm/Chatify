@@ -1,18 +1,10 @@
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { graphql } from "@/gql";
-
-const ToggleLockMutation = graphql(`
-  mutation ToggleLock($noteId: String!) {
-    toggleLock(noteId: $noteId) {
-      id
-    }
-  }
-`);
+import { TOGGLE_LOCK_MUTATION } from "@/lib/gql/mutations";
 
 export const useToggleLock = () => {
-  const [, toggleLockMutation] = useMutation(ToggleLockMutation);
+  const [, toggleLockMutation] = useMutation(TOGGLE_LOCK_MUTATION);
 
   const toggleLock = async (noteId: string) => {
     const result = await toggleLockMutation({ noteId });

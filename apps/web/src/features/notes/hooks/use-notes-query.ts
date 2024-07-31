@@ -1,24 +1,13 @@
 import { useMemo } from "react";
 import { useQuery } from "urql";
 
-import { graphql } from "@/gql";
-
-const NotesQuery = graphql(`
-  query Notes {
-    notes {
-      id
-      title
-      content
-      updatedAt
-    }
-  }
-`);
+import { NOTES_QUERY } from "@/lib/gql/queries";
 
 export const useNotesQuery = () => {
   const context = useMemo(() => ({ additionalTypenames: ["Note"] }), []);
 
   return useQuery({
-    query: NotesQuery,
+    query: NOTES_QUERY,
     context,
   });
 };
