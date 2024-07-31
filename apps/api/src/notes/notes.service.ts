@@ -32,7 +32,7 @@ export class NotesService {
         userId,
       },
       orderBy: {
-        updatedAt: "desc",
+        createdAt: "asc",
       },
     });
   }
