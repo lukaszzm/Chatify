@@ -4,6 +4,7 @@ import {
   HybridBody,
   HybridClose,
   HybridContent,
+  HybridDescription,
   HybridFooter,
   HybridHeader,
   HybridTitle,
@@ -28,6 +29,9 @@ export const NewNote = () => {
       <HybridContent className="sm:max-w-md">
         <HybridHeader>
           <HybridTitle>New Note</HybridTitle>
+          <HybridDescription>
+            Create a new note to keep track of your tasks.
+          </HybridDescription>
         </HybridHeader>
         <HybridBody>
           <NewNoteForm onNoteCreated={() => setIsOpen(false)} />
