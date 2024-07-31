@@ -31,24 +31,24 @@ const documents = {
     types.RecentChatsDocument,
   "\n  subscription ChatUpdated {\n    chatUpdated {\n      id\n      title\n      participants {\n        firstName\n        lastName\n        id\n      }\n      latestMessage {\n        id\n        sender {\n          id\n          firstName\n        }\n        content\n        createdAt\n      }\n    }\n  }\n":
     types.ChatUpdatedDocument,
-  "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n    }\n  }\n":
-    types.CreateNoteDocument,
-  "\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n":
-    types.DeleteNoteDocument,
-  "\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n":
-    types.NoteDocument,
-  "\n  query Notes {\n    notes {\n      id\n      title\n      content\n      updatedAt\n    }\n  }\n":
-    types.NotesDocument,
-  "\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n    }\n  }\n":
-    types.ToggleLockDocument,
-  "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n":
-    types.UpdateNoteDocument,
   "\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n":
     types.SearchUsersDocument,
   "\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n":
     types.StartChatDocument,
   "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.RefreshTokenDocument,
+  "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n":
+    types.CreateNoteDocument,
+  "\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n":
+    types.DeleteNoteDocument,
+  "\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n    }\n  }\n":
+    types.ToggleLockDocument,
+  "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n":
+    types.UpdateNoteDocument,
+  "\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n":
+    types.NoteDocument,
+  "\n  query Notes {\n    notes {\n      id\n      title\n      content\n      updatedAt\n    }\n  }\n":
+    types.NotesDocument,
 };
 
 /**
@@ -123,26 +123,32 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n    }\n  }\n"
-): (typeof documents)["\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n    }\n  }\n"];
+  source: "\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"
+): (typeof documents)["\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n"
+): (typeof documents)["\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"
+): (typeof documents)["\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n"
+): (typeof documents)["\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
   source: "\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n"
 ): (typeof documents)["\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: "\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n"
-): (typeof documents)["\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: "\n  query Notes {\n    notes {\n      id\n      title\n      content\n      updatedAt\n    }\n  }\n"
-): (typeof documents)["\n  query Notes {\n    notes {\n      id\n      title\n      content\n      updatedAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -159,20 +165,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"
-): (typeof documents)["\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
+  source: "\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n"
+): (typeof documents)["\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n"
-): (typeof documents)["\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"
-): (typeof documents)["\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
+  source: "\n  query Notes {\n    notes {\n      id\n      title\n      content\n      updatedAt\n    }\n  }\n"
+): (typeof documents)["\n  query Notes {\n    notes {\n      id\n      title\n      content\n      updatedAt\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
