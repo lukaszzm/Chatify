@@ -24,6 +24,8 @@ export const TOGGLE_LOCK_MUTATION = graphql(`
   mutation ToggleLock($noteId: String!) {
     toggleLock(noteId: $noteId) {
       id
+      isLocked
+      updatedAt
     }
   }
 `);
@@ -32,6 +34,8 @@ export const UPDATE_NOTE_MUTATION = graphql(`
   mutation UpdateNote($noteId: String!, $content: String!) {
     updateNote(noteId: $noteId, content: $content) {
       id
+      content
+      updatedAt
     }
   }
 `);

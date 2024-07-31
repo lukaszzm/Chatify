@@ -35,15 +35,19 @@ const documents = {
     types.SearchUsersDocument,
   "\n  mutation StartChat($data: StartChatInput!) {\n    startChat(data: $data) {\n      id\n    }\n  }\n":
     types.StartChatDocument,
+  "\n  fragment UpdatedNote on Note {\n    id\n    content\n    updatedAt\n  }\n":
+    types.UpdatedNoteFragmentDoc,
+  "\n  fragment ToggleLockNote on Note {\n    id\n    isLocked\n    updatedAt\n  }\n":
+    types.ToggleLockNoteFragmentDoc,
   "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.RefreshTokenDocument,
   "\n  mutation CreateNote($data: CreateNoteInput!) {\n    createNote(data: $data) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n":
     types.CreateNoteDocument,
   "\n  mutation DeleteNote($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      id\n    }\n  }\n":
     types.DeleteNoteDocument,
-  "\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n    }\n  }\n":
+  "\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n      isLocked\n      updatedAt\n    }\n  }\n":
     types.ToggleLockDocument,
-  "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n":
+  "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n      content\n      updatedAt\n    }\n  }\n":
     types.UpdateNoteDocument,
   "\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n":
     types.NoteDocument,
@@ -135,6 +139,18 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: "\n  fragment UpdatedNote on Note {\n    id\n    content\n    updatedAt\n  }\n"
+): (typeof documents)["\n  fragment UpdatedNote on Note {\n    id\n    content\n    updatedAt\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment ToggleLockNote on Note {\n    id\n    isLocked\n    updatedAt\n  }\n"
+): (typeof documents)["\n  fragment ToggleLockNote on Note {\n    id\n    isLocked\n    updatedAt\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"
 ): (typeof documents)["\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
 /**
@@ -153,14 +169,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n    }\n  }\n"
-): (typeof documents)["\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n    }\n  }\n"];
+  source: "\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n      isLocked\n      updatedAt\n    }\n  }\n"
+): (typeof documents)["\n  mutation ToggleLock($noteId: String!) {\n    toggleLock(noteId: $noteId) {\n      id\n      isLocked\n      updatedAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n"
-): (typeof documents)["\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n    }\n  }\n"];
+  source: "\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n      content\n      updatedAt\n    }\n  }\n"
+): (typeof documents)["\n  mutation UpdateNote($noteId: String!, $content: String!) {\n    updateNote(noteId: $noteId, content: $content) {\n      id\n      content\n      updatedAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

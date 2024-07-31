@@ -13,7 +13,13 @@ import {
   saveAuthTokens,
 } from "@/features/auth";
 import { graphql } from "@/gql";
-import type { CreateNoteMutation, DeleteNoteMutation } from "@/gql/graphql";
+import type {
+  CreateNoteMutation,
+  DeleteNoteMutation,
+  ToggleLockMutation,
+  UpdateNoteMutation,
+} from "@/gql/graphql";
+import { TOGGLE_LOCK_FRAGMENT, UPDATE_NOTE_FRAGMENT } from "@/lib/gql/fragments";
 import { NOTES_QUERY } from "@/lib/gql/queries";
 
 const RefreshTokenMutation = graphql(`
@@ -47,7 +53,7 @@ const client = new Client({
             const newData = result as CreateNoteMutation;
 
             cache.updateQuery({ query: NOTES_QUERY }, (data) => {
-              data?.notes.unshift(newData.createNote);
+              data?.notes.push(newData.createNote);
               return data;
             });
           },
@@ -55,11 +61,13 @@ const client = new Client({
             const deletedData = result as DeleteNoteMutation;
             cache.invalidate({ __typename: "Note", id: deletedData.deleteNote.id });
           },
-          updateNote(_result, _args, _cache) {
-            //  Implement cache update for updateNote mutation
+          updateNote(result, _args, cache) {
+            const updatedData = result as UpdateNoteMutation;
+            cache.writeFragment(UPDATE_NOTE_FRAGMENT, updatedData.updateNote);
           },
-          toggleLock(_result, _args, _cache) {
-            //  Implement cache update for toggleLock mutation
+          toggleLock(result, _args, cache) {
+            const updatedData = result as ToggleLockMutation;
+            cache.writeFragment(TOGGLE_LOCK_FRAGMENT, updatedData.toggleLock);
           },
         },
       },
