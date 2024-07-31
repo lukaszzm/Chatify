@@ -402,6 +402,20 @@ export type StartChatMutation = {
   startChat: { __typename?: "Chat"; id: string };
 };
 
+export type UpdatedNoteFragment = {
+  __typename?: "Note";
+  id: string;
+  content: string;
+  updatedAt: string;
+} & { " $fragmentName"?: "UpdatedNoteFragment" };
+
+export type ToggleLockNoteFragment = {
+  __typename?: "Note";
+  id: string;
+  isLocked: boolean;
+  updatedAt: string;
+} & { " $fragmentName"?: "ToggleLockNoteFragment" };
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars["String"]["input"];
 }>;
@@ -442,7 +456,7 @@ export type ToggleLockMutationVariables = Exact<{
 
 export type ToggleLockMutation = {
   __typename?: "Mutation";
-  toggleLock: { __typename?: "Note"; id: string };
+  toggleLock: { __typename?: "Note"; id: string; isLocked: boolean; updatedAt: string };
 };
 
 export type UpdateNoteMutationVariables = Exact<{
@@ -452,7 +466,7 @@ export type UpdateNoteMutationVariables = Exact<{
 
 export type UpdateNoteMutation = {
   __typename?: "Mutation";
-  updateNote: { __typename?: "Note"; id: string };
+  updateNote: { __typename?: "Note"; id: string; content: string; updatedAt: string };
 };
 
 export type NoteQueryVariables = Exact<{
@@ -484,6 +498,42 @@ export type NotesQuery = {
   }>;
 };
 
+export const UpdatedNoteFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "UpdatedNote" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Note" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "content" } },
+          { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdatedNoteFragment, unknown>;
+export const ToggleLockNoteFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ToggleLockNote" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Note" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "isLocked" } },
+          { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ToggleLockNoteFragment, unknown>;
 export const MeDocument = {
   kind: "Document",
   definitions: [
@@ -1206,7 +1256,11 @@ export const ToggleLockDocument = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "isLocked" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+              ],
             },
           },
         ],
@@ -1259,7 +1313,11 @@ export const UpdateNoteDocument = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+              ],
             },
           },
         ],
