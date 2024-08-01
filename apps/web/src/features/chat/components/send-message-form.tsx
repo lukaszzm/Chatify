@@ -11,21 +11,17 @@ import {
 import { Send } from "lucide-react";
 
 import { useChat } from "@/features/chat/hooks/use-chat";
-import { useNewMessage } from "@/features/chat/hooks/use-new-message";
+import { useSendMessage } from "@/features/chat/hooks/use-send-message";
 
-export const ChatNewMessage = () => {
-  const { id, bottomRef } = useChat();
-
-  const { form, sendMessage, sending } = useNewMessage({
-    chatId: id,
-    onSend: () => bottomRef.current?.scrollIntoView({ behavior: "smooth" }),
-  });
+export const SendMessageForm = () => {
+  const { id } = useChat();
+  const { form, sendMessage, sending } = useSendMessage(id);
 
   return (
     <Form {...form}>
       <form
         onSubmit={sendMessage}
-        className="px-4 pt-5 border-t border-border flex items-start gap-2 h-24"
+        className="px-4 pt-5 border-t border-border flex items-start gap-2 h-20"
       >
         <FormField
           control={form.control}

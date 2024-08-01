@@ -5,7 +5,7 @@ export { UserAvatar } from "./components/user-avatar";
 
 export { AuthProvider } from "./contexts/auth-context";
 
-export type { AuthContextValue } from "./contexts/auth-context";
+export type { AuthContextValue, AuthUser } from "./contexts/auth-context";
 
 export {
   getAccessToken,
