@@ -43,25 +43,25 @@ const client = new Client({
     cacheExchange({
       updates: {
         Mutation: {
-          createNote(result, _args, cache) {
-            const newData = result as CreateNoteMutation;
-
+          createNote(result: CreateNoteMutation, _args, cache) {
             cache.updateQuery({ query: NOTES_QUERY }, (data) => {
-              data?.notes.push(newData.createNote);
-              return data;
+              if (!data) {
+                return null;
+              }
+              return {
+                ...data,
+                notes: [...data.notes, result.createNote],
+              };
             });
           },
-          deleteNote(result, _args, cache) {
-            const deletedData = result as DeleteNoteMutation;
-            cache.invalidate({ __typename: "Note", id: deletedData.deleteNote.id });
+          deleteNote(result: DeleteNoteMutation, _args, cache) {
+            cache.invalidate({ __typename: "Note", id: result.deleteNote.id });
           },
-          updateNote(result, _args, cache) {
-            const updatedData = result as UpdateNoteMutation;
-            cache.writeFragment(UPDATE_NOTE_FRAGMENT, updatedData.updateNote);
+          updateNote(result: UpdateNoteMutation, _args, cache) {
+            cache.writeFragment(UPDATE_NOTE_FRAGMENT, result.updateNote);
           },
-          toggleLock(result, _args, cache) {
-            const updatedData = result as ToggleLockMutation;
-            cache.writeFragment(TOGGLE_LOCK_FRAGMENT, updatedData.toggleLock);
+          toggleLock(result: ToggleLockMutation, _args, cache) {
+            cache.writeFragment(TOGGLE_LOCK_FRAGMENT, result.toggleLock);
           },
         },
         Subscription: {
