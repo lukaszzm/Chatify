@@ -15,39 +15,52 @@ interface ChatBubbleProps {
   children: React.ReactNode;
 }
 
+const ChatBubbleAvatar = ({ sender }: { sender: Sender }) => {
+  return (
+    <Avatar className="size-8 mt-4">
+      <AvatarFallback className="text-xs">
+        {sender.firstName.at(0)}
+        {sender.lastName.at(0)}
+      </AvatarFallback>
+    </Avatar>
+  );
+};
+
 export const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) => {
   return (
-    <div className="flex items-start gap-2.5">
-      {!isMine ? (
-        <Avatar className="size-8">
-          <AvatarFallback>
-            {sender.firstName.at(0)}
-            {sender.lastName.at(0)}
-          </AvatarFallback>
-        </Avatar>
-      ) : null}
+    <div className={cn("flex items-start gap-2")}>
+      {!isMine ? <ChatBubbleAvatar sender={sender} /> : null}
+
       <div
         className={cn(
-          "flex flex-col w-full max-w-xs leading-0.5 p-3",
-          isMine
-            ? "rounded-l-lg rounded-tr-lg border-primary bg-primary text-primary-foreground ml-auto"
-            : "rounded-e-xl rounded-es-xl border-muted/50 bg-muted/50"
+          "flex flex-col w-full max-w-xs group relative gap-0.5",
+          isMine && "ml-auto"
         )}
       >
-        <div className="flex items-center justify-between space-x-2 rtl:space-x-reverse">
-          <span className="text-sm font-semibold">
+        <div
+          className={cn(
+            "flex items-center justify-between space-x-2",
+            isMine && "flex-row-reverse"
+          )}
+        >
+          <span className={cn("text-sm font-medium px-2", isMine && "px-3")}>
             {isMine ? "You" : `${sender.firstName} ${sender.lastName}`}
           </span>
-          <span
-            className={cn(
-              "text-xs font-normal",
-              isMine ? "text-primary-foreground/80" : "text-muted-foreground/80"
-            )}
-          >
+          <span className={cn("text-xs text-muted-foreground hidden group-hover:block")}>
             {createdAt}
           </span>
         </div>
-        <p className="text-sm font-normal py-2.5">{children}</p>
+
+        <div
+          className={cn(
+            "w-full px-3 py-1",
+            isMine
+              ? "bg-primary text-primary-foreground rounded-l-lg rounded-tr-lg"
+              : "bg-muted/40 rounded-e-xl rounded-es-xl "
+          )}
+        >
+          <p className="text-sm font-normal py-2.5">{children}</p>
+        </div>
       </div>
     </div>
   );
