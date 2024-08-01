@@ -13,14 +13,17 @@ import {
   saveAuthTokens,
 } from "@/features/auth";
 import type {
+  ChatUpdatedSubscription,
   CreateNoteMutation,
   DeleteNoteMutation,
+  MessageSentSubscription,
+  SubscriptionMessageSentArgs,
   ToggleLockMutation,
   UpdateNoteMutation,
 } from "@/gql/graphql";
 import { TOGGLE_LOCK_FRAGMENT, UPDATE_NOTE_FRAGMENT } from "@/lib/gql/fragments";
 import { REFRESH_TOKEN_MUTATION } from "@/lib/gql/mutations";
-import { NOTES_QUERY } from "@/lib/gql/queries";
+import { MESSAGES_QUERY, NOTES_QUERY, RECENT_CHATS_QUERY } from "@/lib/gql/queries";
 
 const gqlServerUrl = import.meta.env.VITE_API_URL + "/graphql";
 
@@ -59,6 +62,40 @@ const client = new Client({
           toggleLock(result, _args, cache) {
             const updatedData = result as ToggleLockMutation;
             cache.writeFragment(TOGGLE_LOCK_FRAGMENT, updatedData.toggleLock);
+          },
+        },
+        Subscription: {
+          messageSent(
+            result: MessageSentSubscription,
+            args: SubscriptionMessageSentArgs,
+            cache
+          ) {
+            cache.updateQuery({ query: MESSAGES_QUERY, variables: args }, (data) => {
+              if (!data) {
+                return null;
+              }
+
+              return {
+                ...data,
+                messages: [...data.messages, result.messageSent],
+              };
+            });
+          },
+          chatUpdated(result: ChatUpdatedSubscription, _args, cache) {
+            cache.updateQuery({ query: RECENT_CHATS_QUERY }, (data) => {
+              if (!data) {
+                return null;
+              }
+
+              const filteredChats = data.recentChats.filter(
+                (chat) => chat.id !== result.chatUpdated.id
+              );
+
+              return {
+                ...data,
+                recentChats: [result.chatUpdated, ...filteredChats],
+              };
+            });
           },
         },
       },

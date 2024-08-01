@@ -15,13 +15,13 @@ export const RecentChats = () => {
     return <ErrorComponent />;
   }
 
-  if (!data || data.length === 0) {
+  if (!data?.recentChats || data.recentChats.length === 0) {
     return <SidebarInfo>No chat history</SidebarInfo>;
   }
 
   return (
     <SidebarList>
-      {data.map((chat) => (
+      {data.recentChats.map((chat) => (
         <ChatPreview key={chat.id} message={chat.latestMessage} {...chat} />
       ))}
     </SidebarList>
