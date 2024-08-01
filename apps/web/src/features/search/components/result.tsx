@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, Button } from "@ui/index";
+import { Avatar, AvatarFallback, Button } from "@chatify/ui";
 
 import { useStartChat } from "@/features/search/hooks/use-start-chat";
 
