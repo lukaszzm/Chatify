@@ -7,12 +7,7 @@ import type { NewMessageValues } from "@/features/chat/schemas/new-message-schem
 import { newMessageSchema } from "@/features/chat/schemas/new-message-schema";
 import { SEND_MESSAGE_MUTATION } from "@/lib/gql/mutations";
 
-interface UseNewMessageProps {
-  chatId: string;
-  onSend?: () => void;
-}
-
-export const useNewMessage = ({ chatId, onSend }: UseNewMessageProps) => {
+export const useSendMessage = (chatId: string) => {
   const form = useForm<NewMessageValues>({
     resolver: zodResolver(newMessageSchema),
     defaultValues: {
@@ -22,15 +17,12 @@ export const useNewMessage = ({ chatId, onSend }: UseNewMessageProps) => {
   const [, sendMessageMutation] = useMutation(SEND_MESSAGE_MUTATION);
 
   const sendMessage = form.handleSubmit(async ({ content }) => {
+    form.reset();
     const { error } = await sendMessageMutation({ data: { chatId, content } });
 
     if (error) {
       toast.error("Failed to send message, please try again later.");
-      return;
     }
-
-    form.reset();
-    onSend?.();
   });
 
   return {

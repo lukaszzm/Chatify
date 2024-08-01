@@ -16,7 +16,7 @@ type Tokens = {
   refreshToken: string;
 };
 
-type AuthUser = Omit<User, "password" | "createdAt" | "updatedAt">;
+export type AuthUser = Omit<User, "password" | "createdAt" | "updatedAt">;
 
 export type AuthContextValue = {
   isAuthenticated: boolean;

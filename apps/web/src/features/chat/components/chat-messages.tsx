@@ -1,14 +1,11 @@
-import { ChatBubble, ErrorComponent } from "@chatify/ui";
+import { ErrorComponent } from "@chatify/ui";
 
-import { useAuth } from "@/features/auth";
-import { ChatBottomLine } from "@/features/chat/components/chat-bottom-line";
 import { ChatMessagesLoading } from "@/features/chat/components/chat-messages-loading";
+import { MessagesWrapper } from "@/features/chat/components/messages-wrapper";
 import { useChat } from "@/features/chat/hooks/use-chat";
 import { useMessagesSubscription } from "@/features/chat/hooks/use-messages-subscription";
-import { formatDate } from "@/utils/format-date";
 
 export const ChatMessages = () => {
-  const { user } = useAuth();
   const { id } = useChat();
   const [{ fetching, data, error }] = useMessagesSubscription(id);
 
@@ -28,19 +25,5 @@ export const ChatMessages = () => {
     );
   }
 
-  return (
-    <>
-      {data.messages.map((message) => (
-        <ChatBubble
-          key={message.id}
-          createdAt={formatDate(message.createdAt)}
-          sender={message.sender}
-          isMine={message.sender.id === user?.id}
-        >
-          {message.content}
-        </ChatBubble>
-      ))}
-      <ChatBottomLine />
-    </>
-  );
+  return <MessagesWrapper messages={data.messages} />;
 };
