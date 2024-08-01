@@ -20,7 +20,7 @@ export const ChatMessages = () => {
     return <ErrorComponent />;
   }
 
-  if (!data || data.length === 0) {
+  if (!data?.messages || data.messages.length === 0) {
     return (
       <p className="text-muted-foreground text-center text-sm">
         You don&apos;t have any messages in this conversation yet.
@@ -30,7 +30,7 @@ export const ChatMessages = () => {
 
   return (
     <>
-      {data.map((message) => (
+      {data.messages.map((message) => (
         <ChatBubble
           key={message.id}
           createdAt={formatDate(message.createdAt)}
