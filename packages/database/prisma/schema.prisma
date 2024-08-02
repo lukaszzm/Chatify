@@ -15,8 +15,8 @@ model User {
   fullName     String
   password     String
   isActive     Boolean       @default(false)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  createdAt     DateTime         @unique @default(now())
+  updatedAt     DateTime         @unique @updatedAt
   sentMessages Message[]
   chats        Participant[]
   notes        Note[]
@@ -25,8 +25,8 @@ model User {
 model Message {
   id        String   @id @default(cuid())
   content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime         @unique @default(now())
+  updatedAt     DateTime         @unique @updatedAt
   isSeen    Boolean  @default(false)
   isDeleted Boolean  @default(false)
   senderId  String
@@ -37,8 +37,8 @@ model Message {
 
 model Chat {
   id            String           @id @default(cuid())
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
+  createdAt     DateTime         @unique @default(now())
+  updatedAt     DateTime         @unique @updatedAt
   lastMessageAt DateTime?
   isDeleted     Boolean          @default(false)
   type          ConversationType @default(ONE_TO_ONE)
