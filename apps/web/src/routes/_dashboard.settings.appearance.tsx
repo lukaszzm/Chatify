@@ -1,3 +1,4 @@
+import { Container, Title } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_dashboard/settings/appearance")({
@@ -5,5 +6,12 @@ export const Route = createFileRoute("/_dashboard/settings/appearance")({
 });
 
 function AppearanceSettingsPage() {
-  return <p>Appearance Settings</p>;
+  return (
+    <Container>
+      <Title>Appearance</Title>
+      <p className="text-muted-foreground">
+        Page under construction, please check back later.
+      </p>
+    </Container>
+  );
 }

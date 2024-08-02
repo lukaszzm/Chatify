@@ -86,6 +86,7 @@ export type Mutation = {
   __typename?: "Mutation";
   /** Create a new note without a content (empty note with title) */
   createNote: Note;
+  deleteAccount: User;
   /** Delete a note */
   deleteNote: Note;
   refresh: Token;
@@ -97,6 +98,8 @@ export type Mutation = {
   toggleLock: Note;
   /** Update a note content */
   updateNote: Note;
+  updatePassword: User;
+  updateProfile: User;
 };
 
 export type MutationCreateNoteArgs = {
@@ -134,6 +137,14 @@ export type MutationToggleLockArgs = {
 export type MutationUpdateNoteArgs = {
   content: Scalars["String"]["input"];
   noteId: Scalars["String"]["input"];
+};
+
+export type MutationUpdatePasswordArgs = {
+  data: UpdatePasswordInput;
+};
+
+export type MutationUpdateProfileArgs = {
+  data: UpdateProfileInput;
 };
 
 export type Note = {
@@ -227,6 +238,18 @@ export type Token = {
   accessToken: Scalars["String"]["output"];
   /** JWT refresh token */
   refreshToken: Scalars["String"]["output"];
+};
+
+export type UpdatePasswordInput = {
+  confirmPassword: Scalars["String"]["input"];
+  currentPassword: Scalars["String"]["input"];
+  newPassword: Scalars["String"]["input"];
+};
+
+export type UpdateProfileInput = {
+  email: Scalars["String"]["input"];
+  firstName: Scalars["String"]["input"];
+  lastName: Scalars["String"]["input"];
 };
 
 export type User = {
@@ -350,6 +373,37 @@ export type SendMessageMutationVariables = Exact<{
 export type SendMessageMutation = {
   __typename?: "Mutation";
   sendMessage: { __typename?: "Message"; id: string };
+};
+
+export type DeleteAccountMutationVariables = Exact<{ [key: string]: never }>;
+
+export type DeleteAccountMutation = {
+  __typename?: "Mutation";
+  deleteAccount: { __typename?: "User"; id: string };
+};
+
+export type UpdatePasswordMutationVariables = Exact<{
+  data: UpdatePasswordInput;
+}>;
+
+export type UpdatePasswordMutation = {
+  __typename?: "Mutation";
+  updatePassword: { __typename?: "User"; id: string };
+};
+
+export type UpdateProfileMutationVariables = Exact<{
+  data: UpdateProfileInput;
+}>;
+
+export type UpdateProfileMutation = {
+  __typename?: "Mutation";
+  updateProfile: {
+    __typename?: "User";
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -942,6 +996,120 @@ export const SendMessageDocument = {
     },
   ],
 } as unknown as DocumentNode<SendMessageMutation, SendMessageMutationVariables>;
+export const DeleteAccountDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteAccount" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteAccount" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteAccountMutation, DeleteAccountMutationVariables>;
+export const UpdatePasswordDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdatePassword" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdatePasswordInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updatePassword" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdatePasswordMutation, UpdatePasswordMutationVariables>;
+export const UpdateProfileDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateProfile" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateProfileInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateProfile" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
 export const MeDocument = {
   kind: "Document",
   definitions: [

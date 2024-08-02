@@ -1,3 +1,4 @@
+import { Container, Title } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_dashboard/settings/notifications")({
@@ -5,5 +6,12 @@ export const Route = createFileRoute("/_dashboard/settings/notifications")({
 });
 
 function NotificationsSettingsPage() {
-  return <p>Notifications Settings</p>;
+  return (
+    <Container>
+      <Title>Notifications</Title>
+      <p className="text-muted-foreground">
+        Page under construction, please check back later.
+      </p>
+    </Container>
+  );
 }

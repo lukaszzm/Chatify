@@ -82,3 +82,30 @@ export const SEND_MESSAGE_MUTATION = graphql(`
     }
   }
 `);
+
+export const DELETE_ACCOUNT_MUTATION = graphql(`
+  mutation DeleteAccount {
+    deleteAccount {
+      id
+    }
+  }
+`);
+
+export const UPDATE_PASSWORD_MUTATION = graphql(`
+  mutation UpdatePassword($data: UpdatePasswordInput!) {
+    updatePassword(data: $data) {
+      id
+    }
+  }
+`);
+
+export const UPDATE_PROFILE_MUTATION = graphql(`
+  mutation UpdateProfile($data: UpdateProfileInput!) {
+    updateProfile(data: $data) {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+`);

@@ -1,6 +1,7 @@
+import { Sidebar, SidebarContent, SidebarHeader, SidebarTitle } from "@chatify/ui";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-import { SettingsSidebar } from "@/features/settings";
+import { SettingsList } from "@/features/settings";
 
 export const Route = createFileRoute("/_dashboard/settings")({
   component: SettingsPage,
@@ -9,7 +10,14 @@ export const Route = createFileRoute("/_dashboard/settings")({
 function SettingsPage() {
   return (
     <>
-      <SettingsSidebar />
+      <Sidebar>
+        <SidebarHeader>
+          <SidebarTitle>Settings</SidebarTitle>
+        </SidebarHeader>
+        <SidebarContent>
+          <SettingsList />
+        </SidebarContent>
+      </Sidebar>
       <Outlet />
     </>
   );
