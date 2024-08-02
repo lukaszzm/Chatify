@@ -63,6 +63,7 @@ type Message {
 type Mutation {
   """Create a new note without a content (empty note with title)"""
   createNote(data: CreateNoteInput!): Note!
+  deleteAccount: User!
 
   """Delete a note"""
   deleteNote(noteId: String!): Note!
@@ -77,6 +78,8 @@ type Mutation {
 
   """Update a note content"""
   updateNote(content: String!, noteId: String!): Note!
+  updatePassword(data: UpdatePasswordInput!): User!
+  updateProfile(data: UpdateProfileInput!): User!
 }
 
 type Note {
@@ -146,6 +149,18 @@ type Token {
 
   """JWT refresh token"""
   refreshToken: String!
+}
+
+input UpdatePasswordInput {
+  confirmPassword: String!
+  currentPassword: String!
+  newPassword: String!
+}
+
+input UpdateProfileInput {
+  email: String!
+  firstName: String!
+  lastName: String!
 }
 
 type User {

@@ -25,6 +25,6 @@ import { UsersModule } from "@/users/users.module";
     }),
   ],
   providers: [AuthService, JwtStrategy, PasswordService, ConfigService, AuthResolver],
-  exports: [AuthService],
+  exports: [AuthService, PasswordService],
 })
 export class AuthModule {}
