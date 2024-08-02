@@ -29,3 +29,5 @@ export * from "./components/ui/scroll-area";
 export * from "./components/ui/sidebar";
 export * from "./components/ui/not-found-component";
 export * from "./components/ui/error-component";
+export * from "./components/ui/card";
+export * from "./components/ui/title";
