@@ -40,6 +40,7 @@ export type Chat = {
   createdAt: Scalars["DateTime"]["output"];
   id: Scalars["ID"]["output"];
   isDeleted: Scalars["Boolean"]["output"];
+  lastMessageAt: Scalars["DateTime"]["output"];
   messages: Array<Message>;
   participants: Array<User>;
   title?: Maybe<Scalars["String"]["output"]>;
@@ -52,6 +53,7 @@ export type ChatPreview = {
   createdAt: Scalars["DateTime"]["output"];
   id: Scalars["ID"]["output"];
   isDeleted: Scalars["Boolean"]["output"];
+  lastMessageAt: Scalars["DateTime"]["output"];
   latestMessage: Message;
   participants: Array<User>;
   title?: Maybe<Scalars["String"]["output"]>;
@@ -159,6 +161,18 @@ export type Note = {
   userId: Scalars["String"]["output"];
 };
 
+export type PageInfo = {
+  __typename?: "PageInfo";
+  endCursor?: Maybe<Scalars["String"]["output"]>;
+  hasNextPage: Scalars["Boolean"]["output"];
+};
+
+export type PaginatedChatPreview = {
+  __typename?: "PaginatedChatPreview";
+  edges: Array<ChatPreview>;
+  pageInfo: PageInfo;
+};
+
 export type PaginationInput = {
   skip?: Scalars["Int"]["input"];
   take?: Scalars["Int"]["input"];
@@ -173,7 +187,7 @@ export type Query = {
   note?: Maybe<Note>;
   /** Get all notes for the current user */
   notes: Array<Note>;
-  recentChats: Array<ChatPreview>;
+  recentChats: PaginatedChatPreview;
   users: Array<User>;
 };
 
@@ -187,6 +201,11 @@ export type QueryMessagesArgs = {
 
 export type QueryNoteArgs = {
   id: Scalars["String"]["input"];
+};
+
+export type QueryRecentChatsArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type QueryUsersArgs = {
@@ -461,28 +480,39 @@ export type NotesQuery = {
   }>;
 };
 
-export type RecentChatsQueryVariables = Exact<{ [key: string]: never }>;
+export type RecentChatsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
 
 export type RecentChatsQuery = {
   __typename?: "Query";
-  recentChats: Array<{
-    __typename?: "ChatPreview";
-    id: string;
-    type: ChatType;
-    participants: Array<{
-      __typename?: "User";
-      firstName: string;
-      lastName: string;
+  recentChats: {
+    __typename?: "PaginatedChatPreview";
+    edges: Array<{
+      __typename?: "ChatPreview";
       id: string;
+      type: ChatType;
+      participants: Array<{
+        __typename?: "User";
+        firstName: string;
+        lastName: string;
+        id: string;
+      }>;
+      latestMessage: {
+        __typename?: "Message";
+        id: string;
+        content: string;
+        createdAt: string;
+        sender: { __typename?: "User"; id: string; firstName: string };
+      };
     }>;
-    latestMessage: {
-      __typename?: "Message";
-      id: string;
-      content: string;
-      createdAt: string;
-      sender: { __typename?: "User"; id: string; firstName: string };
+    pageInfo: {
+      __typename?: "PageInfo";
+      endCursor?: string | null;
+      hasNextPage: boolean;
     };
-  }>;
+  };
 };
 
 export type ChatQueryVariables = Exact<{
@@ -1291,49 +1321,96 @@ export const RecentChatsDocument = {
       kind: "OperationDefinition",
       operation: "query",
       name: { kind: "Name", value: "RecentChats" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "after" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "first" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+      ],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
           {
             kind: "Field",
             name: { kind: "Name", value: "recentChats" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "after" },
+                value: { kind: "Variable", name: { kind: "Name", value: "after" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "first" },
+                value: { kind: "Variable", name: { kind: "Name", value: "first" } },
+              },
+            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "type" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "participants" },
+                  name: { kind: "Name", value: "edges" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                      { kind: "Field", name: { kind: "Name", value: "lastName" } },
                       { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "type" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "participants" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                            { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "latestMessage" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "sender" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  { kind: "Field", name: { kind: "Name", value: "id" } },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "firstName" },
+                                  },
+                                ],
+                              },
+                            },
+                            { kind: "Field", name: { kind: "Name", value: "content" } },
+                            { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                          ],
+                        },
+                      },
                     ],
                   },
                 },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "latestMessage" },
+                  name: { kind: "Name", value: "pageInfo" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "sender" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            { kind: "Field", name: { kind: "Name", value: "id" } },
-                            { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                          ],
-                        },
-                      },
-                      { kind: "Field", name: { kind: "Name", value: "content" } },
-                      { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                      { kind: "Field", name: { kind: "Name", value: "endCursor" } },
+                      { kind: "Field", name: { kind: "Name", value: "hasNextPage" } },
                     ],
                   },
                 },
