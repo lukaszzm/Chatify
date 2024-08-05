@@ -1,6 +1,7 @@
 import { ErrorComponent, SidebarInfo, SidebarList } from "@chatify/ui";
 
 import { ChatPreview } from "@/features/chat/components/chat-preview";
+import { MoreRecentChats } from "@/features/chat/components/more-recent-chats";
 import { RecentChatsLoading } from "@/features/chat/components/recent-chats-loading";
 import { useRecentChatsSubscription } from "@/features/chat/hooks/use-recent-chats-subscription";
 
@@ -15,15 +16,19 @@ export const RecentChats = () => {
     return <ErrorComponent />;
   }
 
-  if (!data?.recentChats || data.recentChats.length === 0) {
+  if (!data?.recentChats || data.recentChats.edges.length === 0) {
     return <SidebarInfo>No chat history</SidebarInfo>;
   }
 
   return (
     <SidebarList>
-      {data.recentChats.map((chat) => (
+      {data.recentChats.edges.map((chat) => (
         <ChatPreview key={chat.id} message={chat.latestMessage} {...chat} />
       ))}
+
+      {data.recentChats.pageInfo.hasNextPage && (
+        <MoreRecentChats cursor={data.recentChats.pageInfo.endCursor} />
+      )}
     </SidebarList>
   );
 };

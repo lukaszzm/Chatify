@@ -51,23 +51,29 @@ export const NOTES_QUERY = graphql(`
 `);
 
 export const RECENT_CHATS_QUERY = graphql(`
-  query RecentChats {
-    recentChats {
-      id
-      type
-      participants {
-        firstName
-        lastName
+  query RecentChats($after: String, $first: Int) {
+    recentChats(after: $after, first: $first) {
+      edges {
         id
-      }
-      latestMessage {
-        id
-        sender {
-          id
+        type
+        participants {
           firstName
+          lastName
+          id
         }
-        content
-        createdAt
+        latestMessage {
+          id
+          sender {
+            id
+            firstName
+          }
+          content
+          createdAt
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
   }
