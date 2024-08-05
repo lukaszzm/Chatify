@@ -1,17 +1,27 @@
 import type { User } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
-import { Parent, Query, ResolveField, Resolver, Subscription } from "@nestjs/graphql";
+import {
+  Args,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+  Subscription,
+} from "@nestjs/graphql";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { ChatsService } from "@/chats/chats.service";
 import { ChatPreview } from "@/chats/models/chat-preview.model";
 import { Chat } from "@/chats/models/chat.model";
+import { PaginatedChatPreview } from "@/chats/models/paginated-chat-preview.model";
+import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { CHAT_UPDATED_EVENT } from "@/constants";
 import { MessagesService } from "@/messages/messages.service";
 import { RedisPubSubService } from "@/pubsub/redis-pubsub.service";
 import { UsersService } from "@/users/users.service";
 
+@UseGuards(GqlAuthGuard)
 @Resolver(() => ChatPreview)
 export class ChatsPreviewResolver {
   constructor(
@@ -21,7 +31,6 @@ export class ChatsPreviewResolver {
     private readonly redisPubSub: RedisPubSubService
   ) {}
 
-  @UseGuards(GqlAuthGuard)
   @Subscription(() => ChatPreview, {
     async filter(this: ChatsPreviewResolver, payload, _variables, context) {
       const currentUser = context.connection.user;
@@ -38,10 +47,9 @@ export class ChatsPreviewResolver {
     return this.redisPubSub.asyncIterator(CHAT_UPDATED_EVENT);
   }
 
-  @UseGuards(GqlAuthGuard)
-  @Query(() => [ChatPreview])
-  async recentChats(@CurrentUser() me: User) {
-    return this.chatsService.findManyByUserId(me.id);
+  @Query(() => PaginatedChatPreview)
+  async recentChats(@Args() pagination: PaginationArgs, @CurrentUser() me: User) {
+    return this.chatsService.findManyByUserId(me.id, pagination);
   }
 
   @ResolveField()

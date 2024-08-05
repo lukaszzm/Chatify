@@ -15,6 +15,7 @@ type Chat {
   createdAt: DateTime!
   id: ID!
   isDeleted: Boolean!
+  lastMessageAt: DateTime!
   messages: [Message!]!
   participants: [User!]!
   title: String
@@ -26,6 +27,7 @@ type ChatPreview {
   createdAt: DateTime!
   id: ID!
   isDeleted: Boolean!
+  lastMessageAt: DateTime!
   latestMessage: Message!
   participants: [User!]!
   title: String
@@ -93,6 +95,16 @@ type Note {
   userId: String!
 }
 
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+}
+
+type PaginatedChatPreview {
+  edges: [ChatPreview!]!
+  pageInfo: PageInfo!
+}
+
 input PaginationInput {
   skip: Int! = 0
   take: Int! = 10
@@ -108,7 +120,7 @@ type Query {
 
   """Get all notes for the current user"""
   notes: [Note!]!
-  recentChats: [ChatPreview!]!
+  recentChats(after: String, first: Int): PaginatedChatPreview!
   users(excludeMe: Boolean! = true, order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
 }
 

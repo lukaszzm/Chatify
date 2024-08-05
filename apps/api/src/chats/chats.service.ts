@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
+import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { removeDuplicates } from "@/common/utils";
 import { PrismaService } from "@/prisma/prisma.service";
 
@@ -21,8 +22,13 @@ export class ChatsService {
     });
   }
 
-  async findManyByUserId(userId: string) {
-    return this.prismaService.chat.findMany({
+  async findManyByUserId(userId: string, pagination: PaginationArgs) {
+    const take = pagination.first ? pagination.first + 1 : undefined;
+
+    const results = await this.prismaService.chat.findMany({
+      take: take,
+      skip: pagination.after ? 1 : 0,
+      cursor: pagination.after ? { lastMessageAt: pagination.after } : undefined,
       where: {
         participants: {
           some: {
@@ -37,6 +43,18 @@ export class ChatsService {
         lastMessageAt: "desc",
       },
     });
+
+    const edges = results.slice(0, pagination.first);
+
+    const pageInfo = {
+      hasNextPage: results.length === take,
+      endCursor: edges[edges.length - 1]?.lastMessageAt?.toISOString(),
+    };
+
+    return {
+      edges,
+      pageInfo,
+    };
   }
 
   async create(data: StartChatInput) {
