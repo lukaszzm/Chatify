@@ -22,8 +22,8 @@ export const RecentChats = () => {
 
   return (
     <SidebarList>
-      {data.recentChats.edges.map((chat) => (
-        <ChatPreview key={chat.id} message={chat.latestMessage} {...chat} />
+      {data.recentChats.edges.map((edge) => (
+        <ChatPreview key={edge.node.id} {...edge.node} />
       ))}
 
       {data.recentChats.pageInfo.hasNextPage && (

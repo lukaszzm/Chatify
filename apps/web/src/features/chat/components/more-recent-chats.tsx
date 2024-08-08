@@ -1,5 +1,6 @@
 import { Button } from "@chatify/ui";
-import { useState } from "react";
+import { useCallback } from "react";
+import { toast } from "sonner";
 
 import { ChatPreview } from "@/features/chat/components/chat-preview";
 import { RecentChatsLoading } from "@/features/chat/components/recent-chats-loading";
@@ -10,28 +11,37 @@ interface MoreRecentChatsProps {
 }
 
 export const MoreRecentChats = ({ cursor }: MoreRecentChatsProps) => {
-  const [isPaused, setPaused] = useState(true);
-  const [{ data, fetching, error }] = useRecentChatsQuery({
+  const [{ data, fetching, error }, executeQuery] = useRecentChatsQuery({
     after: cursor,
-    pause: isPaused,
+    requestPolicy: "cache-only",
+    pause: !cursor,
   });
 
-  if (isPaused) {
-    return <Button onClick={() => setPaused(false)}>Load more</Button>;
-  }
+  const onLoadMore = useCallback(() => {
+    executeQuery({ requestPolicy: "cache-first" });
+  }, [executeQuery]);
 
   if (fetching) {
     return <RecentChatsLoading />;
   }
 
-  if (!data || error) {
+  if (error) {
+    toast.error("Failed to load more chats");
     return null;
+  }
+
+  if (!data) {
+    return (
+      <Button variant="muted" size="sm" className="w-full" onClick={onLoadMore}>
+        Load more...
+      </Button>
+    );
   }
 
   return (
     <>
-      {data.recentChats.edges.map((chat) => (
-        <ChatPreview key={chat.id} message={chat.latestMessage} {...chat} />
+      {data.recentChats.edges.map((edge) => (
+        <ChatPreview key={edge.node.id} {...edge.node} />
       ))}
 
       {data.recentChats.pageInfo.hasNextPage && (
