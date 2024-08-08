@@ -44,15 +44,15 @@ export class ChatsService {
       },
     });
 
-    const edges = results.slice(0, pagination.first);
+    const nodes = results.slice(0, pagination.first);
 
     const pageInfo = {
       hasNextPage: results.length === take,
-      endCursor: edges[edges.length - 1]?.lastMessageAt?.toISOString(),
+      endCursor: nodes[nodes.length - 1]?.lastMessageAt?.toISOString(),
     };
 
     return {
-      edges,
+      edges: nodes.map((node) => ({ cursor: node.lastMessageAt?.toISOString(), node })),
       pageInfo,
     };
   }
