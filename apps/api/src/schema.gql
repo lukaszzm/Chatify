@@ -125,7 +125,7 @@ type Query {
 
   """Get all notes for the current user"""
   notes: [Note!]!
-  recentChats(after: String, first: Int): ChatPreviewConnection!
+  recentChats(after: String, first: Int! = 2): ChatPreviewConnection!
   users(excludeMe: Boolean! = true, order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
 }
 
