@@ -49,7 +49,7 @@ const documents = {
     types.NoteDocument,
   "\n  query Notes {\n    notes {\n      id\n      title\n      content\n      updatedAt\n    }\n  }\n":
     types.NotesDocument,
-  "\n  query RecentChats($after: String, $first: Int) {\n    recentChats(after: $after, first: $first) {\n      edges {\n        id\n        type\n        participants {\n          firstName\n          lastName\n          id\n        }\n        latestMessage {\n          id\n          sender {\n            id\n            firstName\n          }\n          content\n          createdAt\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n":
+  "\n  query RecentChats($after: String, $first: Int) {\n    recentChats(after: $after, first: $first) {\n      edges {\n        cursor\n        node {\n          id\n          type\n          participants {\n            firstName\n            lastName\n            id\n          }\n          latestMessage {\n            id\n            sender {\n              id\n              firstName\n            }\n            content\n            createdAt\n          }\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n":
     types.RecentChatsDocument,
   "\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n      type\n      participants {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n":
     types.ChatDocument,
@@ -187,8 +187,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query RecentChats($after: String, $first: Int) {\n    recentChats(after: $after, first: $first) {\n      edges {\n        id\n        type\n        participants {\n          firstName\n          lastName\n          id\n        }\n        latestMessage {\n          id\n          sender {\n            id\n            firstName\n          }\n          content\n          createdAt\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n"
-): (typeof documents)["\n  query RecentChats($after: String, $first: Int) {\n    recentChats(after: $after, first: $first) {\n      edges {\n        id\n        type\n        participants {\n          firstName\n          lastName\n          id\n        }\n        latestMessage {\n          id\n          sender {\n            id\n            firstName\n          }\n          content\n          createdAt\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n"];
+  source: "\n  query RecentChats($after: String, $first: Int) {\n    recentChats(after: $after, first: $first) {\n      edges {\n        cursor\n        node {\n          id\n          type\n          participants {\n            firstName\n            lastName\n            id\n          }\n          latestMessage {\n            id\n            sender {\n              id\n              firstName\n            }\n            content\n            createdAt\n          }\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n"
+): (typeof documents)["\n  query RecentChats($after: String, $first: Int) {\n    recentChats(after: $after, first: $first) {\n      edges {\n        cursor\n        node {\n          id\n          type\n          participants {\n            firstName\n            lastName\n            id\n          }\n          latestMessage {\n            id\n            sender {\n              id\n              firstName\n            }\n            content\n            createdAt\n          }\n        }\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

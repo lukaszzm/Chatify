@@ -3,33 +3,19 @@ import { Link } from "@tanstack/react-router";
 
 import { useAuth } from "@/features/auth";
 import { generateChatTitle } from "@/features/chat/utils";
-import type { ChatType } from "@/gql/graphql";
+import type { ChatUpdatedSubscription } from "@/gql/graphql";
 import { formatDate } from "@/utils/format-date";
 
-interface ChatPreviewProps {
-  id: string;
-  type: ChatType;
-  participants: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  }[];
-  message: {
-    id: string;
-    sender: {
-      id: string;
-      firstName: string;
-    };
-    content: string;
-    createdAt: string;
-  };
-}
-
-export const ChatPreview = ({ id, type, participants, message }: ChatPreviewProps) => {
+export const ChatPreview = ({
+  id,
+  type,
+  participants,
+  latestMessage,
+}: ChatUpdatedSubscription["chatUpdated"]) => {
   const { user } = useAuth();
 
   const title = generateChatTitle(type, participants, user?.id);
-  const isMine = message.sender.id === user?.id;
+  const isMine = latestMessage.sender.id === user?.id;
 
   return (
     <SidebarItem asChild>
@@ -47,15 +33,15 @@ export const ChatPreview = ({ id, type, participants, message }: ChatPreviewProp
           <div className="flex items-center justify-between gap-1">
             <h3 className="font-semibold leading-none">{title}</h3>
             <span className="text-xs text-muted-foreground/80">
-              {formatDate(message.createdAt)}
+              {formatDate(latestMessage.createdAt)}
             </span>
           </div>
 
           <p className="text-muted-foreground text-xs truncate">
             <span className="font-semibold">
-              {isMine ? "You" : message.sender.firstName}:
+              {isMine ? "You" : latestMessage.sender.firstName}:
             </span>{" "}
-            {message.content}
+            {latestMessage.content}
           </p>
         </div>
       </Link>

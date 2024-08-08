@@ -82,18 +82,75 @@ const client = new Client({
             });
           },
           chatUpdated(result: ChatUpdatedSubscription, _args, cache) {
+            let cursor;
+            let query = cache.readQuery({
+              query: RECENT_CHATS_QUERY,
+              variables: { after: cursor },
+            });
+
+            while (query) {
+              if (
+                query.recentChats.edges.some(
+                  (edge) => edge.node.id === result.chatUpdated.id
+                )
+              ) {
+                cache.updateQuery(
+                  {
+                    query: RECENT_CHATS_QUERY,
+                    variables: { after: cursor },
+                  },
+                  (data) => {
+                    if (!data) {
+                      return null;
+                    }
+
+                    const updatedEdges = data.recentChats.edges.filter(
+                      (edge) => edge.node.id !== result.chatUpdated.id
+                    );
+
+                    const updatedCursor = updatedEdges.at(-1)?.cursor;
+
+                    return {
+                      ...data,
+                      recentChats: {
+                        ...data.recentChats,
+                        edges: updatedEdges,
+                        pageInfo: {
+                          ...data.recentChats.pageInfo,
+                          endCursor: updatedCursor,
+                        },
+                      },
+                    };
+                  }
+                );
+
+                break;
+              }
+
+              cursor = query.recentChats.pageInfo.endCursor;
+              query = cache.readQuery({
+                query: RECENT_CHATS_QUERY,
+                variables: { after: cursor },
+              });
+            }
+
             cache.updateQuery({ query: RECENT_CHATS_QUERY }, (data) => {
               if (!data) {
                 return null;
               }
 
-              const filteredChats = data.recentChats.filter(
-                (chat) => chat.id !== result.chatUpdated.id
-              );
+              const newEdge = {
+                cursor: result.chatUpdated.latestMessage.createdAt,
+                node: result.chatUpdated,
+                __typename: "ChatPreviewEdge" as const,
+              };
 
               return {
                 ...data,
-                recentChats: [result.chatUpdated, ...filteredChats],
+                recentChats: {
+                  ...data.recentChats,
+                  edges: [newEdge, ...data.recentChats.edges],
+                },
               };
             });
           },
