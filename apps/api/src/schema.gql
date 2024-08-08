@@ -35,6 +35,16 @@ type ChatPreview {
   updatedAt: DateTime!
 }
 
+type ChatPreviewConnection {
+  edges: [ChatPreviewEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ChatPreviewEdge {
+  cursor: String!
+  node: ChatPreview!
+}
+
 enum ChatType {
   Group
   OneToOne
@@ -100,11 +110,6 @@ type PageInfo {
   hasNextPage: Boolean!
 }
 
-type PaginatedChatPreview {
-  edges: [ChatPreview!]!
-  pageInfo: PageInfo!
-}
-
 input PaginationInput {
   skip: Int! = 0
   take: Int! = 10
@@ -120,7 +125,7 @@ type Query {
 
   """Get all notes for the current user"""
   notes: [Note!]!
-  recentChats(after: String, first: Int): PaginatedChatPreview!
+  recentChats(after: String, first: Int): ChatPreviewConnection!
   users(excludeMe: Boolean! = true, order: SortOrder, pagination: PaginationInput, where: UserWhereInput): [User!]!
 }
 
