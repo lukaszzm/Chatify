@@ -1,6 +1,7 @@
 import { ChatBubble } from "@chatify/ui";
 
 import { useAuth } from "@/features/auth";
+import { MoreChatMessages } from "@/features/chat/components/more-chat-messages";
 import { useChatScroll } from "@/features/chat/hooks/use-chat-scroll";
 import type { MessagesQuery } from "@/gql/graphql";
 import { formatDate } from "@/utils/format-date";
@@ -17,19 +18,23 @@ export const MessagesWrapper = ({ messages }: MessagesWrapperProps) => {
   });
 
   return (
-    <div className="p-4 space-y-4">
-      {messages.map((message) => (
+    <>
+      <div className="w-full h-0" ref={ref} />
+
+      {messages.edges.map((edge) => (
         <ChatBubble
-          key={message.id}
-          createdAt={formatDate(message.createdAt)}
-          sender={message.sender}
-          isMine={message.sender.id === user?.id}
+          key={edge.node.id}
+          createdAt={formatDate(edge.node.createdAt)}
+          sender={edge.node.sender}
+          isMine={edge.node.sender.id === user?.id}
         >
-          {message.content}
+          {edge.node.content}
         </ChatBubble>
       ))}
 
-      <div className="w-full h-0" ref={ref} />
-    </div>
+      {messages.pageInfo.hasNextPage && (
+        <MoreChatMessages cursor={messages.pageInfo.endCursor} />
+      )}
+    </>
   );
 };

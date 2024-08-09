@@ -12,9 +12,9 @@ export const useChatScroll = ({ messages, currentUser }: UseChatScrollProps) => 
   const chatScroll = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const lastMessage = messages.at(-1);
+    const message = messages.edges[0];
 
-    if (lastMessage && lastMessage.sender.id === currentUser?.id) {
+    if (message && message.node.sender.id === currentUser?.id) {
       chatScroll.current?.scrollIntoView({ behavior: "auto" });
     }
   }, [messages, currentUser]);

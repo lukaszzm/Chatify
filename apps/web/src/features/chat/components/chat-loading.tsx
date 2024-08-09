@@ -1,4 +1,4 @@
-import { Avatar, Container, Skeleton } from "@chatify/ui";
+import { Avatar, Container, ScrollArea, Skeleton } from "@chatify/ui";
 
 const ChatHeaderSkeleton = () => {
   return (
@@ -13,13 +13,17 @@ const ChatHeaderSkeleton = () => {
 
 const ChatBoxSkeleton = () => {
   return (
-    <div className="p-4 space-y-2 flex-1">
-      <Skeleton className="w-full max-w-xs h-12" />
-      <Skeleton className="w-full max-w-xs h-44 ml-auto" />
-      <Skeleton className="w-full max-w-xs h-16" />
-      <Skeleton className="w-full max-w-xs h-32" />
-      <Skeleton className="w-full max-w-xs h-12 ml-auto" />
-    </div>
+    <ScrollArea className="flex-1">
+      <div className="px-4 flex flex-col-reverse gap-4">
+        <Skeleton className="w-full max-w-xs h-12 ml-auto" />
+        <Skeleton className="w-full max-w-xs h-12" />
+        <Skeleton className="w-full max-w-xs h-44 ml-auto" />
+        <Skeleton className="w-full max-w-xs h-16" />
+        <Skeleton className="w-full max-w-xs h-32" />
+        <Skeleton className="w-full max-w-xs h-12 ml-auto" />
+        <Skeleton className="w-full max-w-xs h-12" />
+      </div>
+    </ScrollArea>
   );
 };
 

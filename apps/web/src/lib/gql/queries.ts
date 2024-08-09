@@ -97,15 +97,24 @@ export const CHAT_QUERY = graphql(`
 `);
 
 export const MESSAGES_QUERY = graphql(`
-  query Messages($chatId: String!) {
-    messages(chatId: $chatId) {
-      id
-      content
-      createdAt
-      sender {
-        id
-        firstName
-        lastName
+  query Messages($chatId: String!, $after: String, $first: Int) {
+    messages(chatId: $chatId, after: $after, first: $first) {
+      edges {
+        cursor
+        node {
+          id
+          content
+          createdAt
+          sender {
+            id
+            firstName
+            lastName
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
   }

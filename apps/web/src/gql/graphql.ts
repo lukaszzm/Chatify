@@ -96,6 +96,18 @@ export type Message = {
   updatedAt: Scalars["DateTime"]["output"];
 };
 
+export type MessageConnection = {
+  __typename?: "MessageConnection";
+  edges: Array<MessageEdge>;
+  pageInfo: PageInfo;
+};
+
+export type MessageEdge = {
+  __typename?: "MessageEdge";
+  cursor: Scalars["String"]["output"];
+  node: Message;
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   /** Create a new note without a content (empty note with title) */
@@ -188,7 +200,7 @@ export type Query = {
   __typename?: "Query";
   chat?: Maybe<Chat>;
   me: User;
-  messages: Array<Message>;
+  messages: MessageConnection;
   /** Get a note by ID, if it belongs to the current user */
   note?: Maybe<Note>;
   /** Get all notes for the current user */
@@ -202,7 +214,9 @@ export type QueryChatArgs = {
 };
 
 export type QueryMessagesArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
   chatId: Scalars["String"]["input"];
+  first?: Scalars["Int"]["input"];
 };
 
 export type QueryNoteArgs = {
@@ -211,7 +225,7 @@ export type QueryNoteArgs = {
 
 export type QueryRecentChatsArgs = {
   after?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
+  first?: Scalars["Int"]["input"];
 };
 
 export type QueryUsersArgs = {
@@ -546,17 +560,31 @@ export type ChatQuery = {
 
 export type MessagesQueryVariables = Exact<{
   chatId: Scalars["String"]["input"];
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
 }>;
 
 export type MessagesQuery = {
   __typename?: "Query";
-  messages: Array<{
-    __typename?: "Message";
-    id: string;
-    content: string;
-    createdAt: string;
-    sender: { __typename?: "User"; id: string; firstName: string; lastName: string };
-  }>;
+  messages: {
+    __typename?: "MessageConnection";
+    edges: Array<{
+      __typename?: "MessageEdge";
+      cursor: string;
+      node: {
+        __typename?: "Message";
+        id: string;
+        content: string;
+        createdAt: string;
+        sender: { __typename?: "User"; id: string; firstName: string; lastName: string };
+      };
+    }>;
+    pageInfo: {
+      __typename?: "PageInfo";
+      endCursor?: string | null;
+      hasNextPage: boolean;
+    };
+  };
 };
 
 export type ChatUpdatedSubscriptionVariables = Exact<{ [key: string]: never }>;
@@ -1528,6 +1556,16 @@ export const MessagesDocument = {
             type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "after" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "first" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -1541,22 +1579,68 @@ export const MessagesDocument = {
                 name: { kind: "Name", value: "chatId" },
                 value: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
               },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "after" },
+                value: { kind: "Variable", name: { kind: "Name", value: "after" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "first" },
+                value: { kind: "Variable", name: { kind: "Name", value: "first" } },
+              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "content" } },
-                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "sender" },
+                  name: { kind: "Name", value: "edges" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                      { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                      { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "node" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            { kind: "Field", name: { kind: "Name", value: "content" } },
+                            { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "sender" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  { kind: "Field", name: { kind: "Name", value: "id" } },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "firstName" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "lastName" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "pageInfo" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "endCursor" } },
+                      { kind: "Field", name: { kind: "Name", value: "hasNextPage" } },
                     ],
                   },
                 },

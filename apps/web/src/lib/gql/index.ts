@@ -70,16 +70,26 @@ const client = new Client({
             args: SubscriptionMessageSentArgs,
             cache
           ) {
-            cache.updateQuery({ query: MESSAGES_QUERY, variables: args }, (data) => {
-              if (!data) {
-                return null;
+            cache.updateQuery(
+              { query: MESSAGES_QUERY, variables: { chatId: args.chatId } },
+              (data) => {
+                if (!data) {
+                  return null;
+                }
+                const newEdge = {
+                  cursor: result.messageSent.createdAt,
+                  node: result.messageSent,
+                  __typename: "MessageEdge" as const,
+                };
+                return {
+                  ...data,
+                  messages: {
+                    ...data.messages,
+                    edges: [newEdge, ...data.messages.edges],
+                  },
+                };
               }
-
-              return {
-                ...data,
-                messages: [...data.messages, result.messageSent],
-              };
-            });
+            );
           },
           chatUpdated(result: ChatUpdatedSubscription, _args, cache) {
             let cursor;
