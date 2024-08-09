@@ -14,14 +14,17 @@ import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { ChatsService } from "@/chats/chats.service";
 import { Chat } from "@/chats/models/chat.model";
+import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { CHAT_UPDATED_EVENT, MESSAGE_SENT_EVENT } from "@/constants";
 import { SendMessageInput } from "@/messages/dtos/send-message.input";
 import { MessagesService } from "@/messages/messages.service";
 import { Message } from "@/messages/models/message.model";
+import { PaginatedMessage } from "@/messages/models/paginated-message.model";
 import { RedisPubSubService } from "@/pubsub/redis-pubsub.service";
 import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
 
+@UseGuards(GqlAuthGuard)
 @Resolver(() => Message)
 export class MessagesResolver {
   constructor(
@@ -31,7 +34,6 @@ export class MessagesResolver {
     private readonly redisPubSub: RedisPubSubService
   ) {}
 
-  @UseGuards(GqlAuthGuard)
   @Subscription(() => Message, {
     filter: (payload, variables) => payload.messageSent.chatId === variables.chatId,
   })
@@ -39,13 +41,11 @@ export class MessagesResolver {
     return this.redisPubSub.asyncIterator(MESSAGE_SENT_EVENT);
   }
 
-  @UseGuards(GqlAuthGuard)
-  @Query(() => [Message])
-  async messages(@Args("chatId") chatId: string) {
-    return this.messagesService.findManyByChatId(chatId);
+  @Query(() => PaginatedMessage)
+  async messages(@Args() pagination: PaginationArgs, @Args("chatId") chatId: string) {
+    return this.messagesService.findManyByChatIdWithPagination(chatId, pagination);
   }
 
-  @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async sendMessage(@Args("data") data: SendMessageInput, @CurrentUser() me: UserType) {
     const message = await this.messagesService.create(data, me.id);
