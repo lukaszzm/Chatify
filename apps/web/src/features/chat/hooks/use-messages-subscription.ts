@@ -4,7 +4,7 @@ import { useMessagesQuery } from "@/features/chat/hooks/use-messages-query";
 import { MESSAGES_SUBSCRIPTION } from "@/lib/gql/subscriptions";
 
 export const useMessagesSubscription = (chatId: string) => {
-  const [queryResult] = useMessagesQuery(chatId);
+  const [queryResult] = useMessagesQuery({ chatId });
 
   useSubscription({
     query: MESSAGES_SUBSCRIPTION,
