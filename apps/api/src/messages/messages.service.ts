@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { PaginationArgs } from "@/common/dtos/pagination.args";
+import { paginate } from "@/common/utils/paginate";
 import { SendMessageInput } from "@/messages/dtos/send-message.input";
 import { PrismaService } from "@/prisma/prisma.service";
 
@@ -17,31 +18,15 @@ export class MessagesService {
   }
 
   async findManyByChatIdWithPagination(chatId: string, pagination: PaginationArgs) {
-    const take = pagination.first ? pagination.first + 1 : undefined;
-
-    const results = await this.prismaService.message.findMany({
-      take: take,
-      skip: pagination.after ? 1 : 0,
-      cursor: pagination.after ? { createdAt: new Date(pagination.after) } : undefined,
+    return paginate({
+      client: this.prismaService,
+      model: "Message",
       where: {
         chatId,
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      pagination,
+      cursorColumn: "createdAt",
     });
-
-    const nodes = results.slice(0, pagination.first);
-
-    const pageInfo = {
-      hasNextPage: results.length === take,
-      endCursor: nodes[nodes.length - 1]?.createdAt?.toISOString(),
-    };
-
-    return {
-      edges: nodes.map((node) => ({ cursor: node.createdAt.toISOString(), node })),
-      pageInfo,
-    };
   }
 
   async findManyByUserId(userId: string) {

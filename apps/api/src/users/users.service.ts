@@ -27,20 +27,14 @@ export class UsersService {
   }
 
   async findMany(args: UsersArgs, userId: string) {
-    const idFilter = args.excludeMe ? { not: userId } : undefined;
-
     return this.prismaService.user.findMany({
+      take: args.first,
       where: {
-        id: idFilter,
+        id: args.excludeMe ? { not: userId } : undefined,
         fullName: { contains: args.where?.fullName, mode: "insensitive" },
         firstName: { contains: args.where?.firstName, mode: "insensitive" },
         lastName: { contains: args.where?.lastName, mode: "insensitive" },
         email: { contains: args.where?.email, mode: "insensitive" },
-      },
-      take: args.pagination?.take,
-      skip: args.pagination?.skip,
-      orderBy: {
-        createdAt: args.order,
       },
     });
   }

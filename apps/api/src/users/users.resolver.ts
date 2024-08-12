@@ -20,7 +20,7 @@ export class UsersResolver {
     return this.usersService.findOneById(me.id);
   }
 
-  @Query(() => [User]!)
+  @Query(() => [User])
   async users(@Args() args: UsersArgs, @CurrentUser() me: UserType) {
     return this.usersService.findMany(args, me.id);
   }
