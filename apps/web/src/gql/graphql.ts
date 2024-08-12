@@ -191,11 +191,6 @@ export type PageInfo = {
   hasNextPage: Scalars["Boolean"]["output"];
 };
 
-export type PaginationInput = {
-  skip?: Scalars["Int"]["input"];
-  take?: Scalars["Int"]["input"];
-};
-
 export type Query = {
   __typename?: "Query";
   chat?: Maybe<Chat>;
@@ -230,8 +225,7 @@ export type QueryRecentChatsArgs = {
 
 export type QueryUsersArgs = {
   excludeMe?: Scalars["Boolean"]["input"];
-  order?: InputMaybe<SortOrder>;
-  pagination?: InputMaybe<PaginationInput>;
+  first?: Scalars["Int"]["input"];
   where?: InputMaybe<UserWhereInput>;
 };
 
@@ -251,11 +245,6 @@ export type SignUpInput = {
   lastName: Scalars["String"]["input"];
   password: Scalars["String"]["input"];
 };
-
-export enum SortOrder {
-  Asc = "Asc",
-  Desc = "Desc",
-}
 
 export type StartChatInput = {
   participants: Array<Scalars["String"]["input"]>;
@@ -461,7 +450,6 @@ export type MeQuery = {
 };
 
 export type SearchUsersQueryVariables = Exact<{
-  pagination: PaginationInput;
   where: UserWhereInput;
   excludeMe: Scalars["Boolean"]["input"];
 }>;
@@ -1218,14 +1206,6 @@ export const SearchUsersDocument = {
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "pagination" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "PaginationInput" } },
-          },
-        },
-        {
-          kind: "VariableDefinition",
           variable: { kind: "Variable", name: { kind: "Name", value: "where" } },
           type: {
             kind: "NonNullType",
@@ -1252,11 +1232,6 @@ export const SearchUsersDocument = {
                 kind: "Argument",
                 name: { kind: "Name", value: "where" },
                 value: { kind: "Variable", name: { kind: "Name", value: "where" } },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: { kind: "Variable", name: { kind: "Name", value: "pagination" } },
               },
               {
                 kind: "Argument",

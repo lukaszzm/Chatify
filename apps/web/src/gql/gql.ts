@@ -43,7 +43,7 @@ const documents = {
     types.UpdateProfileDocument,
   "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      fullName\n      email\n      isActive\n    }\n  }\n":
     types.MeDocument,
-  "\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n":
+  "\n  query SearchUsers($where: UserWhereInput!, $excludeMe: Boolean!) {\n    users(where: $where, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n":
     types.SearchUsersDocument,
   "\n  query Note($id: String!) {\n    note(id: $id) {\n      id\n      title\n      content\n      updatedAt\n      isLocked\n    }\n  }\n":
     types.NoteDocument,
@@ -169,8 +169,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"
-): (typeof documents)["\n  query SearchUsers(\n    $pagination: PaginationInput!\n    $where: UserWhereInput!\n    $excludeMe: Boolean!\n  ) {\n    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
+  source: "\n  query SearchUsers($where: UserWhereInput!, $excludeMe: Boolean!) {\n    users(where: $where, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"
+): (typeof documents)["\n  query SearchUsers($where: UserWhereInput!, $excludeMe: Boolean!) {\n    users(where: $where, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

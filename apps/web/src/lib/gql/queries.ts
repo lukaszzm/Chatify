@@ -14,12 +14,8 @@ export const ME_QUERY = graphql(`
 `);
 
 export const SEARCH_USERS_QUERY = graphql(`
-  query SearchUsers(
-    $pagination: PaginationInput!
-    $where: UserWhereInput!
-    $excludeMe: Boolean!
-  ) {
-    users(where: $where, pagination: $pagination, excludeMe: $excludeMe) {
+  query SearchUsers($where: UserWhereInput!, $excludeMe: Boolean!) {
+    users(where: $where, excludeMe: $excludeMe) {
       id
       firstName
       lastName
