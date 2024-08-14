@@ -1,7 +1,7 @@
 import { Skeleton } from "@chatify/ui";
 
 const ResultSkeleton = () => {
-  return <Skeleton className="w-full h-28" />;
+  return <Skeleton className="h-28 w-full" />;
 };
 
 export const ResultsLoading = () => {

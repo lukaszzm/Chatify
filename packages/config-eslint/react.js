@@ -8,6 +8,7 @@ module.exports = {
     "eslint:recommended",
     "prettier",
     "eslint-config-turbo",
+    "plugin:tailwindcss/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:react/jsx-runtime",

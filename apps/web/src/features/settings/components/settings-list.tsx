@@ -9,7 +9,7 @@ export const SettingsList = () => {
         <Link
           to="/settings/profile"
           activeProps={{ className: "bg-muted/40" }}
-          className="font-semibold text-base"
+          className="text-base font-semibold"
         >
           <User className="text-accent" />
           My Profile
@@ -20,7 +20,7 @@ export const SettingsList = () => {
         <Link
           to="/settings/notifications"
           activeProps={{ className: "bg-muted/40" }}
-          className="font-semibold text-base"
+          className="text-base font-semibold"
         >
           <Bell className="text-accent" />
           Notifications
@@ -30,7 +30,7 @@ export const SettingsList = () => {
         <Link
           to="/settings/appearance"
           activeProps={{ className: "bg-muted/40" }}
-          className="font-semibold text-base"
+          className="text-base font-semibold"
         >
           <Eye className="text-accent" />
           Appearance

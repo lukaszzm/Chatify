@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
-const loadingDotsVariants = cva("rounded-full animate-bounce", {
+const loadingDotsVariants = cva("animate-bounce rounded-full", {
   variants: {
     variant: {
       default: "bg-primary-foreground",

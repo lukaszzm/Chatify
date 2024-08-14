@@ -4,7 +4,7 @@ import { SignInForm } from "@/features/auth/components/sign-in-form";
 export const SignIn = () => {
   return (
     <>
-      <h1 className="text-4xl font-semibold text-center">Welcome back</h1>
+      <h1 className="text-center text-4xl font-semibold">Welcome back</h1>
       <SignInForm />
       <AuthFooter
         label="Don't have an account?"

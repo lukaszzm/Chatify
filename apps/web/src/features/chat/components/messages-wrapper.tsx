@@ -19,7 +19,7 @@ export const MessagesWrapper = ({ messages }: MessagesWrapperProps) => {
 
   return (
     <>
-      <div className="w-full h-0" ref={ref} />
+      <div className="h-0 w-full" ref={ref} />
 
       {messages.edges.map((edge) => (
         <ChatBubble

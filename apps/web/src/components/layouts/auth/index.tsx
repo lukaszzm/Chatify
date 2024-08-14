@@ -2,9 +2,9 @@ import { Link, Outlet } from "@tanstack/react-router";
 
 export const AuthLayout = () => {
   return (
-    <div className="min-h-dvh w-full flex flex-col justify-center items-center gap-6 pt-20 px-4 py-12">
+    <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-6 px-4 py-12 pt-20">
       <Link
-        className="absolute font-bold text-2xl top-0 my-4"
+        className="absolute top-0 my-4 text-2xl font-bold"
         aria-label="Home page"
         to="/"
       >

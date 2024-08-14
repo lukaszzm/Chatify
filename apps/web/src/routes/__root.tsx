@@ -25,10 +25,10 @@ function Page() {
 
 function NotFound() {
   return (
-    <main className="min-h-dvh w-full flex flex-col justify-center items-center gap-6 pt-20 px-4 py-12">
-      <span className="absolute font-bold text-2xl top-0 my-4">Chatify</span>
+    <main className="flex min-h-dvh w-full flex-col items-center justify-center gap-6 px-4 py-12 pt-20">
+      <span className="absolute top-0 my-4 text-2xl font-bold">Chatify</span>
 
-      <div className="flex flex-col gap-2 items-center">
+      <div className="flex flex-col items-center gap-2">
         <h1 className="text-xl font-semibold">This page does not exist</h1>
         <Button variant="muted" asChild>
           <Link to="/">Go back to home</Link>

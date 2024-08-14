@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
-const containerVariants = cva("rounded-md w-full space-y-4 p-4 border", {
+const containerVariants = cva("w-full space-y-4 rounded-md border p-4", {
   variants: {
     variant: {
       default: "border-card bg-card",

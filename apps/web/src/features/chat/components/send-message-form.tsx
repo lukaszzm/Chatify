@@ -21,7 +21,7 @@ export const SendMessageForm = () => {
     <Form {...form}>
       <form
         onSubmit={sendMessage}
-        className="px-4 pt-5 border-t border-border flex items-start gap-2 h-20"
+        className="flex h-20 items-start gap-2 border-t border-border px-4 pt-5"
       >
         <FormField
           control={form.control}

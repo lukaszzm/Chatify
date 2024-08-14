@@ -17,7 +17,7 @@ interface ChatBubbleProps {
 
 const ChatBubbleAvatar = ({ sender }: { sender: Sender }) => {
   return (
-    <Avatar className="size-8 mt-4">
+    <Avatar className="mt-4 size-8">
       <AvatarFallback className="text-xs">
         {sender.firstName.at(0)}
         {sender.lastName.at(0)}
@@ -59,7 +59,7 @@ export const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubblePr
               : "bg-muted/40 rounded-e-xl rounded-es-xl "
           )}
         >
-          <p className="text-sm font-normal py-2.5">{children}</p>
+          <p className="py-2.5 text-sm font-normal">{children}</p>
         </div>
       </div>
     </div>

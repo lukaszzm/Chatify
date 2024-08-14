@@ -6,8 +6,8 @@ import { DashboardLink } from "@/components/layouts/dashboard/dashboard-link";
 import { SignOut, UserAvatar } from "@/features/auth";
 
 export const DashboardLayout = () => (
-  <div className="h-dvh flex w-full p-4 gap-6 overflow-auto">
-    <aside className="py-4 flex flex-col items-center gap-12">
+  <div className="flex h-dvh w-full gap-6 overflow-auto p-4">
+    <aside className="flex flex-col items-center gap-12 py-4">
       <Logo className="w-8" />
       <nav className="flex flex-col gap-4">
         {navLinks.map(({ Icon, label, to }) => (
@@ -17,13 +17,13 @@ export const DashboardLayout = () => (
         ))}
       </nav>
 
-      <div className="flex flex-col gap-4 mt-auto items-center">
+      <div className="mt-auto flex flex-col items-center gap-4">
         <UserAvatar />
         <SignOut />
       </div>
     </aside>
 
-    <main className="flex-1 flex gap-6">
+    <main className="flex flex-1 gap-6">
       <Outlet />
     </main>
   </div>
