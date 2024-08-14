@@ -59,7 +59,9 @@ export const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubblePr
               : "bg-muted/40 rounded-e-xl rounded-es-xl "
           )}
         >
-          <p className="py-2.5 text-sm font-normal">{children}</p>
+          <p className="hyphens-auto break-words py-2.5 text-sm font-normal">
+            {children}
+          </p>
         </div>
       </div>
     </div>

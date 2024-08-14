@@ -4,7 +4,6 @@ import React from "react";
 import type { ButtonProps } from "@ui/components/ui/button";
 import { Button } from "@ui/components/ui/button";
 import { Container } from "@ui/components/ui/container";
-import { ScrollArea } from "@ui/components/ui/scroll-area";
 import { cn } from "@ui/lib/utils";
 
 const Sidebar = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
@@ -44,13 +43,7 @@ const SidebarContent = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  return (
-    <ScrollArea
-      className={cn("max-h-[calc(100dvh-7rem)]", className)}
-      ref={ref}
-      {...props}
-    />
-  );
+  return <div ref={ref} className={cn("flex-1 overflow-auto", className)} {...props} />;
 });
 SidebarContent.displayName = "SidebarContent";
 
@@ -69,7 +62,7 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, ButtonProps>(
         variant="ghost"
         size="auto"
         className={cn(
-          "p-3 rounded-sm justify-start items-center gap-2 w-full hover:bg-muted/40",
+          "w-full p-2 justify-start rounded-sm gap-2 hover:bg-muted/40",
           className
         )}
         ref={ref}

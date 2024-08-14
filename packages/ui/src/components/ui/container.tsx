@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
-const containerVariants = cva("w-full space-y-4 rounded-md border p-4", {
+const containerVariants = cva("flex w-full flex-col gap-4 rounded-md border p-4", {
   variants: {
     variant: {
       default: "border-card bg-card",
@@ -12,7 +12,7 @@ const containerVariants = cva("w-full space-y-4 rounded-md border p-4", {
       destructive: "border-destructive bg-destructive/5 text-destructive",
     },
     size: {
-      sm: "w-full max-w-sm",
+      sm: "w-full md:max-w-sm",
       full: "w-full",
     },
   },

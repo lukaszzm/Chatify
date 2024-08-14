@@ -12,7 +12,7 @@ export const UserAvatar = () => {
   const fallback = `${user.firstName[0]}${user.lastName[0]}`;
 
   return (
-    <Avatar>
+    <Avatar className="hidden md:block">
       <AvatarFallback>{fallback}</AvatarFallback>
     </Avatar>
   );
