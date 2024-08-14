@@ -123,14 +123,14 @@ type PageInfo {
 type Query {
   chat(id: String!): Chat
   me: User!
-  messages(after: String, chatId: String!, first: Int! = 2): MessageConnection!
+  messages(after: String, chatId: String!, first: Int! = 10): MessageConnection!
 
   """Get a note by ID, if it belongs to the current user"""
   note(id: String!): Note
 
   """Get all notes for the current user"""
   notes: [Note!]!
-  recentChats(after: String, first: Int! = 2): ChatPreviewConnection!
+  recentChats(after: String, first: Int! = 10): ChatPreviewConnection!
   users(excludeMe: Boolean! = true, first: Int! = 3, where: UserWhereInput): [User!]!
 }
 
