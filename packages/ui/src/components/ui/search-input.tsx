@@ -11,7 +11,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     return (
       <div className="relative">
         <Input className={cn("pl-10", className)} ref={ref} type="search" {...props} />
-        <Search className="text-muted-foreground/80 absolute left-2 top-2" />
+        <Search className="absolute left-2 top-2 text-muted-foreground/80" />
       </div>
     );
   }

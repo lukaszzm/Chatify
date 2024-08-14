@@ -3,13 +3,13 @@ import { Skeleton } from "@chatify/ui";
 export const ChatMessagesLoading = () => {
   return (
     <>
-      <Skeleton className="w-full max-w-xs h-12 ml-auto" />
-      <Skeleton className="w-full max-w-xs h-12" />
-      <Skeleton className="w-full max-w-xs h-44 ml-auto" />
-      <Skeleton className="w-full max-w-xs h-16" />
-      <Skeleton className="w-full max-w-xs h-32" />
-      <Skeleton className="w-full max-w-xs h-12 ml-auto" />
-      <Skeleton className="w-full max-w-xs h-12" />
+      <Skeleton className="ml-auto h-12 w-full max-w-xs" />
+      <Skeleton className="h-12 w-full max-w-xs" />
+      <Skeleton className="ml-auto h-44 w-full max-w-xs" />
+      <Skeleton className="h-16 w-full max-w-xs" />
+      <Skeleton className="h-32 w-full max-w-xs" />
+      <Skeleton className="ml-auto h-12 w-full max-w-xs" />
+      <Skeleton className="h-12 w-full max-w-xs" />
     </>
   );
 };

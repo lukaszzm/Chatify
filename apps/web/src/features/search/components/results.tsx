@@ -22,7 +22,7 @@ export const Results = ({ phrase }: ResultsProps) => {
 
   if (results?.length === 0) {
     return (
-      <p className="text-center text-muted-foreground text-sm py-12">No users found</p>
+      <p className="py-12 text-center text-sm text-muted-foreground">No users found</p>
     );
   }
 

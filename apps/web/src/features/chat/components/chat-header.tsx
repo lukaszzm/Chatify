@@ -11,7 +11,7 @@ export const ChatHeader = () => {
   const title = generateChatTitle(type, participants, user?.id);
 
   return (
-    <div className="border-b border-border p-2 pb-4 flex items-center gap-4">
+    <div className="flex items-center gap-4 border-b border-border p-2 pb-4">
       <Avatar>
         <AvatarFallback>XX</AvatarFallback>
       </Avatar>

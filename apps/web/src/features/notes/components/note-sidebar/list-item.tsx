@@ -22,8 +22,8 @@ export const NoteSidebarListItem = ({
         params={{ noteId: id }}
         activeProps={{ className: "bg-muted/40" }}
       >
-        <div className="flex-1 flex justify-between w-full">
-          <h3 className="font-semibold text-base">{title}</h3>
+        <div className="flex w-full flex-1 justify-between">
+          <h3 className="text-base font-semibold">{title}</h3>
           <span className="text-xs text-muted-foreground/60">
             {formatDate(updatedAt)}
           </span>

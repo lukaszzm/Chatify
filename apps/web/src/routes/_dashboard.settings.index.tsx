@@ -7,8 +7,8 @@ export const Route = createFileRoute("/_dashboard/settings/")({
 
 function SettingsIndexPage() {
   return (
-    <Container variant="ghost" className="flex justify-center items-center">
-      <p className="text-muted-foreground text-center">Select what you want to change.</p>
+    <Container variant="ghost" className="flex items-center justify-center">
+      <p className="text-center text-muted-foreground">Select what you want to change.</p>
     </Container>
   );
 }

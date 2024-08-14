@@ -7,8 +7,8 @@ export const Route = createFileRoute("/_dashboard/chat/")({
 
 function ChatIndexPage() {
   return (
-    <Container variant="ghost" className="flex justify-center items-center">
-      <p className="text-muted-foreground text-center">
+    <Container variant="ghost" className="flex items-center justify-center">
+      <p className="text-center text-muted-foreground">
         Select chat to start conversation.
       </p>
     </Container>

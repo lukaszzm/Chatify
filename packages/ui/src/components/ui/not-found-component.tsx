@@ -19,7 +19,7 @@ export function NotFoundComponent({
       className={cn("flex justify-center items-center", className)}
       {...props}
     >
-      <div className="flex flex-col gap-1 items-center">
+      <div className="flex flex-col items-center gap-1">
         <SquareX />
         <p className="text-base text-muted-foreground">{text}</p>
       </div>

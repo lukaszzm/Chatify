@@ -14,11 +14,11 @@ export const Result = ({ id, firstName, lastName }: ResultProps) => {
   const fallback = `${firstName.at(0)}${lastName.at(0)}`;
 
   return (
-    <div className="flex flex-col gap-1 items-center bg-background/80 rounded-sm p-2 w-1/3">
+    <div className="flex w-1/3 flex-col items-center gap-1 rounded-sm bg-background/80 p-2">
       <Avatar>
         <AvatarFallback>{fallback}</AvatarFallback>
       </Avatar>
-      <p className="text-sm text-center">
+      <p className="text-center text-sm">
         {firstName} {lastName}
       </p>
       <Button

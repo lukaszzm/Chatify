@@ -26,7 +26,7 @@ export const Note = ({ id }: NoteProps) => {
   }
 
   return (
-    <Container className="p-4 space-y-2 flex flex-col">
+    <Container className="flex flex-col space-y-2 p-4">
       <NoteProvider note={data.note}>
         <NoteHeader />
         <Separator />

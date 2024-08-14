@@ -24,12 +24,12 @@ export const ChatPreview = ({
         to="/chat/$chatId"
         params={{ chatId: id }}
         activeProps={{ className: "bg-muted/40" }}
-        className="flex items-center gap-4 max-w-[22rem]"
+        className="flex max-w-[22rem] items-center gap-4"
       >
         <Avatar>
           <AvatarFallback>XX</AvatarFallback>
         </Avatar>
-        <div className="flex-1 space-y-1 min-w-0">
+        <div className="min-w-0 flex-1 space-y-1">
           <div className="flex items-center justify-between gap-1">
             <h3 className="font-semibold leading-none">{title}</h3>
             <span className="text-xs text-muted-foreground/80">
@@ -37,7 +37,7 @@ export const ChatPreview = ({
             </span>
           </div>
 
-          <p className="text-muted-foreground text-xs truncate">
+          <p className="truncate text-xs text-muted-foreground">
             <span className="font-semibold">
               {isMine ? "You" : latestMessage.sender.firstName}:
             </span>{" "}

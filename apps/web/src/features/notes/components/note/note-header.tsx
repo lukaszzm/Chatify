@@ -9,7 +9,7 @@ export const NoteHeader = () => {
   const { updatedAt } = useNote();
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex items-center justify-between">
       <div className="space-y-2">
         <Badge>Updated {formatDate(updatedAt)}</Badge>
         <NoteTitle />

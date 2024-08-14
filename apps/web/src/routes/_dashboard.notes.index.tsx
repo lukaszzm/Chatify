@@ -7,8 +7,8 @@ export const Route = createFileRoute("/_dashboard/notes/")({
 
 function NotesIndexPage() {
   return (
-    <Container variant="ghost" className="flex justify-center items-center">
-      <p className="text-muted-foreground text-center">Select note to show details.</p>
+    <Container variant="ghost" className="flex items-center justify-center">
+      <p className="text-center text-muted-foreground">Select note to show details.</p>
     </Container>
   );
 }

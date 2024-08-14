@@ -86,7 +86,7 @@ const SidebarInfo = React.forwardRef<
 >((props, ref) => {
   return (
     <p
-      className="text-center text-muted-foreground/80 text-sm py-2"
+      className="py-2 text-center text-sm text-muted-foreground/80"
       ref={ref}
       {...props}
     />
