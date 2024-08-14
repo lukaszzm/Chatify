@@ -1,2 +1,2 @@
 export { Chat } from "./components/chat";
-export { RecentChats } from "./components/recent-chats";
+export { ChatSidebar } from "./components/chat-sidebar";

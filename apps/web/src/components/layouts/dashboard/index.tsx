@@ -6,10 +6,10 @@ import { DashboardLink } from "@/components/layouts/dashboard/dashboard-link";
 import { SignOut, UserAvatar } from "@/features/auth";
 
 export const DashboardLayout = () => (
-  <div className="flex h-dvh w-full gap-6 overflow-auto p-4">
-    <aside className="flex flex-col items-center gap-12 py-4">
-      <Logo className="w-8" />
-      <nav className="flex flex-col gap-4">
+  <div className="flex h-dvh w-full flex-col-reverse gap-3 overflow-hidden p-2 md:flex-row md:gap-6 md:p-4">
+    <aside className="flex items-center gap-4 md:flex-col md:gap-12 md:pt-4">
+      <Logo className="hidden size-8 md:block" />
+      <nav className="flex w-3/4 justify-around  gap-4 md:w-auto md:flex-col">
         {navLinks.map(({ Icon, label, to }) => (
           <DashboardLink key={label} label={label} to={to}>
             <Icon strokeWidth={2.35} />
@@ -17,13 +17,13 @@ export const DashboardLayout = () => (
         ))}
       </nav>
 
-      <div className="mt-auto flex flex-col items-center gap-4">
+      <nav className="mt-auto flex w-1/4 items-center justify-around gap-4 md:w-auto md:flex-col">
         <UserAvatar />
         <SignOut />
-      </div>
+      </nav>
     </aside>
 
-    <main className="flex flex-1 gap-6">
+    <main className="flex h-0 flex-1 gap-6 md:h-auto">
       <Outlet />
     </main>
   </div>

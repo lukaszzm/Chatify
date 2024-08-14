@@ -1,6 +1,7 @@
-import { Container, ScrollArea, Title } from "@chatify/ui";
+import { Container, Title } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { BackButton } from "@/components/back-button";
 import { DeleteAccount, ProfileInfo, UpdatePassword } from "@/features/settings";
 
 export const Route = createFileRoute("/_dashboard/settings/profile")({
@@ -10,14 +11,15 @@ export const Route = createFileRoute("/_dashboard/settings/profile")({
 function ProfileSettingsPage() {
   return (
     <Container className="flex flex-col">
-      <Title>My Profile</Title>
-      <ScrollArea>
-        <div className="space-y-4 p-3">
-          <ProfileInfo />
-          <UpdatePassword />
-          <DeleteAccount />
-        </div>
-      </ScrollArea>
+      <div className="flex items-center gap-2">
+        <BackButton variant="ghost" to="/settings" />
+        <Title>My Profile</Title>
+      </div>
+      <div className="space-y-4 overflow-auto p-2">
+        <ProfileInfo />
+        <UpdatePassword />
+        <DeleteAccount />
+      </div>
     </Container>
   );
 }

@@ -36,7 +36,7 @@ export const MoreChatMessages = ({ cursor }: MoreChatMessagesProps) => {
       <Button
         variant="muted"
         size="sm"
-        className="w-full"
+        className="min-h-8 w-full"
         onClick={onLoadMore}
         isLoading={fetching}
       >
