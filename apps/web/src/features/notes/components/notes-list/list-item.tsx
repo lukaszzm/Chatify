@@ -3,17 +3,13 @@ import { Link } from "@tanstack/react-router";
 
 import { formatDate } from "@/utils/format-date";
 
-interface NoteSidebarListItemProps {
+interface NotesListItemProps {
   id: string;
   title: string;
   updatedAt: string;
 }
 
-export const NoteSidebarListItem = ({
-  id,
-  title,
-  updatedAt,
-}: NoteSidebarListItemProps) => {
+export const NotesListItem = ({ id, title, updatedAt }: NotesListItemProps) => {
   return (
     <SidebarItem asChild>
       <Link

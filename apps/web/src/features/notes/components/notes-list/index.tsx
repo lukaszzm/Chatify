@@ -1,10 +1,10 @@
 import { ErrorComponent, SidebarInfo, SidebarList } from "@chatify/ui";
 
-import { NoteSidebarListItem } from "@/features/notes/components/note-sidebar/list-item";
-import { NotesListLoading } from "@/features/notes/components/note-sidebar/list-loading";
+import { NotesListItem } from "@/features/notes/components/notes-list/list-item";
+import { NotesListLoading } from "@/features/notes/components/notes-list/list-loading";
 import { useNotesQuery } from "@/features/notes/hooks/use-notes-query";
 
-export const NoteSidebarList = () => {
+export const NotesList = () => {
   const [{ data, fetching, error }] = useNotesQuery();
 
   if (fetching) {
@@ -22,7 +22,7 @@ export const NoteSidebarList = () => {
   return (
     <SidebarList>
       {data.notes.map((note) => (
-        <NoteSidebarListItem key={note.id} {...note} />
+        <NotesListItem key={note.id} {...note} />
       ))}
     </SidebarList>
   );
