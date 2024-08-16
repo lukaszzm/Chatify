@@ -6,9 +6,20 @@ import { Button } from "@ui/components/ui/button";
 import { Container } from "@ui/components/ui/container";
 import { cn } from "@ui/lib/utils";
 
-const Sidebar = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  (props, ref) => {
-    return <Container size="sm" ref={ref} {...props} />;
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  hideOnMobile?: boolean;
+}
+
+const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
+  ({ hideOnMobile, className, ...props }, ref) => {
+    return (
+      <Container
+        size="sm"
+        ref={ref}
+        className={cn(className, hideOnMobile && "hidden md:flex")}
+        {...props}
+      />
+    );
   }
 );
 Sidebar.displayName = "Sidebar";
