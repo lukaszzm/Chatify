@@ -1,22 +1,27 @@
+import { Sidebar, SidebarContent, SidebarHeader, SidebarTitle } from "@chatify/ui";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-import { SettingsSidebar } from "@/features/settings";
-import { useMobile } from "@/hooks/use-mobile";
+import { SettingsList } from "@/features/settings";
+import { usePathname } from "@/hooks/use-pathname";
 
 export const Route = createFileRoute("/_dashboard/settings")({
   component: SettingsPage,
 });
 
 function SettingsPage() {
-  const isMobile = useMobile();
-
-  if (isMobile) {
-    return <Outlet />;
-  }
+  const pathname = usePathname();
 
   return (
     <>
-      <SettingsSidebar />
+      <Sidebar hideOnMobile={pathname !== Route.fullPath}>
+        <SidebarHeader>
+          <SidebarTitle>Settings</SidebarTitle>
+        </SidebarHeader>
+        <SidebarContent>
+          <SettingsList />
+        </SidebarContent>
+      </Sidebar>
+
       <Outlet />
     </>
   );

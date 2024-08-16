@@ -1,22 +1,28 @@
+import { Sidebar, SidebarContent, SidebarHeader, SidebarTitle } from "@chatify/ui";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { NoteSidebar } from "@/features/notes";
-import { useMobile } from "@/hooks/use-mobile";
+import { NewNote, NotesList } from "@/features/notes";
+import { usePathname } from "@/hooks/use-pathname";
 
 export const Route = createFileRoute("/_dashboard/notes")({
   component: NotesPage,
 });
 
 function NotesPage() {
-  const isMobile = useMobile();
-
-  if (isMobile) {
-    return <Outlet />;
-  }
+  const pathname = usePathname();
 
   return (
     <>
-      <NoteSidebar />
+      <Sidebar hideOnMobile={pathname !== Route.fullPath}>
+        <SidebarHeader>
+          <SidebarTitle>Notes</SidebarTitle>
+          <NewNote />
+        </SidebarHeader>
+        <SidebarContent>
+          <NotesList />
+        </SidebarContent>
+      </Sidebar>
+
       <Outlet />
     </>
   );

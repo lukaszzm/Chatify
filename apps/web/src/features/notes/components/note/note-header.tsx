@@ -1,6 +1,6 @@
 import { Badge } from "@chatify/ui";
 
-import { BackButton } from "@/components/back-button";
+import { MobileBackButton } from "@/components/mobile-back-button";
 import { NoteMenu } from "@/features/notes/components/note/note-menu";
 import { NoteTitle } from "@/features/notes/components/note/note-title";
 import { useNote } from "@/features/notes/hooks/use-note";
@@ -12,7 +12,7 @@ export const NoteHeader = () => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <BackButton variant="ghost" to="/notes" />
+        <MobileBackButton variant="ghost" to="/notes" />
         <div className="space-y-2">
           <Badge>Updated {formatDate(updatedAt)}</Badge>
           <NoteTitle />

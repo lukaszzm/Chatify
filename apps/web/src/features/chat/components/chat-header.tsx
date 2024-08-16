@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback } from "@chatify/ui";
 
-import { BackButton } from "@/components/back-button";
+import { MobileBackButton } from "@/components/mobile-back-button";
 import { useAuth } from "@/features/auth";
 import { useChat } from "@/features/chat/hooks/use-chat";
 import { generateChatTitle } from "@/features/chat/utils";
@@ -13,7 +13,7 @@ export const ChatHeader = () => {
 
   return (
     <div className="flex items-center gap-4 border-b border-border p-2 pb-4">
-      <BackButton to="/chat" variant="ghost" />
+      <MobileBackButton to="/chat" variant="ghost" />
       <Avatar>
         <AvatarFallback>XX</AvatarFallback>
       </Avatar>
