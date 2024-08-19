@@ -19,7 +19,7 @@ export const ChatMessages = () => {
 
   if (!data?.messages || data.messages.edges.length === 0) {
     return (
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="mb-auto text-center text-sm text-muted-foreground">
         You don&apos;t have any messages in this conversation yet.
       </p>
     );
