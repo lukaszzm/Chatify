@@ -5,7 +5,7 @@ import "@chatify/ui/main.css";
 import { Provider } from "urql";
 
 import { AuthProvider, useAuth } from "@/features/auth";
-import { client } from "@/lib/gql";
+import { client } from "@/lib/gql/client";
 import { routeTree } from "@/routeTree.gen";
 
 const router = createRouter({
