@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
 import { PaginationArgs } from "@/common/dtos/pagination.args";
@@ -44,6 +44,10 @@ export class ChatsService {
 
   async create(data: StartChatInput) {
     const uniqueParticipants = removeDuplicates(data.participants);
+
+    if (uniqueParticipants.length !== 2) {
+      throw new BadRequestException("Chat requires exactly 2 participants");
+    }
 
     return this.prismaService.chat.create({
       data: {
