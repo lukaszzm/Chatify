@@ -137,6 +137,10 @@ const client = new Client({
                 break;
               }
 
+              if (cursor === query.recentChats.pageInfo.endCursor) {
+                break;
+              }
+
               cursor = query.recentChats.pageInfo.endCursor;
               query = cache.readQuery({
                 query: RECENT_CHATS_QUERY,
