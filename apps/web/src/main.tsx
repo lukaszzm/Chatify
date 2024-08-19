@@ -2,6 +2,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "@chatify/ui/main.css";
+import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "urql";
 
 import { AuthProvider, useAuth } from "@/features/auth";
@@ -29,11 +30,13 @@ function InnerApp() {
 
 function App() {
   return (
-    <Provider value={client}>
-      <AuthProvider>
-        <InnerApp />
-      </AuthProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider value={client}>
+        <AuthProvider>
+          <InnerApp />
+        </AuthProvider>
+      </Provider>
+    </HelmetProvider>
   );
 }
 
