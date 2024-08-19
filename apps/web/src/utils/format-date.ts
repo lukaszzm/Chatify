@@ -14,5 +14,5 @@ export const formatDate = (timestamp: string) => {
     return format(timestamp, "cccc	kk:mm");
   }
 
-  return format(timestamp, "dd.MM.yy, kk:mm");
+  return format(timestamp, "dd MMM yy, kk:mm");
 };
