@@ -110,19 +110,15 @@ export type MessageEdge = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  /** Create a new note without a content (empty note with title) */
   createNote: Note;
   deleteAccount: User;
-  /** Delete a note */
   deleteNote: Note;
   refresh: Token;
   sendMessage: Message;
   signIn: Auth;
   signUp: Auth;
   startChat: Chat;
-  /** Toggle lock on a note */
   toggleLock: Note;
-  /** Update a note content */
   updateNote: Note;
   updatePassword: User;
   updateProfile: User;
@@ -185,6 +181,18 @@ export type Note = {
   userId: Scalars["String"]["output"];
 };
 
+export type NoteConnection = {
+  __typename?: "NoteConnection";
+  edges: Array<NoteEdge>;
+  pageInfo: PageInfo;
+};
+
+export type NoteEdge = {
+  __typename?: "NoteEdge";
+  cursor: Scalars["String"]["output"];
+  node: Note;
+};
+
 export type PageInfo = {
   __typename?: "PageInfo";
   endCursor?: Maybe<Scalars["String"]["output"]>;
@@ -196,10 +204,8 @@ export type Query = {
   chat?: Maybe<Chat>;
   me: User;
   messages: MessageConnection;
-  /** Get a note by ID, if it belongs to the current user */
   note?: Maybe<Note>;
-  /** Get all notes for the current user */
-  notes: Array<Note>;
+  notes: NoteConnection;
   recentChats: ChatPreviewConnection;
   users: Array<User>;
 };
@@ -216,6 +222,11 @@ export type QueryMessagesArgs = {
 
 export type QueryNoteArgs = {
   id: Scalars["String"]["input"];
+};
+
+export type QueryNotesArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  first?: Scalars["Int"]["input"];
 };
 
 export type QueryRecentChatsArgs = {
@@ -361,6 +372,7 @@ export type CreateNoteMutation = {
     id: string;
     title: string;
     content: string;
+    createdAt: string;
     updatedAt: string;
     isLocked: boolean;
   };
@@ -475,17 +487,32 @@ export type NoteQuery = {
   } | null;
 };
 
-export type NotesQueryVariables = Exact<{ [key: string]: never }>;
+export type NotesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+}>;
 
 export type NotesQuery = {
   __typename?: "Query";
-  notes: Array<{
-    __typename?: "Note";
-    id: string;
-    title: string;
-    content: string;
-    updatedAt: string;
-  }>;
+  notes: {
+    __typename?: "NoteConnection";
+    edges: Array<{
+      __typename?: "NoteEdge";
+      cursor: string;
+      node: {
+        __typename?: "Note";
+        id: string;
+        title: string;
+        content: string;
+        updatedAt: string;
+      };
+    }>;
+    pageInfo: {
+      __typename?: "PageInfo";
+      endCursor?: string | null;
+      hasNextPage: boolean;
+    };
+  };
 };
 
 export type RecentChatsQueryVariables = Exact<{
@@ -858,6 +885,7 @@ export const CreateNoteDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "title" } },
                 { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
                 { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
                 { kind: "Field", name: { kind: "Name", value: "isLocked" } },
               ],
@@ -1306,19 +1334,73 @@ export const NotesDocument = {
       kind: "OperationDefinition",
       operation: "query",
       name: { kind: "Name", value: "Notes" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "after" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "first" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+      ],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
           {
             kind: "Field",
             name: { kind: "Name", value: "notes" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "after" },
+                value: { kind: "Variable", name: { kind: "Name", value: "after" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "first" },
+                value: { kind: "Variable", name: { kind: "Name", value: "first" } },
+              },
+            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "title" } },
-                { kind: "Field", name: { kind: "Name", value: "content" } },
-                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "edges" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "node" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            { kind: "Field", name: { kind: "Name", value: "title" } },
+                            { kind: "Field", name: { kind: "Name", value: "content" } },
+                            { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "pageInfo" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "endCursor" } },
+                      { kind: "Field", name: { kind: "Name", value: "hasNextPage" } },
+                    ],
+                  },
+                },
               ],
             },
           },

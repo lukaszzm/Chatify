@@ -41,6 +41,7 @@ export const CREATE_NOTE_MUTATION = graphql(`
       id
       title
       content
+      createdAt
       updatedAt
       isLocked
     }

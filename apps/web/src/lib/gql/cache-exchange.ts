@@ -21,9 +21,18 @@ export const cache = cacheExchange({
             return null;
           }
 
+          const newEdge = {
+            cursor: result.createNote.createdAt,
+            node: result.createNote,
+            __typename: "NoteEdge" as const,
+          };
+
           return {
             ...data,
-            notes: [...data.notes, result.createNote],
+            notes: {
+              ...data.notes,
+              edges: [newEdge, ...data.notes.edges],
+            },
           };
         });
       },

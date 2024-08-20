@@ -1,13 +1,19 @@
-import { useMemo } from "react";
+import type { RequestPolicy } from "urql";
 import { useQuery } from "urql";
 
 import { NOTES_QUERY } from "@/lib/gql/queries";
 
-export const useNotesQuery = () => {
-  const context = useMemo(() => ({ additionalTypenames: ["Note"] }), []);
+interface UseNotesQueryProps {
+  after?: string | null;
+  pause?: boolean;
+  requestPolicy?: RequestPolicy;
+}
 
+export const useNotesQuery = ({ after, pause, requestPolicy }: UseNotesQueryProps) => {
   return useQuery({
     query: NOTES_QUERY,
-    context,
+    variables: { after },
+    pause,
+    requestPolicy,
   });
 };
