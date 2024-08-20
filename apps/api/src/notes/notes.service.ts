@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
+import { PaginationArgs } from "@/common/dtos/pagination.args";
+import { paginate } from "@/common/utils/paginate";
 import { CreateNoteInput } from "@/notes/dtos/create-note.input";
 import { PrismaService } from "@/prisma/prisma.service";
 
@@ -34,6 +36,18 @@ export class NotesService {
       orderBy: {
         createdAt: "asc",
       },
+    });
+  }
+
+  async findManyWithPagination(userId: string, pagination: PaginationArgs) {
+    return paginate({
+      client: this.prismaService,
+      model: "Note",
+      where: {
+        userId,
+      },
+      pagination,
+      cursorColumn: "createdAt",
     });
   }
 

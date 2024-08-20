@@ -83,22 +83,15 @@ type MessageEdge {
 }
 
 type Mutation {
-  """Create a new note without a content (empty note with title)"""
   createNote(data: CreateNoteInput!): Note!
   deleteAccount: User!
-
-  """Delete a note"""
   deleteNote(noteId: String!): Note!
   refresh(refreshToken: String!): Token!
   sendMessage(data: SendMessageInput!): Message!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
   startChat(data: StartChatInput!): Chat!
-
-  """Toggle lock on a note"""
   toggleLock(noteId: String!): Note!
-
-  """Update a note content"""
   updateNote(content: String!, noteId: String!): Note!
   updatePassword(data: UpdatePasswordInput!): User!
   updateProfile(data: UpdateProfileInput!): User!
@@ -115,6 +108,16 @@ type Note {
   userId: String!
 }
 
+type NoteConnection {
+  edges: [NoteEdge!]!
+  pageInfo: PageInfo!
+}
+
+type NoteEdge {
+  cursor: String!
+  node: Note!
+}
+
 type PageInfo {
   endCursor: String
   hasNextPage: Boolean!
@@ -124,12 +127,8 @@ type Query {
   chat(id: String!): Chat
   me: User!
   messages(after: String, chatId: String!, first: Int! = 10): MessageConnection!
-
-  """Get a note by ID, if it belongs to the current user"""
   note(id: String!): Note
-
-  """Get all notes for the current user"""
-  notes: [Note!]!
+  notes(after: String, first: Int! = 10): NoteConnection!
   recentChats(after: String, first: Int! = 10): ChatPreviewConnection!
   users(excludeMe: Boolean! = true, first: Int! = 3, where: UserWhereInput): [User!]!
 }
