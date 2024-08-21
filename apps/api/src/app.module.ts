@@ -12,6 +12,7 @@ import { MessagesModule } from "@/messages/messages.module";
 import { NotesModule } from "@/notes/notes.module";
 import { PrismaModule } from "@/prisma/prisma.module";
 import { PubSubModule } from "@/pubsub/pubsub.module";
+import { UploadModule } from "@/upload/upload.module";
 import { UsersModule } from "@/users/users.module";
 
 @Module({
@@ -19,6 +20,7 @@ import { UsersModule } from "@/users/users.module";
     PrismaModule,
     PubSubModule,
     AuthModule,
+    UploadModule,
     UsersModule,
     ChatsModule,
     MessagesModule,

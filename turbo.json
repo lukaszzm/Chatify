@@ -10,6 +10,10 @@
     "JWT_REFRESH_EXPIRATION_TIME",
     "REDIS_HOST",
     "REDIS_PORT",
+    "AWS_ACCESS_KEY",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_S3_REGION",
+    "AWS_S3_BUCKET_NAME",
     "VITE_API_URL"
   ],
   "tasks": {
