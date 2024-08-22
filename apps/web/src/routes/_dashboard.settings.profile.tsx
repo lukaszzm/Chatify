@@ -2,7 +2,12 @@ import { Container, Title } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { MobileBackButton } from "@/components/mobile-back-button";
-import { DeleteAccount, ProfileInfo, UpdatePassword } from "@/features/settings";
+import {
+  DeleteAccount,
+  ProfileInfo,
+  UpdateAvatar,
+  UpdatePassword,
+} from "@/features/settings";
 
 export const Route = createFileRoute("/_dashboard/settings/profile")({
   component: ProfileSettingsPage,
@@ -16,6 +21,7 @@ function ProfileSettingsPage() {
         <Title>My Profile</Title>
       </div>
       <div className="space-y-4 overflow-auto p-2">
+        <UpdateAvatar />
         <ProfileInfo />
         <UpdatePassword />
         <DeleteAccount />
