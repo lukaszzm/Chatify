@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  firstName    String
-  lastName     String
-  fullName     String
-  password     String
-  isActive     Boolean       @default(false)
-  createdAt    DateTime      @unique @default(now())
-  updatedAt    DateTime      @unique @updatedAt
-  sentMessages Message[]
-  chats        Participant[]
-  notes        Note[]
+  id             String        @id @default(cuid())
+  email          String        @unique
+  profilePicture String?
+  firstName      String
+  lastName       String
+  fullName       String
+  password       String
+  isActive       Boolean       @default(false)
+  createdAt      DateTime      @unique @default(now())
+  updatedAt      DateTime      @unique @updatedAt
+  sentMessages   Message[]
+  chats          Participant[]
+  notes          Note[]
 }
 
 model Message {
