@@ -125,7 +125,6 @@ export type Mutation = {
   updatePassword: User;
   updateProfile: User;
   updateProfilePicture: User;
-  uploadImage: Scalars["String"]["output"];
 };
 
 export type MutationCreateNoteArgs = {
@@ -175,10 +174,6 @@ export type MutationUpdateProfileArgs = {
 
 export type MutationUpdateProfilePictureArgs = {
   data: UpdateProfilePictureInput;
-};
-
-export type MutationUploadImageArgs = {
-  file: Scalars["Upload"]["input"];
 };
 
 export type Note = {
@@ -499,7 +494,13 @@ export type SearchUsersQueryVariables = Exact<{
 
 export type SearchUsersQuery = {
   __typename?: "Query";
-  users: Array<{ __typename?: "User"; id: string; firstName: string; lastName: string }>;
+  users: Array<{
+    __typename?: "User";
+    id: string;
+    profilePicture?: string | null;
+    firstName: string;
+    lastName: string;
+  }>;
 };
 
 export type NoteQueryVariables = Exact<{
@@ -566,6 +567,7 @@ export type RecentChatsQuery = {
           __typename?: "User";
           firstName: string;
           lastName: string;
+          profilePicture?: string | null;
           id: string;
         }>;
         latestMessage: {
@@ -598,6 +600,7 @@ export type ChatQuery = {
     participants: Array<{
       __typename?: "User";
       id: string;
+      profilePicture?: string | null;
       firstName: string;
       lastName: string;
     }>;
@@ -622,7 +625,13 @@ export type MessagesQuery = {
         id: string;
         content: string;
         createdAt: string;
-        sender: { __typename?: "User"; id: string; firstName: string; lastName: string };
+        sender: {
+          __typename?: "User";
+          id: string;
+          profilePicture?: string | null;
+          firstName: string;
+          lastName: string;
+        };
       };
     }>;
     pageInfo: {
@@ -645,6 +654,7 @@ export type ChatUpdatedSubscription = {
       __typename?: "User";
       firstName: string;
       lastName: string;
+      profilePicture?: string | null;
       id: string;
     }>;
     latestMessage: {
@@ -668,7 +678,13 @@ export type MessageSentSubscription = {
     id: string;
     content: string;
     createdAt: string;
-    sender: { __typename?: "User"; id: string; firstName: string; lastName: string };
+    sender: {
+      __typename?: "User";
+      id: string;
+      profilePicture?: string | null;
+      firstName: string;
+      lastName: string;
+    };
   };
 };
 
@@ -1352,6 +1368,7 @@ export const SearchUsersDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
                 { kind: "Field", name: { kind: "Name", value: "firstName" } },
                 { kind: "Field", name: { kind: "Name", value: "lastName" } },
               ],
@@ -1559,6 +1576,10 @@ export const RecentChatsDocument = {
                                     kind: "Field",
                                     name: { kind: "Name", value: "lastName" },
                                   },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "profilePicture" },
+                                  },
                                   { kind: "Field", name: { kind: "Name", value: "id" } },
                                 ],
                               },
@@ -1665,6 +1686,7 @@ export const ChatDocument = {
                     kind: "SelectionSet",
                     selections: [
                       { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
                       { kind: "Field", name: { kind: "Name", value: "firstName" } },
                       { kind: "Field", name: { kind: "Name", value: "lastName" } },
                     ],
@@ -1756,6 +1778,10 @@ export const MessagesDocument = {
                                   { kind: "Field", name: { kind: "Name", value: "id" } },
                                   {
                                     kind: "Field",
+                                    name: { kind: "Name", value: "profilePicture" },
+                                  },
+                                  {
+                                    kind: "Field",
                                     name: { kind: "Name", value: "firstName" },
                                   },
                                   {
@@ -1816,6 +1842,7 @@ export const ChatUpdatedDocument = {
                     selections: [
                       { kind: "Field", name: { kind: "Name", value: "firstName" } },
                       { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                      { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
                       { kind: "Field", name: { kind: "Name", value: "id" } },
                     ],
                   },
@@ -1894,6 +1921,7 @@ export const MessageSentDocument = {
                     kind: "SelectionSet",
                     selections: [
                       { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
                       { kind: "Field", name: { kind: "Name", value: "firstName" } },
                       { kind: "Field", name: { kind: "Name", value: "lastName" } },
                     ],

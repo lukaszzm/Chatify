@@ -1,22 +1,18 @@
-import { ChatType } from "@/gql/graphql";
-
 type Participant = {
   id: string;
   firstName: string;
   lastName: string;
 };
 
-export const generateChatTitle = <T extends Participant>(
-  chatType: ChatType,
+export function getSecondParticipant<T extends Participant>(
   participants: T[],
   currentUserId?: string
-) => {
-  if (chatType === ChatType.Group) {
-    return participants
-      .map(({ firstName, lastName }) => `${firstName} ${lastName}`)
-      .join(", ");
+): T {
+  const second = participants.find(({ id }) => id !== currentUserId);
+
+  if (!second) {
+    throw new Error("Second participant not found");
   }
 
-  const secondParticipant = participants.find(({ id }) => id !== currentUserId);
-  return `${secondParticipant?.firstName} ${secondParticipant?.lastName}`;
-};
+  return second;
+}

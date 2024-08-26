@@ -8,6 +8,7 @@ export const RECENT_CHATS_SUBSCRIPTION = graphql(`
       participants {
         firstName
         lastName
+        profilePicture
         id
       }
       latestMessage {
@@ -31,6 +32,7 @@ export const MESSAGES_SUBSCRIPTION = graphql(`
       createdAt
       sender {
         id
+        profilePicture
         firstName
         lastName
       }
