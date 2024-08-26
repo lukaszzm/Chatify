@@ -25,7 +25,7 @@ const Placeholder = () => {
       <div className="rounded-full border border-dashed p-3 text-center">
         <UploadIcon className="size-7 text-muted-foreground" aria-hidden="true" />
       </div>
-      <p className="font-medium text-muted-foreground">Upload a picture</p>
+      <p className="font-medium text-muted-foreground">Upload a new picture</p>
     </div>
   );
 };
