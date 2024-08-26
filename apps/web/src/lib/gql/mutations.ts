@@ -100,6 +100,15 @@ export const UPDATE_PASSWORD_MUTATION = graphql(`
   }
 `);
 
+export const UPDATE_PROFILE_PICTURE_MUTATION = graphql(`
+  mutation UpdateProfilePicture($data: UpdateProfilePictureInput!) {
+    updateProfilePicture(data: $data) {
+      id
+      profilePicture
+    }
+  }
+`);
+
 export const UPDATE_PROFILE_MUTATION = graphql(`
   mutation UpdateProfile($data: UpdateProfileInput!) {
     updateProfile(data: $data) {

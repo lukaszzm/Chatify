@@ -39,9 +39,11 @@ const documents = {
     types.DeleteAccountDocument,
   "\n  mutation UpdatePassword($data: UpdatePasswordInput!) {\n    updatePassword(data: $data) {\n      id\n    }\n  }\n":
     types.UpdatePasswordDocument,
+  "\n  mutation UpdateProfilePicture($data: UpdateProfilePictureInput!) {\n    updateProfilePicture(data: $data) {\n      id\n      profilePicture\n    }\n  }\n":
+    types.UpdateProfilePictureDocument,
   "\n  mutation UpdateProfile($data: UpdateProfileInput!) {\n    updateProfile(data: $data) {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n":
     types.UpdateProfileDocument,
-  "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      fullName\n      email\n      isActive\n    }\n  }\n":
+  "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n    }\n  }\n":
     types.MeDocument,
   "\n  query SearchUsers($where: UserWhereInput!, $excludeMe: Boolean!) {\n    users(where: $where, excludeMe: $excludeMe) {\n      id\n      firstName\n      lastName\n    }\n  }\n":
     types.SearchUsersDocument,
@@ -157,14 +159,20 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: "\n  mutation UpdateProfilePicture($data: UpdateProfilePictureInput!) {\n    updateProfilePicture(data: $data) {\n      id\n      profilePicture\n    }\n  }\n"
+): (typeof documents)["\n  mutation UpdateProfilePicture($data: UpdateProfilePictureInput!) {\n    updateProfilePicture(data: $data) {\n      id\n      profilePicture\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: "\n  mutation UpdateProfile($data: UpdateProfileInput!) {\n    updateProfile(data: $data) {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n"
 ): (typeof documents)["\n  mutation UpdateProfile($data: UpdateProfileInput!) {\n    updateProfile(data: $data) {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      fullName\n      email\n      isActive\n    }\n  }\n"
-): (typeof documents)["\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      fullName\n      email\n      isActive\n    }\n  }\n"];
+  source: "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n    }\n  }\n"
+): (typeof documents)["\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

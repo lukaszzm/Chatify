@@ -19,6 +19,11 @@ const subscriptionClient = new SubscriptionClient(gqlServerUrl, {
 
 const client = new Client({
   url: gqlServerUrl,
+  fetchOptions: {
+    headers: {
+      "Apollo-Require-Preflight": "true",
+    },
+  },
   exchanges: [
     cache,
     auth,

@@ -5,8 +5,8 @@ import { MobileBackButton } from "@/components/mobile-back-button";
 import {
   DeleteAccount,
   ProfileInfo,
-  UpdateAvatar,
   UpdatePassword,
+  UpdateProfilePicture,
 } from "@/features/settings";
 
 export const Route = createFileRoute("/_dashboard/settings/profile")({
@@ -21,7 +21,7 @@ function ProfileSettingsPage() {
         <Title>My Profile</Title>
       </div>
       <div className="space-y-4 overflow-auto p-2">
-        <UpdateAvatar />
+        <UpdateProfilePicture />
         <ProfileInfo />
         <UpdatePassword />
         <DeleteAccount />
