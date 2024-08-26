@@ -18,6 +18,7 @@ export const SEARCH_USERS_QUERY = graphql(`
   query SearchUsers($where: UserWhereInput!, $excludeMe: Boolean!) {
     users(where: $where, excludeMe: $excludeMe) {
       id
+      profilePicture
       firstName
       lastName
     }
@@ -67,6 +68,7 @@ export const RECENT_CHATS_QUERY = graphql(`
           participants {
             firstName
             lastName
+            profilePicture
             id
           }
           latestMessage {
@@ -95,6 +97,7 @@ export const CHAT_QUERY = graphql(`
       type
       participants {
         id
+        profilePicture
         firstName
         lastName
       }
@@ -113,6 +116,7 @@ export const MESSAGES_QUERY = graphql(`
           createdAt
           sender {
             id
+            profilePicture
             firstName
             lastName
           }
