@@ -1,7 +1,7 @@
 export { SignOut } from "./components/sign-out";
 export { SignIn } from "./components/sign-in";
 export { SignUp } from "./components/sign-up";
-export { UserAvatar } from "./components/user-avatar";
+export { CurrentUserAvatar } from "./components/current-user-avatar";
 
 export { AuthProvider } from "./contexts/auth-context";
 

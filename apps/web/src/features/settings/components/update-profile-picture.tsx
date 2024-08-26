@@ -14,10 +14,11 @@ import {
   ImagePicker,
 } from "@chatify/ui";
 
-import { useUpdateAvatar } from "@/features/settings/hooks/use-update-avatar";
+import { ErrorAlert } from "@/components/errors/error-alert";
+import { useUpdateProfilePicture } from "@/features/settings/hooks/use-update-profile-picture";
 
-export const UpdateAvatar = () => {
-  const { form, updateAvatar } = useUpdateAvatar();
+export const UpdateProfilePicture = () => {
+  const { form, updateProfilePicture, error } = useUpdateProfilePicture();
 
   return (
     <Card>
@@ -27,8 +28,8 @@ export const UpdateAvatar = () => {
       <CardContent>
         <Form {...form}>
           <form
-            id="update-avatar-form"
-            onSubmit={form.handleSubmit(updateAvatar)}
+            id="update-picture-form"
+            onSubmit={form.handleSubmit(updateProfilePicture)}
             className="grid grid-cols-1 gap-4 xl:grid-cols-2"
           >
             <FormField
@@ -44,11 +45,15 @@ export const UpdateAvatar = () => {
                 </FormItem>
               )}
             />
+
+            <ErrorAlert error={error} />
           </form>
         </Form>
       </CardContent>
       <CardFooter className="justify-end">
-        <Button form="update-avatar-form">Save</Button>
+        <Button form="update-picture-form" isLoading={form.formState.isSubmitting}>
+          Save
+        </Button>
       </CardFooter>
     </Card>
   );

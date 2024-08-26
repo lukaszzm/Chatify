@@ -24,6 +24,8 @@ export type Scalars = {
   Float: { input: number; output: number };
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: string; output: string };
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: { input: any; output: any };
 };
 
 export type Auth = {
@@ -122,6 +124,8 @@ export type Mutation = {
   updateNote: Note;
   updatePassword: User;
   updateProfile: User;
+  updateProfilePicture: User;
+  uploadImage: Scalars["String"]["output"];
 };
 
 export type MutationCreateNoteArgs = {
@@ -167,6 +171,14 @@ export type MutationUpdatePasswordArgs = {
 
 export type MutationUpdateProfileArgs = {
   data: UpdateProfileInput;
+};
+
+export type MutationUpdateProfilePictureArgs = {
+  data: UpdateProfilePictureInput;
+};
+
+export type MutationUploadImageArgs = {
+  file: Scalars["Upload"]["input"];
 };
 
 export type Note = {
@@ -291,6 +303,10 @@ export type UpdateProfileInput = {
   lastName: Scalars["String"]["input"];
 };
 
+export type UpdateProfilePictureInput = {
+  file?: InputMaybe<Scalars["Upload"]["input"]>;
+};
+
 export type User = {
   __typename?: "User";
   createdAt: Scalars["DateTime"]["output"];
@@ -300,6 +316,7 @@ export type User = {
   id: Scalars["ID"]["output"];
   isActive: Scalars["Boolean"]["output"];
   lastName: Scalars["String"]["output"];
+  profilePicture?: Maybe<Scalars["String"]["output"]>;
   updatedAt: Scalars["DateTime"]["output"];
 };
 
@@ -431,6 +448,19 @@ export type UpdatePasswordMutation = {
   updatePassword: { __typename?: "User"; id: string };
 };
 
+export type UpdateProfilePictureMutationVariables = Exact<{
+  data: UpdateProfilePictureInput;
+}>;
+
+export type UpdateProfilePictureMutation = {
+  __typename?: "Mutation";
+  updateProfilePicture: {
+    __typename?: "User";
+    id: string;
+    profilePicture?: string | null;
+  };
+};
+
 export type UpdateProfileMutationVariables = Exact<{
   data: UpdateProfileInput;
 }>;
@@ -455,6 +485,7 @@ export type MeQuery = {
     id: string;
     firstName: string;
     lastName: string;
+    profilePicture?: string | null;
     fullName: string;
     email: string;
     isActive: boolean;
@@ -1146,6 +1177,55 @@ export const UpdatePasswordDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdatePasswordMutation, UpdatePasswordMutationVariables>;
+export const UpdateProfilePictureDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateProfilePicture" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateProfilePictureInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateProfilePicture" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateProfilePictureMutation,
+  UpdateProfilePictureMutationVariables
+>;
 export const UpdateProfileDocument = {
   kind: "Document",
   definitions: [
@@ -1213,6 +1293,7 @@ export const MeDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "firstName" } },
                 { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
                 { kind: "Field", name: { kind: "Name", value: "fullName" } },
                 { kind: "Field", name: { kind: "Name", value: "email" } },
                 { kind: "Field", name: { kind: "Name", value: "isActive" } },
