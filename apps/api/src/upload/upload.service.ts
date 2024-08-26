@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import {
   BadRequestException,
   Injectable,
@@ -82,6 +82,15 @@ export class UploadService {
     return compressBuffer;
   }
 
+  private createFileUrl(filename: string): string {
+    return `https://${this.s3Bucket}.s3.${this.s3Region}.amazonaws.com/${filename}`;
+  }
+
+  private extractFilename(url: string): string {
+    const urlParts = url.split("/");
+    return urlParts[urlParts.length - 1];
+  }
+
   private async uploadToS3(filename: string, buffer: Buffer): Promise<string> {
     await this.s3Client.send(
       new PutObjectCommand({
@@ -91,8 +100,16 @@ export class UploadService {
       })
     );
 
-    const url = `https://${this.s3Bucket}.s3.${this.s3Region}.amazonaws.com/${filename}`;
-    return url;
+    return this.createFileUrl(filename);
+  }
+
+  private async deleteFromS3(filename: string) {
+    await this.s3Client.send(
+      new DeleteObjectCommand({
+        Bucket: this.configService.getOrThrow<string>("AWS_S3_BUCKET_NAME"),
+        Key: filename,
+      })
+    );
   }
 
   async uploadImage(file: FileUpload, ratio?: Ratio): Promise<string> {
@@ -102,12 +119,24 @@ export class UploadService {
       throw new BadRequestException("Invalid file type, only images are allowed");
     }
 
+    const fixedFileName = `${Date.now()}-${filename}`;
+
     try {
       const buffer = await this.streamToBuffer(createReadStream());
       const compressedBuffer = await this.compressImage(buffer, ratio);
-      return await this.uploadToS3(filename, compressedBuffer);
+      return await this.uploadToS3(fixedFileName, compressedBuffer);
     } catch (error) {
       throw new InternalServerErrorException("Failed to upload image");
+    }
+  }
+
+  async deleteImage(url: string) {
+    const filename = this.extractFilename(url);
+
+    try {
+      await this.deleteFromS3(filename);
+    } catch (error) {
+      throw new InternalServerErrorException("Failed to delete image");
     }
   }
 }
