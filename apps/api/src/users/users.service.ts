@@ -1,8 +1,15 @@
 import { Prisma } from "@chatify/db";
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
+import type { FileUpload } from "graphql-upload-ts";
 
 import { PasswordService } from "@/auth/password.service";
 import { PrismaService } from "@/prisma/prisma.service";
+import { UploadService } from "@/upload/upload.service";
 import { UpdatePasswordInput } from "@/users/dtos/update-password.input";
 import { UpdateProfileInput } from "@/users/dtos/update-profile.input";
 import { UsersArgs } from "@/users/dtos/users.args";
@@ -11,7 +18,8 @@ import { UsersArgs } from "@/users/dtos/users.args";
 export class UsersService {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly passwordService: PasswordService
+    private readonly passwordService: PasswordService,
+    private readonly uploadService: UploadService
   ) {}
 
   async findOneByEmail(email: string) {
@@ -98,6 +106,39 @@ export class UsersService {
       where: { id },
       data: {
         password: hashedPassword,
+      },
+    });
+  }
+
+  async updateProfilePicture(filePromise: Promise<FileUpload> | null, id: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    if (user.profilePicture) {
+      await this.uploadService.deleteImage(user.profilePicture);
+    }
+
+    if (!filePromise) {
+      return this.prismaService.user.update({
+        where: { id },
+        data: {
+          profilePicture: null,
+        },
+      });
+    }
+
+    const file = await filePromise;
+    const pictureUrl = await this.uploadService.uploadImage(file);
+
+    return this.prismaService.user.update({
+      where: { id },
+      data: {
+        profilePicture: pictureUrl,
       },
     });
   }
