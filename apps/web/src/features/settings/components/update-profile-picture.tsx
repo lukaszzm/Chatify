@@ -7,6 +7,7 @@ import {
   CardTitle,
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,7 +31,7 @@ export const UpdateProfilePicture = () => {
           <form
             id="update-picture-form"
             onSubmit={form.handleSubmit(updateProfilePicture)}
-            className="grid grid-cols-1 gap-4 xl:grid-cols-2"
+            className="space-y-4"
           >
             <FormField
               control={form.control}
@@ -41,6 +42,10 @@ export const UpdateProfilePicture = () => {
                   <FormControl>
                     <ImagePicker {...field} />
                   </FormControl>
+                  <FormDescription>
+                    Submitting without selecting an image will remove your current profile
+                    picture.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
