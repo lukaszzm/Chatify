@@ -1,11 +1,12 @@
 import type React from "react";
 
-import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/ui/avatar";
 import { cn } from "@ui/lib/utils";
 
 interface Sender {
   firstName: string;
   lastName: string;
+  profilePicture?: string | null;
 }
 
 interface ChatBubbleProps {
@@ -18,6 +19,10 @@ interface ChatBubbleProps {
 const ChatBubbleAvatar = ({ sender }: { sender: Sender }) => {
   return (
     <Avatar className="mt-4 size-8">
+      <AvatarImage
+        src={sender.profilePicture ?? undefined}
+        alt={`Profile picture of ${sender.firstName} ${sender.lastName}`}
+      />
       <AvatarFallback className="text-xs">
         {sender.firstName.at(0)}
         {sender.lastName.at(0)}
