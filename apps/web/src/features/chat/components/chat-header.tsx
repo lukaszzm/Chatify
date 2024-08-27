@@ -13,7 +13,7 @@ export const ChatHeader = () => {
   return (
     <div className="flex items-center gap-4 border-b border-border p-2 pb-4">
       <MobileBackButton to="/chat" variant="ghost" />
-      <UserAvatar {...secondParticipant} />
+      <UserAvatar className="size-14" {...secondParticipant} />
       <h1 className="text-xl font-semibold">{`${secondParticipant.firstName} ${secondParticipant.lastName}`}</h1>
     </div>
   );
