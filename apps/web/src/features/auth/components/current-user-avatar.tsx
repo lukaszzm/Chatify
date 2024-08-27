@@ -8,5 +8,5 @@ export const CurrentUserAvatar = () => {
     return null;
   }
 
-  return <UserAvatar {...user} />;
+  return <UserAvatar className="hidden md:block" {...user} />;
 };
