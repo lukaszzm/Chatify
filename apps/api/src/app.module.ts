@@ -40,13 +40,16 @@ import { UsersModule } from "@/users/users.module";
           autoSchemaFile: path.join(process.cwd(), "src/schema.gql"),
           sortSchema: true,
           subscriptions: {
-            "subscriptions-transport-ws": {
-              onConnect: async (connectionParams) => {
-                const authToken: string = connectionParams.authorization.split(" ")[1];
+            "graphql-ws": {
+              path: "/graphql",
+              onConnect: async (context) => {
+                const authHeader = context.connectionParams?.authorization;
 
-                if (!authToken) {
+                if (typeof authHeader !== "string") {
                   throw new UnauthorizedException("Missing auth token");
                 }
+
+                const authToken = authHeader.split(" ")[1];
 
                 const user = await authService.getUserFromToken(authToken);
 
@@ -54,7 +57,7 @@ import { UsersModule } from "@/users/users.module";
                   throw new UnauthorizedException("Invalid auth token");
                 }
 
-                return { connection: { user, headers: connectionParams } };
+                context.extra = { user, headers: context.connectionParams };
               },
             },
           },

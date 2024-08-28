@@ -14,7 +14,8 @@
     "AWS_SECRET_ACCESS_KEY",
     "AWS_S3_REGION",
     "AWS_S3_BUCKET_NAME",
-    "VITE_API_URL"
+    "VITE_GRAPHQL_URL",
+    "VITE_GRAPHQL_WS_URL"
   ],
   "tasks": {
     "build": {
