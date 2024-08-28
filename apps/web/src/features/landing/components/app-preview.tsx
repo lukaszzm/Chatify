@@ -2,15 +2,11 @@ import dashboardPreviewImg from "@/assets/dashboard-preview.png";
 
 export const AppPreview = () => {
   return (
-    <div className="relative mx-auto mt-auto">
-      <div className="absolute size-full bg-gradient-to-b from-transparent to-muted" />
+    <div className="relative m-auto w-full max-w-6xl">
+      <div className="absolute size-full bg-gradient-to-b from-transparent to-muted/70" />
 
-      <div className="mx-auto max-w-6xl px-4">
-        <img
-          src={dashboardPreviewImg}
-          alt=""
-          className="rounded-md border-2 border-accent shadow-lg shadow-accent/5"
-        />
+      <div className="rounded-t-md border-2 border-accent">
+        <img src={dashboardPreviewImg} alt="" className="rounded-t-md object-cover" />
       </div>
     </div>
   );
