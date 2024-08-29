@@ -1,7 +1,6 @@
 {
   "extends": "@chatify/typescript-config/vite.json",
   "compilerOptions": {
-    "rootDir": ".",
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
@@ -10,5 +9,6 @@
     }
   },
   "exclude": ["node_modules", "public"],
-  "include": ["."]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
