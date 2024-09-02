@@ -31,7 +31,6 @@
     "sonner": "^1.5.0"
   },
   "devDependencies": {
-    "@chatify/db": "workspace:*",
     "@chatify/eslint-config": "workspace:*",
     "@chatify/typescript-config": "workspace:*",
     "@graphql-codegen/cli": "5.0.2",
