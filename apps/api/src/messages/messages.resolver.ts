@@ -1,4 +1,3 @@
-import type { User as UserType } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
 import {
   Args,
@@ -47,7 +46,7 @@ export class MessagesResolver {
   }
 
   @Mutation(() => Message)
-  async sendMessage(@Args("data") data: SendMessageInput, @CurrentUser() me: UserType) {
+  async sendMessage(@Args("data") data: SendMessageInput, @CurrentUser() me: User) {
     const message = await this.messagesService.create(data, me.id);
     const chat = await this.chatsService.findOneById(data.chatId, me.id);
 

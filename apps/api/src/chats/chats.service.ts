@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { PrismaService } from "nestjs-prisma";
 
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
 import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { paginate } from "@/common/utils/paginate";
 import { removeDuplicates } from "@/common/utils/remove-duplicates";
-import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class ChatsService {

@@ -1,7 +1,8 @@
-import type { Prisma, PrismaClient, PrismaModel, WhereInput } from "@chatify/db";
-import { getPrismaDelegate } from "@chatify/db";
+import type { Prisma, PrismaClient } from "@prisma/client";
 
 import type { PaginationArgs } from "@/common/dtos/pagination.args";
+import type { PrismaModel, WhereInput } from "@/common/types/prisma-helpers";
+import { getPrismaDelegate } from "@/common/types/prisma-helpers";
 
 type PaginateConfig<T extends Prisma.ModelName> = {
   client: PrismaClient;

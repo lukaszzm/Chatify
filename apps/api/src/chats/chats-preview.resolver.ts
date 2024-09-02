@@ -1,4 +1,3 @@
-import type { User } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
 import {
   Args,
@@ -8,6 +7,7 @@ import {
   Resolver,
   Subscription,
 } from "@nestjs/graphql";
+import type { User } from "@prisma/client";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";

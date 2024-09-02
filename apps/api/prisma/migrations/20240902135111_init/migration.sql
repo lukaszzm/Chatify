@@ -5,6 +5,7 @@ CREATE TYPE "ConversationType" AS ENUM ('ONE_TO_ONE', 'GROUP');
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "profilePicture" TEXT,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "fullName" TEXT NOT NULL,
@@ -98,6 +99,12 @@ CREATE UNIQUE INDEX "Chat_lastMessageAt_key" ON "Chat"("lastMessageAt");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "GroupChat_chatId_key" ON "GroupChat"("chatId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Note_createdAt_key" ON "Note"("createdAt");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Note_updatedAt_key" ON "Note"("updatedAt");
 
 -- AddForeignKey
 ALTER TABLE "Message" ADD CONSTRAINT "Message_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

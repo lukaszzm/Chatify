@@ -1,14 +1,14 @@
-import { Prisma } from "@chatify/db";
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import type { FileUpload } from "graphql-upload-ts";
+import { PrismaService } from "nestjs-prisma";
 
 import { PasswordService } from "@/auth/password.service";
-import { PrismaService } from "@/prisma/prisma.service";
 import { UploadService } from "@/upload/upload.service";
 import { UpdatePasswordInput } from "@/users/dtos/update-password.input";
 import { UpdateProfileInput } from "@/users/dtos/update-profile.input";

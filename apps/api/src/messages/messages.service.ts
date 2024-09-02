@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
+import { PrismaService } from "nestjs-prisma";
 
 import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { paginate } from "@/common/utils/paginate";
 import { SendMessageInput } from "@/messages/dtos/send-message.input";
-import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class MessagesService {

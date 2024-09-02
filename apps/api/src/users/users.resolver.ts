@@ -1,4 +1,3 @@
-import type { User as UserType } from "@chatify/db";
 import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 
@@ -17,41 +16,35 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Query(() => User)
-  async me(@CurrentUser() me: UserType) {
+  async me(@CurrentUser() me: User) {
     return this.usersService.findOneById(me.id);
   }
 
   @Query(() => [User])
-  async users(@Args() args: UsersArgs, @CurrentUser() me: UserType) {
+  async users(@Args() args: UsersArgs, @CurrentUser() me: User) {
     return this.usersService.findMany(args, me.id);
   }
 
   @Mutation(() => User)
-  async updateProfile(
-    @Args("data") data: UpdateProfileInput,
-    @CurrentUser() me: UserType
-  ) {
+  async updateProfile(@Args("data") data: UpdateProfileInput, @CurrentUser() me: User) {
     return this.usersService.update(data, me.id);
   }
 
   @Mutation(() => User)
   async updateProfilePicture(
     @Args("data") data: UpdateProfilePictureInput,
-    @CurrentUser() me: UserType
+    @CurrentUser() me: User
   ) {
     return this.usersService.updateProfilePicture(data.file ?? null, me.id);
   }
 
   @Mutation(() => User)
-  async updatePassword(
-    @Args("data") data: UpdatePasswordInput,
-    @CurrentUser() me: UserType
-  ) {
+  async updatePassword(@Args("data") data: UpdatePasswordInput, @CurrentUser() me: User) {
     return this.usersService.updatePassword(data, me.id);
   }
 
   @Mutation(() => User)
-  async deleteAccount(@CurrentUser() me: UserType) {
+  async deleteAccount(@CurrentUser() me: User) {
     return this.usersService.delete(me.id);
   }
 }

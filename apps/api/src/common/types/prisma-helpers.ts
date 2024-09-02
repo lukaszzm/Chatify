@@ -3,10 +3,6 @@ import PrismaRuntime from "@prisma/client/runtime/library";
 
 import PrismaTypes = PrismaRuntime.Types;
 
-export type { PrismaTypes };
-export { Prisma, PrismaClient } from "@prisma/client";
-export * as PrismaRuntime from "@prisma/client/runtime/library";
-
 export type ModelName = Prisma.ModelName;
 export type PrismaModelName = ModelName;
 
@@ -45,5 +41,3 @@ export type WhereOr<N extends ModelName = ModelName> = NonNullable<WhereInput<N>
 export type WhereUniqueInput<N extends ModelName = ModelName> = NonNullable<
   FindUniqueArgs<N>["where"]
 >;
-
-export * from "@prisma/client";

@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "nestjs-prisma";
 
 import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { paginate } from "@/common/utils/paginate";
 import { CreateNoteInput } from "@/notes/dtos/create-note.input";
-import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class NotesService {

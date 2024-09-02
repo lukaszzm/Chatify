@@ -1,7 +1,7 @@
-import type { User } from "@chatify/db";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
+import { User } from "@prisma/client";
 
 import { SignInInput } from "@/auth/dtos/sign-in.input";
 import { SignUpInput } from "@/auth/dtos/sign-up.input";
