@@ -1,4 +1,3 @@
-import type { User } from "@chatify/db";
 import type { PropsWithChildren } from "react";
 import { createContext, useCallback, useState } from "react";
 import { useQuery } from "urql";
@@ -17,8 +16,13 @@ type Tokens = {
 };
 
 export type AuthUser = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
   profilePicture?: string | null;
-} & Omit<User, "password" | "createdAt" | "updatedAt" | "profilePicture">;
+};
 
 export type AuthContextValue = {
   isAuthenticated: boolean;
