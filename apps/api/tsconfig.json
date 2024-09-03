@@ -1,8 +1,7 @@
 {
   "extends": "@chatify/typescript-config/nest.json",
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "dist",
+    "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
