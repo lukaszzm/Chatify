@@ -1,4 +1,4 @@
-import dashboardPreviewImg from "@/assets/dashboard-preview.png";
+import dashboardPreviewImg from "@/assets/dashboard-preview.webp";
 
 export const AppPreview = () => {
   return (
