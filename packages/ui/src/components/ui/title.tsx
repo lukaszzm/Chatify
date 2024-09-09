@@ -7,9 +7,9 @@ export const Title = React.forwardRef<
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ children, className, ...props }, ref) => {
   return (
-    <h1 className={cn("text-2xl font-medium", className)} ref={ref} {...props}>
+    <h2 className={cn("text-2xl font-medium", className)} ref={ref} {...props}>
       {children}
-    </h1>
+    </h2>
   );
 });
 Title.displayName = "Title";

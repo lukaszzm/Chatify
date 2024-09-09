@@ -18,14 +18,21 @@ export const NoteContent = () => {
   };
 
   return (
-    <ContentEditable
-      key={id}
-      html={content.current}
-      disabled={isLocked}
-      onBlur={blurHandler}
-      onChange={(e) => updateContent(e.target.value)}
-      aria-placeholder={isLocked ? "No content" : "Write something..."}
-      className="flex-1 overflow-auto whitespace-pre-wrap p-2 before:text-muted-foreground/80 empty:before:content-[attr(aria-placeholder)]"
-    />
+    <>
+      <span id="note-content-label" className="sr-only">
+        Note content
+      </span>
+      <ContentEditable
+        key={id}
+        html={content.current}
+        disabled={isLocked}
+        onBlur={blurHandler}
+        onChange={(e) => updateContent(e.target.value)}
+        role="textbox"
+        aria-labelledby="note-content-label"
+        aria-placeholder={isLocked ? "No content" : "Write something..."}
+        className="flex-1 overflow-auto whitespace-pre-wrap p-2 before:text-muted-foreground empty:before:content-[attr(aria-placeholder)]"
+      />
+    </>
   );
 };

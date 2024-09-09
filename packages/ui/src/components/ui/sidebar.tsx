@@ -43,9 +43,9 @@ const SidebarTitle = React.forwardRef<
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ children, className, ...props }, ref) => {
   return (
-    <h1 className={cn("text-2xl", className)} ref={ref} {...props}>
+    <h2 className={cn("text-2xl", className)} ref={ref} {...props}>
       {children}
-    </h1>
+    </h2>
   );
 });
 SidebarTitle.displayName = "SidebarTitle";
@@ -62,7 +62,7 @@ const SidebarList = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  return <div className={cn("space-y-2", className)} ref={ref} {...props} />;
+  return <div className={cn("space-y-2 p-1", className)} ref={ref} {...props} />;
 });
 SidebarList.displayName = "SidebarList";
 
@@ -89,11 +89,7 @@ const SidebarInfo = React.forwardRef<
   React.HTMLAttributes<HTMLParagraphElement>
 >((props, ref) => {
   return (
-    <p
-      className="py-2 text-center text-sm text-muted-foreground/80"
-      ref={ref}
-      {...props}
-    />
+    <p className="py-2 text-center text-sm text-muted-foreground" ref={ref} {...props} />
   );
 });
 SidebarInfo.displayName = "SidebarInfo";

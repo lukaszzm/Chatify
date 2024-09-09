@@ -9,7 +9,7 @@ interface AuthFooterProps {
 }
 
 export const AuthFooter = ({ label, linkText, to }: AuthFooterProps) => (
-  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+  <div className="flex items-center gap-2 text-sm text-foreground">
     <p>{label}</p>
     <Button variant="link" size="auto" asChild>
       <Link to={to}>{linkText}</Link>

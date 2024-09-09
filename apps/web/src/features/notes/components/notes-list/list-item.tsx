@@ -20,9 +20,7 @@ export const NotesListItem = ({ id, title, updatedAt }: NotesListItemProps) => {
       >
         <div className="flex w-full flex-1 justify-between">
           <h3 className="text-base font-semibold">{title}</h3>
-          <span className="text-xs text-muted-foreground/60">
-            {formatDate(updatedAt)}
-          </span>
+          <span className="text-xs text-muted-foreground">{formatDate(updatedAt)}</span>
         </div>
       </Link>
     </SidebarItem>

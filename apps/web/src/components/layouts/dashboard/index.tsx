@@ -13,6 +13,7 @@ export const DashboardLayout = () => (
         {navLinks.map(({ Icon, label, to }) => (
           <DashboardLink key={label} label={label} to={to}>
             <Icon strokeWidth={2.35} />
+            <span className="sr-only">{label}</span>
           </DashboardLink>
         ))}
       </nav>

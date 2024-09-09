@@ -56,7 +56,11 @@ export const UpdateProfilePicture = () => {
         </Form>
       </CardContent>
       <CardFooter className="justify-end">
-        <Button form="update-picture-form" isLoading={form.formState.isSubmitting}>
+        <Button
+          form="update-picture-form"
+          aria-label="Save profile picture"
+          isLoading={form.formState.isSubmitting}
+        >
           Save
         </Button>
       </CardFooter>

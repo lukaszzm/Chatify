@@ -77,7 +77,11 @@ export const UpdatePassword = () => {
         </Form>
       </CardContent>
       <CardFooter className="justify-end">
-        <Button form="update-password-form" isLoading={form.formState.isSubmitting}>
+        <Button
+          form="update-password-form"
+          aria-label="Save password"
+          isLoading={form.formState.isSubmitting}
+        >
           Save
         </Button>
       </CardFooter>

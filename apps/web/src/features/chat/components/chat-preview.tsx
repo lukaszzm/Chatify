@@ -29,15 +29,15 @@ export const ChatPreview = ({
         <div className="flex w-full min-w-0 flex-col">
           <div className="flex items-center justify-between gap-2">
             <h3 className="font-semibold">{`${secondParticipant.firstName} ${secondParticipant.lastName}`}</h3>
-            <span className="text-xs text-muted-foreground/80">
+            <span className="text-xs font-normal text-muted-foreground">
               {formatDate(latestMessage.createdAt)}
             </span>
           </div>
 
-          <p className="truncate text-xs text-muted-foreground">
-            <span className="font-bold">
+          <p className="truncate text-xs font-normal text-muted-foreground">
+            <span className="mr-1 font-semibold">
               {isMineMessage ? "You" : latestMessage.sender.firstName}:
-            </span>{" "}
+            </span>
             {latestMessage.content}
           </p>
         </div>

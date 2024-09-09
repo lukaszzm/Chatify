@@ -37,7 +37,9 @@ export const DeleteAccount = () => {
       <CardFooter className="justify-end">
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="destructive">Delete</Button>
+            <Button variant="destructive" aria-label="Delete account">
+              Delete
+            </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>

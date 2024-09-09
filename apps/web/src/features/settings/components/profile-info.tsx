@@ -79,7 +79,11 @@ export const ProfileInfo = () => {
         </Form>
       </CardContent>
       <CardFooter className="justify-end">
-        <Button form="update-profile-form" isLoading={form.formState.isSubmitting}>
+        <Button
+          form="update-profile-form"
+          aria-label="Save personal information"
+          isLoading={form.formState.isSubmitting}
+        >
           Save
         </Button>
       </CardFooter>
