@@ -4,6 +4,7 @@ import React from "react";
 import type { ButtonProps } from "@ui/components/ui/button";
 import { Button } from "@ui/components/ui/button";
 import { Container } from "@ui/components/ui/container";
+import { Title } from "@ui/components/ui/title";
 import { cn } from "@ui/lib/utils";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -41,12 +42,8 @@ SidebarHeader.displayName = "SidebarHeader";
 const SidebarTitle = React.forwardRef<
   HTMLHeadingElement,
   React.HTMLAttributes<HTMLHeadingElement>
->(({ children, className, ...props }, ref) => {
-  return (
-    <h2 className={cn("text-2xl", className)} ref={ref} {...props}>
-      {children}
-    </h2>
-  );
+>(({ className, ...props }, ref) => {
+  return <Title className={className} ref={ref} {...props} />;
 });
 SidebarTitle.displayName = "SidebarTitle";
 

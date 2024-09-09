@@ -1,4 +1,4 @@
-import { Container, Title } from "@chatify/ui";
+import { Container, Subtitle } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { MobileBackButton } from "@/components/mobile-back-button";
@@ -18,7 +18,7 @@ function ProfileSettingsPage() {
     <Container className="flex flex-col">
       <div className="flex items-center gap-2">
         <MobileBackButton variant="ghost" to="/settings" />
-        <Title>My Profile</Title>
+        <Subtitle>My Profile</Subtitle>
       </div>
       <div className="space-y-4 overflow-auto p-2">
         <UpdateProfilePicture />

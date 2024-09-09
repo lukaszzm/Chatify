@@ -1,3 +1,4 @@
+import { Subtitle } from "@chatify/ui";
 import { Lock, Unlock } from "lucide-react";
 
 import { useNote } from "@/features/notes/hooks/use-note";
@@ -9,7 +10,7 @@ export const NoteTitle = () => {
 
   return (
     <div className="flex gap-1.5">
-      <h1 className="text-3xl font-semibold">{title}</h1>
+      <Subtitle>{title}</Subtitle>
       {isLocked ? (
         <Lock className={iconClassName} />
       ) : (

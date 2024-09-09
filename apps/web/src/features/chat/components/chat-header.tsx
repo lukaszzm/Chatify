@@ -1,3 +1,5 @@
+import { Subtitle } from "@chatify/ui";
+
 import { MobileBackButton } from "@/components/mobile-back-button";
 import { UserAvatar } from "@/components/user-avatar";
 import { useAuth } from "@/features/auth";
@@ -14,7 +16,7 @@ export const ChatHeader = () => {
     <div className="flex items-center gap-4 border-b border-border p-2 pb-4">
       <MobileBackButton to="/chat" variant="ghost" />
       <UserAvatar className="size-14" {...secondParticipant} />
-      <h1 className="text-xl font-semibold">{`${secondParticipant.firstName} ${secondParticipant.lastName}`}</h1>
+      <Subtitle>{`${secondParticipant.firstName} ${secondParticipant.lastName}`}</Subtitle>
     </div>
   );
 };

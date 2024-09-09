@@ -1,10 +1,12 @@
+import { Title } from "@chatify/ui";
+
 import { AuthFooter } from "@/features/auth/components/auth-footer";
 import { SignUpForm } from "@/features/auth/components/sign-up-form";
 
 export const SignUp = () => {
   return (
     <>
-      <h1 className="text-center text-4xl font-semibold">Create an account</h1>
+      <Title className="text-center text-4xl font-semibold">Create an account</Title>
       <SignUpForm />
       <AuthFooter
         label="Already have an account?"

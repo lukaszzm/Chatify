@@ -37,7 +37,7 @@ function NotFound() {
         <span className="absolute top-0 my-4 text-2xl font-bold">Chatify</span>
 
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-xl font-semibold">This page does not exist</h1>
+          <p className="text-xl font-semibold">This page does not exist</p>
           <Button variant="muted" asChild>
             <Link to="/">Go back to home</Link>
           </Button>

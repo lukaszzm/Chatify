@@ -1,4 +1,4 @@
-import { Container, Title } from "@chatify/ui";
+import { Container, Subtitle } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { MobileBackButton } from "@/components/mobile-back-button";
@@ -12,7 +12,7 @@ function NotificationsSettingsPage() {
     <Container>
       <div className="flex items-center gap-2">
         <MobileBackButton variant="ghost" to="/settings" />
-        <Title>Notifications</Title>
+        <Subtitle>Notifications</Subtitle>
       </div>
       <p className="text-muted-foreground">
         Page under construction, please check back later.

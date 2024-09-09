@@ -19,7 +19,7 @@ export const NotesListItem = ({ id, title, updatedAt }: NotesListItemProps) => {
         activeProps={{ className: "bg-muted/40" }}
       >
         <div className="flex w-full flex-1 justify-between">
-          <h3 className="text-base font-semibold">{title}</h3>
+          <span className="text-base font-semibold">{title}</span>
           <span className="text-xs text-muted-foreground">{formatDate(updatedAt)}</span>
         </div>
       </Link>

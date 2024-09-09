@@ -28,7 +28,7 @@ export const ChatPreview = ({
         <UserAvatar {...secondParticipant} />
         <div className="flex w-full min-w-0 flex-col">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="font-semibold">{`${secondParticipant.firstName} ${secondParticipant.lastName}`}</h3>
+            <span className="font-semibold">{`${secondParticipant.firstName} ${secondParticipant.lastName}`}</span>
             <span className="text-xs font-normal text-muted-foreground">
               {formatDate(latestMessage.createdAt)}
             </span>
