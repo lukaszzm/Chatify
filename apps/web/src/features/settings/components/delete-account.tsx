@@ -16,7 +16,7 @@ import {
   AlertDialogAction,
 } from "@chatify/ui";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useDeleteAccount } from "@/features/settings/hooks/use-delete-account";
 
 export const DeleteAccount = () => {

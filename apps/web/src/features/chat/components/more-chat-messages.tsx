@@ -2,7 +2,7 @@ import { Button, ChatBubble } from "@chatify/ui";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useChat } from "@/features/chat/hooks/use-chat";
 import { useMessagesQuery } from "@/features/chat/hooks/use-messages-query";
 import { formatDate } from "@/utils/format-date";

@@ -1,7 +1,7 @@
 import { Sidebar, SidebarContent, SidebarHeader, SidebarTitle } from "@chatify/ui";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-import { SettingsList } from "@/features/settings";
+import { SettingsList } from "@/features/settings/components/settings-list";
 import { usePathname } from "@/hooks/use-pathname";
 
 export const Route = createFileRoute("/_dashboard/settings")({

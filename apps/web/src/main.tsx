@@ -5,7 +5,8 @@ import "@chatify/ui/main.css";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "urql";
 
-import { AuthProvider, useAuth } from "@/features/auth";
+import { AuthProvider } from "@/features/auth/contexts/auth-context";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { client } from "@/lib/gql/client";
 import { routeTree } from "@/routeTree.gen";
 

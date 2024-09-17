@@ -1,8 +1,8 @@
 import { Sidebar, SidebarContent, SidebarHeader, SidebarTitle } from "@chatify/ui";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { RecentChats } from "@/features/chat";
-import { Search } from "@/features/search";
+import { RecentChats } from "@/features/chat/components/recent-chats";
+import { Search } from "@/features/search/components/search";
 import { usePathname } from "@/hooks/use-pathname";
 
 export const Route = createFileRoute("/_dashboard/chat")({

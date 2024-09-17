@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Note } from "@/features/notes";
+import { Note } from "@/features/notes/components/note";
 
 export const Route = createFileRoute("/_dashboard/notes/$noteId")({
   component: NoteByIdPage,

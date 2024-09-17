@@ -2,7 +2,7 @@ import { SidebarItem } from "@chatify/ui";
 import { Link } from "@tanstack/react-router";
 
 import { UserAvatar } from "@/components/user-avatar";
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { getSecondParticipant } from "@/features/chat/utils";
 import type { ChatUpdatedSubscription } from "@/gql/graphql";
 import { formatDate } from "@/utils/format-date";

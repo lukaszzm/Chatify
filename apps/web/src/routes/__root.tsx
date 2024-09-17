@@ -4,7 +4,7 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Helmet } from "react-helmet-async";
 
 import { Meta } from "@/components/meta";
-import type { AuthContextValue } from "@/features/auth";
+import type { AuthContextValue } from "@/features/auth/contexts/auth-context";
 
 type RouterContext = {
   auth: AuthContextValue;

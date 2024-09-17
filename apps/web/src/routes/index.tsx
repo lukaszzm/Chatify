@@ -1,6 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { GradientContainer, Header, Hero } from "@/features/landing";
+import { GradientContainer } from "@/features/landing/components/gradient-container";
+import { Header } from "@/features/landing/components/header";
+import { Hero } from "@/features/landing/components/hero";
 
 export const Route = createFileRoute("/")({
   component: IndexPage,

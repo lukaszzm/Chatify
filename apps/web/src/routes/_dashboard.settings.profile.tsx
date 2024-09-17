@@ -2,12 +2,10 @@ import { Container, Subtitle } from "@chatify/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { MobileBackButton } from "@/components/mobile-back-button";
-import {
-  DeleteAccount,
-  ProfileInfo,
-  UpdatePassword,
-  UpdateProfilePicture,
-} from "@/features/settings";
+import { DeleteAccount } from "@/features/settings/components/delete-account";
+import { ProfileInfo } from "@/features/settings/components/profile-info";
+import { UpdatePassword } from "@/features/settings/components/update-password";
+import { UpdateProfilePicture } from "@/features/settings/components/update-profile-picture";
 
 export const Route = createFileRoute("/_dashboard/settings/profile")({
   component: ProfileSettingsPage,

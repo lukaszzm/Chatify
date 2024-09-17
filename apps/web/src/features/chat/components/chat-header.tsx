@@ -2,7 +2,7 @@ import { Subtitle } from "@chatify/ui";
 
 import { MobileBackButton } from "@/components/mobile-back-button";
 import { UserAvatar } from "@/components/user-avatar";
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useChat } from "@/features/chat/hooks/use-chat";
 import { getSecondParticipant } from "@/features/chat/utils";
 

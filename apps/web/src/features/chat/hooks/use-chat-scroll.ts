@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import type { AuthUser } from "@/features/auth";
+import type { AuthUser } from "@/features/auth/contexts/auth-context";
 import type { MessagesQuery } from "@/gql/graphql";
 
 interface UseChatScrollProps {

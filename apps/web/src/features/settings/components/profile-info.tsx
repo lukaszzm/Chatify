@@ -15,7 +15,7 @@ import {
 } from "@chatify/ui";
 
 import { ErrorAlert } from "@/components/errors/error-alert";
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useUpdateProfile } from "@/features/settings/hooks/use-update-profile";
 
 export const ProfileInfo = () => {

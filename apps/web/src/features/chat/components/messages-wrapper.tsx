@@ -1,6 +1,6 @@
 import { ChatBubble } from "@chatify/ui";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { MoreChatMessages } from "@/features/chat/components/more-chat-messages";
 import { useChatScroll } from "@/features/chat/hooks/use-chat-scroll";
 import type { MessagesQuery } from "@/gql/graphql";
