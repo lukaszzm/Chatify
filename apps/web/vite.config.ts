@@ -9,6 +9,9 @@ const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [react(), TanStackRouterVite()],
+  build: {
+    chunkSizeWarningLimit: 750,
+  },
   resolve: {
     alias: [
       {
