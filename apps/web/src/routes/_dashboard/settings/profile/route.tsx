@@ -8,10 +8,10 @@ import { UpdatePassword } from "@/features/settings/components/update-password";
 import { UpdateProfilePicture } from "@/features/settings/components/update-profile-picture";
 
 export const Route = createFileRoute("/_dashboard/settings/profile")({
-  component: ProfileSettingsPage,
+  component: Page,
 });
 
-function ProfileSettingsPage() {
+function Page() {
   return (
     <Container className="flex flex-col">
       <div className="flex items-center gap-2">

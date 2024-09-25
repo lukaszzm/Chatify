@@ -10,6 +10,8 @@ export const ME_QUERY = graphql(`
       fullName
       email
       isActive
+      createdAt
+      updatedAt
     }
   }
 `);

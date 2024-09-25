@@ -1,12 +1,12 @@
 import { ErrorComponent, SidebarInfo, SidebarList } from "@chatify/ui";
 
-import { NotesListItem } from "@/features/notes/components/notes-list/list-item";
-import { NotesListLoading } from "@/features/notes/components/notes-list/list-loading";
-import { MoreNotes } from "@/features/notes/components/notes-list/more";
+import { NotesListItem } from "@/features/notes/components/notes-list-item";
+import { NotesListLoading } from "@/features/notes/components/notes-list-loading";
+import { NotesListMore } from "@/features/notes/components/notes-list-more";
 import { useNotesQuery } from "@/features/notes/hooks/use-notes-query";
 
 export const NotesList = () => {
-  const [{ data, fetching, error }] = useNotesQuery({});
+  const [{ data, fetching, error }] = useNotesQuery();
 
   if (fetching) {
     return <NotesListLoading />;
@@ -27,7 +27,7 @@ export const NotesList = () => {
       ))}
 
       {data.notes.pageInfo.hasNextPage && (
-        <MoreNotes cursor={data.notes.pageInfo.endCursor} />
+        <NotesListMore cursor={data.notes.pageInfo.endCursor} />
       )}
     </SidebarList>
   );

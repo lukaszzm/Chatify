@@ -337,6 +337,14 @@ export type ToggleLockNoteFragment = {
   updatedAt: string;
 } & { " $fragmentName"?: "ToggleLockNoteFragment" };
 
+export type UserInfoFragment = {
+  __typename?: "User";
+  id: string;
+  firstName: string;
+  lastName: string;
+  profilePicture?: string | null;
+} & { " $fragmentName"?: "UserInfoFragment" };
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars["String"]["input"];
 }>;
@@ -484,6 +492,8 @@ export type MeQuery = {
     fullName: string;
     email: string;
     isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
   };
 };
 
@@ -724,6 +734,25 @@ export const ToggleLockNoteFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ToggleLockNoteFragment, unknown>;
+export const UserInfoFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "UserInfo" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "User" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "firstName" } },
+          { kind: "Field", name: { kind: "Name", value: "lastName" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UserInfoFragment, unknown>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [
@@ -1313,6 +1342,8 @@ export const MeDocument = {
                 { kind: "Field", name: { kind: "Name", value: "fullName" } },
                 { kind: "Field", name: { kind: "Name", value: "email" } },
                 { kind: "Field", name: { kind: "Name", value: "isActive" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
               ],
             },
           },

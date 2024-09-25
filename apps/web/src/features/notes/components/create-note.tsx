@@ -13,9 +13,9 @@ import {
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-import { NewNoteForm } from "@/features/notes/components/new-note/form";
+import { CreateNoteForm } from "@/features/notes/components/create-note-form";
 
-export const NewNote = () => {
+export const CreateNote = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -34,7 +34,7 @@ export const NewNote = () => {
           </HybridDescription>
         </HybridHeader>
         <HybridBody>
-          <NewNoteForm onNoteCreated={() => setIsOpen(false)} />
+          <CreateNoteForm onNoteCreated={() => setIsOpen(false)} />
         </HybridBody>
         <HybridFooter>
           <HybridClose asChild>

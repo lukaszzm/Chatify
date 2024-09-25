@@ -1,14 +1,11 @@
 import { useEffect, useRef } from "react";
 
-import type { AuthUser } from "@/features/auth/contexts/auth-context";
-import type { MessagesQuery } from "@/gql/graphql";
+import type { MessagesQuery, User } from "@/gql/graphql";
 
-interface UseChatScrollProps {
-  messages: MessagesQuery["messages"];
-  currentUser: AuthUser | null;
-}
-
-export const useChatScroll = ({ messages, currentUser }: UseChatScrollProps) => {
+export const useChatScroll = (
+  messages: MessagesQuery["messages"],
+  currentUser: User | null
+) => {
   const chatScroll = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

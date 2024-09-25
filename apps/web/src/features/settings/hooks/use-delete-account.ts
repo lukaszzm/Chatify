@@ -3,11 +3,13 @@ import { useMutation } from "urql";
 
 import { DELETE_ACCOUNT_MUTATION } from "@/lib/gql/mutations";
 
-interface UseDeleteAccountProps {
+interface UseDeleteAccountOptions {
   onDelete?: () => void;
 }
 
-export const useDeleteAccount = ({ onDelete }: UseDeleteAccountProps) => {
+export const useDeleteAccount = (options?: UseDeleteAccountOptions) => {
+  const { onDelete } = options || {};
+
   const [, deleteAccountMutation] = useMutation(DELETE_ACCOUNT_MUTATION);
 
   const deleteAccount = async () => {

@@ -1,14 +1,13 @@
 import { Container, ErrorComponent, NotFoundComponent, Separator } from "@chatify/ui";
 
-import { NoteContent } from "@/features/notes/components/note/note-content";
-import { NoteHeader } from "@/features/notes/components/note/note-header";
-import { NoteLoading } from "@/features/notes/components/note/note-loading";
+import { NoteContent } from "@/features/notes/components/note-content";
+import { NoteHeader } from "@/features/notes/components/note-header";
+import { NoteLoading } from "@/features/notes/components/note-loading";
 import { NoteProvider } from "@/features/notes/contexts/note-context";
 import { useNoteQuery } from "@/features/notes/hooks/use-note-query";
+import type { Note as GqlNote } from "@/gql/graphql";
 
-interface NoteProps {
-  id: string;
-}
+interface NoteProps extends Pick<GqlNote, "id"> {}
 
 export const Note = ({ id }: NoteProps) => {
   const [{ data, fetching, error }] = useNoteQuery(id);

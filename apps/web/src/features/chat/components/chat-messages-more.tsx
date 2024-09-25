@@ -7,11 +7,11 @@ import { useChat } from "@/features/chat/hooks/use-chat";
 import { useMessagesQuery } from "@/features/chat/hooks/use-messages-query";
 import { formatDate } from "@/utils/format-date";
 
-interface MoreChatMessagesProps {
+interface ChatMessagesMoreProps {
   cursor?: string | null;
 }
 
-export const MoreChatMessages = ({ cursor }: MoreChatMessagesProps) => {
+export const ChatMessagesMore = ({ cursor }: ChatMessagesMoreProps) => {
   const { id } = useChat();
   const { user } = useAuth();
 
@@ -59,7 +59,7 @@ export const MoreChatMessages = ({ cursor }: MoreChatMessagesProps) => {
       ))}
 
       {data.messages.pageInfo.hasNextPage && (
-        <MoreChatMessages cursor={data.messages.pageInfo.endCursor} />
+        <ChatMessagesMore cursor={data.messages.pageInfo.endCursor} />
       )}
     </>
   );

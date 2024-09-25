@@ -14,7 +14,7 @@ import {
   Input,
 } from "@chatify/ui";
 
-import { ErrorAlert } from "@/components/errors/error-alert";
+import { ErrorAlert } from "@/components/error-alert";
 import { useUpdatePassword } from "@/features/settings/hooks/use-update-password";
 
 export const UpdatePassword = () => {

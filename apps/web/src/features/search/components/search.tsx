@@ -1,8 +1,9 @@
 import { SearchInput } from "@chatify/ui";
 import { useState } from "react";
 
-import { Results } from "@/features/search/components/results";
+import { SearchResults } from "@/features/search/components/search-results";
 import { useDebounce } from "@/hooks/use-debounce";
+import { isEmpty } from "@/utils/is-empty";
 
 export const Search = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -16,7 +17,7 @@ export const Search = () => {
         onChange={(e) => setSearchPhrase(e.target.value)}
       />
 
-      {debouncedPhrase !== "" && <Results phrase={debouncedPhrase} />}
+      {!isEmpty(debouncedPhrase) ? <SearchResults phrase={debouncedPhrase} /> : null}
     </div>
   );
 };

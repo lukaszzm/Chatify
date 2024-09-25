@@ -1,15 +1,11 @@
 import { createContext } from "react";
 
-import type { ChatType } from "@/gql/graphql";
+import type { ChatType, User } from "@/gql/graphql";
 
 export interface ChatContextValue {
   id: string;
   type: ChatType;
-  participants: Array<{
-    id: string;
-    firstName: string;
-    lastName: string;
-  }>;
+  participants: Array<Pick<User, "id" | "firstName" | "lastName">>;
 }
 
 interface ChatProviderProps {

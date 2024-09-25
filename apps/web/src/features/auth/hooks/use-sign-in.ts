@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "urql";
 
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import type { SignInCredentials } from "@/features/auth/schemas/credentials-schema";
-import { signInCredentialsSchema } from "@/features/auth/schemas/credentials-schema";
+import type { SignInCredentials } from "@/features/auth/schemas/sign-in-credentials-schema";
+import { signInCredentialsSchema } from "@/features/auth/schemas/sign-in-credentials-schema";
 import { SIGN_IN_MUTATION } from "@/lib/gql/mutations";
 
-export function useSignIn() {
+export const useSignIn = () => {
   const form = useForm<SignInCredentials>({
     resolver: zodResolver(signInCredentialsSchema),
     defaultValues: {
@@ -38,4 +38,4 @@ export function useSignIn() {
     onSubmit,
     error,
   };
-}
+};

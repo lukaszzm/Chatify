@@ -14,13 +14,16 @@ import {
   Input,
 } from "@chatify/ui";
 
-import { ErrorAlert } from "@/components/errors/error-alert";
+import { ErrorAlert } from "@/components/error-alert";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useUpdateProfile } from "@/features/settings/hooks/use-update-profile";
 
 export const ProfileInfo = () => {
   const { user } = useAuth();
-  const { form, updateProfile, error } = useUpdateProfile(user);
+
+  const { form, updateProfile, error } = useUpdateProfile({
+    defaultValues: user,
+  });
 
   return (
     <Card>

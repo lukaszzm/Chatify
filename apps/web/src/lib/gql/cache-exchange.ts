@@ -9,7 +9,7 @@ import type {
   SubscriptionMessageSentArgs,
   ChatUpdatedSubscription,
 } from "@/gql/graphql";
-import { UPDATE_NOTE_FRAGMENT, TOGGLE_LOCK_FRAGMENT } from "@/lib/gql/fragments";
+import { TOGGLE_LOCK_FRAGMENT, UPDATE_NOTE_FRAGMENT } from "@/lib/gql/fragments";
 import { NOTES_QUERY, MESSAGES_QUERY, RECENT_CHATS_QUERY } from "@/lib/gql/queries";
 
 export const cache = cacheExchange({

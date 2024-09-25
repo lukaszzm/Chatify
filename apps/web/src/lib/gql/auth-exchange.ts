@@ -8,7 +8,7 @@ import {
   getRefreshToken,
   saveAuthTokens,
   clearAuthTokens,
-} from "@/features/auth/utils";
+} from "@/features/auth/utils/tokens";
 import { REFRESH_TOKEN_MUTATION } from "@/lib/gql/mutations";
 
 export const auth = authExchange(async (utilities) => {

@@ -1,8 +1,8 @@
 import { ErrorComponent, SidebarInfo, SidebarList } from "@chatify/ui";
 
-import { ChatPreview } from "@/features/chat/components/chat-preview";
-import { MoreRecentChats } from "@/features/chat/components/more-recent-chats";
+import { RecentChatsItem } from "@/features/chat/components/recent-chats-item";
 import { RecentChatsLoading } from "@/features/chat/components/recent-chats-loading";
+import { RecentChatsMore } from "@/features/chat/components/recent-chats-more";
 import { useRecentChatsSubscription } from "@/features/chat/hooks/use-recent-chats-subscription";
 
 export const RecentChats = () => {
@@ -23,11 +23,11 @@ export const RecentChats = () => {
   return (
     <SidebarList>
       {data.recentChats.edges.map((edge) => (
-        <ChatPreview key={edge.node.id} {...edge.node} />
+        <RecentChatsItem key={edge.node.id} {...edge.node} />
       ))}
 
       {data.recentChats.pageInfo.hasNextPage && (
-        <MoreRecentChats cursor={data.recentChats.pageInfo.endCursor} />
+        <RecentChatsMore cursor={data.recentChats.pageInfo.endCursor} />
       )}
     </SidebarList>
   );

@@ -5,10 +5,10 @@ import { SettingsList } from "@/features/settings/components/settings-list";
 import { usePathname } from "@/hooks/use-pathname";
 
 export const Route = createFileRoute("/_dashboard/settings")({
-  component: SettingsPage,
+  component: Page,
 });
 
-function SettingsPage() {
+function Page() {
   const pathname = usePathname();
 
   return (

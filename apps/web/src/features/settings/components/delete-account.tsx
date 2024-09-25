@@ -21,6 +21,7 @@ import { useDeleteAccount } from "@/features/settings/hooks/use-delete-account";
 
 export const DeleteAccount = () => {
   const { signOut } = useAuth();
+
   const { deleteAccount } = useDeleteAccount({
     onDelete: signOut,
   });

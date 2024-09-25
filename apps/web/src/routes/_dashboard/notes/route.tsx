@@ -1,15 +1,15 @@
 import { Sidebar, SidebarContent, SidebarHeader, SidebarTitle } from "@chatify/ui";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { NewNote } from "@/features/notes/components/new-note";
+import { CreateNote } from "@/features/notes/components/create-note";
 import { NotesList } from "@/features/notes/components/notes-list";
 import { usePathname } from "@/hooks/use-pathname";
 
 export const Route = createFileRoute("/_dashboard/notes")({
-  component: NotesPage,
+  component: Page,
 });
 
-function NotesPage() {
+function Page() {
   const pathname = usePathname();
 
   return (
@@ -17,7 +17,7 @@ function NotesPage() {
       <Sidebar hideOnMobile={pathname !== Route.fullPath}>
         <SidebarHeader>
           <SidebarTitle>Notes</SidebarTitle>
-          <NewNote />
+          <CreateNote />
         </SidebarHeader>
         <SidebarContent>
           <NotesList />

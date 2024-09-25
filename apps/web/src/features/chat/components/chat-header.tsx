@@ -4,7 +4,7 @@ import { MobileBackButton } from "@/components/mobile-back-button";
 import { UserAvatar } from "@/components/user-avatar";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useChat } from "@/features/chat/hooks/use-chat";
-import { getSecondParticipant } from "@/features/chat/utils";
+import { getSecondParticipant } from "@/features/chat/utils/get-second-participant";
 
 export const ChatHeader = () => {
   const { user } = useAuth();

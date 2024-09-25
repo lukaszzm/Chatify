@@ -1,6 +1,6 @@
 import { formatDistance, isSameWeek, formatDate as format, isSameDay } from "date-fns";
 
-export const formatDate = (timestamp: string) => {
+export function formatDate(timestamp: string): string {
   const now = new Date();
 
   if (isSameDay(timestamp, now)) {
@@ -15,4 +15,4 @@ export const formatDate = (timestamp: string) => {
   }
 
   return format(timestamp, "dd MMM yy, kk:mm");
-};
+}

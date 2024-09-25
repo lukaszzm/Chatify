@@ -1,5 +1,3 @@
-import type { Nullable } from "@/types";
-
-export const isEmpty = (str?: Nullable<string>): boolean => {
-  return str === null || str === undefined || str === "";
-};
+export function isEmpty(value?: string | null): boolean {
+  return typeof value !== "string" || value === "";
+}

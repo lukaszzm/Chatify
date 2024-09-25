@@ -2,15 +2,16 @@ import { Button } from "@chatify/ui";
 
 import { UserAvatar } from "@/components/user-avatar";
 import { useStartChat } from "@/features/search/hooks/use-start-chat";
+import type { UserInfoFragment } from "@/gql/graphql";
 
-interface ResultProps {
-  id: string;
-  profilePicture?: string | null;
-  firstName: string;
-  lastName: string;
-}
+interface SearchResultProps extends UserInfoFragment {}
 
-export const Result = ({ id, profilePicture, firstName, lastName }: ResultProps) => {
+export const SearchResult = ({
+  id,
+  profilePicture,
+  firstName,
+  lastName,
+}: SearchResultProps) => {
   const { startChat, fetching } = useStartChat();
 
   return (

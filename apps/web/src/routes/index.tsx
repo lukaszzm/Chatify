@@ -5,7 +5,6 @@ import { Header } from "@/features/landing/components/header";
 import { Hero } from "@/features/landing/components/hero";
 
 export const Route = createFileRoute("/")({
-  component: IndexPage,
   beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
       throw redirect({
@@ -13,9 +12,10 @@ export const Route = createFileRoute("/")({
       });
     }
   },
+  component: Page,
 });
 
-function IndexPage() {
+function Page() {
   return (
     <GradientContainer>
       <Header />

@@ -15,3 +15,12 @@ export const TOGGLE_LOCK_FRAGMENT = graphql(`
     updatedAt
   }
 `);
+
+export const USER_INFO_FRAGMENT = graphql(`
+  fragment UserInfo on User {
+    id
+    firstName
+    lastName
+    profilePicture
+  }
+`);

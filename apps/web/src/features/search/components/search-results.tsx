@@ -1,17 +1,17 @@
-import { ErrorAlert } from "@/components/errors/error-alert";
-import { Result } from "@/features/search/components/result";
-import { ResultsLoading } from "@/features/search/components/results-loading";
+import { ErrorAlert } from "@/components/error-alert";
+import { SearchResult } from "@/features/search/components/search-result";
+import { SearchResultsLoading } from "@/features/search/components/search-results-loading";
 import { useSearch } from "@/features/search/hooks/use-search";
 
-interface ResultsProps {
+interface SearchResultsProps {
   phrase: string;
 }
 
-export const Results = ({ phrase }: ResultsProps) => {
+export const SearchResults = ({ phrase }: SearchResultsProps) => {
   const [{ data, fetching, error }] = useSearch(phrase);
 
   if (fetching) {
-    return <ResultsLoading />;
+    return <SearchResultsLoading />;
   }
 
   if (error) {
@@ -28,7 +28,7 @@ export const Results = ({ phrase }: ResultsProps) => {
 
   return (
     <div className="flex gap-2">
-      {results?.map((result) => <Result key={result.id} {...result} />)}
+      {results?.map((result) => <SearchResult key={result.id} {...result} />)}
     </div>
   );
 };

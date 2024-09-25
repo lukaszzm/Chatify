@@ -1,7 +1,7 @@
 import { ErrorComponent } from "@chatify/ui";
 
 import { ChatMessagesLoading } from "@/features/chat/components/chat-messages-loading";
-import { MessagesWrapper } from "@/features/chat/components/messages-wrapper";
+import { ChatMessagesWrapper } from "@/features/chat/components/chat-messages-wrapper";
 import { useChat } from "@/features/chat/hooks/use-chat";
 import { useMessagesSubscription } from "@/features/chat/hooks/use-messages-subscription";
 
@@ -25,5 +25,5 @@ export const ChatMessages = () => {
     );
   }
 
-  return <MessagesWrapper messages={data.messages} />;
+  return <ChatMessagesWrapper messages={data.messages} />;
 };

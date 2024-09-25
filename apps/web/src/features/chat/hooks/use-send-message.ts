@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import type { NewMessageValues } from "@/features/chat/schemas/new-message-schema";
-import { newMessageSchema } from "@/features/chat/schemas/new-message-schema";
+import type { SendMessageValues } from "@/features/chat/schemas/send-message-schema";
+import { sendMessageSchema } from "@/features/chat/schemas/send-message-schema";
 import { SEND_MESSAGE_MUTATION } from "@/lib/gql/mutations";
 
 export const useSendMessage = (chatId: string) => {
-  const form = useForm<NewMessageValues>({
-    resolver: zodResolver(newMessageSchema),
+  const form = useForm<SendMessageValues>({
+    resolver: zodResolver(sendMessageSchema),
     defaultValues: {
       content: "",
     },

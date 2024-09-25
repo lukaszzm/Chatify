@@ -1,7 +1,7 @@
 import { createClient as createWSClient } from "graphql-ws";
 import { Client, fetchExchange, subscriptionExchange } from "urql";
 
-import { getAccessToken } from "@/features/auth/utils";
+import { getAccessToken } from "@/features/auth/utils/tokens";
 import { auth } from "@/lib/gql/auth-exchange";
 import { cache } from "@/lib/gql/cache-exchange";
 

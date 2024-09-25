@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "urql";
 
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import { signUpCredentialsSchema } from "@/features/auth/schemas/credentials-schema";
-import type { SignUpCredentials } from "@/features/auth/schemas/credentials-schema";
+import type { SignUpCredentials } from "@/features/auth/schemas/sign-up-credentials-schema";
+import { signUpCredentialsSchema } from "@/features/auth/schemas/sign-up-credentials-schema";
 import { SIGN_UP_MUTATION } from "@/lib/gql/mutations";
 
 export const useSignUp = () => {

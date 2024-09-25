@@ -15,7 +15,7 @@ import {
   ImagePicker,
 } from "@chatify/ui";
 
-import { ErrorAlert } from "@/components/errors/error-alert";
+import { ErrorAlert } from "@/components/error-alert";
 import { useUpdateProfilePicture } from "@/features/settings/hooks/use-update-profile-picture";
 
 export const UpdateProfilePicture = () => {

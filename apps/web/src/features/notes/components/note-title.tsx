@@ -3,7 +3,7 @@ import { Lock, Unlock } from "lucide-react";
 
 import { useNote } from "@/features/notes/hooks/use-note";
 
-const iconClassName = "text-muted-foreground size-4 mt-0.5";
+const ICON_CLASSNAME = "text-muted-foreground size-4 mt-0.5";
 
 export const NoteTitle = () => {
   const { title, isLocked } = useNote();
@@ -12,9 +12,9 @@ export const NoteTitle = () => {
     <div className="flex gap-1.5">
       <Subtitle>{title}</Subtitle>
       {isLocked ? (
-        <Lock className={iconClassName} />
+        <Lock className={ICON_CLASSNAME} />
       ) : (
-        <Unlock className={iconClassName} />
+        <Unlock className={ICON_CLASSNAME} />
       )}
     </div>
   );

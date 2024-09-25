@@ -2,34 +2,22 @@ import type { PropsWithChildren } from "react";
 import { createContext, useCallback, useState } from "react";
 import { useQuery } from "urql";
 
+import type { AuthTokens } from "@/features/auth/types";
 import {
   clearAuthTokens,
   getAccessToken,
   getRefreshToken,
   saveAuthTokens,
-} from "@/features/auth/utils";
+} from "@/features/auth/utils/tokens";
+import type { User } from "@/gql/graphql";
 import { ME_QUERY } from "@/lib/gql/queries";
-
-type Tokens = {
-  accessToken: string;
-  refreshToken: string;
-};
-
-export type AuthUser = {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  profilePicture?: string | null;
-};
 
 export type AuthContextValue = {
   isAuthenticated: boolean;
-  user: AuthUser | null;
+  user: User | null;
   accessToken: string | null;
   refreshToken: string | null;
-  signIn: (tokens: Tokens) => Promise<void>;
+  signIn: (tokens: AuthTokens) => Promise<void>;
   signOut: () => void;
 };
 
@@ -47,7 +35,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     pause: !isAuthenticated,
   });
 
-  const signIn = useCallback(async ({ accessToken, refreshToken }: Tokens) => {
+  const signIn = useCallback(async ({ accessToken, refreshToken }: AuthTokens) => {
     saveAuthTokens({ accessToken, refreshToken });
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);

@@ -4,10 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MobileBackButton } from "@/components/mobile-back-button";
 
 export const Route = createFileRoute("/_dashboard/settings/appearance")({
-  component: AppearanceSettingsPage,
+  component: Page,
 });
 
-function AppearanceSettingsPage() {
+function Page() {
   return (
     <Container>
       <div className="flex items-center gap-2">

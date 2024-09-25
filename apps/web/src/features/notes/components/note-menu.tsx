@@ -6,8 +6,8 @@ import {
 } from "@chatify/ui";
 import { EllipsisVertical } from "lucide-react";
 
-import { NoteDeleteItem } from "@/features/notes/components/note/note-delete-item";
-import { NoteLockItem } from "@/features/notes/components/note/note-lock-item";
+import { NoteDeleteItem } from "@/features/notes/components/note-delete-item";
+import { NoteLockItem } from "@/features/notes/components/note-lock-item";
 
 export const NoteMenu = () => {
   return (

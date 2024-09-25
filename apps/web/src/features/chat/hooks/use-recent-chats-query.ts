@@ -3,17 +3,15 @@ import { useQuery } from "urql";
 
 import { RECENT_CHATS_QUERY } from "@/lib/gql/queries";
 
-interface UseRecentChatsProps {
+interface UseRecentChatsOptions {
   after?: string | null;
   pause?: boolean;
   requestPolicy?: RequestPolicy;
 }
 
-export const useRecentChatsQuery = ({
-  after,
-  pause,
-  requestPolicy,
-}: UseRecentChatsProps) => {
+export const useRecentChatsQuery = (options?: UseRecentChatsOptions) => {
+  const { after, pause, requestPolicy } = options ?? {};
+
   return useQuery({
     query: RECENT_CHATS_QUERY,
     variables: { after },

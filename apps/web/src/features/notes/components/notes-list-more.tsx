@@ -2,14 +2,14 @@ import { Button } from "@chatify/ui";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
-import { NotesListItem } from "@/features/notes/components/notes-list/list-item";
+import { NotesListItem } from "@/features/notes/components/notes-list-item";
 import { useNotesQuery } from "@/features/notes/hooks/use-notes-query";
 
-interface MoreNotesProps {
+interface NotesListMoreProps {
   cursor?: string | null;
 }
 
-export const MoreNotes = ({ cursor }: MoreNotesProps) => {
+export const NotesListMore = ({ cursor }: NotesListMoreProps) => {
   const [{ data, fetching, error }, executeQuery] = useNotesQuery({
     after: cursor,
     requestPolicy: "cache-only",
@@ -46,7 +46,7 @@ export const MoreNotes = ({ cursor }: MoreNotesProps) => {
       ))}
 
       {data.notes.pageInfo.hasNextPage && (
-        <MoreNotes cursor={data.notes.pageInfo.endCursor} />
+        <NotesListMore cursor={data.notes.pageInfo.endCursor} />
       )}
     </>
   );

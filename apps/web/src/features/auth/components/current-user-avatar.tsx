@@ -1,12 +1,16 @@
 import { UserAvatar } from "@/components/user-avatar";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 
-export const CurrentUserAvatar = () => {
+interface CurrentUserAvatarProps {
+  className?: string;
+}
+
+export const CurrentUserAvatar = ({ className }: CurrentUserAvatarProps) => {
   const { user } = useAuth();
 
   if (!user) {
     return null;
   }
 
-  return <UserAvatar className="hidden md:block" {...user} />;
+  return <UserAvatar className={className} {...user} />;
 };

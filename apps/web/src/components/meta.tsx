@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { usePathname } from "@/hooks/use-pathname";
 import { matchPageTitle } from "@/utils/match-page-title";
 
-export function Meta() {
+export const Meta = () => {
   const pathname = usePathname();
   const title = matchPageTitle(pathname);
 
@@ -16,4 +16,4 @@ export function Meta() {
       />
     </Helmet>
   );
-}
+};

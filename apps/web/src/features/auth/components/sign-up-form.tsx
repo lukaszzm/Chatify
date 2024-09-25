@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chatify/ui";
 
-import { ErrorAlert } from "@/components/errors/error-alert";
+import { ErrorAlert } from "@/components/error-alert";
 import { useSignUp } from "@/features/auth/hooks/use-sign-up";
 
 export const SignUpForm = () => {

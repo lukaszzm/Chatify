@@ -1,21 +1,17 @@
 import { ChatBubble } from "@chatify/ui";
 
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import { MoreChatMessages } from "@/features/chat/components/more-chat-messages";
+import { ChatMessagesMore } from "@/features/chat/components/chat-messages-more";
 import { useChatScroll } from "@/features/chat/hooks/use-chat-scroll";
 import type { MessagesQuery } from "@/gql/graphql";
 import { formatDate } from "@/utils/format-date";
 
-interface MessagesWrapperProps {
-  messages: MessagesQuery["messages"];
-}
-export const MessagesWrapper = ({ messages }: MessagesWrapperProps) => {
+interface ChatMessagesWrapperProps extends Pick<MessagesQuery, "messages"> {}
+
+export const ChatMessagesWrapper = ({ messages }: ChatMessagesWrapperProps) => {
   const { user } = useAuth();
 
-  const ref = useChatScroll({
-    messages,
-    currentUser: user,
-  });
+  const ref = useChatScroll(messages, user);
 
   return (
     <>
@@ -33,7 +29,7 @@ export const MessagesWrapper = ({ messages }: MessagesWrapperProps) => {
       ))}
 
       {messages.pageInfo.hasNextPage && (
-        <MoreChatMessages cursor={messages.pageInfo.endCursor} />
+        <ChatMessagesMore cursor={messages.pageInfo.endCursor} />
       )}
     </>
   );

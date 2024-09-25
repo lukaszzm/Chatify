@@ -3,7 +3,7 @@ import { useQuery } from "urql";
 
 import { MESSAGES_QUERY } from "@/lib/gql/queries";
 
-interface UseMessagesQueryProps {
+interface UseMessagesQueryOptions {
   chatId: string;
   after?: string | null;
   pause?: boolean;
@@ -15,7 +15,7 @@ export const useMessagesQuery = ({
   after,
   pause,
   requestPolicy,
-}: UseMessagesQueryProps) => {
+}: UseMessagesQueryOptions) => {
   return useQuery({
     query: MESSAGES_QUERY,
     variables: { chatId, after },

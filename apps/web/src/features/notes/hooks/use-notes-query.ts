@@ -3,13 +3,15 @@ import { useQuery } from "urql";
 
 import { NOTES_QUERY } from "@/lib/gql/queries";
 
-interface UseNotesQueryProps {
+interface UseNotesQueryOptions {
   after?: string | null;
   pause?: boolean;
   requestPolicy?: RequestPolicy;
 }
 
-export const useNotesQuery = ({ after, pause, requestPolicy }: UseNotesQueryProps) => {
+export const useNotesQuery = (options?: UseNotesQueryOptions) => {
+  const { after, pause, requestPolicy } = options || {};
+
   return useQuery({
     query: NOTES_QUERY,
     variables: { after },

@@ -17,6 +17,8 @@ const documents = {
     types.UpdatedNoteFragmentDoc,
   "\n  fragment ToggleLockNote on Note {\n    id\n    isLocked\n    updatedAt\n  }\n":
     types.ToggleLockNoteFragmentDoc,
+  "\n  fragment UserInfo on User {\n    id\n    firstName\n    lastName\n    profilePicture\n  }\n":
+    types.UserInfoFragmentDoc,
   "\n  mutation RefreshToken($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n":
     types.RefreshTokenDocument,
   "\n  mutation SignIn($data: SignInInput!) {\n    signIn(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n":
@@ -43,7 +45,7 @@ const documents = {
     types.UpdateProfilePictureDocument,
   "\n  mutation UpdateProfile($data: UpdateProfileInput!) {\n    updateProfile(data: $data) {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n":
     types.UpdateProfileDocument,
-  "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n    }\n  }\n":
+  "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n      createdAt\n      updatedAt\n    }\n  }\n":
     types.MeDocument,
   "\n  query SearchUsers($where: UserWhereInput!, $excludeMe: Boolean!) {\n    users(where: $where, excludeMe: $excludeMe) {\n      id\n      profilePicture\n      firstName\n      lastName\n    }\n  }\n":
     types.SearchUsersDocument,
@@ -89,6 +91,12 @@ export function graphql(
 export function graphql(
   source: "\n  fragment ToggleLockNote on Note {\n    id\n    isLocked\n    updatedAt\n  }\n"
 ): (typeof documents)["\n  fragment ToggleLockNote on Note {\n    id\n    isLocked\n    updatedAt\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment UserInfo on User {\n    id\n    firstName\n    lastName\n    profilePicture\n  }\n"
+): (typeof documents)["\n  fragment UserInfo on User {\n    id\n    firstName\n    lastName\n    profilePicture\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -171,8 +179,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n    }\n  }\n"
-): (typeof documents)["\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n    }\n  }\n"];
+  source: "\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n      createdAt\n      updatedAt\n    }\n  }\n"
+): (typeof documents)["\n  query Me {\n    me {\n      id\n      firstName\n      lastName\n      profilePicture\n      fullName\n      email\n      isActive\n      createdAt\n      updatedAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

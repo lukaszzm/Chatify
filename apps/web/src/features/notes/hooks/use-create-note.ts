@@ -3,17 +3,19 @@ import { useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useMutation } from "urql";
 
-import type { NewNoteValues } from "@/features/notes/schemas/new-note-schema";
-import { newNoteSchema } from "@/features/notes/schemas/new-note-schema";
+import type { CreateNoteValues } from "@/features/notes/schemas/create-note-schema";
+import { createNoteSchema } from "@/features/notes/schemas/create-note-schema";
 import { CREATE_NOTE_MUTATION } from "@/lib/gql/mutations";
 
-interface UseCreateNoteProps {
+interface UseCreateNoteOptions {
   onSuccess?: () => void;
 }
 
-export const useCreateNote = ({ onSuccess }: UseCreateNoteProps) => {
-  const form = useForm<NewNoteValues>({
-    resolver: zodResolver(newNoteSchema),
+export const useCreateNote = (options?: UseCreateNoteOptions) => {
+  const { onSuccess } = options || {};
+
+  const form = useForm<CreateNoteValues>({
+    resolver: zodResolver(createNoteSchema),
     defaultValues: {
       title: "",
     },
