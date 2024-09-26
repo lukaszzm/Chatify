@@ -9,8 +9,8 @@ export class RedisPubSubService extends RedisPubSub implements OnModuleInit {
   constructor(private readonly configService: ConfigService) {
     super({
       connection: {
-        host: configService.get<string>("REDIS_HOST"),
-        port: configService.get<number>("REDIS_PORT"),
+        host: configService.getOrThrow<string>("REDIS_HOST"),
+        port: configService.getOrThrow<number>("REDIS_PORT"),
       },
     });
   }

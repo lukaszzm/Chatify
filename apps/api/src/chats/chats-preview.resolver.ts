@@ -16,7 +16,7 @@ import { ChatPreview } from "@/chats/models/chat-preview.model";
 import { Chat } from "@/chats/models/chat.model";
 import { PaginatedChatPreview } from "@/chats/models/paginated-chat-preview.model";
 import { PaginationArgs } from "@/common/dtos/pagination.args";
-import { CHAT_UPDATED_EVENT } from "@/constants";
+import { CHAT_UPDATED_EVENT } from "@/constants/events";
 import { MessagesService } from "@/messages/messages.service";
 import { RedisPubSubService } from "@/pubsub/redis-pubsub.service";
 import { UsersService } from "@/users/users.service";

@@ -14,7 +14,7 @@ import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { ChatsService } from "@/chats/chats.service";
 import { Chat } from "@/chats/models/chat.model";
 import { PaginationArgs } from "@/common/dtos/pagination.args";
-import { CHAT_UPDATED_EVENT, MESSAGE_SENT_EVENT } from "@/constants";
+import { CHAT_UPDATED_EVENT, MESSAGE_SENT_EVENT } from "@/constants/events";
 import { SendMessageInput } from "@/messages/dtos/send-message.input";
 import { MessagesService } from "@/messages/messages.service";
 import { Message } from "@/messages/models/message.model";

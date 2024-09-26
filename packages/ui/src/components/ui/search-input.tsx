@@ -1,12 +1,12 @@
 import { Search } from "lucide-react";
-import * as React from "react";
+import { forwardRef } from "react";
 
 import { Input, type InputProps } from "@ui/components/ui/input";
 import { cn } from "@ui/lib/utils";
 
 interface SearchInputProps extends Omit<InputProps, "type"> {}
 
-export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
+const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   ({ className, ...props }, ref) => {
     return (
       <div className="relative">
@@ -17,3 +17,5 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   }
 );
 SearchInput.displayName = "SearchInput";
+
+export { SearchInput };

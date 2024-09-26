@@ -39,7 +39,7 @@ export interface LoadingDotsProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children">,
     VariantProps<typeof loadingDotsVariants> {}
 
-export const LoadingDots = forwardRef<HTMLDivElement, LoadingDotsProps>(
+const LoadingDots = forwardRef<HTMLDivElement, LoadingDotsProps>(
   ({ className, variant, size, ...props }, ref) => {
     return (
       <div
@@ -65,5 +65,6 @@ export const LoadingDots = forwardRef<HTMLDivElement, LoadingDotsProps>(
     );
   }
 );
-
 LoadingDots.displayName = "LoadingDots";
+
+export { LoadingDots, loadingDotsVariants };

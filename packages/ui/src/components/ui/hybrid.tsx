@@ -21,7 +21,7 @@ import {
 import { useMediaQuery } from "@ui/hooks/use-media-query";
 import { cn } from "@ui/lib/utils";
 
-const desktop = "(min-width: 640px)";
+const DEKSTOP_MEDIA_QUERY = "(min-width: 640px)";
 
 interface BaseProps {
   children: React.ReactNode;
@@ -38,14 +38,14 @@ interface HybridProps extends BaseProps {
 }
 
 const Hybrid = ({ children, ...props }: RootHybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const Hybrid = isDesktop ? Dialog : Drawer;
 
   return <Hybrid {...props}>{children}</Hybrid>;
 };
 
 const HybridTrigger = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const HybridTrigger = isDesktop ? DialogTrigger : DrawerTrigger;
 
   return (
@@ -56,7 +56,7 @@ const HybridTrigger = ({ className, children, ...props }: HybridProps) => {
 };
 
 const HybridClose = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const HybridClose = isDesktop ? DialogClose : DrawerClose;
 
   return (
@@ -67,7 +67,7 @@ const HybridClose = ({ className, children, ...props }: HybridProps) => {
 };
 
 const HybridContent = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const HybridContent = isDesktop ? DialogContent : DrawerContent;
 
   return (
@@ -78,7 +78,7 @@ const HybridContent = ({ className, children, ...props }: HybridProps) => {
 };
 
 const HybridDescription = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const HybridDescription = isDesktop ? DialogDescription : DrawerDescription;
 
   return (
@@ -89,7 +89,7 @@ const HybridDescription = ({ className, children, ...props }: HybridProps) => {
 };
 
 const HybridHeader = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const HybridHeader = isDesktop ? DialogHeader : DrawerHeader;
 
   return (
@@ -100,7 +100,7 @@ const HybridHeader = ({ className, children, ...props }: HybridProps) => {
 };
 
 const HybridTitle = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const HybridTitle = isDesktop ? DialogTitle : DrawerTitle;
 
   return (
@@ -119,7 +119,7 @@ const HybridBody = ({ className, children, ...props }: HybridProps) => {
 };
 
 const HybridFooter = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(desktop);
+  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
   const HybridFooter = isDesktop ? DialogFooter : DrawerFooter;
 
   return (

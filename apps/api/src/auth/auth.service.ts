@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
-import { User } from "@prisma/client";
 
 import { SignInInput } from "@/auth/dtos/sign-in.input";
 import { SignUpInput } from "@/auth/dtos/sign-up.input";
@@ -18,9 +17,7 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async signIn(
-    payload: SignInInput
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  async signIn(payload: SignInInput) {
     const fixedEmail = payload.email.toLowerCase();
     const user = await this.usersService.findOneByEmail(fixedEmail);
 
@@ -64,38 +61,35 @@ export class AuthService {
     });
   }
 
-  async getUserFromToken(token: string): Promise<User | null> {
+  async getUserFromToken(token: string) {
     const userId = this.jwtService.decode<JwtPayload>(token).sub;
     return this.usersService.findOneById(userId);
   }
 
-  generateTokens(payload: JwtPayload): {
-    accessToken: string;
-    refreshToken: string;
-  } {
+  generateTokens(payload: JwtPayload) {
     return {
       accessToken: this.generateAccessToken(payload),
       refreshToken: this.generateRefreshToken(payload),
     };
   }
 
-  generateAccessToken(payload: JwtPayload): string {
+  generateAccessToken(payload: JwtPayload) {
     return this.jwtService.sign(payload, {
-      secret: this.configService.get<string>("JWT_SECRET"),
+      secret: this.configService.getOrThrow<string>("JWT_SECRET"),
     });
   }
 
-  generateRefreshToken(payload: JwtPayload): string {
+  generateRefreshToken(payload: JwtPayload) {
     return this.jwtService.sign(payload, {
-      secret: this.configService.get<string>("JWT_REFRESH_SECRET"),
-      expiresIn: this.configService.get<string>("JWT_REFRESH_EXPIRATION_TIME"),
+      secret: this.configService.getOrThrow<string>("JWT_REFRESH_SECRET"),
+      expiresIn: this.configService.getOrThrow<string>("JWT_REFRESH_EXPIRATION_TIME"),
     });
   }
 
   refreshToken(token: string) {
     try {
       const { sub, email } = this.jwtService.verify<JwtPayload>(token, {
-        secret: this.configService.get<string>("JWT_REFRESH_SECRET"),
+        secret: this.configService.getOrThrow<string>("JWT_REFRESH_SECRET"),
       });
 
       return this.generateTokens({

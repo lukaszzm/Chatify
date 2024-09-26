@@ -1,5 +1,5 @@
 import type * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
-import React from "react";
+import { forwardRef } from "react";
 
 import type { ButtonProps } from "@ui/components/ui/button";
 import { Button } from "@ui/components/ui/button";
@@ -11,7 +11,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   hideOnMobile?: boolean;
 }
 
-const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
+const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
   ({ hideOnMobile, className, ...props }, ref) => {
     return (
       <Container
@@ -25,21 +25,20 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
 );
 Sidebar.displayName = "Sidebar";
 
-const SidebarHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  return (
-    <div
-      className={cn("flex justify-between items-center", className)}
-      ref={ref}
-      {...props}
-    />
-  );
-});
+const SidebarHeader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        className={cn("flex justify-between items-center", className)}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
 SidebarHeader.displayName = "SidebarHeader";
 
-const SidebarTitle = React.forwardRef<
+const SidebarTitle = forwardRef<
   HTMLHeadingElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => {
@@ -47,7 +46,7 @@ const SidebarTitle = React.forwardRef<
 });
 SidebarTitle.displayName = "SidebarTitle";
 
-const SidebarContent = React.forwardRef<
+const SidebarContent = forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
 >(({ className, ...props }, ref) => {
@@ -55,15 +54,14 @@ const SidebarContent = React.forwardRef<
 });
 SidebarContent.displayName = "SidebarContent";
 
-const SidebarList = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  return <div className={cn("space-y-2 p-1", className)} ref={ref} {...props} />;
-});
+const SidebarList = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    return <div className={cn("space-y-2 p-1", className)} ref={ref} {...props} />;
+  }
+);
 SidebarList.displayName = "SidebarList";
 
-const SidebarItem = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const SidebarItem = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, ...props }, ref) => {
     return (
       <Button
@@ -81,14 +79,12 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 SidebarItem.displayName = "SidebarItem";
 
-const SidebarInfo = React.forwardRef<
+const SidebarInfo = forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
->((props, ref) => {
-  return (
-    <p className="py-2 text-center text-sm text-muted-foreground" ref={ref} {...props} />
-  );
-});
+>((props, ref) => (
+  <p className="py-2 text-center text-sm text-muted-foreground" ref={ref} {...props} />
+));
 SidebarInfo.displayName = "SidebarInfo";
 
 export {

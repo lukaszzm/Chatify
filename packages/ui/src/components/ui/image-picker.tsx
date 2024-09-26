@@ -1,5 +1,5 @@
 import { UploadIcon } from "lucide-react";
-import React from "react";
+import { forwardRef } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { cn } from "@ui/lib/utils";
@@ -38,7 +38,7 @@ interface ImagePickerProps {
   className?: string;
 }
 
-export const ImagePicker = React.forwardRef<HTMLInputElement, ImagePickerProps>(
+const ImagePicker = forwardRef<HTMLInputElement, ImagePickerProps>(
   ({ className, onChange, value, disabled, ...props }, ref) => {
     const { getRootProps, getInputProps } = useDropzone({
       accept: {
@@ -65,3 +65,5 @@ export const ImagePicker = React.forwardRef<HTMLInputElement, ImagePickerProps>(
   }
 );
 ImagePicker.displayName = "ImagePicker";
+
+export { ImagePicker };

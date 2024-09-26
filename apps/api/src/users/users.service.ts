@@ -34,6 +34,16 @@ export class UsersService {
     });
   }
 
+  async findOneOrThrow(id: string) {
+    const user = await this.findOneById(id);
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    return user;
+  }
+
   async findMany(args: UsersArgs, userId: string) {
     return this.prismaService.user.findMany({
       take: args.first,
@@ -68,7 +78,14 @@ export class UsersService {
     });
   }
 
-  async update(data: UpdateProfileInput, id: string) {
+  async updateInfo(data: UpdateProfileInput, id: string) {
+    const currentUser = await this.findOneOrThrow(id);
+    const userFromEmail = await this.findOneByEmail(data.email);
+
+    if (userFromEmail && userFromEmail.id !== currentUser.id) {
+      throw new BadRequestException("Email is already taken");
+    }
+
     return this.prismaService.user.update({
       where: { id },
       data: {
@@ -83,13 +100,7 @@ export class UsersService {
       throw new BadRequestException("Passwords do not match");
     }
 
-    const user = await this.prismaService.user.findUnique({
-      where: { id },
-    });
-
-    if (!user) {
-      throw new BadRequestException("User not found");
-    }
+    const user = await this.findOneOrThrow(id);
 
     const isPasswordValid = await this.passwordService.verify(
       user.password,
@@ -111,13 +122,7 @@ export class UsersService {
   }
 
   async updateProfilePicture(filePromise: Promise<FileUpload> | null, id: string) {
-    const user = await this.prismaService.user.findUnique({
-      where: { id },
-    });
-
-    if (!user) {
-      throw new NotFoundException("User not found");
-    }
+    const user = await this.findOneOrThrow(id);
 
     if (user.profilePicture) {
       await this.uploadService.deleteImage(user.profilePicture);
@@ -144,6 +149,12 @@ export class UsersService {
   }
 
   async delete(id: string) {
+    const user = await this.findOneOrThrow(id);
+
+    if (user.profilePicture) {
+      await this.uploadService.deleteImage(user.profilePicture);
+    }
+
     const [, deletedUser] = await this.prismaService.$transaction([
       this.prismaService.chat.deleteMany({
         where: {

@@ -15,7 +15,7 @@ interface TooltipButtonProps extends ButtonProps {
   side?: "top" | "right" | "bottom" | "left";
 }
 
-export const TooltipButton = forwardRef<HTMLButtonElement, TooltipButtonProps>(
+const TooltipButton = forwardRef<HTMLButtonElement, TooltipButtonProps>(
   (
     {
       asChild,
@@ -48,5 +48,6 @@ export const TooltipButton = forwardRef<HTMLButtonElement, TooltipButtonProps>(
     );
   }
 );
-
 TooltipButton.displayName = "TooltipButton";
+
+export { TooltipButton };

@@ -27,7 +27,7 @@ export class UsersResolver {
 
   @Mutation(() => User)
   async updateProfile(@Args("data") data: UpdateProfileInput, @CurrentUser() me: User) {
-    return this.usersService.update(data, me.id);
+    return this.usersService.updateInfo(data, me.id);
   }
 
   @Mutation(() => User)

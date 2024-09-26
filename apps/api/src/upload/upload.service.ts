@@ -31,22 +31,22 @@ export class UploadService {
     });
   }
 
-  private validateImage(mimetype: string): boolean {
+  private validateImage(mimetype: string) {
     const type = mimetype.split("/")[0];
     return type === "image";
   }
 
-  private async streamToBuffer(stream: Readable): Promise<Buffer> {
+  private async streamToBuffer(stream: Readable) {
     const buffer: Uint8Array[] = [];
 
     return new Promise((resolve, reject) => {
       stream.on("data", (data) => buffer.push(data));
       stream.on("end", () => resolve(Buffer.concat(buffer)));
       stream.on("error", (error) => reject(error));
-    });
+    }) satisfies Promise<Buffer>;
   }
 
-  private async compressImage(buffer: Buffer, ratio?: number): Promise<Buffer> {
+  private async compressImage(buffer: Buffer, ratio?: number) {
     let compressBuffer: Sharp | Buffer = sharp(buffer).jpeg({
       mozjpeg: true,
       chromaSubsampling: "4:4:4",
@@ -82,16 +82,16 @@ export class UploadService {
     return compressBuffer;
   }
 
-  private createFileUrl(filename: string): string {
+  private createFileUrl(filename: string) {
     return `https://${this.s3Bucket}.s3.${this.s3Region}.amazonaws.com/${filename}`;
   }
 
-  private extractFilename(url: string): string {
+  private extractFilename(url: string) {
     const urlParts = url.split("/");
     return urlParts[urlParts.length - 1];
   }
 
-  private async uploadToS3(filename: string, buffer: Buffer): Promise<string> {
+  private async uploadToS3(filename: string, buffer: Buffer) {
     await this.s3Client.send(
       new PutObjectCommand({
         Bucket: this.configService.getOrThrow<string>("AWS_S3_BUCKET_NAME"),
@@ -112,7 +112,7 @@ export class UploadService {
     );
   }
 
-  async uploadImage(file: FileUpload, ratio?: Ratio): Promise<string> {
+  async uploadImage(file: FileUpload, ratio?: Ratio) {
     const { mimetype, filename, createReadStream } = file;
 
     if (!this.validateImage(mimetype)) {

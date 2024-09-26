@@ -26,7 +26,7 @@ export interface ContainerProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof containerVariants> {}
 
-export const Container = forwardRef<HTMLDivElement, ContainerProps>(
+const Container = forwardRef<HTMLDivElement, ContainerProps>(
   ({ className, variant, size, ...props }, ref) => {
     return (
       <div
@@ -39,3 +39,5 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
 );
 
 Container.displayName = "Container";
+
+export { Container, containerVariants };

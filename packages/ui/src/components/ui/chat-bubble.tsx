@@ -1,5 +1,3 @@
-import type React from "react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/ui/avatar";
 import { cn } from "@ui/lib/utils";
 
@@ -31,7 +29,7 @@ const ChatBubbleAvatar = ({ sender }: { sender: Sender }) => {
   );
 };
 
-export const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) => {
+const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) => {
   return (
     <div className={cn("flex items-start gap-2")}>
       {!isMine ? <ChatBubbleAvatar sender={sender} /> : null}
@@ -72,3 +70,5 @@ export const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubblePr
     </div>
   );
 };
+
+export { ChatBubble };
