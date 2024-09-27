@@ -33,7 +33,7 @@ export class ChatsPreviewResolver {
 
   @Subscription(() => ChatPreview, {
     async filter(this: ChatsPreviewResolver, payload, _variables, context) {
-      const currentUser = context.connection.user;
+      const currentUser = context.req.extra.user;
 
       const existingChat = await this.chatsService.findOneById(
         payload.chatUpdated.id,
