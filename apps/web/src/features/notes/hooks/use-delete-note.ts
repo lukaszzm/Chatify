@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { DELETE_NOTE_MUTATION } from "@/lib/gql/mutations";
+import { DELETE_NOTE_MUTATION } from "@/graphql/mutations/delete-note";
 
 export const useDeleteNote = () => {
   const [, deleteNoteMutation] = useMutation(DELETE_NOTE_MUTATION);

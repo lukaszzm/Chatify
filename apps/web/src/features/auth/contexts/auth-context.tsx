@@ -9,8 +9,8 @@ import {
   getRefreshToken,
   saveAuthTokens,
 } from "@/features/auth/utils/tokens";
-import type { User } from "@/gql/graphql";
-import { ME_QUERY } from "@/lib/gql/queries";
+import type { User } from "@/generated/graphql";
+import { ME_QUERY } from "@/graphql/queries/me";
 
 export type AuthContextValue = {
   isAuthenticated: boolean;

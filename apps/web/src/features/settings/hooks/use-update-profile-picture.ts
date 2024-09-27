@@ -5,7 +5,7 @@ import { useMutation } from "urql";
 
 import { updateProfilePictureSchema } from "@/features/settings/schemas/update-profile-picture-schema";
 import type { UpdateProfilePictureValues } from "@/features/settings/schemas/update-profile-picture-schema";
-import { UPDATE_PROFILE_PICTURE_MUTATION } from "@/lib/gql/mutations";
+import { UPDATE_PROFILE_PICTURE_MUTATION } from "@/graphql/mutations/update-profile-picture";
 
 export const useUpdateProfilePicture = () => {
   const form = useForm({

@@ -1,7 +1,7 @@
 import { SidebarItem } from "@chatify/ui";
 import { Link } from "@tanstack/react-router";
 
-import type { Note } from "@/gql/graphql";
+import type { Note } from "@/generated/graphql";
 import { formatDate } from "@/utils/format-date";
 
 interface NotesListItemProps extends Pick<Note, "id" | "title" | "updatedAt"> {}

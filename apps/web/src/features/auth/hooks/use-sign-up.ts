@@ -6,7 +6,7 @@ import { useMutation } from "urql";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import type { SignUpCredentials } from "@/features/auth/schemas/sign-up-credentials-schema";
 import { signUpCredentialsSchema } from "@/features/auth/schemas/sign-up-credentials-schema";
-import { SIGN_UP_MUTATION } from "@/lib/gql/mutations";
+import { SIGN_UP_MUTATION } from "@/graphql/mutations/sign-up";
 
 export const useSignUp = () => {
   const form = useForm<SignUpCredentials>({

@@ -1,13 +1,13 @@
 import { useSubscription } from "urql";
 
 import { useRecentChatsQuery } from "@/features/chat/hooks/use-recent-chats-query";
-import { RECENT_CHATS_SUBSCRIPTION } from "@/lib/gql/subscriptions";
+import { CHAT_UPDATED_SUBSCRIPTION } from "@/graphql/subscriptions/chat-updated";
 
 export const useRecentChatsSubscription = () => {
   const [queryResult] = useRecentChatsQuery();
 
   useSubscription({
-    query: RECENT_CHATS_SUBSCRIPTION,
+    query: CHAT_UPDATED_SUBSCRIPTION,
     pause: queryResult.fetching,
   });
 

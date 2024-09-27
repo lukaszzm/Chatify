@@ -2,8 +2,8 @@ import { createClient as createWSClient } from "graphql-ws";
 import { Client, fetchExchange, subscriptionExchange } from "urql";
 
 import { getAccessToken } from "@/features/auth/utils/tokens";
-import { auth } from "@/lib/gql/auth-exchange";
-import { cache } from "@/lib/gql/cache-exchange";
+import { auth } from "@/graphql/exchanges/auth";
+import { cache } from "@/graphql/exchanges/cache";
 
 const gqlServerUrl = import.meta.env.VITE_GRAPHQL_URL;
 const gqlWsServerUrl = import.meta.env.VITE_GRAPHQL_WS_URL;

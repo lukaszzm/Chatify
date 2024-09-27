@@ -1,16 +1,18 @@
 import { cacheExchange } from "@urql/exchange-graphcache";
 
 import type {
+  ChatUpdatedSubscription,
   CreateNoteMutation,
   DeleteNoteMutation,
-  UpdateNoteMutation,
-  ToggleLockMutation,
   MessageSentSubscription,
   SubscriptionMessageSentArgs,
-  ChatUpdatedSubscription,
-} from "@/gql/graphql";
-import { TOGGLE_LOCK_FRAGMENT, UPDATE_NOTE_FRAGMENT } from "@/lib/gql/fragments";
-import { NOTES_QUERY, MESSAGES_QUERY, RECENT_CHATS_QUERY } from "@/lib/gql/queries";
+  ToggleLockMutation,
+  UpdateNoteMutation,
+} from "@/generated/graphql";
+import { UPDATED_NOTE_FRAGMENT } from "@/graphql/fragments/updated-note";
+import { MESSAGES_QUERY } from "@/graphql/queries/messages";
+import { NOTES_QUERY } from "@/graphql/queries/notes";
+import { RECENT_CHATS_QUERY } from "@/graphql/queries/recent-chats";
 
 export const cache = cacheExchange({
   updates: {
@@ -40,10 +42,10 @@ export const cache = cacheExchange({
         cache.invalidate({ __typename: "Note", id: result.deleteNote.id });
       },
       updateNote(result: UpdateNoteMutation, _args, cache) {
-        cache.writeFragment(UPDATE_NOTE_FRAGMENT, result.updateNote);
+        cache.writeFragment(UPDATED_NOTE_FRAGMENT, result.updateNote);
       },
       toggleLock(result: ToggleLockMutation, _args, cache) {
-        cache.writeFragment(TOGGLE_LOCK_FRAGMENT, result.toggleLock);
+        cache.writeFragment(UPDATED_NOTE_FRAGMENT, result.toggleLock);
       },
       sendMessage(_result, _args, _cache) {
         return;

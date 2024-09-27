@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import type { ChatType, User } from "@/gql/graphql";
+import type { ChatType, User } from "@/generated/graphql";
 
 export interface ChatContextValue {
   id: string;

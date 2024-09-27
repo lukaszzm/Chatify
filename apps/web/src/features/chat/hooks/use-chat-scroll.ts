@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import type { MessagesQuery, User } from "@/gql/graphql";
+import type { MessagesQuery, User } from "@/generated/graphql";
 
 export const useChatScroll = (
   messages: MessagesQuery["messages"],

@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { UPDATE_NOTE_MUTATION } from "@/lib/gql/mutations";
+import { UPDATE_NOTE_MUTATION } from "@/graphql/mutations/update-note";
 
 export const useUpdateNote = () => {
   const [, updateNoteMutation] = useMutation(UPDATE_NOTE_MUTATION);

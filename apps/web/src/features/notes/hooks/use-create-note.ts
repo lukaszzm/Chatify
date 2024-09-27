@@ -5,7 +5,7 @@ import { useMutation } from "urql";
 
 import type { CreateNoteValues } from "@/features/notes/schemas/create-note-schema";
 import { createNoteSchema } from "@/features/notes/schemas/create-note-schema";
-import { CREATE_NOTE_MUTATION } from "@/lib/gql/mutations";
+import { CREATE_NOTE_MUTATION } from "@/graphql/mutations/create-note";
 
 interface UseCreateNoteOptions {
   onSuccess?: () => void;

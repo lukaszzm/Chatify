@@ -6,7 +6,7 @@ import { ChatLoading } from "@/features/chat/components/chat-loading";
 import { SendMessageForm } from "@/features/chat/components/send-message-form";
 import { ChatProvider } from "@/features/chat/contexts/chat-context";
 import { useChatQuery } from "@/features/chat/hooks/use-chat-query";
-import type { Chat as GqlChat } from "@/gql/graphql";
+import type { Chat as GqlChat } from "@/generated/graphql";
 
 interface ChatProps extends Pick<GqlChat, "id"> {}
 

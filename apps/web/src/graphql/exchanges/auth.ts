@@ -9,7 +9,7 @@ import {
   saveAuthTokens,
   clearAuthTokens,
 } from "@/features/auth/utils/tokens";
-import { REFRESH_TOKEN_MUTATION } from "@/lib/gql/mutations";
+import { REFRESH_TOKEN_MUTATION } from "@/graphql/mutations/refresh-token";
 
 export const auth = authExchange(async (utilities) => {
   let accessToken = getAccessToken();

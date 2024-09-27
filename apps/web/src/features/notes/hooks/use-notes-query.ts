@@ -1,7 +1,7 @@
 import type { RequestPolicy } from "urql";
 import { useQuery } from "urql";
 
-import { NOTES_QUERY } from "@/lib/gql/queries";
+import { NOTES_QUERY } from "@/graphql/queries/notes";
 
 interface UseNotesQueryOptions {
   after?: string | null;

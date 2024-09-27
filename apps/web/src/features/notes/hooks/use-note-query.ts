@@ -1,6 +1,6 @@
 import { useQuery } from "urql";
 
-import { NOTE_QUERY } from "@/lib/gql/queries";
+import { NOTE_QUERY } from "@/graphql/queries/note";
 
 export const useNoteQuery = (id: string) => {
   return useQuery({

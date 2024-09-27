@@ -1,6 +1,6 @@
 import { useQuery } from "urql";
 
-import { CHAT_QUERY } from "@/lib/gql/queries";
+import { CHAT_QUERY } from "@/graphql/queries/chat";
 
 export const useChatQuery = (id: string) => {
   const [{ data, fetching, error }] = useQuery({

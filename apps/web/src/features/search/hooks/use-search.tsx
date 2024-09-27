@@ -1,6 +1,6 @@
 import { useQuery } from "urql";
 
-import { SEARCH_USERS_QUERY } from "@/lib/gql/queries";
+import { SEARCH_USERS_QUERY } from "@/graphql/queries/search-users";
 
 export const useSearch = (phrase: string) => {
   return useQuery({

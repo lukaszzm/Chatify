@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { START_CHAT_MUTATION } from "@/lib/gql/mutations";
+import { START_CHAT_MUTATION } from "@/graphql/mutations/start-chat";
 
 export const useStartChat = () => {
   const [{ fetching }, startChatMutation] = useMutation(START_CHAT_MUTATION);

@@ -327,15 +327,9 @@ export type UpdatedNoteFragment = {
   __typename?: "Note";
   id: string;
   content: string;
-  updatedAt: string;
-} & { " $fragmentName"?: "UpdatedNoteFragment" };
-
-export type ToggleLockNoteFragment = {
-  __typename?: "Note";
-  id: string;
   isLocked: boolean;
   updatedAt: string;
-} & { " $fragmentName"?: "ToggleLockNoteFragment" };
+} & { " $fragmentName"?: "UpdatedNoteFragment" };
 
 export type UserInfoFragment = {
   __typename?: "User";
@@ -345,6 +339,39 @@ export type UserInfoFragment = {
   profilePicture?: string | null;
 } & { " $fragmentName"?: "UserInfoFragment" };
 
+export type CreateNoteMutationVariables = Exact<{
+  data: CreateNoteInput;
+}>;
+
+export type CreateNoteMutation = {
+  __typename?: "Mutation";
+  createNote: {
+    __typename?: "Note";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    isLocked: boolean;
+  };
+};
+
+export type DeleteAccountMutationVariables = Exact<{ [key: string]: never }>;
+
+export type DeleteAccountMutation = {
+  __typename?: "Mutation";
+  deleteAccount: { __typename?: "User"; id: string };
+};
+
+export type DeleteNoteMutationVariables = Exact<{
+  noteId: Scalars["String"]["input"];
+}>;
+
+export type DeleteNoteMutation = {
+  __typename?: "Mutation";
+  deleteNote: { __typename?: "Note"; id: string };
+};
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars["String"]["input"];
 }>;
@@ -352,6 +379,15 @@ export type RefreshTokenMutationVariables = Exact<{
 export type RefreshTokenMutation = {
   __typename?: "Mutation";
   refresh: { __typename?: "Token"; accessToken: string; refreshToken: string };
+};
+
+export type SendMessageMutationVariables = Exact<{
+  data: SendMessageInput;
+}>;
+
+export type SendMessageMutation = {
+  __typename?: "Mutation";
+  sendMessage: { __typename?: "Message"; id: string };
 };
 
 export type SignInMutationVariables = Exact<{
@@ -381,39 +417,19 @@ export type StartChatMutation = {
   startChat: { __typename?: "Chat"; id: string };
 };
 
-export type CreateNoteMutationVariables = Exact<{
-  data: CreateNoteInput;
-}>;
-
-export type CreateNoteMutation = {
-  __typename?: "Mutation";
-  createNote: {
-    __typename?: "Note";
-    id: string;
-    title: string;
-    content: string;
-    createdAt: string;
-    updatedAt: string;
-    isLocked: boolean;
-  };
-};
-
-export type DeleteNoteMutationVariables = Exact<{
-  noteId: Scalars["String"]["input"];
-}>;
-
-export type DeleteNoteMutation = {
-  __typename?: "Mutation";
-  deleteNote: { __typename?: "Note"; id: string };
-};
-
 export type ToggleLockMutationVariables = Exact<{
   noteId: Scalars["String"]["input"];
 }>;
 
 export type ToggleLockMutation = {
   __typename?: "Mutation";
-  toggleLock: { __typename?: "Note"; id: string; isLocked: boolean; updatedAt: string };
+  toggleLock: {
+    __typename?: "Note";
+    id: string;
+    content: string;
+    isLocked: boolean;
+    updatedAt: string;
+  };
 };
 
 export type UpdateNoteMutationVariables = Exact<{
@@ -423,23 +439,13 @@ export type UpdateNoteMutationVariables = Exact<{
 
 export type UpdateNoteMutation = {
   __typename?: "Mutation";
-  updateNote: { __typename?: "Note"; id: string; content: string; updatedAt: string };
-};
-
-export type SendMessageMutationVariables = Exact<{
-  data: SendMessageInput;
-}>;
-
-export type SendMessageMutation = {
-  __typename?: "Mutation";
-  sendMessage: { __typename?: "Message"; id: string };
-};
-
-export type DeleteAccountMutationVariables = Exact<{ [key: string]: never }>;
-
-export type DeleteAccountMutation = {
-  __typename?: "Mutation";
-  deleteAccount: { __typename?: "User"; id: string };
+  updateNote: {
+    __typename?: "Note";
+    id: string;
+    content: string;
+    isLocked: boolean;
+    updatedAt: string;
+  };
 };
 
 export type UpdatePasswordMutationVariables = Exact<{
@@ -449,19 +455,6 @@ export type UpdatePasswordMutationVariables = Exact<{
 export type UpdatePasswordMutation = {
   __typename?: "Mutation";
   updatePassword: { __typename?: "User"; id: string };
-};
-
-export type UpdateProfilePictureMutationVariables = Exact<{
-  data: UpdateProfilePictureInput;
-}>;
-
-export type UpdateProfilePictureMutation = {
-  __typename?: "Mutation";
-  updateProfilePicture: {
-    __typename?: "User";
-    id: string;
-    profilePicture?: string | null;
-  };
 };
 
 export type UpdateProfileMutationVariables = Exact<{
@@ -477,6 +470,39 @@ export type UpdateProfileMutation = {
     lastName: string;
     email: string;
   };
+};
+
+export type UpdateProfilePictureMutationVariables = Exact<{
+  data: UpdateProfilePictureInput;
+}>;
+
+export type UpdateProfilePictureMutation = {
+  __typename?: "Mutation";
+  updateProfilePicture: {
+    __typename?: "User";
+    id: string;
+    profilePicture?: string | null;
+  };
+};
+
+export type ChatQueryVariables = Exact<{
+  id: Scalars["String"]["input"];
+}>;
+
+export type ChatQuery = {
+  __typename?: "Query";
+  chat?: {
+    __typename?: "Chat";
+    id: string;
+    type: ChatType;
+    participants: Array<{
+      __typename?: "User";
+      id: string;
+      profilePicture?: string | null;
+      firstName: string;
+      lastName: string;
+    }>;
+  } | null;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -497,20 +523,39 @@ export type MeQuery = {
   };
 };
 
-export type SearchUsersQueryVariables = Exact<{
-  where: UserWhereInput;
-  excludeMe: Scalars["Boolean"]["input"];
+export type MessagesQueryVariables = Exact<{
+  chatId: Scalars["String"]["input"];
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
 }>;
 
-export type SearchUsersQuery = {
+export type MessagesQuery = {
   __typename?: "Query";
-  users: Array<{
-    __typename?: "User";
-    id: string;
-    profilePicture?: string | null;
-    firstName: string;
-    lastName: string;
-  }>;
+  messages: {
+    __typename?: "MessageConnection";
+    edges: Array<{
+      __typename?: "MessageEdge";
+      cursor: string;
+      node: {
+        __typename?: "Message";
+        id: string;
+        content: string;
+        createdAt: string;
+        sender: {
+          __typename?: "User";
+          id: string;
+          profilePicture?: string | null;
+          firstName: string;
+          lastName: string;
+        };
+      };
+    }>;
+    pageInfo: {
+      __typename?: "PageInfo";
+      endCursor?: string | null;
+      hasNextPage: boolean;
+    };
+  };
 };
 
 export type NoteQueryVariables = Exact<{
@@ -597,59 +642,20 @@ export type RecentChatsQuery = {
   };
 };
 
-export type ChatQueryVariables = Exact<{
-  id: Scalars["String"]["input"];
+export type SearchUsersQueryVariables = Exact<{
+  where: UserWhereInput;
+  excludeMe: Scalars["Boolean"]["input"];
 }>;
 
-export type ChatQuery = {
+export type SearchUsersQuery = {
   __typename?: "Query";
-  chat?: {
-    __typename?: "Chat";
+  users: Array<{
+    __typename?: "User";
     id: string;
-    type: ChatType;
-    participants: Array<{
-      __typename?: "User";
-      id: string;
-      profilePicture?: string | null;
-      firstName: string;
-      lastName: string;
-    }>;
-  } | null;
-};
-
-export type MessagesQueryVariables = Exact<{
-  chatId: Scalars["String"]["input"];
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-}>;
-
-export type MessagesQuery = {
-  __typename?: "Query";
-  messages: {
-    __typename?: "MessageConnection";
-    edges: Array<{
-      __typename?: "MessageEdge";
-      cursor: string;
-      node: {
-        __typename?: "Message";
-        id: string;
-        content: string;
-        createdAt: string;
-        sender: {
-          __typename?: "User";
-          id: string;
-          profilePicture?: string | null;
-          firstName: string;
-          lastName: string;
-        };
-      };
-    }>;
-    pageInfo: {
-      __typename?: "PageInfo";
-      endCursor?: string | null;
-      hasNextPage: boolean;
-    };
-  };
+    profilePicture?: string | null;
+    firstName: string;
+    lastName: string;
+  }>;
 };
 
 export type ChatUpdatedSubscriptionVariables = Exact<{ [key: string]: never }>;
@@ -710,30 +716,13 @@ export const UpdatedNoteFragmentDoc = {
         selections: [
           { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "content" } },
-          { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<UpdatedNoteFragment, unknown>;
-export const ToggleLockNoteFragmentDoc = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ToggleLockNote" },
-      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Note" } },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "isLocked" } },
           { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
         ],
       },
     },
   ],
-} as unknown as DocumentNode<ToggleLockNoteFragment, unknown>;
+} as unknown as DocumentNode<UpdatedNoteFragment, unknown>;
 export const UserInfoFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -753,6 +742,116 @@ export const UserInfoFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<UserInfoFragment, unknown>;
+export const CreateNoteDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateNote" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "CreateNoteInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createNote" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "title" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+                { kind: "Field", name: { kind: "Name", value: "isLocked" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreateNoteMutation, CreateNoteMutationVariables>;
+export const DeleteAccountDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteAccount" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteAccount" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteAccountMutation, DeleteAccountMutationVariables>;
+export const DeleteNoteDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteNote" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteNote" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "noteId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteNoteMutation, DeleteNoteMutationVariables>;
 export const RefreshTokenDocument = {
   kind: "Document",
   definitions: [
@@ -799,6 +898,49 @@ export const RefreshTokenDocument = {
     },
   ],
 } as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;
+export const SendMessageDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "SendMessage" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "SendMessageInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "sendMessage" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SendMessageMutation, SendMessageMutationVariables>;
 export const SignInDocument = {
   kind: "Document",
   definitions: [
@@ -925,93 +1067,6 @@ export const StartChatDocument = {
     },
   ],
 } as unknown as DocumentNode<StartChatMutation, StartChatMutationVariables>;
-export const CreateNoteDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "CreateNote" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "CreateNoteInput" } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "createNote" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "data" },
-                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "title" } },
-                { kind: "Field", name: { kind: "Name", value: "content" } },
-                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
-                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
-                { kind: "Field", name: { kind: "Name", value: "isLocked" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CreateNoteMutation, CreateNoteMutationVariables>;
-export const DeleteNoteDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "DeleteNote" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "deleteNote" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "noteId" },
-                value: { kind: "Variable", name: { kind: "Name", value: "noteId" } },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<DeleteNoteMutation, DeleteNoteMutationVariables>;
 export const ToggleLockDocument = {
   kind: "Document",
   definitions: [
@@ -1046,6 +1101,7 @@ export const ToggleLockDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
                 { kind: "Field", name: { kind: "Name", value: "isLocked" } },
                 { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
               ],
@@ -1104,6 +1160,7 @@ export const UpdateNoteDocument = {
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "isLocked" } },
                 { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
               ],
             },
@@ -1113,72 +1170,6 @@ export const UpdateNoteDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdateNoteMutation, UpdateNoteMutationVariables>;
-export const SendMessageDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "SendMessage" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "SendMessageInput" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "sendMessage" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "data" },
-                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<SendMessageMutation, SendMessageMutationVariables>;
-export const DeleteAccountDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "DeleteAccount" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "deleteAccount" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<DeleteAccountMutation, DeleteAccountMutationVariables>;
 export const UpdatePasswordDocument = {
   kind: "Document",
   definitions: [
@@ -1222,6 +1213,54 @@ export const UpdatePasswordDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdatePasswordMutation, UpdatePasswordMutationVariables>;
+export const UpdateProfileDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateProfile" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "UpdateProfileInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateProfile" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "email" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
 export const UpdateProfilePictureDocument = {
   kind: "Document",
   definitions: [
@@ -1271,23 +1310,20 @@ export const UpdateProfilePictureDocument = {
   UpdateProfilePictureMutation,
   UpdateProfilePictureMutationVariables
 >;
-export const UpdateProfileDocument = {
+export const ChatDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "UpdateProfile" },
+      operation: "query",
+      name: { kind: "Name", value: "Chat" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
           type: {
             kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "UpdateProfileInput" },
-            },
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
           },
         },
       ],
@@ -1296,21 +1332,32 @@ export const UpdateProfileDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "updateProfile" },
+            name: { kind: "Name", value: "chat" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "data" },
-                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
+                name: { kind: "Name", value: "id" },
+                value: { kind: "Variable", name: { kind: "Name", value: "id" } },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                { kind: "Field", name: { kind: "Name", value: "lastName" } },
-                { kind: "Field", name: { kind: "Name", value: "email" } },
+                { kind: "Field", name: { kind: "Name", value: "type" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "participants" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+                      { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                      { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -1318,7 +1365,7 @@ export const UpdateProfileDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
+} as unknown as DocumentNode<ChatQuery, ChatQueryVariables>;
 export const MeDocument = {
   kind: "Document",
   definitions: [
@@ -1352,29 +1399,31 @@ export const MeDocument = {
     },
   ],
 } as unknown as DocumentNode<MeQuery, MeQueryVariables>;
-export const SearchUsersDocument = {
+export const MessagesDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "query",
-      name: { kind: "Name", value: "SearchUsers" },
+      name: { kind: "Name", value: "Messages" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "where" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
           type: {
             kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "UserWhereInput" } },
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
           },
         },
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "excludeMe" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
-          },
+          variable: { kind: "Variable", name: { kind: "Name", value: "after" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "first" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
         },
       ],
       selectionSet: {
@@ -1382,26 +1431,82 @@ export const SearchUsersDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "users" },
+            name: { kind: "Name", value: "messages" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "where" },
-                value: { kind: "Variable", name: { kind: "Name", value: "where" } },
+                name: { kind: "Name", value: "chatId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
               },
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "excludeMe" },
-                value: { kind: "Variable", name: { kind: "Name", value: "excludeMe" } },
+                name: { kind: "Name", value: "after" },
+                value: { kind: "Variable", name: { kind: "Name", value: "after" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "first" },
+                value: { kind: "Variable", name: { kind: "Name", value: "first" } },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
-                { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "edges" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "cursor" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "node" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "Field", name: { kind: "Name", value: "id" } },
+                            { kind: "Field", name: { kind: "Name", value: "content" } },
+                            { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "sender" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  { kind: "Field", name: { kind: "Name", value: "id" } },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "profilePicture" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "firstName" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "lastName" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "pageInfo" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "endCursor" } },
+                      { kind: "Field", name: { kind: "Name", value: "hasNextPage" } },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -1409,7 +1514,7 @@ export const SearchUsersDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<SearchUsersQuery, SearchUsersQueryVariables>;
+} as unknown as DocumentNode<MessagesQuery, MessagesQueryVariables>;
 export const NoteDocument = {
   kind: "Document",
   definitions: [
@@ -1675,20 +1780,28 @@ export const RecentChatsDocument = {
     },
   ],
 } as unknown as DocumentNode<RecentChatsQuery, RecentChatsQueryVariables>;
-export const ChatDocument = {
+export const SearchUsersDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "query",
-      name: { kind: "Name", value: "Chat" },
+      name: { kind: "Name", value: "SearchUsers" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          variable: { kind: "Variable", name: { kind: "Name", value: "where" } },
           type: {
             kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+            type: { kind: "NamedType", name: { kind: "Name", value: "UserWhereInput" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "excludeMe" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
           },
         },
       ],
@@ -1697,32 +1810,26 @@ export const ChatDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "chat" },
+            name: { kind: "Name", value: "users" },
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "id" },
-                value: { kind: "Variable", name: { kind: "Name", value: "id" } },
+                name: { kind: "Name", value: "where" },
+                value: { kind: "Variable", name: { kind: "Name", value: "where" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "excludeMe" },
+                value: { kind: "Variable", name: { kind: "Name", value: "excludeMe" } },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "type" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "participants" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
-                      { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                      { kind: "Field", name: { kind: "Name", value: "lastName" } },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
               ],
             },
           },
@@ -1730,123 +1837,7 @@ export const ChatDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<ChatQuery, ChatQueryVariables>;
-export const MessagesDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "Messages" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "after" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "first" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "messages" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "chatId" },
-                value: { kind: "Variable", name: { kind: "Name", value: "chatId" } },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "after" },
-                value: { kind: "Variable", name: { kind: "Name", value: "after" } },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "first" },
-                value: { kind: "Variable", name: { kind: "Name", value: "first" } },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "edges" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "cursor" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "node" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            { kind: "Field", name: { kind: "Name", value: "id" } },
-                            { kind: "Field", name: { kind: "Name", value: "content" } },
-                            { kind: "Field", name: { kind: "Name", value: "createdAt" } },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "sender" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  { kind: "Field", name: { kind: "Name", value: "id" } },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "profilePicture" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "firstName" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "lastName" },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "pageInfo" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "endCursor" } },
-                      { kind: "Field", name: { kind: "Name", value: "hasNextPage" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<MessagesQuery, MessagesQueryVariables>;
+} as unknown as DocumentNode<SearchUsersQuery, SearchUsersQueryVariables>;
 export const ChatUpdatedDocument = {
   kind: "Document",
   definitions: [

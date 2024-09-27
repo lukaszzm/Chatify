@@ -5,7 +5,7 @@ import { NoteHeader } from "@/features/notes/components/note-header";
 import { NoteLoading } from "@/features/notes/components/note-loading";
 import { NoteProvider } from "@/features/notes/contexts/note-context";
 import { useNoteQuery } from "@/features/notes/hooks/use-note-query";
-import type { Note as GqlNote } from "@/gql/graphql";
+import type { Note as GqlNote } from "@/generated/graphql";
 
 interface NoteProps extends Pick<GqlNote, "id"> {}
 

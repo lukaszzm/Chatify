@@ -1,7 +1,7 @@
 import type { RequestPolicy } from "urql";
 import { useQuery } from "urql";
 
-import { RECENT_CHATS_QUERY } from "@/lib/gql/queries";
+import { RECENT_CHATS_QUERY } from "@/graphql/queries/recent-chats";
 
 interface UseRecentChatsOptions {
   after?: string | null;

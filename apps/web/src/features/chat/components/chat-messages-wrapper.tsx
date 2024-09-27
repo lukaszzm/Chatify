@@ -3,7 +3,7 @@ import { ChatBubble } from "@chatify/ui";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { ChatMessagesMore } from "@/features/chat/components/chat-messages-more";
 import { useChatScroll } from "@/features/chat/hooks/use-chat-scroll";
-import type { MessagesQuery } from "@/gql/graphql";
+import type { MessagesQuery } from "@/generated/graphql";
 import { formatDate } from "@/utils/format-date";
 
 interface ChatMessagesWrapperProps extends Pick<MessagesQuery, "messages"> {}

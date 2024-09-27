@@ -1,7 +1,7 @@
 import type { RequestPolicy } from "urql";
 import { useQuery } from "urql";
 
-import { MESSAGES_QUERY } from "@/lib/gql/queries";
+import { MESSAGES_QUERY } from "@/graphql/queries/messages";
 
 interface UseMessagesQueryOptions {
   chatId: string;

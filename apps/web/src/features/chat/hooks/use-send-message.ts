@@ -5,7 +5,7 @@ import { useMutation } from "urql";
 
 import type { SendMessageValues } from "@/features/chat/schemas/send-message-schema";
 import { sendMessageSchema } from "@/features/chat/schemas/send-message-schema";
-import { SEND_MESSAGE_MUTATION } from "@/lib/gql/mutations";
+import { SEND_MESSAGE_MUTATION } from "@/graphql/mutations/send-message";
 
 export const useSendMessage = (chatId: string) => {
   const form = useForm<SendMessageValues>({

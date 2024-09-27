@@ -7,7 +7,7 @@ import "@chatify/ui/main.css";
 
 import { AuthProvider } from "@/features/auth/contexts/auth-context";
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import { client } from "@/lib/gql/client";
+import { client } from "@/graphql/client";
 import { routeTree } from "@/routeTree.gen";
 
 const router = createRouter({

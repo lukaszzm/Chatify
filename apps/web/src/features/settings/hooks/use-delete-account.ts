@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { DELETE_ACCOUNT_MUTATION } from "@/lib/gql/mutations";
+import { DELETE_ACCOUNT_MUTATION } from "@/graphql/mutations/delete-account";
 
 interface UseDeleteAccountOptions {
   onDelete?: () => void;

@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { UserAvatar } from "@/components/user-avatar";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { getSecondParticipant } from "@/features/chat/utils/get-second-participant";
-import type { ChatUpdatedSubscription } from "@/gql/graphql";
+import type { ChatUpdatedSubscription } from "@/generated/graphql";
 import { formatDate } from "@/utils/format-date";
 
 export const RecentChatsItem = ({

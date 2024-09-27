@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { useMutation } from "urql";
 
-import { TOGGLE_LOCK_MUTATION } from "@/lib/gql/mutations";
+import { TOGGLE_LOCK_MUTATION } from "@/graphql/mutations/toggle-lock";
 
 export const useToggleLock = () => {
   const [, toggleLockMutation] = useMutation(TOGGLE_LOCK_MUTATION);

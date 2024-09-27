@@ -5,7 +5,7 @@ import { useMutation } from "urql";
 
 import type { UpdatePasswordValues } from "@/features/settings/schemas/update-password-schema";
 import { updatePasswordSchema } from "@/features/settings/schemas/update-password-schema";
-import { UPDATE_PASSWORD_MUTATION } from "@/lib/gql/mutations";
+import { UPDATE_PASSWORD_MUTATION } from "@/graphql/mutations/update-password";
 
 export const useUpdatePassword = () => {
   const form = useForm<UpdatePasswordValues>({
