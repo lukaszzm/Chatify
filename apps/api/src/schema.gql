@@ -92,9 +92,9 @@ type Mutation {
   signUp(data: SignUpInput!): Auth!
   startChat(data: StartChatInput!): Chat!
   toggleLock(noteId: String!): Note!
+  updateInfo(data: UpdateProfileInfoInput!): User!
   updateNote(content: String!, noteId: String!): Note!
   updatePassword(data: UpdatePasswordInput!): User!
-  updateProfile(data: UpdateProfileInput!): User!
   updateProfilePicture(data: UpdateProfilePictureInput!): User!
 }
 
@@ -174,8 +174,7 @@ input UpdatePasswordInput {
   newPassword: String!
 }
 
-input UpdateProfileInput {
-  email: String!
+input UpdateProfileInfoInput {
   firstName: String!
   lastName: String!
 }

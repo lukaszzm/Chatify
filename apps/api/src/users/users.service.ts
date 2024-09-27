@@ -11,7 +11,7 @@ import { PrismaService } from "nestjs-prisma";
 import { PasswordService } from "@/auth/password.service";
 import { UploadService } from "@/upload/upload.service";
 import { UpdatePasswordInput } from "@/users/dtos/update-password.input";
-import { UpdateProfileInput } from "@/users/dtos/update-profile.input";
+import { UpdateProfileInfoInput } from "@/users/dtos/update-profile-info.input";
 import { UsersArgs } from "@/users/dtos/users.args";
 
 @Injectable()
@@ -78,14 +78,7 @@ export class UsersService {
     });
   }
 
-  async updateInfo(data: UpdateProfileInput, id: string) {
-    const currentUser = await this.findOneOrThrow(id);
-    const userFromEmail = await this.findOneByEmail(data.email);
-
-    if (userFromEmail && userFromEmail.id !== currentUser.id) {
-      throw new BadRequestException("Email is already taken");
-    }
-
+  async updateInfo(data: UpdateProfileInfoInput, id: string) {
     return this.prismaService.user.update({
       where: { id },
       data: {

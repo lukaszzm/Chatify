@@ -4,8 +4,8 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
 import { UpdatePasswordInput } from "@/users/dtos/update-password.input";
+import { UpdateProfileInfoInput } from "@/users/dtos/update-profile-info.input";
 import { UpdateProfilePictureInput } from "@/users/dtos/update-profile-picture.input";
-import { UpdateProfileInput } from "@/users/dtos/update-profile.input";
 import { UsersArgs } from "@/users/dtos/users.args";
 import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
@@ -26,7 +26,7 @@ export class UsersResolver {
   }
 
   @Mutation(() => User)
-  async updateProfile(@Args("data") data: UpdateProfileInput, @CurrentUser() me: User) {
+  async updateInfo(@Args("data") data: UpdateProfileInfoInput, @CurrentUser() me: User) {
     return this.usersService.updateInfo(data, me.id);
   }
 

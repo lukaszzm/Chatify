@@ -2,7 +2,7 @@ import { Field, InputType } from "@nestjs/graphql";
 import { IsNotEmpty, IsString } from "class-validator";
 
 @InputType()
-export class UpdateProfileInput {
+export class UpdateProfileInfoInput {
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
@@ -12,9 +12,4 @@ export class UpdateProfileInput {
   @IsString()
   @IsNotEmpty()
   lastName: string;
-
-  @Field(() => String)
-  @IsString()
-  @IsNotEmpty()
-  email: string;
 }
