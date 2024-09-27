@@ -45,6 +45,9 @@ export const cache = cacheExchange({
       toggleLock(result: ToggleLockMutation, _args, cache) {
         cache.writeFragment(TOGGLE_LOCK_FRAGMENT, result.toggleLock);
       },
+      sendMessage(_result, _args, _cache) {
+        return;
+      },
     },
     Subscription: {
       messageSent(
