@@ -39,8 +39,8 @@ const documents = {
     types.UpdateNoteDocument,
   "\n  mutation UpdatePassword($data: UpdatePasswordInput!) {\n    updatePassword(data: $data) {\n      id\n    }\n  }\n":
     types.UpdatePasswordDocument,
-  "\n  mutation UpdateProfile($data: UpdateProfileInput!) {\n    updateProfile(data: $data) {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n":
-    types.UpdateProfileDocument,
+  "\n  mutation UpdateProfileInfo($data: UpdateProfileInfoInput!) {\n    updateInfo(data: $data) {\n      id\n      firstName\n      lastName\n    }\n  }\n":
+    types.UpdateProfileInfoDocument,
   "\n  mutation UpdateProfilePicture($data: UpdateProfilePictureInput!) {\n    updateProfilePicture(data: $data) {\n      id\n      profilePicture\n    }\n  }\n":
     types.UpdateProfilePictureDocument,
   "\n  query Chat($id: String!) {\n    chat(id: $id) {\n      id\n      type\n      participants {\n        id\n        profilePicture\n        firstName\n        lastName\n      }\n    }\n  }\n":
@@ -159,8 +159,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation UpdateProfile($data: UpdateProfileInput!) {\n    updateProfile(data: $data) {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n"
-): (typeof documents)["\n  mutation UpdateProfile($data: UpdateProfileInput!) {\n    updateProfile(data: $data) {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n"];
+  source: "\n  mutation UpdateProfileInfo($data: UpdateProfileInfoInput!) {\n    updateInfo(data: $data) {\n      id\n      firstName\n      lastName\n    }\n  }\n"
+): (typeof documents)["\n  mutation UpdateProfileInfo($data: UpdateProfileInfoInput!) {\n    updateInfo(data: $data) {\n      id\n      firstName\n      lastName\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -10,11 +10,11 @@ import {
 import type { User } from "@/generated/graphql";
 import { UPDATE_PROFILE_INFO_MUTATION } from "@/graphql/mutations/update-profile-info";
 
-interface UseUpdateProfileOptions {
+interface UseUpdateProfileInfoOptions {
   defaultValues?: User | null;
 }
 
-export const useUpdateProfile = (options?: UseUpdateProfileOptions) => {
+export const useUpdateProfileInfo = (options?: UseUpdateProfileInfoOptions) => {
   const { defaultValues } = options || {};
 
   const form = useForm<UpdateProfileValues>({
@@ -30,9 +30,11 @@ export const useUpdateProfile = (options?: UseUpdateProfileOptions) => {
   const [{ error }, updateProfileMutation] = useMutation(UPDATE_PROFILE_INFO_MUTATION);
 
   const updateProfile = async (values: UpdateProfileValues) => {
-    const { data } = await updateProfileMutation({ data: values });
+    const { email: _email, ...rest } = values;
 
-    if (data?.updateProfile) {
+    const { data } = await updateProfileMutation({ data: rest });
+
+    if (data?.updateInfo) {
       toast.success("Profile updated successfully");
     }
   };

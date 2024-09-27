@@ -16,12 +16,12 @@ import {
 
 import { ErrorAlert } from "@/components/error-alert";
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import { useUpdateProfile } from "@/features/settings/hooks/use-update-profile";
+import { useUpdateProfileInfo } from "@/features/settings/hooks/use-update-profile-info";
 
 export const ProfileInfo = () => {
   const { user } = useAuth();
 
-  const { form, updateProfile, error } = useUpdateProfile({
+  const { form, updateProfile, error } = useUpdateProfileInfo({
     defaultValues: user,
   });
 
@@ -44,7 +44,7 @@ export const ProfileInfo = () => {
                 <FormItem className="xl:col-span-2">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="example@example.com" {...field} />
+                    <Input disabled placeholder="example@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

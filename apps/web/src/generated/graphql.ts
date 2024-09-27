@@ -121,9 +121,9 @@ export type Mutation = {
   signUp: Auth;
   startChat: Chat;
   toggleLock: Note;
+  updateInfo: User;
   updateNote: Note;
   updatePassword: User;
-  updateProfile: User;
   updateProfilePicture: User;
 };
 
@@ -159,6 +159,10 @@ export type MutationToggleLockArgs = {
   noteId: Scalars["String"]["input"];
 };
 
+export type MutationUpdateInfoArgs = {
+  data: UpdateProfileInfoInput;
+};
+
 export type MutationUpdateNoteArgs = {
   content: Scalars["String"]["input"];
   noteId: Scalars["String"]["input"];
@@ -166,10 +170,6 @@ export type MutationUpdateNoteArgs = {
 
 export type MutationUpdatePasswordArgs = {
   data: UpdatePasswordInput;
-};
-
-export type MutationUpdateProfileArgs = {
-  data: UpdateProfileInput;
 };
 
 export type MutationUpdateProfilePictureArgs = {
@@ -292,8 +292,7 @@ export type UpdatePasswordInput = {
   newPassword: Scalars["String"]["input"];
 };
 
-export type UpdateProfileInput = {
-  email: Scalars["String"]["input"];
+export type UpdateProfileInfoInput = {
   firstName: Scalars["String"]["input"];
   lastName: Scalars["String"]["input"];
 };
@@ -457,19 +456,13 @@ export type UpdatePasswordMutation = {
   updatePassword: { __typename?: "User"; id: string };
 };
 
-export type UpdateProfileMutationVariables = Exact<{
-  data: UpdateProfileInput;
+export type UpdateProfileInfoMutationVariables = Exact<{
+  data: UpdateProfileInfoInput;
 }>;
 
-export type UpdateProfileMutation = {
+export type UpdateProfileInfoMutation = {
   __typename?: "Mutation";
-  updateProfile: {
-    __typename?: "User";
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
+  updateInfo: { __typename?: "User"; id: string; firstName: string; lastName: string };
 };
 
 export type UpdateProfilePictureMutationVariables = Exact<{
@@ -1213,13 +1206,13 @@ export const UpdatePasswordDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdatePasswordMutation, UpdatePasswordMutationVariables>;
-export const UpdateProfileDocument = {
+export const UpdateProfileInfoDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "UpdateProfile" },
+      name: { kind: "Name", value: "UpdateProfileInfo" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -1228,7 +1221,7 @@ export const UpdateProfileDocument = {
             kind: "NonNullType",
             type: {
               kind: "NamedType",
-              name: { kind: "Name", value: "UpdateProfileInput" },
+              name: { kind: "Name", value: "UpdateProfileInfoInput" },
             },
           },
         },
@@ -1238,7 +1231,7 @@ export const UpdateProfileDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "updateProfile" },
+            name: { kind: "Name", value: "updateInfo" },
             arguments: [
               {
                 kind: "Argument",
@@ -1252,7 +1245,6 @@ export const UpdateProfileDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "firstName" } },
                 { kind: "Field", name: { kind: "Name", value: "lastName" } },
-                { kind: "Field", name: { kind: "Name", value: "email" } },
               ],
             },
           },
@@ -1260,7 +1252,10 @@ export const UpdateProfileDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
+} as unknown as DocumentNode<
+  UpdateProfileInfoMutation,
+  UpdateProfileInfoMutationVariables
+>;
 export const UpdateProfilePictureDocument = {
   kind: "Document",
   definitions: [
