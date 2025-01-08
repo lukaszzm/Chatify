@@ -40,6 +40,7 @@ const config = {
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
+          contrast: "hsl(var(--accent-contrast))",
           foreground: "hsl(var(--accent-foreground))",
         },
         popover: {

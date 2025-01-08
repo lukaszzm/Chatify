@@ -58,8 +58,8 @@ const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) =>
           className={cn(
             "w-full px-3 py-1",
             isMine
-              ? "bg-primary text-primary-foreground rounded-l-lg rounded-tr-lg"
-              : "bg-muted/40 rounded-e-xl rounded-es-xl "
+              ? "bg-accent text-accent-foreground rounded-l-lg rounded-tr-lg"
+              : "bg-muted/60 rounded-e-xl rounded-es-xl "
           )}
         >
           <p className="hyphens-auto break-words py-2.5 text-sm font-normal">
