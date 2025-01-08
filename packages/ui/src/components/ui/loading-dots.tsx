@@ -17,6 +17,8 @@ const loadingDotsVariants = cva("animate-bounce rounded-full", {
       accent: "bg-accent-foreground",
       nav: "bg-primary",
       active: "bg-accent",
+      staticBlack: "bg-white",
+      staticGhost: "bg-white",
     },
     size: {
       default: "size-1.5",
