@@ -58,7 +58,7 @@ const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) =>
           className={cn(
             "w-full px-3 py-1",
             isMine
-              ? "bg-accent text-accent-foreground rounded-l-lg rounded-tr-lg"
+              ? "bg-foreground dark:bg-accent text-background dark:text-accent-foreground rounded-l-lg rounded-tr-lg"
               : "bg-muted/60 rounded-e-xl rounded-es-xl "
           )}
         >
