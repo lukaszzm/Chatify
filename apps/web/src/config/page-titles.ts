@@ -7,7 +7,6 @@ export const pageTitles = {
   "/sign-up": "Sign Up | Chatify",
   "/chat": "Chat | Chatify",
   "/notes": "Notes | Chatify",
-  "/settings/notifications": "Notifications | Chatify",
   "/settings/appearance": "Appearance | Chatify",
   "/settings/profile": "My Profile | Chatify",
   "/settings": "Settings | Chatify",
