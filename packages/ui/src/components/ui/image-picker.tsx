@@ -53,7 +53,7 @@ const ImagePicker = forwardRef<HTMLInputElement, ImagePickerProps>(
       <div
         {...getRootProps()}
         className={cn(
-          "group relative grid w-full max-w-xs aspect-square rounded-full cursor-pointer border border-input/30 bg-input/30 place-items-center text-center transition hover:bg-input/20 overflow-hidden ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "group relative grid w-full max-w-xs aspect-square rounded-full cursor-pointer border border-muted/20 bg-muted/20 place-items-center text-center transition hover:bg-input/20 overflow-hidden ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           disabled && "opacity-50 cursor-not-allowed hover:bg-input/30",
           className
         )}
