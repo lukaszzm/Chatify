@@ -2,7 +2,14 @@
 module.exports = {
   extends: ["@chatify/eslint-config/react.js"],
   parser: "@typescript-eslint/parser",
-  ignorePatterns: [".eslintrc.cjs", "vite.config.ts", "codegen.ts", "tailwind.config.ts"],
+  ignorePatterns: [
+    ".eslintrc.cjs",
+    "vite.config.ts",
+    "codegen.ts",
+    "tailwind.config.ts",
+    "vitest.config.ts",
+    "vitest-global-setup.ts",
+  ],
   parserOptions: {
     project: true,
     ecmaFeatures: {
