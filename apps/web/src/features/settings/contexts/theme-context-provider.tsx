@@ -1,6 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { Theme } from "@/config/themes";
+import { Theme } from "@/features/settings/config/themes";
+import {
+  ThemeContext,
+  type ThemeProviderState,
+} from "@/features/settings/contexts/theme-context";
 
 const THEME_STORAGE_KEY = "ui-theme";
 
@@ -10,23 +14,11 @@ interface ThemeProviderProps {
   storageKey?: string;
 }
 
-interface ThemeProviderState {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-}
-
-const initialState: ThemeProviderState = {
-  theme: Theme.System,
-  setTheme: () => {},
-};
-
-const ThemeContext = createContext<ThemeProviderState>(initialState);
-
-export function ThemeProvider({
+export const ThemeProvider = ({
   children,
   defaultTheme = Theme.System,
   storageKey = THEME_STORAGE_KEY,
-}: ThemeProviderProps) {
+}: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(() => {
     const storedTheme = window.localStorage.getItem(storageKey);
 
@@ -63,4 +55,4 @@ export function ThemeProvider({
   } satisfies ThemeProviderState;
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
-}
+};

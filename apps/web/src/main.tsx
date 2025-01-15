@@ -5,9 +5,9 @@ import { HelmetProvider } from "react-helmet-async";
 import { Provider as UrqlProvider } from "urql";
 import "@chatify/ui/main.css";
 
-import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/features/auth/contexts/auth-context";
 import { useAuth } from "@/features/auth/hooks/use-auth";
+import { ThemeProvider } from "@/features/settings/contexts/theme-context-provider";
 import { client } from "@/graphql/client";
 import { routeTree } from "@/routeTree.gen";
 
