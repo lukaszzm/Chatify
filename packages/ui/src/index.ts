@@ -33,3 +33,5 @@ export * from "./components/ui/card";
 export * from "./components/ui/subtitle";
 export * from "./components/ui/title";
 export * from "./components/ui/image-picker";
+export * from "./components/ui/toggle";
+export * from "./components/ui/toggle-group";
