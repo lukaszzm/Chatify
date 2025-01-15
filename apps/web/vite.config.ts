@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import react from "@vitejs/plugin-react";
 import path, { dirname } from "node:path";
@@ -24,5 +26,8 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "../../packages/ui/src"),
       },
     ],
+  },
+  test: {
+    globalSetup: "./vitest-global-setup.ts",
   },
 });

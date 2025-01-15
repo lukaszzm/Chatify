@@ -7,7 +7,6 @@ module.exports = {
     "vite.config.ts",
     "codegen.ts",
     "tailwind.config.ts",
-    "vitest.config.ts",
     "vitest-global-setup.ts",
   ],
   parserOptions: {
