@@ -6,7 +6,7 @@ import { useChatScroll } from "@/features/chat/hooks/use-chat-scroll";
 import type { MessagesQuery } from "@/generated/graphql";
 import { formatDate } from "@/utils/format-date";
 
-interface ChatMessagesWrapperProps extends Pick<MessagesQuery, "messages"> {}
+type ChatMessagesWrapperProps = Pick<MessagesQuery, "messages">;
 
 export const ChatMessagesWrapper = ({ messages }: ChatMessagesWrapperProps) => {
   const { user } = useAuth();

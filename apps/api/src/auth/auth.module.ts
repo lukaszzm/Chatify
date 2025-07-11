@@ -15,7 +15,7 @@ import { UsersModule } from "@/users/users.module";
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         secret: configService.getOrThrow<string>("JWT_SECRET"),
         signOptions: {
           expiresIn: configService.getOrThrow<string>("JWT_EXPIRATION_TIME"),

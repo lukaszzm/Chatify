@@ -23,23 +23,8 @@ export class ChatsService {
     });
   }
 
-  async findManyByUserId(userId: string, pagination: PaginationArgs) {
-    return paginate({
-      client: this.prismaService,
-      model: "Chat",
-      where: {
-        participants: {
-          some: {
-            userId,
-          },
-        },
-        lastMessageAt: {
-          not: null,
-        },
-      },
-      cursorColumn: "lastMessageAt",
-      pagination,
-    });
+  findManyByUserId(_userId: string, _pagination: PaginationArgs) {
+    return paginate();
   }
 
   async create(data: StartChatInput) {

@@ -1,15 +1,14 @@
-/* eslint-disable tailwindcss/no-custom-classname */
-
 import { useTheme } from "next-themes";
 import { Toaster as Sonner } from "sonner";
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = ({ ref, ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme();
 
   return (
     <Sonner
+      ref={ref}
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
       toastOptions={{
@@ -27,5 +26,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
     />
   );
 };
+Toaster.displayName = "Toaster";
 
-export { Toaster };
+export { Toaster, type ToasterProps };

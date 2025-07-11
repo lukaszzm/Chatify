@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import type { Note } from "@/generated/graphql";
 import { formatDate } from "@/utils/format-date";
 
-interface NotesListItemProps extends Pick<Note, "id" | "title" | "updatedAt"> {}
+type NotesListItemProps = Pick<Note, "id" | "title" | "updatedAt">;
 
 export const NotesListItem = ({ id, title, updatedAt }: NotesListItemProps) => {
   return (

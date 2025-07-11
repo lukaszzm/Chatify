@@ -8,7 +8,7 @@ import { ChatProvider } from "@/features/chat/contexts/chat-context";
 import { useChatQuery } from "@/features/chat/hooks/use-chat-query";
 import type { Chat as GqlChat } from "@/generated/graphql";
 
-interface ChatProps extends Pick<GqlChat, "id"> {}
+type ChatProps = Pick<GqlChat, "id">;
 
 export const Chat = ({ id }: ChatProps) => {
   const { data, fetching, error } = useChatQuery(id);

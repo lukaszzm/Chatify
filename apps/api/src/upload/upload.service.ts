@@ -40,9 +40,13 @@ export class UploadService {
     const buffer: Uint8Array[] = [];
 
     return new Promise((resolve, reject) => {
-      stream.on("data", (data) => buffer.push(data));
-      stream.on("end", () => resolve(Buffer.concat(buffer)));
-      stream.on("error", (error) => reject(error));
+      stream.on("data", (data: Uint8Array) => buffer.push(data));
+      stream.on("end", () => {
+        resolve(Buffer.concat(buffer));
+      });
+      stream.on("error", (error) => {
+        reject(error);
+      });
     }) satisfies Promise<Buffer>;
   }
 
@@ -63,8 +67,7 @@ export class UploadService {
     compressBuffer = await compressBuffer.toBuffer();
 
     if (compressBuffer.length > IMAGE_SIZE) {
-      for (let i = 0; i < QUALITY_ARRAY.length; i++) {
-        const quality = QUALITY_ARRAY[i];
+      for (const quality of QUALITY_ARRAY) {
         const smallerBuffer = await sharp(compressBuffer)
           .jpeg({
             quality,
@@ -113,19 +116,18 @@ export class UploadService {
   }
 
   async uploadImage(file: FileUpload, ratio?: Ratio) {
-    const { mimetype, filename, createReadStream } = file;
-
-    if (!this.validateImage(mimetype)) {
+    if (!this.validateImage(file.mimetype)) {
       throw new BadRequestException("Invalid file type, only images are allowed");
     }
 
-    const fixedFileName = `${Date.now()}-${filename}`;
+    const timestamp = Date.now().toString();
+    const fixedFileName = `${timestamp}-${file.filename}`;
 
     try {
-      const buffer = await this.streamToBuffer(createReadStream());
+      const buffer = await this.streamToBuffer(file.createReadStream());
       const compressedBuffer = await this.compressImage(buffer, ratio);
       return await this.uploadToS3(fixedFileName, compressedBuffer);
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException("Failed to upload image");
     }
   }
@@ -135,7 +137,7 @@ export class UploadService {
 
     try {
       await this.deleteFromS3(filename);
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException("Failed to delete image");
     }
   }

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
-
 import { authExchange } from "@urql/exchange-auth";
 import { Kind } from "graphql";
 

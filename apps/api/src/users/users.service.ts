@@ -82,7 +82,8 @@ export class UsersService {
     return this.prismaService.user.update({
       where: { id },
       data: {
-        ...data,
+        firstName: data.firstName,
+        lastName: data.lastName,
         fullName: `${data.firstName} ${data.lastName}`,
       },
     });
@@ -116,12 +117,12 @@ export class UsersService {
 
   async updateProfilePicture(filePromise: Promise<FileUpload> | null, id: string) {
     const user = await this.findOneOrThrow(id);
-
     if (user.profilePicture) {
       await this.uploadService.deleteImage(user.profilePicture);
     }
 
-    if (!filePromise) {
+    const isFileProvided = filePromise !== null;
+    if (!isFileProvided) {
       return this.prismaService.user.update({
         where: { id },
         data: {

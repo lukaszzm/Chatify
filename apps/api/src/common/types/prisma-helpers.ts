@@ -9,10 +9,8 @@ export type PrismaModelName = ModelName;
 export const getPrismaModelProp = <N extends PrismaModelName>(name: N) =>
   `${name.charAt(0).toLowerCase()}${name.slice(1)}` as PrismaModelProp<N>;
 
-export const getPrismaDelegate = <N extends PrismaModelName>(
-  name: N,
-  prisma: PrismaClient
-) => prisma[getPrismaModelProp(name)] as PrismaModelDelegate<N> as any;
+export const getPrismaDelegate = (name: PrismaModelName, prisma: PrismaClient) =>
+  prisma[getPrismaModelProp(name)] as PrismaModelDelegate;
 
 export type PrismaModel<N extends ModelName = ModelName> =
   PrismaTypes.Result.DefaultSelection<PrismaModelPayload<N>>;

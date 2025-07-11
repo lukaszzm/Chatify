@@ -35,7 +35,7 @@ import { UsersModule } from "@/users/users.module";
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       imports: [AuthModule],
       driver: ApolloDriver,
-      useFactory: async (authService: AuthService) => {
+      useFactory: (authService: AuthService) => {
         return {
           introspection: true,
           playground: true,

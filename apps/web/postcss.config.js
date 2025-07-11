@@ -1,1 +1,3 @@
-export { default } from "@chatify/ui/postcss.config";
+import { postcssConfig } from "@chatify/ui/postcss.config";
+
+export default postcssConfig;

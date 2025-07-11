@@ -1,12 +1,9 @@
 import { NestFactory } from "@nestjs/core";
 import type { NestFastifyApplication } from "@nestjs/platform-fastify";
 import { FastifyAdapter } from "@nestjs/platform-fastify";
-import type { FastifyRequest } from "fastify";
 import { processRequest } from "graphql-upload-ts";
 
 import { AppModule } from "@/app.module";
-
-type FastifyRequestWithMultipart = { isMultipart?: boolean } & FastifyRequest;
 
 async function bootstrap() {
   const adapter = new FastifyAdapter();
@@ -17,16 +14,13 @@ async function bootstrap() {
     done(null);
   });
 
-  fastify.addHook(
-    "preValidation",
-    async function (request: FastifyRequestWithMultipart, reply) {
-      if (!request.isMultipart) {
-        return;
-      }
-
-      request.body = await processRequest(request.raw, reply.raw);
+  fastify.addHook("preValidation", async function (request, reply) {
+    if ("isMultipart" in request && !request.isMultipart) {
+      return;
     }
-  );
+
+    request.body = await processRequest(request.raw, reply.raw);
+  });
 
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, {
     cors: true,

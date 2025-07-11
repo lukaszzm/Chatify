@@ -1,12 +1,12 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
-import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
-const Label = forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => (
+const Label = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<typeof LabelPrimitive.Root>) => (
   <LabelPrimitive.Root
     ref={ref}
     className={cn(
@@ -15,7 +15,7 @@ const Label = forwardRef<
     )}
     {...props}
   />
-));
+);
 Label.displayName = LabelPrimitive.Root.displayName;
 
 export { Label };

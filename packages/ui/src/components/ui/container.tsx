@@ -1,6 +1,5 @@
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
@@ -22,22 +21,19 @@ const containerVariants = cva("flex w-full flex-col gap-4 rounded-md border p-4"
   },
 });
 
-export interface ContainerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+interface ContainerProps
+  extends React.ComponentProps<"div">,
     VariantProps<typeof containerVariants> {}
 
-const Container = forwardRef<HTMLDivElement, ContainerProps>(
-  ({ className, variant, size, ...props }, ref) => {
-    return (
-      <div
-        className={cn(containerVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-
+const Container = ({ className, variant, size, ref, ...props }: ContainerProps) => {
+  return (
+    <div
+      className={cn(containerVariants({ variant, size, className }))}
+      ref={ref}
+      {...props}
+    />
+  );
+};
 Container.displayName = "Container";
 
-export { Container, containerVariants };
+export { Container, containerVariants, type ContainerProps };

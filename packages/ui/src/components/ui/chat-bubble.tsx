@@ -14,7 +14,7 @@ interface ChatBubbleProps {
   children: React.ReactNode;
 }
 
-const ChatBubbleAvatar = ({ sender }: { sender: Sender }) => {
+const ChatBubbleAvatar = ({ sender }: Pick<ChatBubbleProps, "sender">) => {
   return (
     <Avatar className="mt-4 size-8">
       <AvatarImage

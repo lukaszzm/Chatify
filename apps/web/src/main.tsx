@@ -1,9 +1,9 @@
+import "@/globals.css";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider as UrqlProvider } from "urql";
-import "@chatify/ui/main.css";
 
 import { AuthProvider } from "@/features/auth/contexts/auth-context";
 import { useAuth } from "@/features/auth/hooks/use-auth";

@@ -19,6 +19,10 @@ import { SendMessageInput } from "@/messages/dtos/send-message.input";
 import { MessagesService } from "@/messages/messages.service";
 import { Message } from "@/messages/models/message.model";
 import { PaginatedMessage } from "@/messages/models/paginated-message.model";
+import {
+  SentMessagePayload,
+  SentMessageVariables,
+} from "@/messages/types/message-subsciption.types";
 import { RedisPubSubService } from "@/pubsub/redis-pubsub.service";
 import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
@@ -34,14 +38,15 @@ export class MessagesResolver {
   ) {}
 
   @Subscription(() => Message, {
-    filter: (payload, variables) => payload.messageSent.chatId === variables.chatId,
+    filter: (payload: SentMessagePayload, variables: SentMessageVariables) =>
+      payload.messageSent.chatId === variables.chatId,
   })
   messageSent(@Args("chatId") _chatId: string) {
     return this.redisPubSub.asyncIterator(MESSAGE_SENT_EVENT);
   }
 
   @Query(() => PaginatedMessage)
-  async messages(@Args() pagination: PaginationArgs, @Args("chatId") chatId: string) {
+  messages(@Args() pagination: PaginationArgs, @Args("chatId") chatId: string) {
     return this.messagesService.findManyByChatIdWithPagination(chatId, pagination);
   }
 
@@ -50,8 +55,10 @@ export class MessagesResolver {
     const message = await this.messagesService.create(data, me.id);
     const chat = await this.chatsService.findOneById(data.chatId, me.id);
 
-    this.redisPubSub.publish(MESSAGE_SENT_EVENT, { messageSent: message });
-    this.redisPubSub.publish(CHAT_UPDATED_EVENT, { chatUpdated: chat });
+    await Promise.all([
+      this.redisPubSub.publish(MESSAGE_SENT_EVENT, { messageSent: message }),
+      this.redisPubSub.publish(CHAT_UPDATED_EVENT, { chatUpdated: chat }),
+    ]);
 
     return message;
   }

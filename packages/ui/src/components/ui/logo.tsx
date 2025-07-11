@@ -1,6 +1,4 @@
-import { forwardRef } from "react";
-
-const Logo = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>((props, ref) => {
+const Logo = ({ ref, ...props }: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg ref={ref} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" {...props}>
       <path
@@ -13,7 +11,7 @@ const Logo = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>((props, re
       />
     </svg>
   );
-});
+};
 Logo.displayName = "Logo";
 
 export { Logo };

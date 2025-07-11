@@ -2,6 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
   "globalEnv": [
+    "TZ",
     "PORT",
     "DATABASE_URL",
     "JWT_SECRET",

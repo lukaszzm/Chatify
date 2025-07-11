@@ -2,7 +2,7 @@
   "extends": "@chatify/typescript-config/nest.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -11,5 +11,5 @@
     "require": ["tsconfig-paths/register"]
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["."]
+  "include": ["src"]
 }

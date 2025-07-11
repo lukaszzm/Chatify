@@ -4,7 +4,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { useStartChat } from "@/features/search/hooks/use-start-chat";
 import type { UserInfoFragment } from "@/generated/graphql";
 
-interface SearchResultProps extends UserInfoFragment {}
+type SearchResultProps = UserInfoFragment;
 
 export const SearchResult = ({
   id,

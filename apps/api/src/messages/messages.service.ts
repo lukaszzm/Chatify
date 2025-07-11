@@ -17,16 +17,17 @@ export class MessagesService {
     });
   }
 
-  async findManyByChatIdWithPagination(chatId: string, pagination: PaginationArgs) {
-    return paginate({
-      client: this.prismaService,
-      model: "Message",
-      where: {
-        chatId,
-      },
-      pagination,
-      cursorColumn: "createdAt",
-    });
+  findManyByChatIdWithPagination(_chatId: string, _pagination: PaginationArgs) {
+    return paginate();
+    // return paginate({
+    //   client: this.prismaService,
+    //   model: "Message",
+    //   where: {
+    //     chatId,
+    //   },
+    //   pagination,
+    //   cursorColumn: "createdAt",
+    // });
   }
 
   async findManyByUserId(userId: string) {

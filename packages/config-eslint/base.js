@@ -1,70 +1,70 @@
-const { resolve } = require("node:path");
+import js from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
+import turboPlugin from "eslint-plugin-turbo";
+import tseslint from "typescript-eslint";
+import onlyWarn from "eslint-plugin-only-warn";
+import eslintPluginUnicorn from "eslint-plugin-unicorn";
+import importPlugin from "eslint-plugin-import";
 
-const project = resolve(process.cwd(), "tsconfig.json");
-
-/** @type {import("eslint").Linter.Config} */
-module.exports = {
-  extends: [
-    "eslint:recommended",
-    "prettier",
-    "eslint-config-turbo",
-    "plugin:import/recommended",
-  ],
-  parserOptions: {
-    project,
-  },
-  env: {
-    es2021: true,
-    node: true,
-    jest: true,
-  },
-  settings: {
-    "import/resolver": {
-      typescript: {
-        project,
-      },
+/** @type {import("eslint").Linter.Config[]} */
+export const baseConfig = [
+  js.configs.recommended,
+  importPlugin.flatConfigs.recommended,
+  eslintConfigPrettier,
+  ...tseslint.configs.recommended,
+  {
+    plugins: {
+      turbo: turboPlugin,
+      unicorn: eslintPluginUnicorn,
+    },
+    rules: {
+      "turbo/no-undeclared-env-vars": "warn",
+      "import/order": [
+        "error",
+        {
+          "newlines-between": "always",
+          pathGroups: [
+            {
+              pattern: "@/**",
+              group: "internal",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["builtin"],
+          groups: [
+            ["builtin", "external"],
+            ["internal"],
+            ["parent", "sibling", "index"],
+            "unknown",
+          ],
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+      "@typescript-eslint/consistent-type-imports": "error",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [".*"],
+        },
+      ],
     },
   },
-  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.cjs", "*.config.js"],
-  rules: {
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        pathGroups: [
-          {
-            pattern: "$/**",
-            group: "internal",
-          },
-        ],
-        pathGroupsExcludedImportTypes: ["builtin"],
-        groups: [
-          ["builtin", "external"],
-          ["internal"],
-          ["parent", "sibling", "index"],
-          "unknown",
-        ],
-        alphabetize: {
-          order: "asc",
-          caseInsensitive: true,
-        },
-      },
-    ],
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-      },
-    ],
-    "@typescript-eslint/consistent-type-imports": "error",
-    "no-restricted-imports": [
-      "error",
-      {
-        patterns: [".*"],
-      },
-    ],
+  {
+    plugins: {
+      onlyWarn,
+    },
   },
-  plugins: ["@typescript-eslint/eslint-plugin"],
-};
+  {
+    ignores: ["dist/**"],
+  },
+];

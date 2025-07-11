@@ -8,536 +8,391 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as DashboardRouteRouteImport } from './routes/_dashboard/route'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardSettingsRouteRouteImport } from './routes/_dashboard/settings/route'
+import { Route as DashboardNotesRouteRouteImport } from './routes/_dashboard/notes/route'
+import { Route as DashboardChatRouteRouteImport } from './routes/_dashboard/chat/route'
+import { Route as AuthSignUpRouteRouteImport } from './routes/_auth/sign-up/route'
+import { Route as AuthSignInRouteRouteImport } from './routes/_auth/sign-in/route'
+import { Route as DashboardSettingsProfileRouteRouteImport } from './routes/_dashboard/settings/profile/route'
+import { Route as DashboardSettingsAppearanceRouteRouteImport } from './routes/_dashboard/settings/appearance/route'
+import { Route as DashboardNotesNoteIdRouteRouteImport } from './routes/_dashboard/notes/$noteId/route'
+import { Route as DashboardChatChatIdRouteRouteImport } from './routes/_dashboard/chat/$chatId/route'
+import { Route as DashboardSettingsIndexRouteRouteImport } from './routes/_dashboard/settings/index/route'
+import { Route as DashboardNotesIndexRouteRouteImport } from './routes/_dashboard/notes/index/route'
+import { Route as DashboardChatIndexRouteRouteImport } from './routes/_dashboard/chat/index/route'
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as DashboardRouteImport } from "./routes/_dashboard/route";
-import { Route as AuthRouteImport } from "./routes/_auth/route";
-import { Route as IndexImport } from "./routes/index";
-import { Route as DashboardSettingsRouteImport } from "./routes/_dashboard/settings/route";
-import { Route as DashboardNotesRouteImport } from "./routes/_dashboard/notes/route";
-import { Route as DashboardChatRouteImport } from "./routes/_dashboard/chat/route";
-import { Route as AuthSignUpRouteImport } from "./routes/_auth/sign-up/route";
-import { Route as AuthSignInRouteImport } from "./routes/_auth/sign-in/route";
-import { Route as DashboardSettingsProfileRouteImport } from "./routes/_dashboard/settings/profile/route";
-import { Route as DashboardSettingsNotificationsRouteImport } from "./routes/_dashboard/settings/notifications/route";
-import { Route as DashboardSettingsAppearanceRouteImport } from "./routes/_dashboard/settings/appearance/route";
-import { Route as DashboardNotesNoteIdRouteImport } from "./routes/_dashboard/notes/$noteId/route";
-import { Route as DashboardChatChatIdRouteImport } from "./routes/_dashboard/chat/$chatId/route";
-import { Route as DashboardSettingsIndexRouteImport } from "./routes/_dashboard/settings/index/route";
-import { Route as DashboardNotesIndexRouteImport } from "./routes/_dashboard/notes/index/route";
-import { Route as DashboardChatIndexRouteImport } from "./routes/_dashboard/chat/index/route";
-
-// Create/Update Routes
-
-const DashboardRouteRoute = DashboardRouteImport.update({
-  id: "/_dashboard",
-  getParentRoute: () => rootRoute,
-} as any);
-
-const AuthRouteRoute = AuthRouteImport.update({
-  id: "/_auth",
-  getParentRoute: () => rootRoute,
-} as any);
-
-const IndexRoute = IndexImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => rootRoute,
-} as any);
-
-const DashboardSettingsRouteRoute = DashboardSettingsRouteImport.update({
-  id: "/settings",
-  path: "/settings",
+const DashboardRouteRoute = DashboardRouteRouteImport.update({
+  id: '/_dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardSettingsRouteRoute = DashboardSettingsRouteRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => DashboardRouteRoute,
-} as any);
-
-const DashboardNotesRouteRoute = DashboardNotesRouteImport.update({
-  id: "/notes",
-  path: "/notes",
+} as any)
+const DashboardNotesRouteRoute = DashboardNotesRouteRouteImport.update({
+  id: '/notes',
+  path: '/notes',
   getParentRoute: () => DashboardRouteRoute,
-} as any);
-
-const DashboardChatRouteRoute = DashboardChatRouteImport.update({
-  id: "/chat",
-  path: "/chat",
+} as any)
+const DashboardChatRouteRoute = DashboardChatRouteRouteImport.update({
+  id: '/chat',
+  path: '/chat',
   getParentRoute: () => DashboardRouteRoute,
-} as any);
-
-const AuthSignUpRouteRoute = AuthSignUpRouteImport.update({
-  id: "/sign-up",
-  path: "/sign-up",
+} as any)
+const AuthSignUpRouteRoute = AuthSignUpRouteRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
   getParentRoute: () => AuthRouteRoute,
-} as any);
-
-const AuthSignInRouteRoute = AuthSignInRouteImport.update({
-  id: "/sign-in",
-  path: "/sign-in",
+} as any)
+const AuthSignInRouteRoute = AuthSignInRouteRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
   getParentRoute: () => AuthRouteRoute,
-} as any);
-
-const DashboardSettingsProfileRouteRoute = DashboardSettingsProfileRouteImport.update({
-  id: "/profile",
-  path: "/profile",
-  getParentRoute: () => DashboardSettingsRouteRoute,
-} as any);
-
-const DashboardSettingsNotificationsRouteRoute =
-  DashboardSettingsNotificationsRouteImport.update({
-    id: "/notifications",
-    path: "/notifications",
+} as any)
+const DashboardSettingsProfileRouteRoute =
+  DashboardSettingsProfileRouteRouteImport.update({
+    id: '/profile',
+    path: '/profile',
     getParentRoute: () => DashboardSettingsRouteRoute,
-  } as any);
-
+  } as any)
 const DashboardSettingsAppearanceRouteRoute =
-  DashboardSettingsAppearanceRouteImport.update({
-    id: "/appearance",
-    path: "/appearance",
+  DashboardSettingsAppearanceRouteRouteImport.update({
+    id: '/appearance',
+    path: '/appearance',
     getParentRoute: () => DashboardSettingsRouteRoute,
-  } as any);
-
-const DashboardNotesNoteIdRouteRoute = DashboardNotesNoteIdRouteImport.update({
-  id: "/$noteId",
-  path: "/$noteId",
-  getParentRoute: () => DashboardNotesRouteRoute,
-} as any);
-
-const DashboardChatChatIdRouteRoute = DashboardChatChatIdRouteImport.update({
-  id: "/$chatId",
-  path: "/$chatId",
+  } as any)
+const DashboardNotesNoteIdRouteRoute =
+  DashboardNotesNoteIdRouteRouteImport.update({
+    id: '/$noteId',
+    path: '/$noteId',
+    getParentRoute: () => DashboardNotesRouteRoute,
+  } as any)
+const DashboardChatChatIdRouteRoute =
+  DashboardChatChatIdRouteRouteImport.update({
+    id: '/$chatId',
+    path: '/$chatId',
+    getParentRoute: () => DashboardChatRouteRoute,
+  } as any)
+const DashboardSettingsIndexRouteRoute =
+  DashboardSettingsIndexRouteRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => DashboardSettingsRouteRoute,
+  } as any)
+const DashboardNotesIndexRouteRoute =
+  DashboardNotesIndexRouteRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => DashboardNotesRouteRoute,
+  } as any)
+const DashboardChatIndexRouteRoute = DashboardChatIndexRouteRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => DashboardChatRouteRoute,
-} as any);
+} as any)
 
-const DashboardSettingsIndexRouteRoute = DashboardSettingsIndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => DashboardSettingsRouteRoute,
-} as any);
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/sign-in': typeof AuthSignInRouteRoute
+  '/sign-up': typeof AuthSignUpRouteRoute
+  '/chat': typeof DashboardChatRouteRouteWithChildren
+  '/notes': typeof DashboardNotesRouteRouteWithChildren
+  '/settings': typeof DashboardSettingsRouteRouteWithChildren
+  '/chat/': typeof DashboardChatIndexRouteRoute
+  '/notes/': typeof DashboardNotesIndexRouteRoute
+  '/settings/': typeof DashboardSettingsIndexRouteRoute
+  '/chat/$chatId': typeof DashboardChatChatIdRouteRoute
+  '/notes/$noteId': typeof DashboardNotesNoteIdRouteRoute
+  '/settings/appearance': typeof DashboardSettingsAppearanceRouteRoute
+  '/settings/profile': typeof DashboardSettingsProfileRouteRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/sign-in': typeof AuthSignInRouteRoute
+  '/sign-up': typeof AuthSignUpRouteRoute
+  '/chat': typeof DashboardChatIndexRouteRoute
+  '/notes': typeof DashboardNotesIndexRouteRoute
+  '/settings': typeof DashboardSettingsIndexRouteRoute
+  '/chat/$chatId': typeof DashboardChatChatIdRouteRoute
+  '/notes/$noteId': typeof DashboardNotesNoteIdRouteRoute
+  '/settings/appearance': typeof DashboardSettingsAppearanceRouteRoute
+  '/settings/profile': typeof DashboardSettingsProfileRouteRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/_dashboard': typeof DashboardRouteRouteWithChildren
+  '/_auth/sign-in': typeof AuthSignInRouteRoute
+  '/_auth/sign-up': typeof AuthSignUpRouteRoute
+  '/_dashboard/chat': typeof DashboardChatRouteRouteWithChildren
+  '/_dashboard/notes': typeof DashboardNotesRouteRouteWithChildren
+  '/_dashboard/settings': typeof DashboardSettingsRouteRouteWithChildren
+  '/_dashboard/chat/': typeof DashboardChatIndexRouteRoute
+  '/_dashboard/notes/': typeof DashboardNotesIndexRouteRoute
+  '/_dashboard/settings/': typeof DashboardSettingsIndexRouteRoute
+  '/_dashboard/chat/$chatId': typeof DashboardChatChatIdRouteRoute
+  '/_dashboard/notes/$noteId': typeof DashboardNotesNoteIdRouteRoute
+  '/_dashboard/settings/appearance': typeof DashboardSettingsAppearanceRouteRoute
+  '/_dashboard/settings/profile': typeof DashboardSettingsProfileRouteRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/chat'
+    | '/notes'
+    | '/settings'
+    | '/chat/'
+    | '/notes/'
+    | '/settings/'
+    | '/chat/$chatId'
+    | '/notes/$noteId'
+    | '/settings/appearance'
+    | '/settings/profile'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/chat'
+    | '/notes'
+    | '/settings'
+    | '/chat/$chatId'
+    | '/notes/$noteId'
+    | '/settings/appearance'
+    | '/settings/profile'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/_dashboard'
+    | '/_auth/sign-in'
+    | '/_auth/sign-up'
+    | '/_dashboard/chat'
+    | '/_dashboard/notes'
+    | '/_dashboard/settings'
+    | '/_dashboard/chat/'
+    | '/_dashboard/notes/'
+    | '/_dashboard/settings/'
+    | '/_dashboard/chat/$chatId'
+    | '/_dashboard/notes/$noteId'
+    | '/_dashboard/settings/appearance'
+    | '/_dashboard/settings/profile'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
+}
 
-const DashboardNotesIndexRouteRoute = DashboardNotesIndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => DashboardNotesRouteRoute,
-} as any);
-
-const DashboardChatIndexRouteRoute = DashboardChatIndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => DashboardChatRouteRoute,
-} as any);
-
-// Populate the FileRoutesByPath interface
-
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/_auth": {
-      id: "/_auth";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof AuthRouteImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/_dashboard": {
-      id: "/_dashboard";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof DashboardRouteImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/_auth/sign-in": {
-      id: "/_auth/sign-in";
-      path: "/sign-in";
-      fullPath: "/sign-in";
-      preLoaderRoute: typeof AuthSignInRouteImport;
-      parentRoute: typeof AuthRouteImport;
-    };
-    "/_auth/sign-up": {
-      id: "/_auth/sign-up";
-      path: "/sign-up";
-      fullPath: "/sign-up";
-      preLoaderRoute: typeof AuthSignUpRouteImport;
-      parentRoute: typeof AuthRouteImport;
-    };
-    "/_dashboard/chat": {
-      id: "/_dashboard/chat";
-      path: "/chat";
-      fullPath: "/chat";
-      preLoaderRoute: typeof DashboardChatRouteImport;
-      parentRoute: typeof DashboardRouteImport;
-    };
-    "/_dashboard/notes": {
-      id: "/_dashboard/notes";
-      path: "/notes";
-      fullPath: "/notes";
-      preLoaderRoute: typeof DashboardNotesRouteImport;
-      parentRoute: typeof DashboardRouteImport;
-    };
-    "/_dashboard/settings": {
-      id: "/_dashboard/settings";
-      path: "/settings";
-      fullPath: "/settings";
-      preLoaderRoute: typeof DashboardSettingsRouteImport;
-      parentRoute: typeof DashboardRouteImport;
-    };
-    "/_dashboard/chat/": {
-      id: "/_dashboard/chat/";
-      path: "/";
-      fullPath: "/chat/";
-      preLoaderRoute: typeof DashboardChatIndexRouteImport;
-      parentRoute: typeof DashboardChatRouteImport;
-    };
-    "/_dashboard/notes/": {
-      id: "/_dashboard/notes/";
-      path: "/";
-      fullPath: "/notes/";
-      preLoaderRoute: typeof DashboardNotesIndexRouteImport;
-      parentRoute: typeof DashboardNotesRouteImport;
-    };
-    "/_dashboard/settings/": {
-      id: "/_dashboard/settings/";
-      path: "/";
-      fullPath: "/settings/";
-      preLoaderRoute: typeof DashboardSettingsIndexRouteImport;
-      parentRoute: typeof DashboardSettingsRouteImport;
-    };
-    "/_dashboard/chat/$chatId": {
-      id: "/_dashboard/chat/$chatId";
-      path: "/$chatId";
-      fullPath: "/chat/$chatId";
-      preLoaderRoute: typeof DashboardChatChatIdRouteImport;
-      parentRoute: typeof DashboardChatRouteImport;
-    };
-    "/_dashboard/notes/$noteId": {
-      id: "/_dashboard/notes/$noteId";
-      path: "/$noteId";
-      fullPath: "/notes/$noteId";
-      preLoaderRoute: typeof DashboardNotesNoteIdRouteImport;
-      parentRoute: typeof DashboardNotesRouteImport;
-    };
-    "/_dashboard/settings/appearance": {
-      id: "/_dashboard/settings/appearance";
-      path: "/appearance";
-      fullPath: "/settings/appearance";
-      preLoaderRoute: typeof DashboardSettingsAppearanceRouteImport;
-      parentRoute: typeof DashboardSettingsRouteImport;
-    };
-    "/_dashboard/settings/notifications": {
-      id: "/_dashboard/settings/notifications";
-      path: "/notifications";
-      fullPath: "/settings/notifications";
-      preLoaderRoute: typeof DashboardSettingsNotificationsRouteImport;
-      parentRoute: typeof DashboardSettingsRouteImport;
-    };
-    "/_dashboard/settings/profile": {
-      id: "/_dashboard/settings/profile";
-      path: "/profile";
-      fullPath: "/settings/profile";
-      preLoaderRoute: typeof DashboardSettingsProfileRouteImport;
-      parentRoute: typeof DashboardSettingsRouteImport;
-    };
+    '/_dashboard': {
+      id: '/_dashboard'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof DashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_dashboard/settings': {
+      id: '/_dashboard/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/_dashboard/notes': {
+      id: '/_dashboard/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof DashboardNotesRouteRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/_dashboard/chat': {
+      id: '/_dashboard/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof DashboardChatRouteRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/_auth/sign-up': {
+      id: '/_auth/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof AuthSignUpRouteRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/sign-in': {
+      id: '/_auth/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof AuthSignInRouteRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_dashboard/settings/profile': {
+      id: '/_dashboard/settings/profile'
+      path: '/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof DashboardSettingsProfileRouteRouteImport
+      parentRoute: typeof DashboardSettingsRouteRoute
+    }
+    '/_dashboard/settings/appearance': {
+      id: '/_dashboard/settings/appearance'
+      path: '/appearance'
+      fullPath: '/settings/appearance'
+      preLoaderRoute: typeof DashboardSettingsAppearanceRouteRouteImport
+      parentRoute: typeof DashboardSettingsRouteRoute
+    }
+    '/_dashboard/notes/$noteId': {
+      id: '/_dashboard/notes/$noteId'
+      path: '/$noteId'
+      fullPath: '/notes/$noteId'
+      preLoaderRoute: typeof DashboardNotesNoteIdRouteRouteImport
+      parentRoute: typeof DashboardNotesRouteRoute
+    }
+    '/_dashboard/chat/$chatId': {
+      id: '/_dashboard/chat/$chatId'
+      path: '/$chatId'
+      fullPath: '/chat/$chatId'
+      preLoaderRoute: typeof DashboardChatChatIdRouteRouteImport
+      parentRoute: typeof DashboardChatRouteRoute
+    }
+    '/_dashboard/settings/': {
+      id: '/_dashboard/settings/'
+      path: '/'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof DashboardSettingsIndexRouteRouteImport
+      parentRoute: typeof DashboardSettingsRouteRoute
+    }
+    '/_dashboard/notes/': {
+      id: '/_dashboard/notes/'
+      path: '/'
+      fullPath: '/notes/'
+      preLoaderRoute: typeof DashboardNotesIndexRouteRouteImport
+      parentRoute: typeof DashboardNotesRouteRoute
+    }
+    '/_dashboard/chat/': {
+      id: '/_dashboard/chat/'
+      path: '/'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof DashboardChatIndexRouteRouteImport
+      parentRoute: typeof DashboardChatRouteRoute
+    }
   }
 }
 
-// Create and export the route tree
-
 interface AuthRouteRouteChildren {
-  AuthSignInRouteRoute: typeof AuthSignInRouteRoute;
-  AuthSignUpRouteRoute: typeof AuthSignUpRouteRoute;
+  AuthSignInRouteRoute: typeof AuthSignInRouteRoute
+  AuthSignUpRouteRoute: typeof AuthSignUpRouteRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthSignInRouteRoute: AuthSignInRouteRoute,
   AuthSignUpRouteRoute: AuthSignUpRouteRoute,
-};
+}
 
-const AuthRouteRouteWithChildren =
-  AuthRouteRoute._addFileChildren(AuthRouteRouteChildren);
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
 
 interface DashboardChatRouteRouteChildren {
-  DashboardChatIndexRouteRoute: typeof DashboardChatIndexRouteRoute;
-  DashboardChatChatIdRouteRoute: typeof DashboardChatChatIdRouteRoute;
+  DashboardChatIndexRouteRoute: typeof DashboardChatIndexRouteRoute
+  DashboardChatChatIdRouteRoute: typeof DashboardChatChatIdRouteRoute
 }
 
 const DashboardChatRouteRouteChildren: DashboardChatRouteRouteChildren = {
   DashboardChatIndexRouteRoute: DashboardChatIndexRouteRoute,
   DashboardChatChatIdRouteRoute: DashboardChatChatIdRouteRoute,
-};
+}
 
-const DashboardChatRouteRouteWithChildren = DashboardChatRouteRoute._addFileChildren(
-  DashboardChatRouteRouteChildren
-);
+const DashboardChatRouteRouteWithChildren =
+  DashboardChatRouteRoute._addFileChildren(DashboardChatRouteRouteChildren)
 
 interface DashboardNotesRouteRouteChildren {
-  DashboardNotesIndexRouteRoute: typeof DashboardNotesIndexRouteRoute;
-  DashboardNotesNoteIdRouteRoute: typeof DashboardNotesNoteIdRouteRoute;
+  DashboardNotesIndexRouteRoute: typeof DashboardNotesIndexRouteRoute
+  DashboardNotesNoteIdRouteRoute: typeof DashboardNotesNoteIdRouteRoute
 }
 
 const DashboardNotesRouteRouteChildren: DashboardNotesRouteRouteChildren = {
   DashboardNotesIndexRouteRoute: DashboardNotesIndexRouteRoute,
   DashboardNotesNoteIdRouteRoute: DashboardNotesNoteIdRouteRoute,
-};
-
-const DashboardNotesRouteRouteWithChildren = DashboardNotesRouteRoute._addFileChildren(
-  DashboardNotesRouteRouteChildren
-);
-
-interface DashboardSettingsRouteRouteChildren {
-  DashboardSettingsIndexRouteRoute: typeof DashboardSettingsIndexRouteRoute;
-  DashboardSettingsAppearanceRouteRoute: typeof DashboardSettingsAppearanceRouteRoute;
-  DashboardSettingsNotificationsRouteRoute: typeof DashboardSettingsNotificationsRouteRoute;
-  DashboardSettingsProfileRouteRoute: typeof DashboardSettingsProfileRouteRoute;
 }
 
-const DashboardSettingsRouteRouteChildren: DashboardSettingsRouteRouteChildren = {
-  DashboardSettingsIndexRouteRoute: DashboardSettingsIndexRouteRoute,
-  DashboardSettingsAppearanceRouteRoute: DashboardSettingsAppearanceRouteRoute,
-  DashboardSettingsNotificationsRouteRoute: DashboardSettingsNotificationsRouteRoute,
-  DashboardSettingsProfileRouteRoute: DashboardSettingsProfileRouteRoute,
-};
+const DashboardNotesRouteRouteWithChildren =
+  DashboardNotesRouteRoute._addFileChildren(DashboardNotesRouteRouteChildren)
+
+interface DashboardSettingsRouteRouteChildren {
+  DashboardSettingsIndexRouteRoute: typeof DashboardSettingsIndexRouteRoute
+  DashboardSettingsAppearanceRouteRoute: typeof DashboardSettingsAppearanceRouteRoute
+  DashboardSettingsProfileRouteRoute: typeof DashboardSettingsProfileRouteRoute
+}
+
+const DashboardSettingsRouteRouteChildren: DashboardSettingsRouteRouteChildren =
+  {
+    DashboardSettingsIndexRouteRoute: DashboardSettingsIndexRouteRoute,
+    DashboardSettingsAppearanceRouteRoute:
+      DashboardSettingsAppearanceRouteRoute,
+    DashboardSettingsProfileRouteRoute: DashboardSettingsProfileRouteRoute,
+  }
 
 const DashboardSettingsRouteRouteWithChildren =
-  DashboardSettingsRouteRoute._addFileChildren(DashboardSettingsRouteRouteChildren);
+  DashboardSettingsRouteRoute._addFileChildren(
+    DashboardSettingsRouteRouteChildren,
+  )
 
 interface DashboardRouteRouteChildren {
-  DashboardChatRouteRoute: typeof DashboardChatRouteRouteWithChildren;
-  DashboardNotesRouteRoute: typeof DashboardNotesRouteRouteWithChildren;
-  DashboardSettingsRouteRoute: typeof DashboardSettingsRouteRouteWithChildren;
+  DashboardChatRouteRoute: typeof DashboardChatRouteRouteWithChildren
+  DashboardNotesRouteRoute: typeof DashboardNotesRouteRouteWithChildren
+  DashboardSettingsRouteRoute: typeof DashboardSettingsRouteRouteWithChildren
 }
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardChatRouteRoute: DashboardChatRouteRouteWithChildren,
   DashboardNotesRouteRoute: DashboardNotesRouteRouteWithChildren,
   DashboardSettingsRouteRoute: DashboardSettingsRouteRouteWithChildren,
-};
+}
 
 const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
-  DashboardRouteRouteChildren
-);
-
-export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "": typeof DashboardRouteRouteWithChildren;
-  "/sign-in": typeof AuthSignInRouteRoute;
-  "/sign-up": typeof AuthSignUpRouteRoute;
-  "/chat": typeof DashboardChatRouteRouteWithChildren;
-  "/notes": typeof DashboardNotesRouteRouteWithChildren;
-  "/settings": typeof DashboardSettingsRouteRouteWithChildren;
-  "/chat/": typeof DashboardChatIndexRouteRoute;
-  "/notes/": typeof DashboardNotesIndexRouteRoute;
-  "/settings/": typeof DashboardSettingsIndexRouteRoute;
-  "/chat/$chatId": typeof DashboardChatChatIdRouteRoute;
-  "/notes/$noteId": typeof DashboardNotesNoteIdRouteRoute;
-  "/settings/appearance": typeof DashboardSettingsAppearanceRouteRoute;
-  "/settings/notifications": typeof DashboardSettingsNotificationsRouteRoute;
-  "/settings/profile": typeof DashboardSettingsProfileRouteRoute;
-}
-
-export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "": typeof DashboardRouteRouteWithChildren;
-  "/sign-in": typeof AuthSignInRouteRoute;
-  "/sign-up": typeof AuthSignUpRouteRoute;
-  "/chat": typeof DashboardChatIndexRouteRoute;
-  "/notes": typeof DashboardNotesIndexRouteRoute;
-  "/settings": typeof DashboardSettingsIndexRouteRoute;
-  "/chat/$chatId": typeof DashboardChatChatIdRouteRoute;
-  "/notes/$noteId": typeof DashboardNotesNoteIdRouteRoute;
-  "/settings/appearance": typeof DashboardSettingsAppearanceRouteRoute;
-  "/settings/notifications": typeof DashboardSettingsNotificationsRouteRoute;
-  "/settings/profile": typeof DashboardSettingsProfileRouteRoute;
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute;
-  "/": typeof IndexRoute;
-  "/_auth": typeof AuthRouteRouteWithChildren;
-  "/_dashboard": typeof DashboardRouteRouteWithChildren;
-  "/_auth/sign-in": typeof AuthSignInRouteRoute;
-  "/_auth/sign-up": typeof AuthSignUpRouteRoute;
-  "/_dashboard/chat": typeof DashboardChatRouteRouteWithChildren;
-  "/_dashboard/notes": typeof DashboardNotesRouteRouteWithChildren;
-  "/_dashboard/settings": typeof DashboardSettingsRouteRouteWithChildren;
-  "/_dashboard/chat/": typeof DashboardChatIndexRouteRoute;
-  "/_dashboard/notes/": typeof DashboardNotesIndexRouteRoute;
-  "/_dashboard/settings/": typeof DashboardSettingsIndexRouteRoute;
-  "/_dashboard/chat/$chatId": typeof DashboardChatChatIdRouteRoute;
-  "/_dashboard/notes/$noteId": typeof DashboardNotesNoteIdRouteRoute;
-  "/_dashboard/settings/appearance": typeof DashboardSettingsAppearanceRouteRoute;
-  "/_dashboard/settings/notifications": typeof DashboardSettingsNotificationsRouteRoute;
-  "/_dashboard/settings/profile": typeof DashboardSettingsProfileRouteRoute;
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths:
-    | "/"
-    | ""
-    | "/sign-in"
-    | "/sign-up"
-    | "/chat"
-    | "/notes"
-    | "/settings"
-    | "/chat/"
-    | "/notes/"
-    | "/settings/"
-    | "/chat/$chatId"
-    | "/notes/$noteId"
-    | "/settings/appearance"
-    | "/settings/notifications"
-    | "/settings/profile";
-  fileRoutesByTo: FileRoutesByTo;
-  to:
-    | "/"
-    | ""
-    | "/sign-in"
-    | "/sign-up"
-    | "/chat"
-    | "/notes"
-    | "/settings"
-    | "/chat/$chatId"
-    | "/notes/$noteId"
-    | "/settings/appearance"
-    | "/settings/notifications"
-    | "/settings/profile";
-  id:
-    | "__root__"
-    | "/"
-    | "/_auth"
-    | "/_dashboard"
-    | "/_auth/sign-in"
-    | "/_auth/sign-up"
-    | "/_dashboard/chat"
-    | "/_dashboard/notes"
-    | "/_dashboard/settings"
-    | "/_dashboard/chat/"
-    | "/_dashboard/notes/"
-    | "/_dashboard/settings/"
-    | "/_dashboard/chat/$chatId"
-    | "/_dashboard/notes/$noteId"
-    | "/_dashboard/settings/appearance"
-    | "/_dashboard/settings/notifications"
-    | "/_dashboard/settings/profile";
-  fileRoutesById: FileRoutesById;
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AuthRouteRoute: typeof AuthRouteRouteWithChildren;
-  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren;
-}
+  DashboardRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
-};
-
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/_auth",
-        "/_dashboard"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/_auth": {
-      "filePath": "_auth/route.tsx",
-      "children": [
-        "/_auth/sign-in",
-        "/_auth/sign-up"
-      ]
-    },
-    "/_dashboard": {
-      "filePath": "_dashboard/route.tsx",
-      "children": [
-        "/_dashboard/chat",
-        "/_dashboard/notes",
-        "/_dashboard/settings"
-      ]
-    },
-    "/_auth/sign-in": {
-      "filePath": "_auth/sign-in/route.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/sign-up": {
-      "filePath": "_auth/sign-up/route.tsx",
-      "parent": "/_auth"
-    },
-    "/_dashboard/chat": {
-      "filePath": "_dashboard/chat/route.tsx",
-      "parent": "/_dashboard",
-      "children": [
-        "/_dashboard/chat/",
-        "/_dashboard/chat/$chatId"
-      ]
-    },
-    "/_dashboard/notes": {
-      "filePath": "_dashboard/notes/route.tsx",
-      "parent": "/_dashboard",
-      "children": [
-        "/_dashboard/notes/",
-        "/_dashboard/notes/$noteId"
-      ]
-    },
-    "/_dashboard/settings": {
-      "filePath": "_dashboard/settings/route.tsx",
-      "parent": "/_dashboard",
-      "children": [
-        "/_dashboard/settings/",
-        "/_dashboard/settings/appearance",
-        "/_dashboard/settings/notifications",
-        "/_dashboard/settings/profile"
-      ]
-    },
-    "/_dashboard/chat/": {
-      "filePath": "_dashboard/chat/index/route.tsx",
-      "parent": "/_dashboard/chat"
-    },
-    "/_dashboard/notes/": {
-      "filePath": "_dashboard/notes/index/route.tsx",
-      "parent": "/_dashboard/notes"
-    },
-    "/_dashboard/settings/": {
-      "filePath": "_dashboard/settings/index/route.tsx",
-      "parent": "/_dashboard/settings"
-    },
-    "/_dashboard/chat/$chatId": {
-      "filePath": "_dashboard/chat/$chatId/route.tsx",
-      "parent": "/_dashboard/chat"
-    },
-    "/_dashboard/notes/$noteId": {
-      "filePath": "_dashboard/notes/$noteId/route.tsx",
-      "parent": "/_dashboard/notes"
-    },
-    "/_dashboard/settings/appearance": {
-      "filePath": "_dashboard/settings/appearance/route.tsx",
-      "parent": "/_dashboard/settings"
-    },
-    "/_dashboard/settings/notifications": {
-      "filePath": "_dashboard/settings/notifications/route.tsx",
-      "parent": "/_dashboard/settings"
-    },
-    "/_dashboard/settings/profile": {
-      "filePath": "_dashboard/settings/profile/route.tsx",
-      "parent": "/_dashboard/settings"
-    }
-  }
 }
-ROUTE_MANIFEST_END */
+export const routeTree = rootRouteImport
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()

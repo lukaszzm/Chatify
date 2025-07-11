@@ -7,7 +7,7 @@ import { NoteProvider } from "@/features/notes/contexts/note-context";
 import { useNoteQuery } from "@/features/notes/hooks/use-note-query";
 import type { Note as GqlNote } from "@/generated/graphql";
 
-interface NoteProps extends Pick<GqlNote, "id"> {}
+type NoteProps = Pick<GqlNote, "id">;
 
 export const Note = ({ id }: NoteProps) => {
   const [{ data, fetching, error }] = useNoteQuery(id);

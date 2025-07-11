@@ -1,6 +1,5 @@
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 
 import { cn } from "@ui/lib/utils";
 
@@ -37,36 +36,28 @@ const loadingDotsVariants = cva("animate-bounce rounded-full", {
   },
 });
 
-export interface LoadingDotsProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "children">,
+interface LoadingDotsProps
+  extends Omit<React.ComponentProps<"div">, "children">,
     VariantProps<typeof loadingDotsVariants> {}
 
-const LoadingDots = forwardRef<HTMLDivElement, LoadingDotsProps>(
-  ({ className, variant, size, ...props }, ref) => {
-    return (
+const LoadingDots = ({ className, variant, size, ref, ...props }: LoadingDotsProps) => {
+  return (
+    <div
+      className={cn("flex gap-1.5 justify-center items-center", className)}
+      ref={ref}
+      {...props}
+    >
+      <span className="sr-only">Loading...</span>
       <div
-        className={cn("flex gap-1.5 justify-center items-center", className)}
-        ref={ref}
-        {...props}
-      >
-        <span className="sr-only">Loading...</span>
-        <div
-          className={cn(
-            loadingDotsVariants({ variant, size }),
-            "[animation-delay:-0.3s]"
-          )}
-        />
-        <div
-          className={cn(
-            loadingDotsVariants({ variant, size }),
-            "[animation-delay:-0.15s]"
-          )}
-        />
-        <div className={cn(loadingDotsVariants({ variant, size }))} />
-      </div>
-    );
-  }
-);
+        className={cn(loadingDotsVariants({ variant, size }), "[animation-delay:-0.3s]")}
+      />
+      <div
+        className={cn(loadingDotsVariants({ variant, size }), "[animation-delay:-0.15s]")}
+      />
+      <div className={cn(loadingDotsVariants({ variant, size }))} />
+    </div>
+  );
+};
 LoadingDots.displayName = "LoadingDots";
 
-export { LoadingDots, loadingDotsVariants };
+export { LoadingDots, loadingDotsVariants, type LoadingDotsProps };

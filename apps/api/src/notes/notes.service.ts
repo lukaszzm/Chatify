@@ -39,16 +39,17 @@ export class NotesService {
     });
   }
 
-  async findManyWithPagination(userId: string, pagination: PaginationArgs) {
-    return paginate({
-      client: this.prismaService,
-      model: "Note",
-      where: {
-        userId,
-      },
-      pagination,
-      cursorColumn: "createdAt",
-    });
+  findManyWithPagination(_userId: string, _pagination: PaginationArgs) {
+    return paginate();
+    // return paginate({
+    //   client: this.prismaService,
+    //   model: "Note",
+    //   where: {
+    //     userId,
+    //   },
+    //   pagination,
+    //   cursorColumn: "createdAt",
+    // });
   }
 
   async create(data: CreateNoteInput, userId: string) {

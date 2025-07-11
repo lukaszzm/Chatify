@@ -25,7 +25,7 @@ export class NotesResolver {
   }
 
   @Query(() => PaginatedNote)
-  async notes(@Args() pagination: PaginationArgs, @CurrentUser() me: User) {
+  notes(@Args() pagination: PaginationArgs, @CurrentUser() me: User) {
     return this.notesService.findManyWithPagination(me.id, pagination);
   }
 

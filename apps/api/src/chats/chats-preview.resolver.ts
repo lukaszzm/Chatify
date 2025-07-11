@@ -11,10 +11,12 @@ import type { User } from "@prisma/client";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
+import { WebSocketGqlAuthContext } from "@/auth/types/gql-auth-context.type";
 import { ChatsService } from "@/chats/chats.service";
 import { ChatPreview } from "@/chats/models/chat-preview.model";
 import { Chat } from "@/chats/models/chat.model";
 import { PaginatedChatPreview } from "@/chats/models/paginated-chat-preview.model";
+import { ChatUpdatedPayload } from "@/chats/types/chat-subscription.types";
 import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { CHAT_UPDATED_EVENT } from "@/constants/events";
 import { MessagesService } from "@/messages/messages.service";
@@ -32,7 +34,12 @@ export class ChatsPreviewResolver {
   ) {}
 
   @Subscription(() => ChatPreview, {
-    async filter(this: ChatsPreviewResolver, payload, _variables, context) {
+    async filter(
+      this: ChatsPreviewResolver,
+      payload: ChatUpdatedPayload,
+      _variables,
+      context: WebSocketGqlAuthContext
+    ) {
       const currentUser = context.req.extra.user;
 
       const existingChat = await this.chatsService.findOneById(
@@ -43,12 +50,12 @@ export class ChatsPreviewResolver {
       return !!existingChat;
     },
   })
-  async chatUpdated() {
+  chatUpdated() {
     return this.redisPubSub.asyncIterator(CHAT_UPDATED_EVENT);
   }
 
   @Query(() => PaginatedChatPreview)
-  async recentChats(@Args() pagination: PaginationArgs, @CurrentUser() me: User) {
+  recentChats(@Args() pagination: PaginationArgs, @CurrentUser() me: User) {
     return this.chatsService.findManyByUserId(me.id, pagination);
   }
 

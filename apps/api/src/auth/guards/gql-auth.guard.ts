@@ -2,11 +2,17 @@ import type { ExecutionContext } from "@nestjs/common";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { AuthGuard } from "@nestjs/passport";
 
+import type { GqlAuthContext } from "@/auth/types/gql-auth-context.type";
+
 export class GqlAuthGuard extends AuthGuard("jwt") {
   getRequest(context: ExecutionContext) {
-    const context_ = GqlExecutionContext.create(context);
-    const { req } = context_.getContext();
+    const gqlExecutionContext = GqlExecutionContext.create(context);
+    const gqlContext = gqlExecutionContext.getContext<GqlAuthContext>();
 
-    return req.extra ?? req;
+    if ("extra" in gqlContext.req) {
+      return gqlContext.req.extra;
+    }
+
+    return gqlContext.req.user;
   }
 }

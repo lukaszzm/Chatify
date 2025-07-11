@@ -1,84 +1,94 @@
-const { resolve } = require("node:path");
+import js from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
+import tseslint from "typescript-eslint";
+import importPlugin from "eslint-plugin-import";
+import eslintNestJs from "@darraghor/eslint-plugin-nestjs-typed";
+import globals from "globals";
+import { baseConfig } from "./base.js";
+import { resolve } from "node:path";
 
-const project = resolve(process.cwd(), "tsconfig.json");
+const project = resolve(import.meta.dirname, "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
-module.exports = {
-  extends: [
-    "eslint:recommended",
-    "prettier",
-    "eslint-config-turbo",
-    "plugin:import/recommended",
-    "plugin:@darraghor/nestjs-typed/recommended",
-  ],
-  parserOptions: {
-    project,
-  },
-  env: {
-    es2021: true,
-    node: true,
-    jest: true,
-  },
-  globals: {
-    React: true,
-    JSX: true,
-  },
-  settings: {
-    "import/resolver": {
-      typescript: {
-        project,
+export const nestConfig = tseslint.config(
+  ...baseConfig,
+  js.configs.recommended,
+  importPlugin.flatConfigs.recommended,
+  eslintConfigPrettier,
+  tseslint.configs.recommendedTypeChecked,
+  {
+    files: ["**/*.ts"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      ecmaVersion: 2022,
+      sourceType: "module",
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
-  },
-  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.cjs", "*.config.js", "*.gen.ts"],
-  rules: {
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        pathGroups: [
-          {
-            pattern: "$/**",
-            group: "internal",
-          },
-        ],
-        pathGroupsExcludedImportTypes: ["builtin"],
-        groups: [
-          ["builtin", "external"],
-          ["internal"],
-          ["parent", "sibling", "index"],
-          "unknown",
-        ],
-        alphabetize: {
-          order: "asc",
-          caseInsensitive: true,
+    settings: {
+      "import/resolver": {
+        typescript: {
+          project,
         },
       },
-    ],
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-      },
-    ],
-    "@typescript-eslint/consistent-type-imports": "error",
-    "no-restricted-imports": [
-      "error",
-      {
-        patterns: [".*"],
-      },
-    ],
-  },
-  overrides: [
-    {
-      files: ["*.test.ts", "index.ts"],
-      rules: {
-        "no-restricted-imports": "off",
-      },
     },
-  ],
-  plugins: ["@darraghor/nestjs-typed", "@typescript-eslint/eslint-plugin"],
-};
+  },
+  eslintNestJs.configs.flatRecommended,
+  {
+    rules: {
+      "import/order": [
+        "error",
+        {
+          "newlines-between": "always",
+          pathGroups: [
+            {
+              pattern: "@/**",
+              group: "internal",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["builtin"],
+          groups: [
+            ["builtin", "external"],
+            ["internal"],
+            ["parent", "sibling", "index"],
+            "unknown",
+          ],
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+      "@typescript-eslint/consistent-type-imports": "error",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [".*"],
+        },
+      ],
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/no-misused-spread": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+  {
+    files: ["*.test.ts", "index.ts"],
+    rules: {
+      "no-restricted-imports": "off",
+    },
+  }
+);
