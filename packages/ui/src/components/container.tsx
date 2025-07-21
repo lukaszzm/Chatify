@@ -1,7 +1,6 @@
+import { cn } from "@ui/lib/utils";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-
-import { cn } from "@ui/lib/utils";
 
 const containerVariants = cva("flex w-full flex-col gap-4 rounded-md border p-4", {
   variants: {

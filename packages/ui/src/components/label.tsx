@@ -1,6 +1,5 @@
-import * as LabelPrimitive from "@radix-ui/react-label";
-
 import { cn } from "@ui/lib/utils";
+import * as LabelPrimitive from "@radix-ui/react-label";
 
 const Label = ({
   className,

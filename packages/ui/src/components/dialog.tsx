@@ -1,7 +1,6 @@
+import { cn } from "@ui/lib/utils";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
-
-import { cn } from "@ui/lib/utils";
 
 const Dialog = DialogPrimitive.Root;
 

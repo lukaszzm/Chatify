@@ -1,14 +1,13 @@
-import { Slot } from "@radix-ui/react-slot";
-
-import { buttonVariants, type ButtonProps } from "@ui/components/ui/button";
-import type { TooltipContentProps } from "@ui/components/ui/tooltip";
+import { buttonVariants, type ButtonProps } from "@ui/components/button";
 import {
+  type TooltipContentProps,
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@ui/components/ui/tooltip";
+} from "@ui/components/tooltip";
 import { cn } from "@ui/lib/utils";
+import { Slot } from "@radix-ui/react-slot";
 
 interface TooltipButtonProps extends ButtonProps {
   tooltipText: string;

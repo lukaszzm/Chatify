@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@ui/components/ui/dialog";
+} from "@ui/components/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -17,7 +17,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@ui/components/ui/drawer";
+} from "@ui/components/drawer";
 import { useMediaQuery } from "@ui/hooks/use-media-query";
 import { cn } from "@ui/lib/utils";
 

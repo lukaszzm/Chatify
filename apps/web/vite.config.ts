@@ -1,14 +1,10 @@
 /// <reference types="vitest" />
 
-import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
-import path, { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import path from "node:path";
 import { defineConfig } from "vite";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [
@@ -34,6 +30,9 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "../../packages/ui/src"),
       },
     ],
+  },
+  css: {
+    postcss: "@chatify/ui/postcss.config",
   },
   test: {
     globalSetup: "./vitest-global-setup.ts",

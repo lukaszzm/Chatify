@@ -1,3 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "@chatify/ui/main.css";
+@import "@chatify/ui/globals.css";
+
+@source "../node_modules/@chatify/ui";

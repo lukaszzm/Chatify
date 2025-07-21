@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import { cn } from "@ui/lib/utils";
 
 interface Sender {
@@ -22,8 +22,8 @@ const ChatBubbleAvatar = ({ sender }: Pick<ChatBubbleProps, "sender">) => {
         alt={`Profile picture of ${sender.firstName} ${sender.lastName}`}
       />
       <AvatarFallback className="text-xs">
-        {sender.firstName.at(0)}
-        {sender.lastName.at(0)}
+        {sender.firstName.charAt(0)}
+        {sender.lastName.charAt(0)}
       </AvatarFallback>
     </Avatar>
   );

@@ -1,10 +1,9 @@
-import type * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
-
-import type { ButtonProps } from "@ui/components/ui/button";
-import { Button } from "@ui/components/ui/button";
-import { Container } from "@ui/components/ui/container";
-import { Title } from "@ui/components/ui/title";
+import { type ButtonProps } from "@ui/components/button";
+import { Button } from "@ui/components/button";
+import { Container } from "@ui/components/container";
+import { Title } from "@ui/components/title";
 import { cn } from "@ui/lib/utils";
+import type * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 
 interface SidebarProps extends React.ComponentProps<"div"> {
   hideOnMobile?: boolean;
