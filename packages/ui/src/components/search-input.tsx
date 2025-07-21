@@ -1,6 +1,7 @@
+import { Search } from "lucide-react";
+
 import { Input, type InputProps } from "@ui/components/input";
 import { cn } from "@ui/lib/utils";
-import { Search } from "lucide-react";
 
 type SearchInputProps = Omit<InputProps, "type">;
 

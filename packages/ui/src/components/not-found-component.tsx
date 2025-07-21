@@ -1,6 +1,7 @@
+import { SquareXIcon } from "lucide-react";
+
 import { Container, type ContainerProps } from "@ui/components/container";
 import { cn } from "@ui/lib/utils";
-import { SquareXIcon } from "lucide-react";
 
 export interface NotFoundComponentProps extends ContainerProps {
   text?: string;

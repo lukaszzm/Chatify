@@ -1,8 +1,9 @@
-import { type InputProps } from "@ui/components/input";
-import { cn } from "@ui/lib/utils";
 import { UploadIcon } from "lucide-react";
 import type { DropzoneInputProps } from "react-dropzone";
 import { useDropzone } from "react-dropzone";
+
+import { type InputProps } from "@ui/components/input";
+import { cn } from "@ui/lib/utils";
 
 interface ImagePickerProps
   extends Omit<DropzoneInputProps, "value" | "onChange" | "type">,

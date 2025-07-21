@@ -1,7 +1,8 @@
-import type { ContainerProps } from "@ui/components/container";
-import { cn } from "@ui/lib/utils";
-import { Container } from "@ui/components/container";
 import { ServerCrashIcon } from "lucide-react";
+
+import type { ContainerProps } from "@ui/components/container";
+import { Container } from "@ui/components/container";
+import { cn } from "@ui/lib/utils";
 
 interface ErrorComponentProps extends ContainerProps {
   text?: string;

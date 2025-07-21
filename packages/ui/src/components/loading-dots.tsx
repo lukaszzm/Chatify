@@ -1,6 +1,7 @@
-import { cn } from "@ui/lib/utils";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
+
+import { cn } from "@ui/lib/utils";
 
 const loadingDotsVariants = cva("animate-bounce rounded-full", {
   variants: {

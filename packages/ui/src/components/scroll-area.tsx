@@ -1,5 +1,6 @@
-import { cn } from "@ui/lib/utils";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
+
+import { cn } from "@ui/lib/utils";
 
 const ScrollBar = ({
   className,

@@ -1,5 +1,6 @@
-import { cn } from "@ui/lib/utils";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
+
+import { cn } from "@ui/lib/utils";
 
 const Separator = ({
   ref,
