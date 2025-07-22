@@ -7,10 +7,12 @@ import { AuthResolver } from "@/auth/auth.resolver";
 import { AuthService } from "@/auth/auth.service";
 import { PasswordService } from "@/auth/password.service";
 import { JwtStrategy } from "@/auth/strategies/jwt.strategy";
+import { DrizzleModule } from "@/drizzle/drizzle.module";
 import { UsersModule } from "@/users/users.module";
 
 @Module({
   imports: [
+    DrizzleModule,
     UsersModule,
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({

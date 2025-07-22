@@ -13,6 +13,6 @@ export class GqlAuthGuard extends AuthGuard("jwt") {
       return gqlContext.req.extra;
     }
 
-    return gqlContext.req.user;
+    return gqlContext.req;
   }
 }

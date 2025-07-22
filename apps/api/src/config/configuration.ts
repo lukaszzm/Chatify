@@ -3,6 +3,7 @@ import Joi from "joi";
 export default () => ({
   database: {
     url: process.env.DATABASE_URL,
+    ssl: process.env.DATABASE_SSL === "true" || false,
   },
   jwt: {
     secret: process.env.JWT_SECRET,
@@ -26,6 +27,7 @@ export default () => ({
 
 export const validationSchema = Joi.object({
   DATABASE_URL: Joi.string().required(),
+  DATABASE_SSL: Joi.boolean(),
   JWT_SECRET: Joi.string().required(),
   JWT_EXPIRATION_TIME: Joi.string().required(),
   JWT_REFRESH_SECRET: Joi.string().required(),

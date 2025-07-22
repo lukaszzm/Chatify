@@ -19,7 +19,7 @@ export class AuthService {
 
   async signIn(payload: SignInInput) {
     const fixedEmail = payload.email.toLowerCase();
-    const user = await this.usersService.findOneByEmail(fixedEmail);
+    const user = await this.usersService.findOneWithPasswordByEmail(fixedEmail);
 
     if (!user) {
       throw new UnauthorizedException("Incorrect email or password");

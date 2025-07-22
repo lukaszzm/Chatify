@@ -22,7 +22,7 @@ export class UsersResolver {
 
   @Query(() => [User])
   async users(@Args() args: UsersArgs, @CurrentUser() me: User) {
-    return this.usersService.findMany(args, me.id);
+    return this.usersService.search(args, me.id);
   }
 
   @Mutation(() => User)

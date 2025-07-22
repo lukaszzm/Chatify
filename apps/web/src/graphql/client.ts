@@ -12,6 +12,7 @@ const wsClient = createWSClient({
   url: gqlWsServerUrl,
   connectionParams: () => {
     const accessToken = getAccessToken();
+
     return {
       authorization: `Bearer ${accessToken}`,
     };

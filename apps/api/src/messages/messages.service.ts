@@ -1,82 +1,70 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "nestjs-prisma";
+import { Inject, Injectable } from "@nestjs/common";
+import { desc, eq } from "drizzle-orm";
+import { withCursorPagination } from "drizzle-pagination";
 
 import { PaginationArgs } from "@/common/dtos/pagination.args";
-import { paginate } from "@/common/utils/paginate";
+import { SortOrder } from "@/common/enums/sort-order";
+import { createCursorPaginationResult } from "@/common/utils/cursor-pagination-result";
+import { DRIZZLE } from "@/drizzle/drizzle.module";
+import { chats, messages } from "@/drizzle/schema";
+import { DrizzleDB } from "@/drizzle/types/drizzle";
 import { SendMessageInput } from "@/messages/dtos/send-message.input";
 
 @Injectable()
 export class MessagesService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(@Inject(DRIZZLE) private readonly db: DrizzleDB) {}
 
   async findManyByChatId(chatId: string) {
-    return this.prismaService.message.findMany({
-      where: {
-        chatId,
-      },
+    return this.db.query.messages.findMany({
+      where: eq(messages.chatId, chatId),
     });
   }
 
-  findManyByChatIdWithPagination(_chatId: string, _pagination: PaginationArgs) {
-    return paginate();
-    // return paginate({
-    //   client: this.prismaService,
-    //   model: "Message",
-    //   where: {
-    //     chatId,
-    //   },
-    //   pagination,
-    //   cursorColumn: "createdAt",
-    // });
-  }
-
   async findManyByUserId(userId: string) {
-    return this.prismaService.message.findMany({
-      where: {
-        senderId: userId,
-      },
+    return this.db.query.messages.findMany({
+      where: eq(messages.senderId, userId),
     });
   }
 
   async findLatestByChatId(chatId: string) {
-    return this.prismaService.message.findFirst({
-      where: {
-        chatId,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
+    return this.db.query.messages.findFirst({
+      where: eq(messages.chatId, chatId),
+      orderBy: desc(messages.createdAt),
     });
   }
 
+  async findManyByChatIdWithPagination(chatId: string, pagination: PaginationArgs) {
+    const paginatedMessages = await this.db.query.messages.findMany(
+      withCursorPagination({
+        where: eq(messages.chatId, chatId),
+        limit: pagination.first + 1,
+        cursors: [[messages.createdAt, SortOrder.Asc, pagination.after]],
+      })
+    );
+
+    return createCursorPaginationResult(paginatedMessages, pagination);
+  }
+
   async create(data: SendMessageInput, senderId: string) {
-    return this.prismaService.$transaction(async (tx) => {
-      const message = await tx.message.create({
-        data: {
+    return this.db.transaction(async (tx) => {
+      const [message] = await tx
+        .insert(messages)
+        .values({
           content: data.content,
-          chat: {
-            connect: {
-              id: data.chatId,
-            },
-          },
-          sender: {
-            connect: {
-              id: senderId,
-            },
-          },
-        },
-      });
+          chatId: data.chatId,
+          senderId,
+        })
+        .returning();
 
-      await tx.chat.update({
-        where: {
-          id: data.chatId,
-        },
-        data: {
+      const [updatedMessage] = await tx
+        .update(chats)
+        .set({
           lastMessageAt: message.createdAt,
-        },
-      });
+        })
+        .where(eq(chats.id, data.chatId))
+        .returning();
 
-      return message;
+      return updatedMessage;
     });
   }
 }

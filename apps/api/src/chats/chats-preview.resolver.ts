@@ -7,7 +7,6 @@ import {
   Resolver,
   Subscription,
 } from "@nestjs/graphql";
-import type { User } from "@prisma/client";
 
 import { CurrentUser } from "@/auth/decorators/current-user.decorator";
 import { GqlAuthGuard } from "@/auth/guards/gql-auth.guard";
@@ -21,6 +20,7 @@ import { PaginationArgs } from "@/common/dtos/pagination.args";
 import { CHAT_UPDATED_EVENT } from "@/constants/events";
 import { MessagesService } from "@/messages/messages.service";
 import { RedisPubSubService } from "@/pubsub/redis-pubsub.service";
+import { User } from "@/users/models/user.model";
 import { UsersService } from "@/users/users.service";
 
 @UseGuards(GqlAuthGuard)

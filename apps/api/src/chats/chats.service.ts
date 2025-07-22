@@ -1,30 +1,44 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { PrismaService } from "nestjs-prisma";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { and, eq, exists } from "drizzle-orm";
+import { withCursorPagination } from "drizzle-pagination";
 
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
 import { PaginationArgs } from "@/common/dtos/pagination.args";
-import { paginate } from "@/common/utils/paginate";
+import { SortOrder } from "@/common/enums/sort-order";
+import { createCursorPaginationResult } from "@/common/utils/cursor-pagination-result";
 import { removeDuplicates } from "@/common/utils/remove-duplicates";
+import { DRIZZLE } from "@/drizzle/drizzle.module";
+import { chats, messages, participants } from "@/drizzle/schema";
+import { DrizzleDB } from "@/drizzle/types/drizzle";
 
 @Injectable()
 export class ChatsService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(@Inject(DRIZZLE) private readonly db: DrizzleDB) {}
 
   async findOneById(id: string, userId: string) {
-    return this.prismaService.chat.findUnique({
-      where: {
-        id,
-        participants: {
-          some: {
-            userId,
-          },
-        },
-      },
+    return this.db.query.chats.findFirst({
+      where: (chats, { eq, exists }) =>
+        and(
+          eq(chats.id, id),
+          exists(
+            this.db.select().from(participants).where(eq(participants.userId, userId))
+          )
+        ),
     });
   }
 
-  findManyByUserId(_userId: string, _pagination: PaginationArgs) {
-    return paginate();
+  async findManyByUserId(userId: string, pagination: PaginationArgs) {
+    const paginatedChats = await this.db.query.chats.findMany(
+      withCursorPagination({
+        where: exists(
+          this.db.select().from(participants).where(eq(participants.userId, userId))
+        ),
+        limit: pagination.first + 1,
+        cursors: [[messages.createdAt, SortOrder.Asc, pagination.after]],
+      })
+    );
+
+    return createCursorPaginationResult(paginatedChats, pagination);
   }
 
   async create(data: StartChatInput) {
@@ -34,32 +48,43 @@ export class ChatsService {
       throw new BadRequestException("Chat requires exactly 2 participants");
     }
 
-    return this.prismaService.chat.create({
-      data: {
-        type: "ONE_TO_ONE",
-        participants: {
-          createMany: {
-            data: uniqueParticipants.map((userId) => ({
-              userId,
-            })),
-          },
-        },
-      },
+    return this.db.transaction(async (tx) => {
+      const [newChat] = await tx
+        .insert(chats)
+        .values({
+          type: "ONE_TO_ONE",
+        })
+        .returning();
+
+      const participantsPromises = uniqueParticipants.map((userId) =>
+        tx.insert(participants).values({
+          chatId: newChat.id,
+          userId,
+        })
+      );
+
+      await Promise.all(participantsPromises);
+
+      return newChat;
     });
   }
 
   async createIfNotExists(data: StartChatInput) {
-    const existingChat = await this.prismaService.chat.findFirst({
-      where: {
-        participants: {
-          every: {
-            userId: {
-              in: data.participants,
-            },
-          },
-        },
-        type: "ONE_TO_ONE",
-      },
+    const uniqueParticipants = removeDuplicates(data.participants);
+
+    const existingChat = await this.db.query.chats.findFirst({
+      where: (chats, { exists, and, eq }) =>
+        exists(
+          this.db
+            .select()
+            .from(participants)
+            .where(
+              and(
+                eq(participants.chatId, chats.id),
+                ...uniqueParticipants.map((userId) => eq(participants.userId, userId))
+              )
+            )
+        ),
     });
 
     if (existingChat) {
