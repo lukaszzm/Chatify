@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { chats } from "@/drizzle/schemas/chats.schema";
@@ -10,11 +10,10 @@ export const messages = pgTable("messages", {
     .primaryKey()
     .$defaultFn(() => createId()),
   content: text("content").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at")
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date()),
+  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+    () => sql`CURRENT_TIMESTAMP`
+  ),
   isSeen: boolean("is_seen").default(false),
   isDeleted: boolean("is_deleted").default(false),
   senderId: text("sender_id")

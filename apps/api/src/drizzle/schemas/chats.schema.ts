@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { conversationType } from "@/drizzle/schemas/conversation-type.schema";
@@ -10,12 +10,11 @@ export const chats = pgTable("chats", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at")
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date()),
-  lastMessageAt: timestamp("last_message_at"),
+  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+    () => sql`CURRENT_TIMESTAMP`
+  ),
+  lastMessageAt: timestamp("last_message_at", { mode: "string" }),
   isDeleted: boolean("is_deleted").default(false),
   type: conversationType("type").notNull().default("ONE_TO_ONE"),
 });

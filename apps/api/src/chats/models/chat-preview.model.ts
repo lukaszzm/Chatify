@@ -1,5 +1,4 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { GraphQLDateTime } from "graphql-scalars";
 
 import { ChatType } from "@/chats/enums/chat-type";
 import { BaseModel } from "@/common/models/base.model";
@@ -14,8 +13,8 @@ export class ChatPreview extends BaseModel {
   @Field(() => Boolean)
   isDeleted: boolean;
 
-  @Field(() => GraphQLDateTime)
-  lastMessageAt: Date;
+  @Field(() => String)
+  lastMessageAt: string;
 
   @Field(() => Message)
   latestMessage: Message;

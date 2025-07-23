@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { messages } from "@/drizzle/schemas/messages.schema";
@@ -17,11 +17,10 @@ export const users = pgTable("users", {
   fullName: text("full_name").notNull(),
   password: text("password").notNull(),
   isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at")
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date()),
+  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+    () => sql`CURRENT_TIMESTAMP`
+  ),
 });
 
 export const userRelations = relations(users, ({ many }) => ({

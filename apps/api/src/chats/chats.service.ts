@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
-import { and, eq, exists } from "drizzle-orm";
+import { and, count, eq, exists, inArray } from "drizzle-orm";
 import { withCursorPagination } from "drizzle-pagination";
 
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
@@ -8,7 +8,7 @@ import { SortOrder } from "@/common/enums/sort-order";
 import { createCursorPaginationResult } from "@/common/utils/cursor-pagination-result";
 import { removeDuplicates } from "@/common/utils/remove-duplicates";
 import { DRIZZLE } from "@/drizzle/drizzle.module";
-import { chats, messages, participants } from "@/drizzle/schema";
+import { chats, participants } from "@/drizzle/schema";
 import { DrizzleDB } from "@/drizzle/types/drizzle";
 
 @Injectable()
@@ -17,13 +17,10 @@ export class ChatsService {
 
   async findOneById(id: string, userId: string) {
     return this.db.query.chats.findFirst({
-      where: (chats, { eq, exists }) =>
-        and(
-          eq(chats.id, id),
-          exists(
-            this.db.select().from(participants).where(eq(participants.userId, userId))
-          )
-        ),
+      where: and(
+        eq(chats.id, id),
+        exists(this.db.select().from(participants).where(eq(participants.userId, userId)))
+      ),
     });
   }
 
@@ -34,18 +31,20 @@ export class ChatsService {
           this.db.select().from(participants).where(eq(participants.userId, userId))
         ),
         limit: pagination.first + 1,
-        cursors: [[messages.createdAt, SortOrder.Asc, pagination.after]],
+        cursors: [[chats.lastMessageAt, SortOrder.Desc, pagination.after]],
       })
     );
 
-    return createCursorPaginationResult(paginatedChats, pagination);
+    return createCursorPaginationResult(paginatedChats, "lastMessageAt", pagination);
   }
 
   async create(data: StartChatInput) {
     const uniqueParticipants = removeDuplicates(data.participants);
 
     if (uniqueParticipants.length !== 2) {
-      throw new BadRequestException("Chat requires exactly 2 participants");
+      throw new BadRequestException(
+        "Currently, only chats with two participants are supported."
+      );
     }
 
     return this.db.transaction(async (tx) => {
@@ -73,18 +72,20 @@ export class ChatsService {
     const uniqueParticipants = removeDuplicates(data.participants);
 
     const existingChat = await this.db.query.chats.findFirst({
-      where: (chats, { exists, and, eq }) =>
-        exists(
+      where: and(
+        eq(
           this.db
-            .select()
+            .select({ count: count() })
             .from(participants)
             .where(
               and(
                 eq(participants.chatId, chats.id),
-                ...uniqueParticipants.map((userId) => eq(participants.userId, userId))
+                inArray(participants.userId, uniqueParticipants)
               )
-            )
-        ),
+            ),
+          uniqueParticipants.length
+        )
+      ),
     });
 
     if (existingChat) {

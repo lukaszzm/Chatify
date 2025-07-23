@@ -34,10 +34,7 @@ export class AuthService {
       throw new UnauthorizedException("Incorrect email or password");
     }
 
-    return this.generateTokens({
-      sub: user.id,
-      email: user.email,
-    });
+    return this.generateTokens({ sub: user.id, email: user.email });
   }
 
   async signUp(payload: SignUpInput) {
@@ -55,10 +52,7 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    return this.generateTokens({
-      sub: user.id,
-      email: user.email,
-    });
+    return this.generateTokens({ sub: user.id, email: user.email });
   }
 
   async getUserFromToken(token: string) {
@@ -92,10 +86,7 @@ export class AuthService {
         secret: this.configService.getOrThrow<string>("JWT_REFRESH_SECRET"),
       });
 
-      return this.generateTokens({
-        sub,
-        email,
-      });
+      return this.generateTokens({ sub, email });
     } catch {
       throw new UnauthorizedException();
     }

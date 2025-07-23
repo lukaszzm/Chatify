@@ -1,28 +1,15 @@
 import { NestFactory } from "@nestjs/core";
-import type { NestFastifyApplication } from "@nestjs/platform-fastify";
-import { FastifyAdapter } from "@nestjs/platform-fastify";
-import { processRequest } from "graphql-upload-ts";
+import type { NestExpressApplication } from "@nestjs/platform-express";
+import { graphqlUploadExpress } from "graphql-upload-ts";
 
 import { AppModule } from "@/app.module";
 
 async function bootstrap() {
-  const adapter = new FastifyAdapter();
-  const fastify = adapter.getInstance();
-
-  fastify.addContentTypeParser("multipart", (request, _payload, done) => {
-    Object.assign(request, { isMultipart: true });
-    done(null);
-  });
-
-  fastify.addHook("preValidation", async (request, reply) => {
-    if ("isMultipart" in request.raw && request.raw.isMultipart === true) {
-      request.body = await processRequest(request.raw, reply.raw);
-    }
-  });
-
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
   });
+
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
 
   await app.listen(3000, "0.0.0.0");
 }

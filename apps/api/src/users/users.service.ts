@@ -5,7 +5,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
-import { and, asc, eq, exists, ilike, inArray, not, or } from "drizzle-orm";
+import { and, asc, eq, exists, ilike, inArray, not, SQL } from "drizzle-orm";
 import type { FileUpload } from "graphql-upload-ts";
 
 import { PasswordService } from "@/auth/password.service";
@@ -65,16 +65,31 @@ export class UsersService {
   }
 
   async search(args: UsersArgs, userId: string) {
-    const searchWhere = or(
-      args.excludeMe ? not(eq(users.id, userId)) : undefined,
-      ilike(users.fullName, `%${args.where?.fullName}%`),
-      ilike(users.firstName, `%${args.where?.firstName}%`),
-      ilike(users.lastName, `%${args.where?.lastName}%`),
-      ilike(users.email, `%${args.where?.email}%`)
-    );
+    const conditions: SQL[] = [];
+
+    if (args.excludeMe) {
+      conditions.push(not(eq(users.id, userId)));
+    }
+
+    if (args.where.isActive) {
+      conditions.push(eq(users.isActive, args.where.isActive));
+    }
+
+    const searchFields = [
+      { field: users.firstName, value: args.where.firstName },
+      { field: users.lastName, value: args.where.lastName },
+      { field: users.fullName, value: args.where.fullName },
+      { field: users.email, value: args.where.email },
+    ] as const;
+
+    searchFields.forEach(({ field, value }) => {
+      if (value) {
+        conditions.push(ilike(field, `%${value}%`));
+      }
+    });
 
     return this.db.query.users.findMany({
-      where: searchWhere,
+      where: and(...conditions),
       orderBy: asc(users.createdAt),
       limit: args.first,
       columns: {
@@ -147,28 +162,28 @@ export class UsersService {
   async updateProfilePicture(filePromise: Promise<FileUpload> | null, id: string) {
     const user = await this.db.query.users.findFirst({
       where: eq(users.id, id),
+      columns: {
+        password: false,
+      },
     });
 
     if (user.profilePicture) {
       await this.uploadService.deleteImage(user.profilePicture);
     }
 
-    const isFileProvided = filePromise !== null;
-    if (!isFileProvided) {
-      return this.db
-        .update(users)
-        .set({
-          profilePicture: null,
-        })
-        .where(eq(users.id, id));
-    }
+    let newProfilePicture: string | null = null;
 
-    const file = await filePromise;
-    const pictureUrl = await this.uploadService.uploadImage(file);
+    const isFileProvided = filePromise !== null;
+    if (isFileProvided) {
+      const file = await filePromise;
+      newProfilePicture = await this.uploadService.uploadImage(file);
+    }
 
     const [updatedUser] = await this.db
       .update(users)
-      .set({ profilePicture: pictureUrl })
+      .set({
+        profilePicture: newProfilePicture,
+      })
       .where(eq(users.id, id))
       .returning();
 

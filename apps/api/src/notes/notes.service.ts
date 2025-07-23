@@ -16,7 +16,7 @@ export class NotesService {
 
   async findOneById(id: string, userId: string) {
     return this.db.query.notes.findFirst({
-      where: eq(notes.id, id) && eq(notes.userId, userId),
+      where: and(eq(notes.id, id), eq(notes.userId, userId)),
     });
   }
 
@@ -32,11 +32,11 @@ export class NotesService {
       withCursorPagination({
         where: eq(notes.userId, userId),
         limit: pagination.first + 1,
-        cursors: [[notes.createdAt, SortOrder.Asc, pagination.after]],
+        cursors: [[notes.createdAt, SortOrder.Desc, pagination.after]],
       })
     );
 
-    return createCursorPaginationResult(paginatedNotes, pagination);
+    return createCursorPaginationResult(paginatedNotes, "createdAt", pagination);
   }
 
   async create(payload: CreateNoteInput, userId: string) {
@@ -74,7 +74,7 @@ export class NotesService {
   async toggleLock(noteId: string, userId: string) {
     return this.db.transaction(async (tx) => {
       const note = await tx.query.notes.findFirst({
-        where: eq(notes.id, noteId) && eq(notes.userId, userId),
+        where: and(eq(notes.id, noteId), eq(notes.userId, userId)),
       });
 
       if (!note) {

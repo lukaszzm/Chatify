@@ -12,27 +12,27 @@ type Auth {
 }
 
 type Chat {
-  createdAt: DateTime!
+  createdAt: String!
   id: ID!
   isDeleted: Boolean!
-  lastMessageAt: DateTime!
+  lastMessageAt: String!
   messages: [Message!]!
   participants: [User!]!
   title: String
   type: ChatType!
-  updatedAt: DateTime!
+  updatedAt: String!
 }
 
 type ChatPreview {
-  createdAt: DateTime!
+  createdAt: String!
   id: ID!
   isDeleted: Boolean!
-  lastMessageAt: DateTime!
+  lastMessageAt: String!
   latestMessage: Message!
   participants: [User!]!
   title: String
   type: ChatType!
-  updatedAt: DateTime!
+  updatedAt: String!
 }
 
 type ChatPreviewConnection {
@@ -54,22 +54,17 @@ input CreateNoteInput {
   title: String!
 }
 
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
-"""
-scalar DateTime
-
 type Message {
   chat: Chat!
   chatId: ID!
   content: String!
-  createdAt: DateTime!
+  createdAt: String!
   id: ID!
   isDeleted: Boolean!
   isSeen: Boolean!
   sender: User!
   senderId: ID!
-  updatedAt: DateTime!
+  updatedAt: String!
 }
 
 type MessageConnection {
@@ -100,11 +95,11 @@ type Mutation {
 
 type Note {
   content: String!
-  createdAt: DateTime!
+  createdAt: String!
   id: ID!
   isLocked: Boolean!
   title: String!
-  updatedAt: DateTime!
+  updatedAt: String!
   user: User!
   userId: String!
 }
@@ -187,7 +182,7 @@ input UpdateProfilePictureInput {
 scalar Upload
 
 type User {
-  createdAt: DateTime!
+  createdAt: String!
   email: String!
   firstName: String!
   fullName: String!
@@ -195,7 +190,7 @@ type User {
   isActive: Boolean!
   lastName: String!
   profilePicture: String
-  updatedAt: DateTime!
+  updatedAt: String!
 }
 
 input UserWhereInput {

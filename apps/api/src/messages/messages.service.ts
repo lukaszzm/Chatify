@@ -38,11 +38,11 @@ export class MessagesService {
       withCursorPagination({
         where: eq(messages.chatId, chatId),
         limit: pagination.first + 1,
-        cursors: [[messages.createdAt, SortOrder.Asc, pagination.after]],
+        cursors: [[messages.createdAt, SortOrder.Desc, pagination.after]],
       })
     );
 
-    return createCursorPaginationResult(paginatedMessages, pagination);
+    return createCursorPaginationResult(paginatedMessages, "createdAt", pagination);
   }
 
   async create(data: SendMessageInput, senderId: string) {
@@ -56,15 +56,14 @@ export class MessagesService {
         })
         .returning();
 
-      const [updatedMessage] = await tx
+      await tx
         .update(chats)
         .set({
           lastMessageAt: message.createdAt,
         })
-        .where(eq(chats.id, data.chatId))
-        .returning();
+        .where(eq(chats.id, data.chatId));
 
-      return updatedMessage;
+      return message;
     });
   }
 }

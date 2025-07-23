@@ -1,28 +1,28 @@
 import type { PaginationArgs } from "@/common/dtos/pagination.args";
 
-type EntityWithTimestamp = {
-  createdAt: Date;
-} & Record<string, unknown>;
-
-export interface CursorPaginationResult<T extends EntityWithTimestamp> {
-  edges: { cursor: string; node: T }[];
+export interface CursorPaginationResult<TEntity extends Record<string, unknown>> {
+  edges: { cursor: TEntity[keyof TEntity]; node: TEntity }[];
   pageInfo: {
     hasNextPage: boolean;
-    endCursor?: string;
+    endCursor?: TEntity[keyof TEntity];
   };
 }
 
-export function createCursorPaginationResult<T extends EntityWithTimestamp>(
-  items: T[],
+export function createCursorPaginationResult<
+  TEntity extends Record<string, unknown>,
+  TColumn extends keyof TEntity,
+>(
+  items: TEntity[],
+  column: TColumn,
   pagination: PaginationArgs
-): CursorPaginationResult<T> {
+): CursorPaginationResult<TEntity> {
   const hasNextPage = items.length > pagination.first;
   const edges = hasNextPage ? items.slice(0, -1) : items;
-  const endCursor = hasNextPage ? edges.at(-1)?.createdAt.toString() : undefined;
+  const endCursor = hasNextPage ? edges.at(-1)?.[column] : undefined;
 
   return {
     edges: edges.map((item) => ({
-      cursor: item.createdAt.toString(),
+      cursor: item[column],
       node: item,
     })),
     pageInfo: {
