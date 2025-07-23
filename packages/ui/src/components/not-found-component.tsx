@@ -7,15 +7,14 @@ export interface NotFoundComponentProps extends ContainerProps {
   text?: string;
 }
 
-const NotFoundComponent = ({
-  ref,
+function NotFoundComponent({
   className,
   text = "Resource not found",
   ...props
-}: NotFoundComponentProps) => {
+}: NotFoundComponentProps) {
   return (
     <Container
-      ref={ref}
+      data-slot="not-found-component"
       variant="ghost"
       className={cn("flex justify-center items-center", className)}
       {...props}
@@ -26,7 +25,6 @@ const NotFoundComponent = ({
       </div>
     </Container>
   );
-};
-NotFoundComponent.displayName = "NotFoundComponent";
+}
 
 export { NotFoundComponent };

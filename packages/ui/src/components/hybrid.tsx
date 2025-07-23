@@ -18,10 +18,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@ui/components/drawer";
-import { useMediaQuery } from "@ui/hooks/use-media-query";
+import { useIsMobile } from "@ui/hooks/use-mobile";
 import { cn } from "@ui/lib/utils";
-
-const DEKSTOP_MEDIA_QUERY = "(min-width: 640px)";
 
 interface BaseProps {
   children: React.ReactNode;
@@ -37,97 +35,97 @@ interface HybridProps extends BaseProps {
   asChild?: boolean;
 }
 
-const Hybrid = ({ children, ...props }: RootHybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const Hybrid = isDesktop ? Dialog : Drawer;
+function Hybrid({ children, ...props }: RootHybridProps) {
+  const isMobile = useIsMobile();
+  const Hybrid = isMobile ? Drawer : Dialog;
 
   return <Hybrid {...props}>{children}</Hybrid>;
-};
+}
 
-const HybridTrigger = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const HybridTrigger = isDesktop ? DialogTrigger : DrawerTrigger;
+function HybridTrigger({ className, children, ...props }: HybridProps) {
+  const isMobile = useIsMobile();
+  const HybridTrigger = isMobile ? DrawerTrigger : DialogTrigger;
 
   return (
     <HybridTrigger className={className} {...props}>
       {children}
     </HybridTrigger>
   );
-};
+}
 
-const HybridClose = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const HybridClose = isDesktop ? DialogClose : DrawerClose;
+function HybridClose({ className, children, ...props }: HybridProps) {
+  const isMobile = useIsMobile();
+  const HybridClose = isMobile ? DrawerClose : DialogClose;
 
   return (
-    <HybridClose className={cn(isDesktop && "hidden", className)} {...props}>
+    <HybridClose className={cn(isMobile && "hidden", "w-full", className)} {...props}>
       {children}
     </HybridClose>
   );
-};
+}
 
-const HybridContent = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const HybridContent = isDesktop ? DialogContent : DrawerContent;
+function HybridContent({ className, children, ...props }: HybridProps) {
+  const isMobile = useIsMobile();
+  const HybridContent = isMobile ? DrawerContent : DialogContent;
 
   return (
     <HybridContent className={className} {...props}>
       {children}
     </HybridContent>
   );
-};
+}
 
-const HybridDescription = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const HybridDescription = isDesktop ? DialogDescription : DrawerDescription;
+function HybridDescription({ className, children, ...props }: HybridProps) {
+  const isMobile = useIsMobile();
+  const HybridDescription = isMobile ? DrawerDescription : DialogDescription;
 
   return (
     <HybridDescription className={className} {...props}>
       {children}
     </HybridDescription>
   );
-};
+}
 
-const HybridHeader = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const HybridHeader = isDesktop ? DialogHeader : DrawerHeader;
+function HybridHeader({ className, children, ...props }: HybridProps) {
+  const isMobile = useIsMobile();
+  const HybridHeader = isMobile ? DrawerHeader : DialogHeader;
 
   return (
     <HybridHeader className={className} {...props}>
       {children}
     </HybridHeader>
   );
-};
+}
 
-const HybridTitle = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const HybridTitle = isDesktop ? DialogTitle : DrawerTitle;
+function HybridTitle({ className, children, ...props }: HybridProps) {
+  const isMobile = useIsMobile();
+  const HybridTitle = isMobile ? DrawerTitle : DialogTitle;
 
   return (
     <HybridTitle className={className} {...props}>
       {children}
     </HybridTitle>
   );
-};
+}
 
-const HybridBody = ({ className, children, ...props }: HybridProps) => {
+function HybridBody({ className, children, ...props }: HybridProps) {
   return (
     <div className={cn("px-4 sm:px-0", className)} {...props}>
       {children}
     </div>
   );
-};
+}
 
-const HybridFooter = ({ className, children, ...props }: HybridProps) => {
-  const isDesktop = useMediaQuery(DEKSTOP_MEDIA_QUERY);
-  const HybridFooter = isDesktop ? DialogFooter : DrawerFooter;
+function HybridFooter({ className, children, ...props }: HybridProps) {
+  const isMobile = useIsMobile();
+  const HybridFooter = isMobile ? DrawerFooter : DialogFooter;
 
   return (
     <HybridFooter className={className} {...props}>
       {children}
     </HybridFooter>
   );
-};
+}
 
 export {
   Hybrid,

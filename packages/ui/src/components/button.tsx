@@ -5,7 +5,7 @@ import { LoadingDots } from "@ui/components/loading-dots";
 import { cn } from "@ui/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-3xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap gap-2 rounded-md text-sm font-medium ring-offset-background transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer",
   {
     variants: {
       variant: {
@@ -49,8 +49,7 @@ interface ButtonProps
   isLoading?: boolean;
 }
 
-const Button = ({
-  ref,
+function Button({
   className,
   variant,
   size,
@@ -59,20 +58,19 @@ const Button = ({
   disabled,
   asChild = false,
   ...props
-}: ButtonProps) => {
+}: ButtonProps) {
   const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
+      data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
-      ref={ref}
       disabled={isLoading || disabled}
       {...props}
     >
       {isLoading ? <LoadingDots variant={variant} size={size} /> : children}
     </Comp>
   );
-};
-Button.displayName = "Button";
+}
 
 export { Button, buttonVariants, type ButtonProps };

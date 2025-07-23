@@ -8,15 +8,14 @@ interface ErrorComponentProps extends ContainerProps {
   text?: string;
 }
 
-const ErrorComponent = ({
-  ref,
+function ErrorComponent({
   className,
   text = "Something, went wrong, try again later",
   ...props
-}: ErrorComponentProps) => {
+}: ErrorComponentProps) {
   return (
     <Container
-      ref={ref}
+      data-slot="error-component"
       variant="destructive"
       className={cn("flex justify-center items-center", className)}
       {...props}
@@ -27,7 +26,6 @@ const ErrorComponent = ({
       </div>
     </Container>
   );
-};
-ErrorComponent.displayName = "ErrorComponent";
+}
 
 export { ErrorComponent, type ErrorComponentProps };

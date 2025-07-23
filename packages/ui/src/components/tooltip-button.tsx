@@ -15,7 +15,7 @@ interface TooltipButtonProps extends ButtonProps {
   side?: TooltipContentProps["side"];
 }
 
-const TooltipButton = ({
+function TooltipButton({
   ref,
   asChild,
   tooltipText,
@@ -24,7 +24,7 @@ const TooltipButton = ({
   size = "square",
   className,
   ...props
-}: TooltipButtonProps) => {
+}: TooltipButtonProps) {
   const Comp = asChild ? Slot : "button";
 
   return (
@@ -37,13 +37,12 @@ const TooltipButton = ({
             {...props}
           />
         </TooltipTrigger>
-        <TooltipContent side={side}>
-          <p>{tooltipText}</p>
+        <TooltipContent side={side} className="">
+          {tooltipText}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
-};
-TooltipButton.displayName = "TooltipButton";
+}
 
 export { TooltipButton };

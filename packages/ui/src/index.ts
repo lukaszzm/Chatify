@@ -1,6 +1,6 @@
 export * from "./lib/utils";
 
-export * from "./hooks/use-media-query";
+export * from "./hooks/use-mobile";
 
 export * from "./components/button";
 export * from "./components/logo";

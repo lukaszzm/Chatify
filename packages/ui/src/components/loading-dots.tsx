@@ -40,11 +40,11 @@ interface LoadingDotsProps
   extends Omit<React.ComponentProps<"div">, "children">,
     VariantProps<typeof loadingDotsVariants> {}
 
-const LoadingDots = ({ className, variant, size, ref, ...props }: LoadingDotsProps) => {
+function LoadingDots({ className, variant, size, ...props }: LoadingDotsProps) {
   return (
     <div
+      data-slot="loading-dots"
       className={cn("flex gap-1.5 justify-center items-center", className)}
-      ref={ref}
       {...props}
     >
       <span className="sr-only">Loading...</span>
@@ -57,7 +57,6 @@ const LoadingDots = ({ className, variant, size, ref, ...props }: LoadingDotsPro
       <div className={cn(loadingDotsVariants({ variant, size }))} />
     </div>
   );
-};
-LoadingDots.displayName = "LoadingDots";
+}
 
 export { LoadingDots, loadingDotsVariants, type LoadingDotsProps };

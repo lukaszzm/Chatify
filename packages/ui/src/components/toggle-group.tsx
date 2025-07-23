@@ -12,46 +12,44 @@ const ToggleGroupContext = createContext<VariantProps<typeof toggleVariants>>({
   variant: "default",
 });
 
-type ToggleGroupProps = React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
-  VariantProps<typeof toggleVariants>;
-
-const ToggleGroup = ({
+function ToggleGroup({
   className,
   variant,
   size,
   children,
-  ref,
   ...props
-}: ToggleGroupProps) => (
-  <ToggleGroupPrimitive.Root
-    ref={ref}
-    className={cn("flex items-center justify-center gap-1", className)}
-    {...props}
-  >
-    <ToggleGroupContext.Provider value={{ variant, size }}>
-      {children}
-    </ToggleGroupContext.Provider>
-  </ToggleGroupPrimitive.Root>
-);
-ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName;
+}: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
+  VariantProps<typeof toggleVariants>) {
+  return (
+    <ToggleGroupPrimitive.Root
+      data-slot="toggle-group"
+      data-variant={variant}
+      data-size={size}
+      className={cn("flex items-center justify-center gap-1", className)}
+      {...props}
+    >
+      <ToggleGroupContext.Provider value={{ variant, size }}>
+        {children}
+      </ToggleGroupContext.Provider>
+    </ToggleGroupPrimitive.Root>
+  );
+}
 
-interface ToogleGroupItemProps
-  extends React.ComponentProps<typeof ToggleGroupPrimitive.Item>,
-    VariantProps<typeof toggleVariants> {}
-
-const ToggleGroupItem = ({
+function ToggleGroupItem({
   className,
   children,
   variant,
   size,
-  ref,
   ...props
-}: ToogleGroupItemProps) => {
+}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
+  VariantProps<typeof toggleVariants>) {
   const context = useContext(ToggleGroupContext);
 
   return (
     <ToggleGroupPrimitive.Item
-      ref={ref}
+      data-slot="toggle-group-item"
+      data-variant={context.variant || variant}
+      data-size={context.size || size}
       className={cn(
         toggleVariants({
           variant: context.variant || variant,
@@ -64,8 +62,6 @@ const ToggleGroupItem = ({
       {children}
     </ToggleGroupPrimitive.Item>
   );
-};
+}
 
-ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName;
-
-export { ToggleGroup, ToggleGroupItem, type ToggleGroupProps, type ToogleGroupItemProps };
+export { ToggleGroup, ToggleGroupItem };

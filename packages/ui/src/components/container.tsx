@@ -25,15 +25,14 @@ interface ContainerProps
   extends React.ComponentProps<"div">,
     VariantProps<typeof containerVariants> {}
 
-const Container = ({ className, variant, size, ref, ...props }: ContainerProps) => {
+function Container({ className, variant, size, ...props }: ContainerProps) {
   return (
     <div
+      data-slot="container"
       className={cn(containerVariants({ variant, size, className }))}
-      ref={ref}
       {...props}
     />
   );
-};
-Container.displayName = "Container";
+}
 
 export { Container, containerVariants, type ContainerProps };

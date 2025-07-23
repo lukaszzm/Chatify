@@ -14,9 +14,9 @@ interface ChatBubbleProps {
   children: React.ReactNode;
 }
 
-const ChatBubbleAvatar = ({ sender }: Pick<ChatBubbleProps, "sender">) => {
+function ChatBubbleAvatar({ sender }: Pick<ChatBubbleProps, "sender">) {
   return (
-    <Avatar className="mt-4 size-8">
+    <Avatar data-slot="chat-bubble-avatar" className="mt-4 size-8">
       <AvatarImage
         src={sender.profilePicture ?? undefined}
         alt={`Profile picture of ${sender.firstName} ${sender.lastName}`}
@@ -27,11 +27,11 @@ const ChatBubbleAvatar = ({ sender }: Pick<ChatBubbleProps, "sender">) => {
       </AvatarFallback>
     </Avatar>
   );
-};
+}
 
-const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) => {
+function ChatBubble({ isMine, sender, createdAt, children }: ChatBubbleProps) {
   return (
-    <div className={cn("flex items-start gap-2")}>
+    <div data-slot="chat-bubble" className={cn("flex items-start gap-2")}>
       {!isMine ? <ChatBubbleAvatar sender={sender} /> : null}
 
       <div
@@ -58,7 +58,7 @@ const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) =>
           className={cn(
             "w-full px-3 py-1",
             isMine
-              ? "bg-foreground dark:bg-accent text-background dark:text-accent-foreground rounded-l-lg rounded-tr-lg"
+              ? "bg-bubble text-bubble-foreground rounded-l-lg rounded-tr-lg"
               : "bg-muted/60 rounded-e-xl rounded-es-xl "
           )}
         >
@@ -69,6 +69,6 @@ const ChatBubble = ({ isMine, sender, createdAt, children }: ChatBubbleProps) =>
       </div>
     </div>
   );
-};
+}
 
 export { ChatBubble };
