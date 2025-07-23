@@ -38,7 +38,7 @@ export const CreateNote = () => {
         </HybridBody>
         <HybridFooter>
           <HybridClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="ghost">Cancel</Button>
           </HybridClose>
         </HybridFooter>
       </HybridContent>
