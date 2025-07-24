@@ -10,8 +10,10 @@ export const messages = pgTable("messages", {
     .primaryKey()
     .$defaultFn(() => createId()),
   content: text("content").notNull(),
-  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).$onUpdate(
     () => sql`CURRENT_TIMESTAMP`
   ),
   isSeen: boolean("is_seen").default(false),

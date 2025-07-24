@@ -10,8 +10,10 @@ export const notes = pgTable("notes", {
     .$defaultFn(() => createId()),
   title: text("title").notNull(),
   content: text("content").notNull(),
-  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).$onUpdate(
     () => sql`CURRENT_TIMESTAMP`
   ),
   isLocked: boolean("is_locked").notNull().default(false),

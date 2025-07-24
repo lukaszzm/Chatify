@@ -17,8 +17,10 @@ export const users = pgTable("users", {
   fullName: text("full_name").notNull(),
   password: text("password").notNull(),
   isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).$onUpdate(
     () => sql`CURRENT_TIMESTAMP`
   ),
 });

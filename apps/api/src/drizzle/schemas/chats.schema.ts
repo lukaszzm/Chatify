@@ -10,11 +10,13 @@ export const chats = pgTable("chats", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
-  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).$onUpdate(
     () => sql`CURRENT_TIMESTAMP`
   ),
-  lastMessageAt: timestamp("last_message_at", { mode: "string" }),
+  lastMessageAt: timestamp("last_message_at", { mode: "string", withTimezone: true }),
   isDeleted: boolean("is_deleted").default(false),
   type: conversationType("type").notNull().default("ONE_TO_ONE"),
 });
