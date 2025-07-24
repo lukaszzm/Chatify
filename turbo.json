@@ -5,7 +5,6 @@
     "TZ",
     "PORT",
     "DATABASE_URL",
-    "DATABASE_SSL",
     "JWT_SECRET",
     "JWT_EXPIRATION_TIME",
     "JWT_REFRESH_SECRET",
