@@ -30,7 +30,7 @@ export const UpdatePassword = () => {
           <form
             id="update-password-form"
             onSubmit={form.handleSubmit(updatePassword)}
-            className="grid grid-cols-1 gap-4 xl:grid-cols-2"
+            className="space-y-4"
           >
             <FormField
               control={form.control}
