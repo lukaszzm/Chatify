@@ -10,8 +10,12 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { MobileBackButton } from "@/components/mobile-back-button";
 import { ThemeToggle } from "@/features/settings/components/theme-toggle";
+import { matchPageTitle } from "@/utils/match-page-title";
 
 export const Route = createFileRoute("/_dashboard/settings/appearance")({
+  head: () => ({
+    meta: [{ title: matchPageTitle("/settings/appearance") }],
+  }),
   component: Page,
 });
 

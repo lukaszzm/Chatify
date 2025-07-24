@@ -6,8 +6,12 @@ import { DeleteAccount } from "@/features/settings/components/delete-account";
 import { ProfileInfo } from "@/features/settings/components/profile-info";
 import { UpdatePassword } from "@/features/settings/components/update-password";
 import { UpdateProfilePicture } from "@/features/settings/components/update-profile-picture";
+import { matchPageTitle } from "@/utils/match-page-title";
 
 export const Route = createFileRoute("/_dashboard/settings/profile")({
+  head: () => ({
+    meta: [{ title: matchPageTitle("/settings/profile") }],
+  }),
   component: Page,
 });
 

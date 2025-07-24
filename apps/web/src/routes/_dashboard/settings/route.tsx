@@ -3,8 +3,12 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 import { SettingsList } from "@/features/settings/components/settings-list";
 import { usePathname } from "@/hooks/use-pathname";
+import { matchPageTitle } from "@/utils/match-page-title";
 
 export const Route = createFileRoute("/_dashboard/settings")({
+  head: () => ({
+    meta: [{ title: matchPageTitle("/settings") }],
+  }),
   component: Page,
 });
 

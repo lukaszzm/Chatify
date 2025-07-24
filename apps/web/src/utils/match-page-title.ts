@@ -1,9 +1,11 @@
+import type { LinkProps } from "@tanstack/react-router";
+
 import { pageTitles } from "@/config/page-titles";
 
 const DEFAULT_TITLE = "Chatify";
 const ROOT = "/";
 
-export function matchPageTitle(pathname: string): string {
+export function matchPageTitle(pathname: NonNullable<LinkProps["to"]>): string {
   if (pathname === ROOT) {
     return pageTitles[ROOT];
   }
@@ -12,5 +14,5 @@ export function matchPageTitle(pathname: string): string {
     .filter(([key]) => key !== ROOT)
     .find(([key]) => pathname.startsWith(key));
 
-  return result ? result[1] : DEFAULT_TITLE;
+  return result?.at(1) ?? DEFAULT_TITLE;
 }

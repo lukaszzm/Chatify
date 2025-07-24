@@ -2,7 +2,6 @@ import "@/globals.css";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { HelmetProvider } from "react-helmet-async";
 import { Provider as UrqlProvider } from "urql";
 
 import { AuthProvider } from "@/features/auth/contexts/auth-context";
@@ -32,15 +31,13 @@ function InnerApp() {
 
 function App() {
   return (
-    <HelmetProvider>
-      <UrqlProvider value={client}>
-        <AuthProvider>
-          <ThemeProvider>
-            <InnerApp />
-          </ThemeProvider>
-        </AuthProvider>
-      </UrqlProvider>
-    </HelmetProvider>
+    <UrqlProvider value={client}>
+      <AuthProvider>
+        <ThemeProvider>
+          <InnerApp />
+        </ThemeProvider>
+      </AuthProvider>
+    </UrqlProvider>
   );
 }
 

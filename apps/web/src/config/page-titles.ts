@@ -1,6 +1,6 @@
 import type { LinkProps } from "@tanstack/react-router";
 
-type Route = Exclude<LinkProps["to"], undefined>;
+type Route = NonNullable<LinkProps["to"]>;
 
 export const pageTitles = {
   "/sign-in": "Sign In | Chatify",
