@@ -12,7 +12,7 @@ export const Search = () => {
   return (
     <div className="space-y-2">
       <SearchInput
-        placeholder="Search user"
+        placeholder="Search users..."
         value={searchPhrase}
         onChange={(e) => setSearchPhrase(e.target.value)}
       />

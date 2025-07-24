@@ -28,7 +28,7 @@ export const SignInForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="example@example.com" {...field} />
+                <Input placeholder="Enter your email address..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -41,7 +41,7 @@ export const SignInForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="*********" type="password" {...field} />
+                <Input placeholder="Enter your password..." type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

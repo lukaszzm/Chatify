@@ -28,7 +28,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="example@example.com" {...field} />
+                <Input placeholder="Enter your email address..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -41,7 +41,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input placeholder="John" {...field} />
+                <Input placeholder="Enter your first name..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -54,7 +54,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input placeholder="Smith" {...field} />
+                <Input placeholder="Enter your last name..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,7 +67,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="*********" type="password" {...field} />
+                <Input placeholder="Enter your password..." type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

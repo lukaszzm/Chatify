@@ -44,7 +44,11 @@ export const ProfileInfo = () => {
                 <FormItem className="xl:col-span-2">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input disabled placeholder="example@example.com" {...field} />
+                    <Input
+                      disabled
+                      placeholder="Enter your email address..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -57,7 +61,7 @@ export const ProfileInfo = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John" {...field} />
+                    <Input placeholder="Enter your first name..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -70,7 +74,7 @@ export const ProfileInfo = () => {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Smith" {...field} />
+                    <Input placeholder="Enter your last name..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
