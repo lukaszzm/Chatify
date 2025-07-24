@@ -12,8 +12,7 @@ export default () => ({
     refreshExpirationTime: process.env.JWT_REFRESH_EXPIRATION_TIME,
   },
   redis: {
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
+    url: process.env.REDIS_URL,
   },
   aws: {
     accessKey: process.env.AWS_ACCESS_KEY,
@@ -32,8 +31,7 @@ export const validationSchema = Joi.object({
   JWT_EXPIRATION_TIME: Joi.string().required(),
   JWT_REFRESH_SECRET: Joi.string().required(),
   JWT_REFRESH_EXPIRATION_TIME: Joi.string().required(),
-  REDIS_HOST: Joi.string().required(),
-  REDIS_PORT: Joi.number().required(),
+  REDIS_URL: Joi.string().required(),
   AWS_ACCESS_KEY: Joi.string().required(),
   AWS_SECRET_ACCESS_KEY: Joi.string().required(),
   AWS_S3_REGION: Joi.string().required(),

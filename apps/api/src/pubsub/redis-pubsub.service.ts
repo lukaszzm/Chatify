@@ -1,6 +1,7 @@
 import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { RedisPubSub } from "graphql-redis-subscriptions";
+import Redis from "ioredis";
 
 @Injectable()
 export class RedisPubSubService extends RedisPubSub implements OnModuleInit {
@@ -8,10 +9,8 @@ export class RedisPubSubService extends RedisPubSub implements OnModuleInit {
 
   constructor(private readonly configService: ConfigService) {
     super({
-      connection: {
-        host: configService.getOrThrow<string>("REDIS_HOST"),
-        port: configService.getOrThrow<number>("REDIS_PORT"),
-      },
+      publisher: new Redis(configService.getOrThrow<string>("REDIS_URL")),
+      subscriber: new Redis(configService.getOrThrow<string>("REDIS_URL")),
     });
   }
 
