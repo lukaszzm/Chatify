@@ -2,6 +2,9 @@ import Joi from "joi";
 
 export default () => ({
   port: process.env.PORT,
+  cors: {
+    origin: process.env.CORS_ORIGIN,
+  },
   database: {
     url: process.env.DATABASE_URL,
   },
@@ -27,6 +30,7 @@ export default () => ({
 export const validationSchema = Joi.object({
   DATABASE_URL: Joi.string().required(),
   PORT: Joi.number().default(3000),
+  CORS_ORIGIN: Joi.string().required(),
   JWT_SECRET: Joi.string().required(),
   JWT_EXPIRATION_TIME: Joi.string().required(),
   JWT_REFRESH_SECRET: Joi.string().required(),
