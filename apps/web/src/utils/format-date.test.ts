@@ -8,6 +8,7 @@ const Timestamp = {
   CurrentWeek: "2025-01-13T13:59:49.570Z",
   CurrentDay: "2025-01-15T12:59:49.570Z",
   LessThanMinuteAgo: "2025-01-15T13:59:48.570Z",
+  InOneMinute: "2025-01-15T14:00:49.570Z",
 };
 
 describe("formatDate", () => {
@@ -45,8 +46,8 @@ describe("formatDate", () => {
     expect(result).toBe("about 1 hour ago");
   });
 
-  it("should return 'just now' if it's less than a minute ago", () => {
-    const date = new Date(Timestamp.LessThanMinuteAgo).toISOString();
+  it("should return 'just now' if it's in one minute", () => {
+    const date = new Date(Timestamp.InOneMinute).toISOString();
 
     const result = formatDate(date);
 

@@ -1,12 +1,12 @@
 import { formatDistance, isSameWeek, formatDate as format, isSameDay } from "date-fns";
 
 export function formatDate(timestamp: string): string {
-  const now = new Date().toISOString();
-  const time = new Date(timestamp).toISOString();
+  const now = new Date().toUTCString();
+  const time = new Date(timestamp).toUTCString();
 
   if (isSameDay(time, now)) {
     return formatDistance(time, now, { addSuffix: true }).replace(
-      "less than a minute ago",
+      "in 1 minute",
       "just now"
     );
   }
