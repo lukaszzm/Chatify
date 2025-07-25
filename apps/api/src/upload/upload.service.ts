@@ -6,11 +6,16 @@ import {
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { FileUpload } from "graphql-upload-ts";
-import sharp, { Sharp } from "sharp";
+import sharp from "sharp";
 import { Readable } from "stream";
 
 import { Ratio } from "@/common/enums/ratio";
-import { IMAGE_SIZE, MAX_WIDTH, QUALITY_ARRAY } from "@/upload/upload.constants";
+import {
+  CHROMA_SUBSAMPLING,
+  IMAGE_SIZE,
+  MAX_WIDTH,
+  QUALITY_ARRAY,
+} from "@/upload/upload.constants";
 
 @Injectable()
 export class UploadService {
@@ -36,53 +41,65 @@ export class UploadService {
     return type === "image";
   }
 
-  private async streamToBuffer(stream: Readable) {
-    const buffer: Uint8Array[] = [];
+  private async compressImageStream(
+    inputStream: Readable,
+    ratio?: number
+  ): Promise<Buffer> {
+    let transformer = sharp();
 
-    return new Promise((resolve, reject) => {
-      stream.on("data", (data: Uint8Array) => buffer.push(data));
-      stream.on("end", () => {
-        resolve(Buffer.concat(buffer));
-      });
-      stream.on("error", (error) => {
-        reject(error);
-      });
-    }) satisfies Promise<Buffer>;
-  }
+    try {
+      if (ratio) {
+        transformer = transformer.resize({
+          width: MAX_WIDTH,
+          height: Math.round(MAX_WIDTH * ratio),
+          fit: sharp.fit.cover,
+        });
+      }
 
-  private async compressImage(buffer: Buffer, ratio?: number) {
-    let compressBuffer: Sharp | Buffer = sharp(buffer).jpeg({
-      mozjpeg: true,
-      chromaSubsampling: "4:4:4",
-    });
+      const processedBuffer = await inputStream
+        .pipe(transformer)
+        .jpeg({
+          mozjpeg: true,
+          chromaSubsampling: CHROMA_SUBSAMPLING,
+        })
+        .toBuffer();
 
-    if (ratio) {
-      compressBuffer.resize({
-        width: MAX_WIDTH,
-        height: Math.round(MAX_WIDTH * ratio),
-        fit: "cover",
-      });
-    }
+      if (processedBuffer.length <= IMAGE_SIZE) {
+        return processedBuffer;
+      }
 
-    compressBuffer = await compressBuffer.toBuffer();
+      let bestBuffer = processedBuffer;
 
-    if (compressBuffer.length > IMAGE_SIZE) {
       for (const quality of QUALITY_ARRAY) {
-        const smallerBuffer = await sharp(compressBuffer)
-          .jpeg({
-            quality,
-            chromaSubsampling: "4:4:4",
-          })
-          .toBuffer();
+        let qualityTransformer: sharp.Sharp | null = null;
 
-        if (smallerBuffer.length <= IMAGE_SIZE || quality === 10) {
-          compressBuffer = smallerBuffer;
-          break;
+        try {
+          qualityTransformer = sharp(processedBuffer).jpeg({
+            quality,
+            chromaSubsampling: CHROMA_SUBSAMPLING,
+          });
+
+          const qualityBuffer = await qualityTransformer.toBuffer();
+
+          if (qualityBuffer.length <= IMAGE_SIZE || quality === 10) {
+            return qualityBuffer;
+          }
+
+          if (qualityBuffer.length < bestBuffer.length) {
+            bestBuffer = qualityBuffer;
+          }
+        } finally {
+          if (qualityTransformer) {
+            qualityTransformer.destroy();
+          }
         }
       }
-    }
 
-    return compressBuffer;
+      return bestBuffer;
+    } catch (error) {
+      transformer.destroy();
+      throw error;
+    }
   }
 
   private createFileUrl(filename: string) {
@@ -121,14 +138,24 @@ export class UploadService {
     }
 
     const timestamp = Date.now().toString();
-    const fixedFileName = `${timestamp}-${file.filename}`;
+    const sanitizedFilename = file.filename.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const fixedFileName = `${timestamp}-${sanitizedFilename}`;
+
+    let inputStream: Readable | null = null;
 
     try {
-      const buffer = await this.streamToBuffer(file.createReadStream());
-      const compressedBuffer = await this.compressImage(buffer, ratio);
+      inputStream = file.createReadStream();
+
+      inputStream.on("error", (error) => {
+        throw new InternalServerErrorException(`Stream error: ${error.message}`);
+      });
+
+      const compressedBuffer = await this.compressImageStream(inputStream, ratio);
       return await this.uploadToS3(fixedFileName, compressedBuffer);
-    } catch {
-      throw new InternalServerErrorException("Failed to upload image");
+    } finally {
+      if (inputStream && !inputStream.destroyed) {
+        inputStream.destroy();
+      }
     }
   }
 

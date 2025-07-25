@@ -13,8 +13,11 @@ async function bootstrap() {
   const port = configService.getOrThrow<number>("PORT") || 3000;
   const corsOrigin = configService.getOrThrow<string>("CORS_ORIGIN");
 
+  const maxFileSize = configService.getOrThrow<number>("UPLOAD_MAX_FILE_SIZE");
+  const maxFiles = configService.getOrThrow<number>("UPLOAD_MAX_FILES");
+
   app.enableCors({ origin: corsOrigin, credentials: true });
-  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+  app.use(graphqlUploadExpress({ maxFileSize, maxFiles }));
 
   await app.listen(port, "0.0.0.0");
 }
