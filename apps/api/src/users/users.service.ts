@@ -137,6 +137,10 @@ export class UsersService {
       where: eq(users.id, id),
     });
 
+    if (user.email.endsWith("@test.com")) {
+      throw new UnauthorizedException("Cannot change password for test users");
+    }
+
     const isPasswordValid = await this.passwordService.verify(
       user.password,
       data.currentPassword
