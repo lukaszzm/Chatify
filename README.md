@@ -1,3 +1,5 @@
+> **⚡ Important Notice:** The API is hosted on a free-tier service, so the initial request may take longer than usual to wake up the server.
+
 <div align="center">
     <img src="public/chatify-logo.png" alt="Chatify logo" width="80" height="80">
   <h1 align="center">Chatify</h1>
