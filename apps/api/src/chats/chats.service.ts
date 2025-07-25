@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
-import { and, count, eq, exists, inArray } from "drizzle-orm";
+import { and, count, eq, exists, inArray, isNotNull } from "drizzle-orm";
 import { withCursorPagination } from "drizzle-pagination";
 
 import { StartChatInput } from "@/chats/dtos/start-chat.input";
@@ -27,8 +27,11 @@ export class ChatsService {
   async findManyByUserId(userId: string, pagination: PaginationArgs) {
     const paginatedChats = await this.db.query.chats.findMany(
       withCursorPagination({
-        where: exists(
-          this.db.select().from(participants).where(eq(participants.userId, userId))
+        where: and(
+          exists(
+            this.db.select().from(participants).where(eq(participants.userId, userId))
+          ),
+          isNotNull(chats.lastMessageAt)
         ),
         limit: pagination.first + 1,
         cursors: [[chats.lastMessageAt, SortOrder.Desc, pagination.after]],
