@@ -19,7 +19,14 @@ export class ChatsService {
     return this.db.query.chats.findFirst({
       where: and(
         eq(chats.id, id),
-        exists(this.db.select().from(participants).where(eq(participants.userId, userId)))
+        exists(
+          this.db
+            .select()
+            .from(participants)
+            .where(
+              and(eq(participants.userId, userId), eq(participants.chatId, chats.id))
+            )
+        )
       ),
     });
   }
@@ -29,7 +36,12 @@ export class ChatsService {
       withCursorPagination({
         where: and(
           exists(
-            this.db.select().from(participants).where(eq(participants.userId, userId))
+            this.db
+              .select()
+              .from(participants)
+              .where(
+                and(eq(participants.userId, userId), eq(participants.chatId, chats.id))
+              )
           ),
           isNotNull(chats.lastMessageAt)
         ),
