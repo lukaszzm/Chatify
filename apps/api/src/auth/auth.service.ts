@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
+import { StringValue } from "ms";
 
 import { SignInInput } from "@/auth/dtos/sign-in.input";
 import { SignUpInput } from "@/auth/dtos/sign-up.input";
@@ -76,7 +77,9 @@ export class AuthService {
   generateRefreshToken(payload: JwtPayload) {
     return this.jwtService.sign(payload, {
       secret: this.configService.getOrThrow<string>("JWT_REFRESH_SECRET"),
-      expiresIn: this.configService.getOrThrow<string>("JWT_REFRESH_EXPIRATION_TIME"),
+      expiresIn: this.configService.getOrThrow<StringValue>(
+        "JWT_REFRESH_EXPIRATION_TIME"
+      ),
     });
   }
 
